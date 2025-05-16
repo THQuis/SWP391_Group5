@@ -68,10 +68,6 @@
    * Access dashboard and generate reports.
 
 #### **Non-Functional Requirements:**
-
----
-
-### 2. **Use Case Diagram**
 **Security:**
 * Passwords must be encrypted.
 * Use HTTPS for all connections.
@@ -89,4 +85,8 @@
 * Daily data backup is required.
 * **Compatibility:**
 * Platform must be compatible with major browsers (Chrome, Firefox, Edge).
+---
+
+### 2. **Use Case Diagram**
+
   

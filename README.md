@@ -69,27 +69,28 @@
 
 #### **Non-Functional Requirements:**
 **Security:**
-* Passwords must be encrypted.
-* Use HTTPS for all connections.
+* User passwords must be encrypted (e.g., using MD5 or SHA-256 for demonstration purposes).
+* Use HTTPS if deployed online, or simulate a secure environment when running locally.
   
 **Performance:**
-* Homepage should load in under 3 seconds.
-* Support at least 1000 users concurrently.
+* Homepage should load within 3–5 seconds.
+* The system should handle at least 20–50 concurrent users, which is suitable for testing or demo purposes.
   
 **Usability:**
-* Interface must be user-friendly on both desktop and mobile.
-* Provide clear instructions for key features.
+* Interface should be simple and responsive (works on both desktop and basic mobile view).
+* Provide short and clear instructions for key features like registration, creating a plan, and tracking progress.
 
 **Maintainability:**
-* Code should be modular and well-commented.
-* System should be easy to update and fix bugs.
+* Code should be organized into clear sections (e.g., by user roles or features).
+* Important parts of the code should include comments to make it easier to maintain.
 
 **Availability:**
-* System uptime should be at least 99.5%.
-* Daily data backup is required.
+* The system should run stably during testing and presentations.
+* Data should be backed up manually (e.g., export to a JSON/CSV file or copy the database folder).
 
 **Compatibility:**
-* Platform must be compatible with major browsers (Chrome, Firefox, Edge).
+* The platform should work properly on Chrome and Firefox.
+* Focus on laptop compatibility; mobile support is optional if time allows.
 ---
 
 ### 2. **Use Case Diagram**

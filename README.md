@@ -25,6 +25,7 @@
    * Access homepage and introduction about the platform.
    * View blogs and success stories.
    * Browse features and pricing of membership packages.
+   * Register for a membership account.
 
 2. **Member Features:**
 

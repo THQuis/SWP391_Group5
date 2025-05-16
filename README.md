@@ -74,16 +74,16 @@
 **Performance:**
 * Homepage should load in under 3 seconds.
 * Support at least 1000 users concurrently.
-* **Usability:**
+ **Usability:**
 * Interface must be user-friendly on both desktop and mobile.
 * Provide clear instructions for key features.
-* **Maintainability:**
+  **Maintainability:**
 * Code should be modular and well-commented.
 * System should be easy to update and fix bugs.
 **Availability:**
 * System uptime should be at least 99.5%.
 * Daily data backup is required.
-* **Compatibility:**
+  **Compatibility:**
 * Platform must be compatible with major browsers (Chrome, Firefox, Edge).
 ---
 

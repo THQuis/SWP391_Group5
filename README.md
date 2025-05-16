@@ -1,5 +1,12 @@
 # SWP391 - Project
+## Members:
+1. Trương Hoàng Quí  
+2. Lê Thị Trà Mi
+3. Cao Hữu Trí
+4. Khúc Ngọc Sơn
+5. Nguyễn Văn Dũng
 
+## Topic: Smoking Cessation Support Platfrom - Nền tảng hỗ trợ cai nghiện thuốc lá
 ### 1. **Requirement Analysis for Smoking Cessation Support Platform**
 
 #### **Actors:**

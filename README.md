@@ -67,7 +67,26 @@
    * Manage user profiles and system data.
    * Access dashboard and generate reports.
 
+#### **Non-Functional Requirements:**
+
 ---
 
 ### 2. **Use Case Diagram**
-
+**Security:**
+* Passwords must be encrypted.
+* Use HTTPS for all connections.
+**Performance:**
+* Homepage should load in under 3 seconds.
+* Support at least 1000 users concurrently.
+* **Usability:**
+* Interface must be user-friendly on both desktop and mobile.
+* Provide clear instructions for key features.
+* **Maintainability:**
+* Code should be modular and well-commented.
+* System should be easy to update and fix bugs.
+**Availability:**
+* System uptime should be at least 99.5%.
+* Daily data backup is required.
+* **Compatibility:**
+* Platform must be compatible with major browsers (Chrome, Firefox, Edge).
+  

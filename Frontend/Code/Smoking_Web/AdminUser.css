@@ -1,0 +1,225 @@
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            background-color: #a8d0e6;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover {
+            background-color: #f8f9fa;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .navbar {
+            background-color: #a8d0e6;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content {
+            margin-left: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            min-height: calc(100vh - 56px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .content.active {
+            margin-left: 250px;
+        }
+
+        .table-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .text-center img{
+            max-width: 50%;
+            margin-top: 50px;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                left: -100%;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .content.active {
+                margin-left: 0;
+            }
+        }
+        /* thêm user cho admin  */
+        /* Popup overlay chồng lên toàn trang */
+.add-user-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Form bên trong popup */
+.add-user-popup {
+  background: white;
+  border-radius: 8px;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Header popup */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #a8d0e6;
+  padding: 10px 16px;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  color: black;
+}
+
+.popup-header button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Body and footer */
+.popup-body {
+  padding: 16px;
+}
+
+.popup-footer {
+  padding: 10px 16px 16px;
+  text-align: right;
+}
+
+.popup-input {
+  background-color: #e8e8e8;
+  border-radius: 6px;
+  border: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+/* hộp nổi add useruser */
+        /* Popup overlay chồng lên toàn trang */
+.add-user-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Form bên trong popup */
+.add-user-popup {
+  background: white;
+  border-radius: 8px;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Header popup */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #a8d0e6;
+  padding: 10px 16px;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  color: black;
+}
+
+.popup-header button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Body and footer */
+.popup-body {
+  padding: 16px;
+}
+
+.popup-footer {
+  padding: 10px 16px 16px;
+  text-align: right;
+}
+
+.popup-input {
+  background-color: #e8e8e8;
+  border-radius: 6px;
+  border: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}

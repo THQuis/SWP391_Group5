@@ -119,7 +119,70 @@ namespace WebTestAPI.Controllers
             return Ok(new { message = "Xác thực OTP thành công! Bạn có thể đăng nhập." });
         }
 
-        //Delete
+        // =======================
+        // 🔑 API: Quên mật khẩu - Gửi OTP
+        // =======================
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+            if (user == null)
+            {
+                return NotFound(new { message = "Email không tồn tại trong hệ thống." });
+            }
+
+            // Tạo mã OTP ngẫu nhiên
+            var otp = new Random().Next(100000, 999999).ToString();
+
+            // Gửi OTP qua email
+            await _emailService.SendEmailAsync(
+                request.Email,
+                "Mã xác nhận quên mật khẩu",
+                $"Mã OTP của bạn là: {otp}"
+            );
+
+            // Lưu OTP tạm thời
+            _tempOtpStorage[request.Email] = otp;
+
+            return Ok(new { message = "Mã OTP đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư." });
+        }
+
+
+   
+
+        // =======================
+        // 🔑 API: Đặt lại mật khẩu
+        // =======================
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            // Kiểm tra OTP
+            if (!_tempOtpStorage.TryGetValue(request.Email, out var storedOtp) || storedOtp != request.Otp)
+            {
+                return BadRequest(new { message = "Mã OTP không chính xác." });
+            }
+
+            // Lấy người dùng từ cơ sở dữ liệu
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+            if (user == null)
+            {
+                return NotFound(new { message = "Không tìm thấy người dùng." });
+            }
+
+            // Cập nhật mật khẩu mới
+            user.Password = request.NewPassword; // Mã hóa mật khẩu trước khi lưu vào DB nếu cần
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            // Xóa OTP đã sử dụng
+            _tempOtpStorage.TryRemove(request.Email, out _);
+
+            return Ok(new { message = "Mật khẩu đã được thay đổi thành công!" });
+        }
+
+        // =======================
+        // Xóa người dùng
+        // =======================
         [HttpDelete("delete/{email}")]
         public async Task<IActionResult> DeleteUser(string email)
         {

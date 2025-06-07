@@ -4686,11 +4686,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Ki_5\\PRN212\\code\\WebTestAPI - Copy\\WebTestAPI.csproj",
+      "projectUniqueName": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\WebTestAPI.csproj",
       "projectName": "WebTestAPI",
-      "projectPath": "D:\\Ki_5\\PRN212\\code\\WebTestAPI - Copy\\WebTestAPI.csproj",
+      "projectPath": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\WebTestAPI.csproj",
       "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "D:\\Ki_5\\PRN212\\code\\WebTestAPI - Copy\\obj\\",
+      "outputPath": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

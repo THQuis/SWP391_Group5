@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "csFpVmBApGyM8cnJQzZhYjwmZLPqpMSDzqMf1zGYrrI=",
+  "Source": "WebTestAPI",
+  "BasePath": "_content/WebTestAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

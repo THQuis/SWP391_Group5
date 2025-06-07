@@ -1,0 +1,32 @@
+.sidebar {
+    width: 220px;
+    background-color: #65a9d7;
+    height: 100vh;
+    /* Chiều cao toàn màn hình */
+    position: fixed;
+    /* Luôn dính trái */
+    top: 0;
+    left: 0;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.logo {
+    width: 100px;
+    margin: 0 auto 30px auto;
+    display: block;
+}
+
+
+/* đổi màu chữchữ */
+.sidebar .nav-link {
+    color: black !important;
+    font-weight: 500;
+
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+}

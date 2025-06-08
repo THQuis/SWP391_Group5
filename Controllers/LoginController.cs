@@ -54,55 +54,86 @@ namespace WebTestAPI.Controllers
             });
         }
 
-        // =======================
-        // 📨 API: Đăng ký + Gửi OTP
-        // =======================
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
-        {
-            // Kiểm tra nếu người dùng đã tồn tại
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
-            if (existingUser != null)
-            {
-                return Conflict(new { message = "Email đã tồn tại trong hệ thống!" });
-            }
+   // =======================
+// 📨 API: Đăng ký + Gửi OTP
+// =======================
+[HttpPost("register")]
+public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+{
+    // Kiểm tra nếu người dùng đã tồn tại
+    var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+    if (existingUser != null)
+    {
+        return Conflict(new { message = "Email đã tồn tại trong hệ thống!" });
+    }
 
-            // Kiểm tra mật khẩu và xác nhận mật khẩu có khớp không
-            if (request.Password != request.ConfirmPassword)
-            {
-                return BadRequest(new { message = "Mật khẩu và xác nhận mật khẩu không khớp!" });
-            }
+    // Kiểm tra mật khẩu và xác nhận mật khẩu có khớp không
+    if (request.Password != request.ConfirmPassword)
+    {
+        return BadRequest(new { message = "Mật khẩu và xác nhận mật khẩu không khớp!" });
+    }
 
-            // Tạo mã OTP ngẫu nhiên
-            var otp = new Random().Next(100000, 999999).ToString();
+    // Tạo mã OTP ngẫu nhiên
+    var otp = new Random().Next(100000, 999999).ToString();
 
-            // Gửi OTP qua email
-            await _emailService.SendEmailAsync(
-                request.Email,
-                "Mã xác nhận đăng ký QuitSmart",
-                $"Mã OTP của bạn là: {otp}"
-            );
+    // Tạo nội dung email HTML
+    var emailBody = $@"
+<html>
+  <body style=""font-family: Arial, sans-serif; color: #333; background-color: #f7f7f7; margin: 0; padding: 0;"">
+    <div style=""width: 100%; max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"">
+      <div style=""text-align: center; font-size: 24px; color: #333; margin-bottom: 20px;"">
+      <div style=""text-align: center; margin-bottom: 20px;"">
+  <img 
+    src=""https://raw.githubusercontent.com/THQuis/SWP391_Group5/main/Frontend/image/logo.png"" 
+    alt=""Breath Again Logo"" 
+    style=""width: 100px; height: auto;"" 
+  />
+</div>
+      </div>
+      <div style=""font-size: 16px; color: #555; line-height: 1.6;"">
+        <p>Xin chào,</p>
+        <p>Chúng tôi đã nhận được yêu cầu đăng ký tài khoản tại <strong>{request.Email}</strong> của bạn.</p>
+        <p>Để hoàn tất quá trình đăng ký, vui lòng nhập mã OTP dưới đây vào trang xác nhận:</p>
+        <p style=""display: inline-block; font-size: 24px; font-weight: bold; color: #4CAF50; padding: 10px; background-color: #f4f4f4; border-radius: 5px;"">
+          {otp}
+        </p>
+        <p>Mã OTP này sẽ hết hạn trong 10 phút. Nếu bạn không yêu cầu đăng ký, vui lòng bỏ qua email này.</p>
+        <p>Trân trọng,</p>
+        <p><strong>Đội ngũ hỗ trợ QuitSmart</strong></p>
+      </div>
+      <div style=""text-align: center; font-size: 12px; color: #888; margin-top: 30px;"">
+        <p>QuitSmart - Đảm bảo an toàn sức khỏe của bạn</p>
+        <p>Điện thoại: 1800-1234 | Email: support@quitsmart.com</p>
+      </div>
+    </div>
+  </body>
+</html>
+";
 
-            // Tạo người dùng với trạng thái "Pending"
-            var user = new User
-            {
-                FullName = request.FullName,
-                Email = request.Email,
-                Password = request.Password,  // Lưu mật khẩu (nên mã hóa trước khi lưu vào DB)
-                PhoneNumber = request.PhoneNumber,
-                Status = "Pending",  // Trạng thái chưa xác thực
-                RoleId = 1,         // Vai trò mặc định là "Member"
-                RegistrationDate = DateTime.Now
-            };
+    // Gửi OTP qua email
+    await _emailService.SendEmailAsync(request.Email, "Mã xác nhận đăng ký QuitSmart", emailBody);
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+    // Tạo người dùng với trạng thái "Pending"
+    var user = new User
+    {
+        FullName = request.FullName,
+        Email = request.Email,
+        Password = request.Password,  // Lưu mật khẩu (nên mã hóa trước khi lưu vào DB)
+        PhoneNumber = request.PhoneNumber,
+        Status = "Pending",  // Trạng thái chưa xác thực
+        RoleId = 1,         // Vai trò mặc định là "Member"
+        RegistrationDate = DateTime.Now
+    };
 
-            // Lưu OTP tạm thời vào bộ nhớ
-            _tempOtpStorage[request.Email] = otp;
+    _context.Users.Add(user);
+    await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Mã xác nhận đã được gửi đến email. Vui lòng kiểm tra để xác thực." });
-        }
+    // Lưu OTP tạm thời vào bộ nhớ
+    _tempOtpStorage[request.Email] = otp;
+
+    return Ok(new { message = "Mã xác nhận đã được gửi đến email. Vui lòng kiểm tra để xác thực." });
+}
+
 
 
         // =======================

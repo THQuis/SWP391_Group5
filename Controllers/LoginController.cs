@@ -158,7 +158,20 @@ namespace WebTestAPI.Controllers
         }
 
 
-   
+        // =======================
+        // ✅ API: Xác thực OTP Quên Mật Khẩu
+        // =======================
+        [HttpPost("verify-otp-reset")]
+        public async Task<IActionResult> VerifyOtpReset([FromBody] OtpVerifyRequest request)
+        {
+            if (!_tempOtpStorage.TryGetValue(request.Email, out var storedOtp))
+                return BadRequest(new { message = "Không tìm thấy mã xác minh cho email này." });
+
+            if (storedOtp != request.Otp)
+                return BadRequest(new { message = "Mã OTP không chính xác." });
+
+            return Ok(new { message = "Mã OTP xác thực thành công. Bạn có thể thay đổi mật khẩu mới." });
+        }
 
         // =======================
         // 🔑 API: Đặt lại mật khẩu
@@ -166,12 +179,6 @@ namespace WebTestAPI.Controllers
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
-            // Kiểm tra OTP
-            if (!_tempOtpStorage.TryGetValue(request.Email, out var storedOtp) || storedOtp != request.Otp)
-            {
-                return BadRequest(new { message = "Mã OTP không chính xác." });
-            }
-
             // Lấy người dùng từ cơ sở dữ liệu
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
             if (user == null)
@@ -184,11 +191,12 @@ namespace WebTestAPI.Controllers
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
-            // Xóa OTP đã sử dụng
-            _tempOtpStorage.TryRemove(request.Email, out _);
-
             return Ok(new { message = "Mật khẩu đã được thay đổi thành công!" });
         }
+
+
+
+
 
         // =======================
         // Xóa người dùng

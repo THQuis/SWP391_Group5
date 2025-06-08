@@ -524,3 +524,4 @@ D:\Ki_5\PRN212\code\WebTestAPI\obj\Debug\net9.0\refint\WebTestAPI.dll
 D:\Ki_5\PRN212\code\WebTestAPI\obj\Debug\net9.0\WebTestAPI.pdb
 D:\Ki_5\PRN212\code\WebTestAPI\obj\Debug\net9.0\WebTestAPI.genruntimeconfig.cache
 D:\Ki_5\PRN212\code\WebTestAPI\obj\Debug\net9.0\ref\WebTestAPI.dll
+D:\Ki_5\PRN212\code\WebTestAPI\obj\Debug\net9.0\WebTestAPI.sourcelink.json

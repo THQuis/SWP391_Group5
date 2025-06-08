@@ -1,0 +1,197 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\dtos\\resetpasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:dtos\\resetpasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\dtos\\forgotpasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:dtos\\forgotpasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\dtos\\updateuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:dtos\\updateuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\modelfromdb\\smokingstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:modelfromdb\\smokingstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\modelfromdb\\userachievement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:modelfromdb\\userachievement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\modelfromdb\\usermembership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:modelfromdb\\usermembership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|d:\\ki_5\\prn212\\code\\webtestapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{765D3AB8-4852-46B5-A09F-F1706DEB783F}|WebTestAPI.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ForgotPasswordRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\DTOs\\ForgotPasswordRequest.cs",
+              "RelativeDocumentMoniker": "DTOs\\ForgotPasswordRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\DTOs\\ForgotPasswordRequest.cs",
+              "RelativeToolTip": "DTOs\\ForgotPasswordRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:29:25.811Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ResetPasswordRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\DTOs\\ResetPasswordRequest.cs",
+              "RelativeDocumentMoniker": "DTOs\\ResetPasswordRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\DTOs\\ResetPasswordRequest.cs",
+              "RelativeToolTip": "DTOs\\ResetPasswordRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:26:18.143Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "Controllers\\LoginController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "Controllers\\LoginController.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAowIoAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:04:47.687Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAAL8AAAAAAAAAAAAUwL8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T06:10:17.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UpdateUserRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\DTOs\\UpdateUserRequest.cs",
+              "RelativeDocumentMoniker": "DTOs\\UpdateUserRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\DTOs\\UpdateUserRequest.cs",
+              "RelativeToolTip": "DTOs\\UpdateUserRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T07:55:29.303Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SmokingStatus.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\ModelFromDB\\SmokingStatus.cs",
+              "RelativeDocumentMoniker": "ModelFromDB\\SmokingStatus.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\ModelFromDB\\SmokingStatus.cs",
+              "RelativeToolTip": "ModelFromDB\\SmokingStatus.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAUwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T13:47:20.506Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserAchievement.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\ModelFromDB\\UserAchievement.cs",
+              "RelativeDocumentMoniker": "ModelFromDB\\UserAchievement.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\ModelFromDB\\UserAchievement.cs",
+              "RelativeToolTip": "ModelFromDB\\UserAchievement.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAADwvyAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T13:47:11.197Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserMembership.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\ModelFromDB\\UserMembership.cs",
+              "RelativeDocumentMoniker": "ModelFromDB\\UserMembership.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\ModelFromDB\\UserMembership.cs",
+              "RelativeToolTip": "ModelFromDB\\UserMembership.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAADwvykAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T13:47:04.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\WebTestAPI\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-06T13:45:41.258Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

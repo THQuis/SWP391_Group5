@@ -1,5 +1,84 @@
 [
   {
+    "ContainingType": "WebTestAPI.Controllers.AdminController",
+    "Method": "AddUser",
+    "RelativePath": "api/admin/add-user",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AddUserRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebTestAPI.Controllers.AdminController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/admin/delete-user/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebTestAPI.Controllers.AdminController",
+    "Method": "GetUsers",
+    "RelativePath": "api/admin/get-users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "role",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebTestAPI.Controllers.AdminController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/admin/update-user/{userId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "WebTestAPI.DTOs.UpdateUserRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebTestAPI.Controllers.LoginController",
     "Method": "DeleteUser",
     "RelativePath": "api/delete/{email}",
@@ -83,6 +162,22 @@
     "ContainingType": "WebTestAPI.Controllers.LoginController",
     "Method": "VerifyOtp",
     "RelativePath": "api/verify-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "WebTestAPI.DTOs.OtpVerifyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebTestAPI.Controllers.LoginController",
+    "Method": "VerifyOtpReset",
+    "RelativePath": "api/verify-otp-reset",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebTestAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95e278602a6ae93f981fc06b4415a780d92e7dab")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebTestAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebTestAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

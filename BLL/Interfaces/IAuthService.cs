@@ -12,5 +12,7 @@ public interface IAuthService
     Task<bool> VerifyForgotPasswordOtpAsync(string email, string otpCode);
     Task ResetPasswordAsync(string email, string newPassword);
     Task DeleteUserByEmailAsync(string email);
+    Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture);
+
 
 }

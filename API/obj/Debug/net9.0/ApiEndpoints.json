@@ -81,6 +81,22 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.AuthController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/Auth/update-profile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Account.UpdateProfileRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.AuthController",
     "Method": "VerifyOtp",
     "RelativePath": "api/Auth/verify-otp",
     "HttpMethod": "POST",

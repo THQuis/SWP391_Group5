@@ -96,7 +96,7 @@ namespace Smoking.BLL.Services
             string htmlBody = $@"
     <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; padding: 20px;'>
         <div style='text-align: center;'>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Smoking_icon.svg/512px-Smoking_icon.svg.png' alt='Logo' style='width: 100px; margin-bottom: 20px;'/>
+            <img src='' alt='Breath Again Logo' style='width: 100px; margin-bottom: 20px;'/>
             <h2>Đặt lại mật khẩu</h2>
         </div>
         <p>Xin chào,</p>
@@ -145,6 +145,20 @@ namespace Smoking.BLL.Services
                 throw new Exception("Không tìm thấy user với email này.");
 
             _unitOfWork.Users.Remove(user);
+            await _unitOfWork.CompleteAsync();
+        }
+
+        public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture)
+        {
+            var user = await _unitOfWork.Users.GetByEmailAsync(email);
+            if (user == null)
+                throw new Exception("Không tìm thấy user với email này.");
+
+            user.FullName = fullName;
+            user.PhoneNumber = phoneNumber;
+            user.ProfilePicture = profilePicture;
+
+            _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
         }
 

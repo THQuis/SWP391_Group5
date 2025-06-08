@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Smoking.BLL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89ce1c9ef58a36fe098c2b68fb6a48530d05610c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91525fd3a255fabc874a918a8ff70c0c375f1c54")]
 [assembly: System.Reflection.AssemblyProductAttribute("Smoking.BLL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Smoking.BLL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

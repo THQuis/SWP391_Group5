@@ -129,6 +129,7 @@ namespace WebTestAPI.Controllers
             return Ok(new { message = "Xác thực OTP thành công! Bạn có thể đăng nhập." });
         }
 
+       
         // =======================
         // 🔑 API: Quên mật khẩu - Gửi OTP
         // =======================
@@ -144,18 +145,52 @@ namespace WebTestAPI.Controllers
             // Tạo mã OTP ngẫu nhiên
             var otp = new Random().Next(100000, 999999).ToString();
 
-            // Gửi OTP qua email
-            await _emailService.SendEmailAsync(
-                request.Email,
-                "Mã xác nhận quên mật khẩu",
-                $"Mã OTP của bạn là: {otp}"
-            );
+            // Tạo nội dung email HTML
+            var emailBody = $@"
+  <html>
+  <body style=""font-family: Arial, sans-serif; color: #333; background-color: #f7f7f7; margin: 0; padding: 0;"">
+    <div style=""width: 100%; max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"">
+      <div style=""text-align: center; color: #333; margin-bottom: 20px;"">
+       <div style=""text-align: center; margin-bottom: 20px;"">
+  <img 
+    src=""https://raw.githubusercontent.com/THQuis/SWP391_Group5/main/Frontend/image/logo.png"" 
+    alt=""Breath Again Logo"" 
+    style=""width: 100px; height: auto;"" 
+  />
+</div>
 
-            // Lưu OTP tạm thời
+        <div style=""font-size: 20px; margin-top: 10px; font-weight: bold;"">Xác nhận yêu cầu quên mật khẩu</div>
+
+                </div>
+                <div style='font-size: 16px; color: #555; line-height: 1.6;'>
+                    <p>Xin chào,</p>
+                    <p>Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu cho tài khoản <strong>{request.Email}</strong> của bạn.</p>
+                    <p>Để hoàn tất quá trình đặt lại mật khẩu, vui lòng nhập mã OTP dưới đây:</p>
+                    <p style='display: inline-block; font-size: 24px; font-weight: bold; color: #4CAF50; padding: 10px; background-color: #f4f4f4; border-radius: 5px;'>{otp}</p>
+                    <p>Mã OTP này sẽ hết hạn trong 10 phút. Nếu bạn không yêu cầu thay đổi mật khẩu, vui lòng bỏ qua email này.</p>
+                    <p>Trân trọng,</p>
+                    <p><strong>Đội ngũ hỗ trợ QuitSmart</strong></p>
+                </div>
+                <div style='text-align: center; font-size: 12px; color: #888; margin-top: 30px;'>
+                    <p>QuitSmart - Đảm bảo an toàn sức khỏe của bạn</p>
+                    <p>Điện thoại: 1800-1234 | Email: support@quitsmart.com</p>
+                </div>
+            </div>
+        </body>
+    </html>";
+
+            // Gửi OTP qua email
+            await _emailService.SendEmailAsync(request.Email, "Mã xác nhận quên mật khẩu", emailBody);
+
+            // Lưu OTP tạm thời vào bộ nhớ
             _tempOtpStorage[request.Email] = otp;
 
             return Ok(new { message = "Mã OTP đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư." });
         }
+
+
+
+
 
 
         // =======================
@@ -172,6 +207,9 @@ namespace WebTestAPI.Controllers
 
             return Ok(new { message = "Mã OTP xác thực thành công. Bạn có thể thay đổi mật khẩu mới." });
         }
+
+
+
 
         // =======================
         // 🔑 API: Đặt lại mật khẩu

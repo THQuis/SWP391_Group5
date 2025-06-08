@@ -366,3 +366,4 @@ D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets.upToDateCheck
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\Smoking..870F7192.Up2Date
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\Smoking.API.genruntimeconfig.cache
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\ref\Smoking.API.dll
+D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\Smoking.API.sourcelink.json

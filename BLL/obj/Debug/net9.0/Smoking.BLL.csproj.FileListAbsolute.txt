@@ -314,3 +314,4 @@ D:\Ki_5\Project_SWP\SMOKING_1\BLL\bin\Debug\net9.0\Smoking.DAL.pdb
 D:\Ki_5\Project_SWP\SMOKING_1\BLL\obj\Debug\net9.0\Smoking..C0546DFA.Up2Date
 D:\Ki_5\Project_SWP\SMOKING_1\BLL\obj\Debug\net9.0\Smoking.BLL.genruntimeconfig.cache
 D:\Ki_5\Project_SWP\SMOKING_1\BLL\obj\Debug\net9.0\ref\Smoking.BLL.dll
+D:\Ki_5\Project_SWP\SMOKING_1\BLL\obj\Debug\net9.0\Smoking.BLL.sourcelink.json

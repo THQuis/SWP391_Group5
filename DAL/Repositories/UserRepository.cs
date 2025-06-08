@@ -21,5 +21,6 @@ namespace Smoking.DAL.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
+
     }
 }

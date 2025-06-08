@@ -3,24 +3,36 @@
   "WorkspaceRootPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\models\\account\\deleteuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\account\\deleteuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\services\\mailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\mailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\interfaces\\imailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\imailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\dal\\interfaces\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\dal\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,55 +42,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MailService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\MailService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\MailService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\MailService.cs",
-              "RelativeToolTip": "BLL\\Services\\MailService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T07:17:47.844Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\AuthService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\AuthService.cs",
-              "RelativeToolTip": "BLL\\Services\\AuthService.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAowFwAAAAlAAAAAAAAAA==",
+              "Title": "DeleteUserRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Account\\DeleteUserRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Account\\DeleteUserRequest.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Account\\DeleteUserRequest.cs",
+              "RelativeToolTip": "API\\Models\\Account\\DeleteUserRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T07:17:46.688Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IMailService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IMailService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IMailService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IMailService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IMailService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T07:17:44.82Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "IAuthService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IAuthService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IAuthService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IAuthService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IAuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T07:17:43.268Z",
+              "WhenOpened": "2025-06-08T08:17:43.55Z",
               "EditorCaption": ""
             },
             {
@@ -89,9 +65,88 @@
               "RelativeDocumentMoniker": "API\\Controllers\\AuthController.cs",
               "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\AuthController.cs",
               "RelativeToolTip": "API\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAqwJsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T07:17:41.894Z"
+              "WhenOpened": "2025-06-08T08:12:26.354Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IAuthService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IAuthService.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IAuthService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:09:27.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\AuthService.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\AuthService.cs",
+              "RelativeToolTip": "BLL\\Services\\AuthService.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAqwJUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:09:25.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\GenericRepository.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAUwDgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:09:19.589Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Interfaces\\Repositories\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUserRepository.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Interfaces\\Repositories\\IUserRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:09:17.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\UserRepository.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAwwBYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:09:16.651Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T08:09:21.614Z",
+              "EditorCaption": ""
             }
           ]
         }

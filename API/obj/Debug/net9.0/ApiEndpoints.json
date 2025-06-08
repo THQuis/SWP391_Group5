@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "Smoking.API.Controllers.AuthController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Auth/delete-user",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Account.DeleteUserRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.AuthController",
     "Method": "ForgotPassword",
     "RelativePath": "api/Auth/forgot-password",
     "HttpMethod": "POST",

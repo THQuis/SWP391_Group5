@@ -138,5 +138,16 @@ namespace Smoking.BLL.Services
 
             _memoryCache.Remove($"RESET_PWD_OTP_{email}");
         }
+        public async Task DeleteUserByEmailAsync(string email)
+        {
+            var user = await _unitOfWork.Users.GetByEmailAsync(email);
+            if (user == null)
+                throw new Exception("Không tìm thấy user với email này.");
+
+            _unitOfWork.Users.Remove(user);
+            await _unitOfWork.CompleteAsync();
+        }
+
+
     }
 }

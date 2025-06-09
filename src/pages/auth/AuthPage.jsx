@@ -38,10 +38,19 @@ const AuthPage = () => {
 
             // Lưu trạng thái đăng nhập vào localStorage
             localStorage.setItem('userLoggedIn', 'true');
+            localStorage.setItem('token', data.token);// nếu server trả về token
+            localStorage.setItem('role', data.role); // nếu có phân quyền
             alert('✅ ' + data.message);
 
             // Điều hướng sau khi đăng nhập thành công
-            navigate('/');
+            const role = data.role;
+
+            if (role === 'Admin') {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
+
         } catch {
             alert('⚠ Lỗi kết nối đến máy chủ');
         }

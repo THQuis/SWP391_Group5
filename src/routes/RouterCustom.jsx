@@ -5,8 +5,9 @@ import UserLayout from "../layouts/UserLayout";
 
 import AuthPage from "../pages/auth/AuthPage";
 import HomePage from "../pages/home/HomePage";
-// import AdminLayout from "../layouts/AdminLayout";
-// import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminLayout from "../layouts/AdminLayout";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+
 
 
 const RouterCustom = () => {
@@ -23,11 +24,12 @@ const RouterCustom = () => {
                 </UserLayout>
             } />
 
-            {/* <Route path={ROUTERS.ADMIN.DASHBOARD} element={
+
+            <Route path={ROUTERS.ADMIN.DASHBOARD} element={
                 <AdminLayout>
                     <AdminDashboard />
                 </AdminLayout>
-            } /> */}
+            } />
 
 
         </Routes>

@@ -225,6 +225,106 @@
         margin: 8px 15px;
     }
 
+    // .user-icon {
+    //     width: 40px;
+    //     height: 40px;
+    //     border-radius: 50%;
+    //     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    //     object-fit: cover;
+    // }
+
+    .logout-btn {
+        background: none;
+        border: none;
+        color: #333;
+        width: 100%;
+        padding: 12px 20px;
+        text-align: left;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-left: 3px solid transparent;
+
+        &:hover {
+            background: linear-gradient(90deg, rgba(193, 220, 220, 0.3), rgba(193, 220, 220, 0.1));
+            color: #4CAF50;
+            border-left-color: #4CAF50;
+        }
+    }
+
+    .user-icon {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #4CAF50, #66BB6A);
+        color: white;
+        text-decoration: none;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .user-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s;
+    }
+
+    .user-icon:hover::before {
+        left: 100%;
+    }
+
+    .user-icon img {
+        width: 24px;
+        height: 24px;
+        /* border-radius: 50%; */
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    }
+
+    .user-icon p {
+        margin: 0;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .user-icon:hover {
+        background: linear-gradient(135deg, #45a049, #5cb85c);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    }
+
+    .user-icon:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .user-icon {
+            padding: 10px 16px;
+            font-size: 13px;
+        }
+
+        .user-icon img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
     /* Scroll effect enhancement */
     header.scrolled {
         background: rgba(193, 220, 220, 0.95);

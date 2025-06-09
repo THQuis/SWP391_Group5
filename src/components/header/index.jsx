@@ -3,6 +3,17 @@ import { Link } from 'react-router-dom';
 import { ROUTERS } from '../../utils/router';
 import '../header/header.scss';
 
+const handleLogout = () => {
+  localStorage.removeItem('userLoggedIn');
+  localStorage.removeItem('token');
+  localStorage.removeItem('role');
+
+  alert('🚪 Đăng xuất thành công!');
+  window.location.href = '/'; // hoặc dùng navigate('/login') nếu dùng useNavigate
+};
+
+
+
 const Header = () => {
   const menuToggleRef = useRef(null);
   const dropdownMenuRef = useRef(null);
@@ -53,7 +64,22 @@ const Header = () => {
           <li><a href="#progress">Tiến trình</a></li>
         </ul>
         <div className="auth-section" ref={authSectionRef}>
-          <Link className="auth-button" to={ROUTERS.AUTH.LOGIN}>Đăng nhập / đăng ký</Link>
+          {/* <Link className="auth-button" to={ROUTERS.AUTH.LOGIN}>Đăng nhập / đăng ký</Link> */}
+
+          {localStorage.getItem('userLoggedIn') === 'true' ? (
+            <Link to="/profile" className="user-icon">
+              <img
+                src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/user.png?raw=true"
+                alt="User"
+
+              />
+            </Link>
+          ) : (
+            <Link className="auth-button" to={ROUTERS.AUTH.LOGIN}>
+              Đăng nhập
+            </Link>
+          )}
+
 
           <div className="menu-toggle" ref={menuToggleRef}>
             <span></span>
@@ -71,7 +97,12 @@ const Header = () => {
               <li><a href="#support"><span className="icon">💬</span>Hỗ Trợ</a></li>
               <li><a href="#about"><span className="icon">ℹ️</span>Về Chúng Tôi</a></li>
               <li><div className="divider"></div></li>
-              <li><a href="#logout"><span className="icon">🚪</span>Đăng Xuất</a></li>
+              <li>
+                <button onClick={handleLogout} className="logout-btn">
+                  <span className="icon">🚪</span>Đăng Xuất
+                </button>
+              </li>
+
             </ul>
           </div>
         </div>

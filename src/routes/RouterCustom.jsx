@@ -1,17 +1,17 @@
-// RouterCustom.jsx
 import { Routes, Route } from "react-router-dom";
 import { ROUTERS } from "../utils/router";
 
-// import AuthLayout from "../layouts/AuthLayout";
 import UserLayout from "../layouts/UserLayout";
 
 import AuthPage from "../pages/auth/AuthPage";
 import HomePage from "../pages/home/HomePage";
+// import AdminLayout from "../layouts/AdminLayout";
+// import AdminDashboard from "../pages/admin/AdminDashboard";
+
 
 const RouterCustom = () => {
     return (
         <Routes>
-            {/* Auth layout */}
             <Route path={ROUTERS.AUTH.LOGIN} element={
                 <AuthPage />
             } />
@@ -23,12 +23,15 @@ const RouterCustom = () => {
                 </UserLayout>
             } />
 
-            {/* <Route path={ROUTERS.USER.HOME2} element={
-                <UserLayout>
-                    <HomePage />
-                </UserLayout>
+            {/* <Route path={ROUTERS.ADMIN.DASHBOARD} element={
+                <AdminLayout>
+                    <AdminDashboard />
+                </AdminLayout>
             } /> */}
+
+
         </Routes>
+
     );
 };
 

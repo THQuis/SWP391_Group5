@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTERS } from '../../utils/router';
-import '../header/header.css';
+import '../header/header.scss';
 
 const Header = () => {
   const menuToggleRef = useRef(null);
@@ -38,8 +38,8 @@ const Header = () => {
   }, []);
 
   return (
-    <header>
-      <nav className="container">
+    <header className='header_1'>
+      <nav className="containerHeader">
         <div className="logo">
           <img
             src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/logo.png?raw=true"

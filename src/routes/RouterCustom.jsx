@@ -7,7 +7,7 @@ import AuthPage from "../pages/auth/AuthPage";
 import HomePage from "../pages/home/HomePage";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-
+import UserProfile from "../pages/user/UserProfile";
 
 
 const RouterCustom = () => {
@@ -23,8 +23,15 @@ const RouterCustom = () => {
                     <HomePage />
                 </UserLayout>
             } />
+            <Route path={ROUTERS.USER.PROFILE} element={
+                <UserLayout>
+                    <UserProfile />
+                </UserLayout>
+            } />
 
 
+
+            {/* Admin layout */}
             <Route path={ROUTERS.ADMIN.DASHBOARD} element={
                 <AdminLayout>
                     <AdminDashboard />

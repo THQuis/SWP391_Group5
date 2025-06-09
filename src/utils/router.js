@@ -4,7 +4,7 @@ export const ROUTERS = {
     },
     USER: {
         HOME: "/",
-        HOME2: "/home"
+        PROFILE: "/User/profile"
     },
     ADMIN: {
         DASHBOARD: "/admin",

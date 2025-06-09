@@ -1,113 +1,82 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import { Navbar, Nav, Container, Dropdown, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ROUTERS } from '../../utils/router';
-import '../header/header.scss';
+import "../header/header.scss";
 
 const handleLogout = () => {
   localStorage.removeItem('userLoggedIn');
   localStorage.removeItem('token');
   localStorage.removeItem('role');
-
   alert('🚪 Đăng xuất thành công!');
-  window.location.href = '/'; // hoặc dùng navigate('/login') nếu dùng useNavigate
+  window.location.href = '/';
 };
 
-
-
 const Header = () => {
-  const menuToggleRef = useRef(null);
-  const dropdownMenuRef = useRef(null);
-  const authSectionRef = useRef(null);
-
-  useEffect(() => {
-    const menuToggle = menuToggleRef.current;
-    const dropdownMenu = dropdownMenuRef.current;
-    const authSection = authSectionRef.current;
-
-    if (!menuToggle || !dropdownMenu || !authSection) return;
-
-    const toggleMenu = (e) => {
-      e.stopPropagation();
-      menuToggle.classList.toggle('active');
-      dropdownMenu.classList.toggle('active');
-    };
-
-    const handleClickOutside = (e) => {
-      if (!authSection.contains(e.target)) {
-        menuToggle.classList.remove('active');
-        dropdownMenu.classList.remove('active');
-      }
-    };
-
-    menuToggle.addEventListener('click', toggleMenu);
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      menuToggle.removeEventListener('click', toggleMenu);
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
+  const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
 
   return (
-    <header className='header_1'>
-      <nav className="containerHeader">
-        <div className="logo">
-          <img
+    <Navbar expand="lg" bg="light" className="shadow-sm border-bottom" style={{ backgroundColor: '#C1DCDC' }}>
+      <Container>
+        {/* Logo */}
+        <Navbar.Brand as={Link} to={ROUTERS.USER.HOME}>
+          <Image
             src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/logo.png?raw=true"
-            alt="Breath Again Logo"
+            alt="Logo"
+            width="80"
           />
-        </div>
-        <ul className="nav-links">
-          <li><Link to={ROUTERS.USER.HOME}>Trang chủ</Link></li>
-          <li><a href="#blog">Kế hoạch</a></li>
-          <li><a href="#rankings1">Cộng đồng</a></li>
-          <li><a href="#progress">Tiến trình</a></li>
-        </ul>
-        <div className="auth-section" ref={authSectionRef}>
-          {/* <Link className="auth-button" to={ROUTERS.AUTH.LOGIN}>Đăng nhập / đăng ký</Link> */}
+        </Navbar.Brand>
 
-          {localStorage.getItem('userLoggedIn') === 'true' ? (
-            <Link to="/profile" className="user-icon">
-              <img
-                src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/user.png?raw=true"
-                alt="User"
+        {/* Responsive toggle */}
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-              />
-            </Link>
-          ) : (
-            <Link className="auth-button" to={ROUTERS.AUTH.LOGIN}>
-              Đăng nhập
-            </Link>
-          )}
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
+          {/* Nav links */}
+          <Nav className="me-auto gap-3 align-items-center">
+            <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
+            <Nav.Link href="#blog" className="nav-item-custom">Kế hoạch</Nav.Link>
+            <Nav.Link href="#rankings1" className="nav-item-custom">Cộng đồng</Nav.Link>
+            <Nav.Link href="#progress" className="nav-item-custom">Tiến trình</Nav.Link>
+          </Nav>
 
 
-          <div className="menu-toggle" ref={menuToggleRef}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div className="dropdown-menu" ref={dropdownMenuRef}>
-            <ul>
-              <li><a href="#profile"><span className="icon">👤</span>Xem Profile</a></li>
-              <li><a href="#achievements"><span className="icon">🏆</span>Thành Tích</a></li>
-              <li><a href="#community"><span className="icon">🧑‍⚕️</span>Coach</a></li>
-              <li><a href="#dashboard"><span className="icon">📊</span>Dashboard</a></li>
-              <li><div className="divider"></div></li>
-              <li><a href="#settings"><span className="icon">⚙️</span>Cài Đặt</a></li>
-              <li><a href="#support"><span className="icon">💬</span>Hỗ Trợ</a></li>
-              <li><a href="#about"><span className="icon">ℹ️</span>Về Chúng Tôi</a></li>
-              <li><div className="divider"></div></li>
-              <li>
-                <button onClick={handleLogout} className="logout-btn">
-                  <span className="icon">🚪</span>Đăng Xuất
-                </button>
-              </li>
+          {/* Auth section */}
+          <Nav>
+            {isLoggedIn ? (
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="success" id="dropdown-user">
+                  <Image
+                    src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/user.png?raw=true"
+                    width={30}
+                    height={30}
+                    roundedCircle
+                    className="me-2"
+                  />
+                  Tài khoản
+                </Dropdown.Toggle>
 
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/user/profile">👤 Xem Profile</Dropdown.Item>
+                  <Dropdown.Item href="#achievements">🏆 Thành Tích</Dropdown.Item>
+                  <Dropdown.Item href="#community">🧑‍⚕️ Coach</Dropdown.Item>
+                  <Dropdown.Item href="#dashboard">📊 Dashboard</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item href="#settings">⚙️ Cài đặt</Dropdown.Item>
+                  <Dropdown.Item href="#support">💬 Hỗ trợ</Dropdown.Item>
+                  <Dropdown.Item href="#about">ℹ️ Về Chúng Tôi</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item as="button" onClick={handleLogout}>🚪 Đăng xuất</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Button as={Link} to={ROUTERS.AUTH.LOGIN} variant="success">
+                Đăng nhập
+              </Button>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 

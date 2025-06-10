@@ -266,3 +266,25 @@ footer {
     padding: 40px 0;
     text-align: center;
 }
+
+.hero-carousel {
+    position: relative;
+
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.4);
+        padding: 20px;
+        border-radius: 10px;
+
+        h3,
+        p {
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+    }
+
+    img {
+        max-height: 85vh;
+        object-fit: cover;
+        filter: brightness(0.85);
+    }
+}

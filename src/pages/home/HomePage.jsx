@@ -1,11 +1,14 @@
 import { memo } from "react";
+import { Carousel } from 'react-bootstrap';
 import "../home/home.scss";
+
+
 
 const HomePage = () => {
     return (
         <>
             {/* Hero Section */}
-            <section className="hero" id="home">
+            {/* <section className="hero" id="home">
                 <img
                     src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Banner.jpg?raw=true"
                     alt="banner"
@@ -13,8 +16,36 @@ const HomePage = () => {
                 <div className="container">
                     <div className="hero-content">
                         {/* bạn có thể thêm tiêu đề/btn tại đây */}
-                    </div>
+            {/* </div>
                 </div>
+            </section> */}
+
+            <section className="hero-carousel" id="home">
+                <Carousel fade controls={false} indicators={false} interval={4000}>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Banner.jpg?raw=true"
+                            alt="First slide"
+                        />
+
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="https://source.unsplash.com/1600x600/?hope,lifestyle"
+                            alt="Second slide"
+                        />
+
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="https://source.unsplash.com/1600x600/?hope,lifestyle"
+                            alt="Third slide"
+                        />
+                    </Carousel.Item>
+                </Carousel>
             </section>
 
             {/* About Section */}

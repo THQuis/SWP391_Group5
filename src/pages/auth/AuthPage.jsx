@@ -27,7 +27,7 @@ const AuthPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch('/api/login', {
+            const res = await fetch('/api/Auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: form.email, password: form.password })
@@ -62,7 +62,7 @@ const AuthPage = () => {
         if (!form.agree) return alert('❗ Bạn cần đồng ý với điều khoản.');
 
         try {
-            const res = await fetch('/api/register', {
+            const res = await fetch('/api/Auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ fullName: form.name, email: form.email, password: form.password })

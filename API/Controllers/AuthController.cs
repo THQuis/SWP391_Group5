@@ -14,7 +14,7 @@
     namespace Smoking.API.Controllers
     {
         [ApiController]
-        [Route("api/[controller]")]
+        [Route("api/Auth")]
         public class AuthController : ControllerBase
         {
             private readonly IAuthService _authService;
@@ -140,35 +140,11 @@
                 return BadRequest(new { Error = ex.Message });
             }
         }
-        [HttpDelete("delete-user")]
-        public async Task<IActionResult> DeleteUser([FromBody] DeleteUserRequest request)
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
         {
-            try
-            {
-                await _authService.DeleteUserByEmailAsync(request.Email);
-                return Ok(new { Message = "Xoá user thành công." });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
+            return Ok(new { Message = "Đăng xuất thành công. Vui lòng xoá token ở client." });
         }
-
-        [HttpPut("update-profile")]
-        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
-        {
-            try
-            {
-                await _authService.UpdateProfileAsync(request.Email, request.FullName, request.PhoneNumber, request.ProfilePicture);
-                return Ok(new { Message = "Cập nhật thông tin thành công." });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
-        }
-
-
-
     }
 }

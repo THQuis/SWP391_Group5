@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
+using System.Linq;
 using System.Threading.Tasks;
+using Smoking.API.Models.Admin;
 
 namespace Smoking.API.Controllers
 {
     [ApiController]
-    [Route("api/admin")]
+    [Route("api/Admin")]
     [Authorize(Roles = "1")] // Chỉ Admin (RoleID=1) được vào
     public class AdminController : ControllerBase
     {
@@ -20,26 +22,42 @@ namespace Smoking.API.Controllers
         }
 
         // 1️⃣ Lấy danh sách User
-        [HttpGet("users")]
+        [HttpGet("ListUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _unitOfWork.Users.GetAllAsync();
-            return Ok(users);
+            return Ok(users.Select(u => new
+            {
+                u.UserID,
+                u.FullName,
+                u.Email,
+                u.PhoneNumber,
+                u.Status,
+                u.RoleID
+            }));
         }
 
         // 2️⃣ Xem chi tiết 1 User
-        [HttpGet("users/{id}")]
+        [HttpGet("User")]
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(id);
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
 
-            return Ok(user);
+            return Ok(new
+            {
+                user.UserID,
+                user.FullName,
+                user.Email,
+                user.PhoneNumber,
+                user.Status,
+                user.RoleID
+            });
         }
 
         // 3️⃣ Cập nhật thông tin User (VD: thay đổi Status)
-        [HttpPut("users/{id}/status")]
+        [HttpPut("UpdateStatus")]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string newStatus)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(id);
@@ -54,7 +72,7 @@ namespace Smoking.API.Controllers
         }
 
         // 4️⃣ Xóa User
-        [HttpDelete("users/{id}")]
+        [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(id);
@@ -67,8 +85,32 @@ namespace Smoking.API.Controllers
             return Ok(new { Message = "Xóa User thành công." });
         }
 
-        // 6️⃣ Gửi notification (giả sử có NotificationService)
-        [HttpPost("notifications/send")]
+        // 5️⃣ Báo cáo hệ thống (thực tế - dùng DB)
+        //[HttpGet("reports")]
+        //public async Task<IActionResult> GetReports()
+        //{
+        //    var users = await _unitOfWork.Users.GetAllAsync();
+        //    var totalUsers = users.Count();
+        //    var activeUsers = users.Count(u => u.Status == "Active");
+        //    var lockedUsers = users.Count(u => u.Status == "Locked");
+
+        //    // TODO: sau này có thêm bảng LoginHistory thì tính thêm login count, new user...
+
+        //    var report = new
+        //    {
+        //        TotalUsers = totalUsers,
+        //        ActiveUsers = activeUsers,
+        //        LockedUsers = lockedUsers,
+        //        // Example static value - có thể cập nhật sau này
+        //        NewUsersThisMonth = 5,
+        //        TotalLoginCount = 500
+        //    };
+
+        //    return Ok(report);
+        //}
+
+        // 6️⃣ Gửi notification toàn hệ thống (giả sử có NotificationService)
+        [HttpPost("Notifications")]
         public IActionResult SendNotification([FromBody] string message)
         {
             // TODO: Gửi notification đến tất cả user (broadcast)
@@ -76,5 +118,45 @@ namespace Smoking.API.Controllers
 
             return Ok(new { Message = $"Đã gửi notification: {message}" });
         }
+
+        // 7️⃣ (Optional) Cập nhật Role cho User
+        [HttpPut("UpdateRole")]
+        public async Task<IActionResult> UpdateUserRole(int id, [FromBody] int newRoleId)
+        {
+            var user = await _unitOfWork.Users.GetByIdAsync(id);
+            if (user == null)
+                return NotFound(new { Message = "User không tồn tại." });
+
+            user.RoleID = newRoleId;
+            _unitOfWork.Users.Update(user);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new { Message = "Cập nhật Role cho User thành công." });
+        }
+
+        //1. Thêm mới User
+        [HttpPost("AddUser")]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+        {
+            var existing = await _unitOfWork.Users.GetByEmailAsync(request.Email);
+            if (existing != null)
+                return BadRequest(new { Message = "Email đã tồn tại." });
+
+            var user = new User
+            {
+                FullName = request.FullName,
+                Email = request.Email,
+                Password = request.Password, // TODO: Hash password
+                PhoneNumber = request.PhoneNumber,
+                Status = "Active",
+                RoleID = request.RoleID // Admin được chọn
+            };
+
+            await _unitOfWork.Users.AddAsync(user);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new { Message = "Tạo User thành công." });
+        }
+
     }
 }

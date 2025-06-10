@@ -22,7 +22,7 @@ namespace Smoking.BLL.Services
             string htmlBody = $@"
                 <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; padding: 20px;'>
                     <div style='text-align: center;'>
-                        <img src='' alt='Logo' style='width: 100px; margin-bottom: 20px;'/>
+                        <img src='https://raw.githubusercontent.com/THQuis/SWP391_Group5/main/Frontend/image/logo.png' alt='Logo' style='width: 100px; margin-bottom: 20px;'/>
                         <h2>Xác thực đăng ký tài khoản</h2>
                     </div>
                     <p>Xin chào,</p>

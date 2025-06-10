@@ -1,8 +1,50 @@
 [
   {
     "ContainingType": "Smoking.API.Controllers.AdminController",
+    "Method": "CreateUser",
+    "RelativePath": "api/Admin/AddUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Admin.CreateUserRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Admin/DeleteUser",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/Admin/ListUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.AdminController",
     "Method": "SendNotification",
-    "RelativePath": "api/admin/notifications/send",
+    "RelativePath": "api/Admin/Notifications",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -17,40 +59,19 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.AdminController",
-    "Method": "GetAllUsers",
-    "RelativePath": "api/admin/users",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
-    "Method": "GetUserById",
-    "RelativePath": "api/admin/users/{id}",
-    "HttpMethod": "GET",
+    "Method": "UpdateUserRole",
+    "RelativePath": "api/Admin/UpdateRole",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
-    "Method": "DeleteUser",
-    "RelativePath": "api/admin/users/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+        "IsRequired": false
+      },
       {
-        "Name": "id",
+        "Name": "newRoleId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -60,7 +81,7 @@
   {
     "ContainingType": "Smoking.API.Controllers.AdminController",
     "Method": "UpdateUserStatus",
-    "RelativePath": "api/admin/users/{id}/status",
+    "RelativePath": "api/Admin/UpdateStatus",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -68,7 +89,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       },
       {
         "Name": "newStatus",
@@ -79,17 +100,17 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
-    "Method": "DeleteUser",
-    "RelativePath": "api/Auth/delete-user",
-    "HttpMethod": "DELETE",
+    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "Method": "GetUserById",
+    "RelativePath": "api/Admin/User",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "Smoking.API.Models.Account.DeleteUserRequest",
-        "IsRequired": true
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -128,6 +149,16 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.AuthController",
+    "Method": "Logout",
+    "RelativePath": "api/Auth/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.AuthController",
     "Method": "Register",
     "RelativePath": "api/Auth/register",
     "HttpMethod": "POST",
@@ -153,22 +184,6 @@
       {
         "Name": "request",
         "Type": "Smoking.API.Models.Account.ResetPasswordRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
-    "Method": "UpdateProfile",
-    "RelativePath": "api/Auth/update-profile",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "Smoking.API.Models.Account.UpdateProfileRequest",
         "IsRequired": true
       }
     ],
@@ -208,6 +223,22 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.UserProfileController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/user/delete-user",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.User.DeleteUserRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.UserProfileController",
     "Method": "GetNotifications",
     "RelativePath": "api/user/notifications",
     "HttpMethod": "GET",
@@ -224,6 +255,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.UserProfileController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/user/update-profile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.User.UpdateProfileRequest",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

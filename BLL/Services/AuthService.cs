@@ -56,10 +56,10 @@ namespace Smoking.BLL.Services
                     {
                         FullName = tempUser.FullName,
                         Email = tempUser.Email,
-                        Password = tempUser.Password, // Hash password nếu có
+                        Password = tempUser.Password,
                         PhoneNumber = tempUser.PhoneNumber,
                         Status = "Active",
-                        RoleID = 2 // Ví dụ role mặc định
+                        RoleID = 2
                     };
 
                     await _unitOfWork.Users.AddAsync(user);
@@ -94,22 +94,22 @@ namespace Smoking.BLL.Services
 
             string subject = "Đặt lại mật khẩu - Smoking App";
             string htmlBody = $@"
-    <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; padding: 20px;'>
-        <div style='text-align: center;'>
-            <img src='' alt='Breath Again Logo' style='width: 100px; margin-bottom: 20px;'/>
-            <h2>Đặt lại mật khẩu</h2>
-        </div>
-        <p>Xin chào,</p>
-        <p>Bạn hoặc ai đó đã yêu cầu đặt lại mật khẩu cho tài khoản của bạn tại Smoking App.</p>
-        <p>Vui lòng sử dụng mã OTP sau để xác nhận:</p>
-        <div style='background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 2px; margin: 20px 0;'>
-            {otpCode}
-        </div>
-        <p><strong>Lưu ý:</strong> Mã OTP có hiệu lực trong 5 phút.</p>
-        <p>Nếu bạn không yêu cầu, hãy bỏ qua email này.</p>
-        <hr/>
-        <p style='text-align: center; color: #888;'>Smoking App © 2025</p>
-    </div>";
+            <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; padding: 20px;'>
+                <div style='text-align: center;'>
+                    <img src='https://raw.githubusercontent.com/THQuis/SWP391_Group5/main/Frontend/image/logo.png' alt='Breath Again Logo' style='width: 100px; margin-bottom: 20px;'/>
+                    <h2>Đặt lại mật khẩu</h2>
+                </div>
+                <p>Xin chào,</p>
+                <p>Bạn hoặc ai đó đã yêu cầu đặt lại mật khẩu cho tài khoản của bạn tại Smoking App.</p>
+                <p>Vui lòng sử dụng mã OTP sau để xác nhận:</p>
+                <div style='background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 2px; margin: 20px 0;'>
+                    {otpCode}
+                </div>
+                <p><strong>Lưu ý:</strong> Mã OTP có hiệu lực trong 5 phút.</p>
+                <p>Nếu bạn không yêu cầu, hãy bỏ qua email này.</p>
+                <hr/>
+                <p style='text-align: center; color: #888;'>Smoking App © 2025</p>
+            </div>";
 
             await _mailService.SendHtmlEmailAsync(email, subject, htmlBody);
         }

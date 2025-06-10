@@ -14,7 +14,8 @@ namespace Smoking.BLL.Interfaces
         Task<bool> DeleteAsync(int id);
         Task<User> AuthenticateAsync(string email, string password);
 
-        //Task<bool> ChangePasswordAsync(int userId, string newPassword);
-        //Task<bool> ResetPasswordAsync(int userId, string token, string newPassword);
+        // MỚI THÊM:
+        Task DeleteUserByEmailAsync(string email);
+        Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture);
     }
 }

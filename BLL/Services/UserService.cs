@@ -17,11 +17,9 @@ namespace Smoking.BLL.Services
 
         public async Task<User> CreateAsync(User entity)
         {
-            // Ví dụ: kiểm tra email đã tồn tại
             var existing = await _unitOfWork.Users.GetByEmailAsync(entity.Email);
             if (existing != null)
             {
-                // Trong thực tế, bạn có thể ném Exception hoặc trả null
                 throw new System.Exception("Email đã tồn tại.");
             }
 
@@ -68,7 +66,6 @@ namespace Smoking.BLL.Services
             existing.RoleID = entity.RoleID;
             existing.Status = entity.Status;
             existing.ProfilePicture = entity.ProfilePicture;
-            // Nếu có đổi mật khẩu, thực hiện ở một phương thức riêng (bảo mật hơn)
 
             _unitOfWork.Users.Update(existing);
             await _unitOfWork.CompleteAsync();
@@ -82,11 +79,35 @@ namespace Smoking.BLL.Services
                 return null;
 
             // Nếu lưu password dạng mã hóa (hash), bạn cần kiểm tra hash ở đây
-            if (user.Password == password) // Chỉ dùng cho test, thực tế phải hash!
+            if (user.Password == password)
                 return user;
 
             return null;
         }
 
+        // MỚI THÊM:
+        public async Task DeleteUserByEmailAsync(string email)
+        {
+            var user = await _unitOfWork.Users.GetByEmailAsync(email);
+            if (user == null)
+                throw new System.Exception("Không tìm thấy user với email này.");
+
+            _unitOfWork.Users.Remove(user);
+            await _unitOfWork.CompleteAsync();
+        }
+
+        public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture)
+        {
+            var user = await _unitOfWork.Users.GetByEmailAsync(email);
+            if (user == null)
+                throw new System.Exception("Không tìm thấy user với email này.");
+
+            user.FullName = fullName;
+            user.PhoneNumber = phoneNumber;
+            user.ProfilePicture = profilePicture;
+
+            _unitOfWork.Users.Update(user);
+            await _unitOfWork.CompleteAsync();
+        }
     }
 }

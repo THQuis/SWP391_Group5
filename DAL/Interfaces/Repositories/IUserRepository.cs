@@ -7,6 +7,6 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<User> GetByEmailAsync(string email);
         Task<User> GetByEmailAndPasswordAsync(string email, string password);
-        // Thêm method Remove
+        
     }
 }

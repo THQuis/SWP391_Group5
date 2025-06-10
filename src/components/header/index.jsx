@@ -5,15 +5,18 @@ import { ROUTERS } from '../../utils/router';
 import "../header/header.scss";
 
 const handleLogout = () => {
-  localStorage.removeItem('userLoggedIn');
-  localStorage.removeItem('token');
-  localStorage.removeItem('role');
+  // SỬ DỤNG ĐÚNG TÊN KEY ĐÃ LƯU LÚC ĐĂNG NHẬP
+  localStorage.removeItem('userToken');
+  localStorage.removeItem('userRole');
+  localStorage.removeItem('userName'); // Đừng quên xóa cả userName
+
   alert('🚪 Đăng xuất thành công!');
-  window.location.href = '/';
+  window.location.href = '/'; // Chuyển hướng về trang chủ
 };
 
 const Header = () => {
-  const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+  const isLoggedIn = !!localStorage.getItem('userToken');
+  // const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
 
   return (
     <Navbar expand="lg" bg="light" className="shadow-sm border-bottom" style={{ backgroundColor: '#C1DCDC' }}>

@@ -8,7 +8,7 @@ import HomePage from "../pages/home/HomePage";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import UserProfile from "../pages/user/UserProfile";
-import ManagementUser from "../pages/home/ManagementUser";
+import ManagementUser from "../pages/admin/ManagementUser";
 
 
 const RouterCustom = () => {

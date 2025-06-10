@@ -3,52 +3,8 @@
   "WorkspaceRootPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\models\\admin\\createuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\createuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\models\\user\\deleteuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\deleteuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\models\\account\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\account\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\controllers\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\smoking.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\smoking.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,162 +14,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CreateUserRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Admin\\CreateUserRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\Admin\\CreateUserRequest.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Admin\\CreateUserRequest.cs",
-              "RelativeToolTip": "API\\Models\\Admin\\CreateUserRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T12:37:15.781Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IAuthService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IAuthService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IAuthService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IAuthService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IAuthService.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAwAkAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T12:25:58.732Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "RegisterRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Account\\RegisterRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\Account\\RegisterRequest.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Account\\RegisterRequest.cs",
-              "RelativeToolTip": "API\\Models\\Account\\RegisterRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T12:25:28.321Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Program.cs",
-              "RelativeDocumentMoniker": "API\\Program.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Program.cs",
-              "RelativeToolTip": "API\\Program.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAQwGcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T12:18:12.588Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\AdminController.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "API\\Controllers\\AdminController.cs",
-              "ViewState": "AgIAAIgAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T12:11:40.772Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UpdateProfileRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\User\\UpdateProfileRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\User\\UpdateProfileRequest.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\User\\UpdateProfileRequest.cs",
-              "RelativeToolTip": "API\\Models\\User\\UpdateProfileRequest.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAiwAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T11:58:33.321Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DeleteUserRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\User\\DeleteUserRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\User\\DeleteUserRequest.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\User\\DeleteUserRequest.cs",
-              "RelativeToolTip": "API\\Models\\User\\DeleteUserRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T11:58:18.538Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "API\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T11:57:03.977Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\AuthService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\AuthService.cs",
-              "RelativeToolTip": "BLL\\Services\\AuthService.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAIwDgAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T11:53:31.35Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\UserService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\UserService.cs",
-              "RelativeToolTip": "BLL\\Services\\UserService.cs",
-              "ViewState": "AgIAAEwAAAAAAAAAAADwv3EAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T11:47:45.139Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IUserService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IUserService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IUserService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IUserService.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAIwBUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T11:47:42.356Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "UserProfileController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\UserProfileController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\UserProfileController.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\UserProfileController.cs",
-              "RelativeToolTip": "API\\Controllers\\UserProfileController.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAkwAkAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T11:47:35.142Z",
+              "Title": "Smoking.API",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Smoking.API.csproj",
+              "RelativeDocumentMoniker": "API\\Smoking.API.csproj",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Smoking.API.csproj",
+              "RelativeToolTip": "API\\Smoking.API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-06-10T13:53:56.92Z",
               "EditorCaption": ""
             }
           ]

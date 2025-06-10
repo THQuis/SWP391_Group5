@@ -1,5 +1,5 @@
 import { memo } from "react";
-import "../home/home.css";
+import "../home/home.scss";
 
 const HomePage = () => {
     return (

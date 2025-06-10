@@ -8,6 +8,7 @@ import HomePage from "../pages/home/HomePage";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import UserProfile from "../pages/user/UserProfile";
+import ManagementUser from "../pages/home/ManagementUser";
 
 
 const RouterCustom = () => {
@@ -35,6 +36,12 @@ const RouterCustom = () => {
             <Route path={ROUTERS.ADMIN.DASHBOARD} element={
                 <AdminLayout>
                     <AdminDashboard />
+                </AdminLayout>
+            } />
+
+            <Route path={ROUTERS.ADMIN.USER} element={
+                <AdminLayout>
+                    <ManagementUser />
                 </AdminLayout>
             } />
 

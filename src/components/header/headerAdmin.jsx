@@ -28,7 +28,7 @@ const HeaderAdmin = () => {
                     <button onClick={toggleNotification} className="icon-button">
                         <Bell size={20} />
                     </button>
-                    <Link to="/home" className="icon-button">
+                    <Link to="/" className="icon-button">
                         <House size={20} />
                     </Link>
                 </div>

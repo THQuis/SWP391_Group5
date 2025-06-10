@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Smoking.API.Models.Account;
+using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
@@ -73,7 +73,7 @@ namespace Smoking.API.Controllers
             return Ok(new { Message = "Xóa tài khoản thành công." });
         }
 
-        // 4️⃣ Lấy thông báo
+        // 4 Lấy thông báo
         [HttpGet("notifications")]
         public IActionResult GetNotifications()
         {

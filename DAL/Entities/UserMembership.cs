@@ -1,32 +1,21 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Smoking.DAL.Entities
+﻿namespace Smoking.DAL.Entities
 {
     public class UserMembership
     {
-        [Key]
-        public int UserMembershipID { get; set; }
+        // Khóa chính
+        public int UserMembershipId { get; set; }  // Đảm bảo đúng tên
 
-        [Required]
-        public int UserID { get; set; }
-        public User User { get; set; }
+        // Các khóa ngoại
+        public int UserId { get; set; }  // Liên kết với bảng User
+        public int PackageId { get; set; }  // Liên kết với bảng MembershipPackage
 
-        [Required]
-        public int PackageID { get; set; }
-        public MembershipPackage Package { get; set; }
+        // Các thuộc tính khác
+        public string PaymentStatus { get; set; }  // Trạng thái thanh toán
+        public DateTime StartDate { get; set; }  // Ngày bắt đầu
+        public DateTime EndDate { get; set; }  // Ngày kết thúc
 
-        [Required]
-        public DateTime StartDate { get; set; }
-
-        [Required]
-        public DateTime EndDate { get; set; }
-
-        [Required, MaxLength(50)]
-        public string PaymentStatus { get; set; }
-
-        // Navigation
-        public ICollection<Payment> Payments { get; set; }
+        // Navigation properties
+        public User User { get; set; }  // Liên kết đến bảng User
+        public MembershipPackage MembershipPackage { get; set; }  // Liên kết đến bảng MembershipPackage
     }
 }

@@ -175,6 +175,48 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.MembershipController",
+    "Method": "GetPackageByName",
+    "RelativePath": "api/membership/package/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.MembershipController",
+    "Method": "GetAllPackages",
+    "RelativePath": "api/membership/packages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.MembershipController",
+    "Method": "SubscribePackage",
+    "RelativePath": "api/membership/subscribe",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Controllers.SubscribePackageRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.UserProfileController",
     "Method": "GetNotifications",
     "RelativePath": "api/user/notifications",
@@ -214,7 +256,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Smoking.API.Models.Account.UpdateProfileRequest",
+        "Type": "Smoking.API.Models.User.UpdateProfileRequest",
         "IsRequired": true
       }
     ],

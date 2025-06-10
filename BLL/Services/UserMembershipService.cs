@@ -50,19 +50,28 @@ namespace Smoking.BLL.Services
 
         public async Task<bool> UpdateAsync(UserMembership entity)
         {
-            var existing = await _unitOfWork.UserMemberships.GetByIdAsync(entity.UserMembershipID);
+            // Lấy đối tượng UserMembership hiện có từ cơ sở dữ liệu
+            var existing = await _unitOfWork.UserMemberships.GetByIdAsync(entity.UserMembershipId);  // Đảm bảo sử dụng đúng tên thuộc tính "UserMembershipId"
+
             if (existing == null)
-                return false;
+                return false;  // Nếu không tìm thấy UserMembership, trả về false
 
-            existing.UserID = entity.UserID;
-            existing.PackageID = entity.PackageID;
-            existing.StartDate = entity.StartDate;
-            existing.EndDate = entity.EndDate;
-            existing.PaymentStatus = entity.PaymentStatus;
+            // Cập nhật thông tin UserMembership từ đối tượng entity
+            existing.UserId = entity.UserId;  // Đảm bảo đúng tên thuộc tính là UserId
+            existing.PackageId = entity.PackageId;  // Đảm bảo đúng tên thuộc tính là PackageId
+            existing.StartDate = entity.StartDate;  // Cập nhật ngày bắt đầu
+            existing.EndDate = entity.EndDate;  // Cập nhật ngày kết thúc
+            existing.PaymentStatus = entity.PaymentStatus;  // Cập nhật trạng thái thanh toán
 
+            // Cập nhật vào cơ sở dữ liệu
             _unitOfWork.UserMemberships.Update(existing);
+
+            // Lưu thay đổi vào cơ sở dữ liệu
             await _unitOfWork.CompleteAsync();
+
+            // Trả về true nếu cập nhật thành công
             return true;
         }
+
     }
 }

@@ -8,5 +8,6 @@ namespace Smoking.DAL.Interfaces.Repositories
     public interface IMembershipPackageRepository : IGenericRepository<MembershipPackage>
     {
         // Nếu cần thêm truy vấn đặc thù, khai báo ở đây
+        Task<MembershipPackage> GetPackageByNameAsync(string packageName);
     }
 }

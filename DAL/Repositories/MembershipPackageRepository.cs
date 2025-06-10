@@ -1,4 +1,5 @@
-﻿using Smoking.DAL.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Smoking.DAL.Data;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 
@@ -10,6 +11,11 @@ namespace Smoking.DAL.Repositories
         {
         }
 
-        // Hiện tại chưa có truy vấn đặc thù, dùng hết các phương thức từ GenericRepository
+        // Phương thức tìm gói theo tên
+        public async Task<MembershipPackage> GetPackageByNameAsync(string packageName)
+        {
+            return await _context.MembershipPackages
+                .FirstOrDefaultAsync(p => p.PackageName.Equals(packageName, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

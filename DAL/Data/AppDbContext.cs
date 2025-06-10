@@ -16,6 +16,7 @@ namespace Smoking.DAL.Data
         public DbSet<User> Users { get; set; }
         public DbSet<MembershipPackage> MembershipPackages { get; set; }
         public DbSet<UserMembership> UserMemberships { get; set; }
+
         public DbSet<Payment> Payments { get; set; }
         public DbSet<SmokingStatus> SmokingStatuses { get; set; }
         public DbSet<QuitPlan> QuitPlans { get; set; }
@@ -26,6 +27,7 @@ namespace Smoking.DAL.Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ConsultationBooking> ConsultationBookings { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

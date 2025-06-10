@@ -320,6 +320,71 @@
         }
       }
     },
+    "/api/membership/packages": {
+      "get": {
+        "tags": [
+          "Membership"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/membership/package/{name}": {
+      "get": {
+        "tags": [
+          "Membership"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/membership/subscribe": {
+      "post": {
+        "tags": [
+          "Membership"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscribePackageRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscribePackageRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscribePackageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/profile": {
       "get": {
         "tags": [
@@ -446,6 +511,16 @@
             "nullable": true
           },
           "newPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubscribePackageRequest": {
+        "type": "object",
+        "properties": {
+          "packageName": {
             "type": "string",
             "nullable": true
           }

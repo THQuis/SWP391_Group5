@@ -17,10 +17,12 @@ namespace Smoking.DAL.Repositories
         public async Task<IEnumerable<UserMembership>> GetByUserIdAsync(int userId)
         {
             return await _context.UserMemberships
-                                 .Include(um => um.Package)
-                                 .Where(um => um.UserID == userId)
-                                 .AsNoTracking()
-                                 .ToListAsync();
+                .Include(um => um.MembershipPackage)  // Đảm bảo dùng đúng tên navigation property
+                .Where(um => um.UserId == userId)  // Kiểm tra đúng tên thuộc tính UserId
+                .AsNoTracking()  // Tránh theo dõi các đối tượng
+                .ToListAsync();
         }
+
+
     }
 }

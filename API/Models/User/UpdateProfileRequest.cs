@@ -1,4 +1,4 @@
-﻿namespace Smoking.API.Models.Account
+﻿namespace Smoking.API.Models.User
 {
     public class UpdateProfileRequest
     {

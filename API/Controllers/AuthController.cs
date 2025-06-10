@@ -140,33 +140,9 @@
                 return BadRequest(new { Error = ex.Message });
             }
         }
-        [HttpDelete("delete-user")]
-        public async Task<IActionResult> DeleteUser([FromBody] DeleteUserRequest request)
-        {
-            try
-            {
-                await _authService.DeleteUserByEmailAsync(request.Email);
-                return Ok(new { Message = "Xoá user thành công." });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
-        }
+   
 
-        [HttpPut("update-profile")]
-        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
-        {
-            try
-            {
-                await _authService.UpdateProfileAsync(request.Email, request.FullName, request.PhoneNumber, request.ProfilePicture);
-                return Ok(new { Message = "Cập nhật thông tin thành công." });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
-        }
+   
 
 
 

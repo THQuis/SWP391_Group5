@@ -80,22 +80,6 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.AuthController",
-    "Method": "DeleteUser",
-    "RelativePath": "api/Auth/delete-user",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "Smoking.API.Models.Account.DeleteUserRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
     "Method": "ForgotPassword",
     "RelativePath": "api/Auth/forgot-password",
     "HttpMethod": "POST",
@@ -160,22 +144,6 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.AuthController",
-    "Method": "UpdateProfile",
-    "RelativePath": "api/Auth/update-profile",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "Smoking.API.Models.Account.UpdateProfileRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
     "Method": "VerifyOtp",
     "RelativePath": "api/Auth/verify-otp",
     "HttpMethod": "POST",
@@ -224,6 +192,32 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.UserProfileController",
+    "Method": "DeleteProfile",
+    "RelativePath": "api/user/profile",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.UserProfileController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/user/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Account.UpdateProfileRequest",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

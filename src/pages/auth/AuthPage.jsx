@@ -108,7 +108,7 @@ const AuthPage = () => {
 
 
             // Điều hướng dựa trên vai trò
-            if (userRole === 3) {
+            if (userRole === 1) {
                 navigate('/admin');
             } else {
                 navigate('/');

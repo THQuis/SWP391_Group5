@@ -9,6 +9,9 @@ import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import UserProfile from "../pages/user/UserProfile";
 import ManagementUser from "../pages/admin/ManagementUser";
+// import ManagementUser from "../pages/admin/test";
+
+
 
 
 const RouterCustom = () => {
@@ -38,6 +41,8 @@ const RouterCustom = () => {
                     <AdminDashboard />
                 </AdminLayout>
             } />
+
+
 
             <Route path={ROUTERS.ADMIN.USER} element={
                 <AdminLayout>

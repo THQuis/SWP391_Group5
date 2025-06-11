@@ -4,24 +4,40 @@ import { Link } from 'react-router-dom';
 import { ROUTERS } from '../../utils/router';
 import "../header/header.scss";
 
-const handleLogout = () => {
-  // SỬ DỤNG ĐÚNG TÊN KEY ĐÃ LƯU LÚC ĐĂNG NHẬP
-  localStorage.removeItem('userToken');
-  localStorage.removeItem('userRole');
-  localStorage.removeItem('userName'); // Đừng quên xóa cả userName
+const handleLogout = async () => {
+  try {
+    // Gửi yêu cầu đăng xuất đến máy chủ
+    const response = await fetch('/api/Auth/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}` // Gửi token xác thực nếu cần
+      }
+    });
 
-  alert('🚪 Đăng xuất thành công!');
-  window.location.href = '/'; // Chuyển hướng về trang chủ
+    if (response.ok) {
+      // Xóa thông tin người dùng khỏi localStorage
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('userName');
+
+      alert('🚪 Đăng xuất thành công!');
+      window.location.href = '/'; // Chuyển hướng về trang chủ
+    } else {
+      alert('Có lỗi xảy ra khi đăng xuất. Vui lòng thử lại!');
+    }
+  } catch (error) {
+    console.error('Lỗi khi đăng xuất:', error);
+    alert('Không thể kết nối với máy chủ. Vui lòng thử lại sau!');
+  }
 };
 
 const Header = () => {
   const isLoggedIn = !!localStorage.getItem('userToken');
-  // const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
 
   return (
     <Navbar expand="lg" bg="light" className="shadow-sm border-bottom" style={{ backgroundColor: '#C1DCDC' }}>
       <Container>
-        {/* Logo */}
         <Navbar.Brand as={Link} to={ROUTERS.USER.HOME}>
           <Image
             src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/logo.png?raw=true"
@@ -29,21 +45,14 @@ const Header = () => {
             width="80"
           />
         </Navbar.Brand>
-
-        {/* Responsive toggle */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
-          {/* Nav links */}
           <Nav className="me-auto gap-3 align-items-center">
             <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
             <Nav.Link href="#blog" className="nav-item-custom">Kế hoạch</Nav.Link>
             <Nav.Link href="#rankings1" className="nav-item-custom">Cộng đồng</Nav.Link>
             <Nav.Link href="#progress" className="nav-item-custom">Tiến trình</Nav.Link>
           </Nav>
-
-
-          {/* Auth section */}
           <Nav>
             {isLoggedIn ? (
               <Dropdown align="end">
@@ -57,7 +66,6 @@ const Header = () => {
                   />
                   Tài khoản
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to="/user/profile">👤 Xem Profile</Dropdown.Item>
                   <Dropdown.Item href="#achievements">🏆 Thành Tích</Dropdown.Item>

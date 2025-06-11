@@ -52,6 +52,8 @@ namespace Smoking.DAL.Data
                 .HasForeignKey(cb => cb.CoachID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Chỉ định bảng trong cơ sở dữ liệu là "Notification"
+            modelBuilder.Entity<Notification>().ToTable("Notification");
             // ... các cấu hình khác nếu cần
         }
     }

@@ -540,10 +540,10 @@ D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\staticwebassets.build.jso
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\staticwebassets.build.json.cache
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\staticwebassets.development.json
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\Smoking..870F7192.Up2Date
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\Smoking.API.dll
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\refint\Smoking.API.dll
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\Smoking.API.pdb
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\Smoking.API.genruntimeconfig.cache
 D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\ref\Smoking.API.dll
+D:\Ki_5\PRN212\code\SWP391_Group5\API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

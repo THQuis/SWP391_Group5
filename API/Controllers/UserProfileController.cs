@@ -14,11 +14,13 @@ namespace Smoking.API.Controllers
     public class UserProfileController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMailService _mailService;  // Inject MailService
 
-        // Inject IUnitOfWork vào Controller
-        public UserProfileController(IUnitOfWork unitOfWork)
+        // Inject IUnitOfWork và IMailService vào Controller
+        public UserProfileController(IUnitOfWork unitOfWork, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
+            _mailService = mailService;
         }
 
         // 1️⃣ Lấy thông tin profile của user
@@ -34,7 +36,6 @@ namespace Smoking.API.Controllers
         [HttpPut("update")] // Cập nhật thông tin User
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
         {
-            // Lấy UserID từ Token
             var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
 
             // Lấy thông tin User từ DB qua UnitOfWork
@@ -42,18 +43,20 @@ namespace Smoking.API.Controllers
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
 
-            // Cập nhật thông tin User nếu có thay đổi
-            user.FullName = request.FullName ?? user.FullName; // Nếu không có giá trị mới, giữ nguyên
-            user.PhoneNumber = request.PhoneNumber ?? user.PhoneNumber; // Nếu không có giá trị mới, giữ nguyên
-            user.ProfilePicture = request.ProfilePicture ?? user.ProfilePicture; // Nếu không có giá trị mới, giữ nguyên
+            // Cập nhật thông tin User
+            user.FullName = request.FullName ?? user.FullName;
+            user.PhoneNumber = request.PhoneNumber ?? user.PhoneNumber;
+            user.ProfilePicture = request.ProfilePicture ?? user.ProfilePicture;
 
             // Cập nhật thông tin trong DB qua UnitOfWork
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
 
+            // Gửi email thông báo
+            await _mailService.SendEmailAsync(user.Email, "Cập nhật thông tin thành công", "Thông tin của bạn đã được cập nhật thành công.");
+
             return Ok(new { Message = "Cập nhật thông tin thành công!" });
         }
-
 
         // 3️⃣ Xóa User
         [HttpDelete("profile")]
@@ -70,15 +73,35 @@ namespace Smoking.API.Controllers
             _unitOfWork.Users.Remove(user);
             await _unitOfWork.CompleteAsync();
 
+            // Gửi email thông báo
+            await _mailService.SendEmailAsync(user.Email, "Tài khoản đã bị xóa", "Tài khoản của bạn đã bị xóa thành công.");
+
             return Ok(new { Message = "Xóa tài khoản thành công." });
         }
 
-        // 4 Lấy thông báo
+        // 4 Lấy thông báo và hiển thị trên trang chủ
         [HttpGet("notifications")]
-        public IActionResult GetNotifications()
+        public async Task<IActionResult> GetNotifications()
         {
-            // TODO: Lấy thông báo hỗ trợ cai thuốc
-            return Ok(new { Message = "Thông báo hỗ trợ cai thuốc - User" });
+            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+
+            // Lấy thông báo hỗ trợ cai thuốc từ cơ sở dữ liệu (hoặc từ dịch vụ)
+            // Ví dụ: lấy tất cả thông báo chưa đọc
+            var notifications = await _unitOfWork.Notifications.GetAllAsync();
+
+            // Gửi thông báo qua email (ví dụ gửi tất cả thông báo cho user qua email)
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user != null)
+            {
+                // Kết hợp tất cả thông báo thành một chuỗi
+                var allMessages = string.Join("<br/>", notifications.Select(n => n.Message));
+
+                // Gửi tất cả thông báo trong một email duy nhất
+                await _mailService.SendEmailAsync(user.Email, "Thông báo từ hệ thống", allMessages);
+            }
+
+            // Trả về thông báo trên trang chủ
+            return Ok(new { Message = "Đã gửi thông báo qua email và hiển thị trên trang chủ", Notifications = notifications });
         }
     }
 }

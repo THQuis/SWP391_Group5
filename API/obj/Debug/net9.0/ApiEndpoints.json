@@ -222,7 +222,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.UserProfileController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "DeleteUser",
     "RelativePath": "api/user/delete-user",
     "HttpMethod": "DELETE",
@@ -238,7 +238,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.UserProfileController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "GetNotifications",
     "RelativePath": "api/user/notifications",
     "HttpMethod": "GET",
@@ -248,7 +248,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.UserProfileController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "GetProfile",
     "RelativePath": "api/user/profile",
     "HttpMethod": "GET",
@@ -258,7 +258,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.UserProfileController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "UpdateProfile",
     "RelativePath": "api/user/update-profile",
     "HttpMethod": "PUT",

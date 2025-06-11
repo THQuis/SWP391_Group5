@@ -9,6 +9,7 @@ using Smoking.API.Models.Admin;
 using Smoking.BLL.Services;
 using Smoking.API.Models.Achievement;
 using Smoking.API.Models.Blog;
+using System.Security.Claims;
 
 namespace Smoking.API.Controllers.Admin
 {
@@ -35,7 +36,7 @@ namespace Smoking.API.Controllers.Admin
                 u.FullName,
                 u.Email,
                 u.PhoneNumber,
-                u.RegistrationDate,
+                RegistrationDate = u.RegistrationDate.ToString("dd/MM/yyyy HH:mm"),
                 u.Status,
                 Role = u.Role?.RoleName ?? "Unknown"
             }));
@@ -64,14 +65,25 @@ namespace Smoking.API.Controllers.Admin
         [HttpPut("UpdateStatus")]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string newStatus)
         {
-            var allowedStatuses = new[] { "Active", "IsActive", "Locked" };
+            var allowedStatuses = new[] { "Active", "IsActive"};
 
             if (string.IsNullOrWhiteSpace(newStatus) || !allowedStatuses.Contains(newStatus, StringComparer.OrdinalIgnoreCase))
             {
                 return BadRequest(new
                 {
-                    Message = "Trạng thái không hợp lệ. Chỉ được phép: Active, IsActive, Locked."
+                    Message = "Trạng thái không hợp lệ. Chỉ được phép: Active, IsActive"
                 });
+            }
+
+            // Lấy UserID của người đang đăng nhập từ JWT
+            var currentUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(currentUserIdClaim, out int currentUserId))
+            {
+                if (id == currentUserId)
+                {
+                    return BadRequest(new { Message = "Bạn không thể tự thay đổi trạng thái của chính mình." });
+                }
             }
 
             var user = await _unitOfWork.Users.GetByIdAsync(id);
@@ -84,6 +96,7 @@ namespace Smoking.API.Controllers.Admin
 
             return Ok(new { Message = "Cập nhật trạng thái User thành công." });
         }
+
 
 
         // 4️ Xóa User   
@@ -139,7 +152,16 @@ namespace Smoking.API.Controllers.Admin
             var user = await _unitOfWork.Users.GetByIdAsync(id);
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
+            // Lấy UserID của người đang đăng nhập từ JWT
+            var currentUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+            if (int.TryParse(currentUserIdClaim, out int currentUserId))
+            {
+                if (id == currentUserId)
+                {
+                    return BadRequest(new { Message = "Bạn không thể tự thay đổi trạng thái của chính mình." });
+                }
+            }
             user.RoleID = newRoleId;
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
@@ -147,7 +169,7 @@ namespace Smoking.API.Controllers.Admin
             return Ok(new { Message = "Cập nhật Role cho User thành công." });
         }
 
-        //1. Thêm mới User
+        //8. Thêm mới User
         [HttpPost("AddUser")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {

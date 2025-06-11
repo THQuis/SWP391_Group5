@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Smoking.API.Models;
 using Smoking.BLL.Interfaces;
-using Smoking.BLL.Models;
+using Smoking.BLL.Models; // Đảm bảo namespace này tồn tại và chứa EmailSettings nếu bạn dùng
 using Smoking.BLL.Services;
 using Smoking.DAL.Data;
 using Smoking.DAL.Interfaces.Repositories;
@@ -30,6 +30,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Đăng ký MailService
 builder.Services.AddScoped<IMailService, MailService>();
+
+// --- ĐĂNG KÝ USER SERVICE ---
+builder.Services.AddScoped<IUserService, UserService>();
+// --- HẾT ĐĂNG KÝ USER SERVICE ---
 
 // Thêm MemoryCache (bắt buộc nếu dùng để lưu OTP tạm)
 builder.Services.AddMemoryCache();

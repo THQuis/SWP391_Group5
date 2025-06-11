@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces; // Dùng interface chứ không phải BLL.Services trực tiếp
 
-namespace Smoking.API.Controllers
+namespace Smoking.API.Controllers.Member
 {
     [ApiController]
     [Route("api/user")]

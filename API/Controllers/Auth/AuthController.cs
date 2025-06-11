@@ -1,17 +1,17 @@
-﻿    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
-    using Microsoft.IdentityModel.Tokens;
-    using Smoking.API.Models;
-    using Smoking.API.Models.Account;
-    using Smoking.BLL.Interfaces;
-    using Smoking.DAL.Entities;
-    using System;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-    using System.Text;
-    using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Smoking.API.Models;
+using Smoking.API.Models.Account;
+using Smoking.BLL.Interfaces;
+using Smoking.DAL.Entities;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
-    namespace Smoking.API.Controllers
+namespace Smoking.API.Controllers.Auth
     {
         [ApiController]
         [Route("api/Auth")]
@@ -52,31 +52,34 @@
                 return Ok(new { Message = "Xác thực OTP thành công. Tài khoản đã được kích hoạt." });
             }
 
-            // Đăng nhập
-            [HttpPost("login")]
-            public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        // Đăng nhập
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var user = await _authService.AuthenticateAsync(request.Email, request.Password);
+            if (user == null)
+                return Unauthorized(new { Error = "Email hoặc mật khẩu không đúng." });
+            if (!string.Equals(user.Status, "Active", StringComparison.OrdinalIgnoreCase))
+                return Unauthorized(new { Error = "Tài khoản của bạn không được phép đăng nhập." });
+            var token = GenerateJwtToken(user);
+            return Ok(new
             {
-                var user = await _authService.AuthenticateAsync(request.Email, request.Password);
-                if (user == null)
-                    return Unauthorized(new { Error = "Email hoặc mật khẩu không đúng." });
-
-                var token = GenerateJwtToken(user);
-                return Ok(new
+                Token = token,
+                User = new
                 {
-                    Token = token,
-                    User = new
-                    {
-                        user.UserID,
-                        user.FullName,
-                        user.Email,
-                        user.PhoneNumber,
-                        user.RoleID
-                    }
-                });
-            }
+                    user.UserID,
+                    user.FullName,
+                    user.Email,
+                    user.PhoneNumber,
+                    user.Status,
+                    user.RoleID
+                }
+            });
+        }
 
-            // Tạo JWT Token
-            private string GenerateJwtToken(User user)
+
+        // Tạo JWT Token
+        private string GenerateJwtToken(User user)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.UTF8.GetBytes(_jwtSettings.SecretKey);

@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "CreateUser",
     "RelativePath": "api/Admin/AddUser",
     "HttpMethod": "POST",
@@ -16,7 +16,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "DeleteUser",
     "RelativePath": "api/Admin/DeleteUser",
     "HttpMethod": "DELETE",
@@ -32,7 +32,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Admin/ListUsers",
     "HttpMethod": "GET",
@@ -42,7 +42,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "SendNotification",
     "RelativePath": "api/Admin/Notifications",
     "HttpMethod": "POST",
@@ -58,7 +58,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "UpdateUserRole",
     "RelativePath": "api/Admin/UpdateRole",
     "HttpMethod": "PUT",
@@ -79,7 +79,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "UpdateUserStatus",
     "RelativePath": "api/Admin/UpdateStatus",
     "HttpMethod": "PUT",
@@ -100,7 +100,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "GetUserById",
     "RelativePath": "api/Admin/User",
     "HttpMethod": "GET",
@@ -116,7 +116,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "ForgotPassword",
     "RelativePath": "api/Auth/forgot-password",
     "HttpMethod": "POST",
@@ -132,7 +132,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
     "HttpMethod": "POST",
@@ -148,7 +148,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "Logout",
     "RelativePath": "api/Auth/logout",
     "HttpMethod": "POST",
@@ -158,7 +158,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "Register",
     "RelativePath": "api/Auth/register",
     "HttpMethod": "POST",
@@ -174,7 +174,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "ResetPassword",
     "RelativePath": "api/Auth/reset-password",
     "HttpMethod": "POST",
@@ -190,7 +190,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "VerifyOtp",
     "RelativePath": "api/Auth/verify-otp",
     "HttpMethod": "POST",
@@ -206,7 +206,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "VerifyResetOtp",
     "RelativePath": "api/Auth/verify-reset-otp",
     "HttpMethod": "POST",

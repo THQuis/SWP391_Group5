@@ -19,5 +19,7 @@ namespace Smoking.DAL.Entities
 
         [Required, MaxLength(50)]
         public string NotificationType { get; set; }
+
+        public DateTime SentAt { get; set; } = DateTime.Now;
     }
 }

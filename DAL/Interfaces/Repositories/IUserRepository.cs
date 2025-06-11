@@ -7,6 +7,7 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<User> GetByEmailAsync(string email);
         Task<User> GetByEmailAndPasswordAsync(string email, string password);
-        
+        Task<IEnumerable<User>> GetAllWithRolesAsync();
+
     }
 }

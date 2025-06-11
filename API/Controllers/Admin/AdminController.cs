@@ -6,8 +6,11 @@ using Smoking.DAL.Interfaces.Repositories;
 using System.Linq;
 using System.Threading.Tasks;
 using Smoking.API.Models.Admin;
+using Smoking.BLL.Services;
+using Smoking.API.Models.Achievement;
+using Smoking.API.Models.Blog;
 
-namespace Smoking.API.Controllers
+namespace Smoking.API.Controllers.Admin
 {
     [ApiController]
     [Route("api/Admin")]
@@ -15,29 +18,30 @@ namespace Smoking.API.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-
+       
         public AdminController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        // 1️⃣ Lấy danh sách User
+        // 1️ Lấy danh sách User
         [HttpGet("ListUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await _unitOfWork.Users.GetAllAsync();
+            var users = await _unitOfWork.Users.GetAllWithRolesAsync();
             return Ok(users.Select(u => new
             {
                 u.UserID,
                 u.FullName,
                 u.Email,
                 u.PhoneNumber,
+                u.RegistrationDate,
                 u.Status,
-                u.RoleID
+                Role = u.Role?.RoleName ?? "Unknown"
             }));
         }
 
-        // 2️⃣ Xem chi tiết 1 User
+        // 2️ Xem chi tiết 1 User
         [HttpGet("User")]
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -56,10 +60,20 @@ namespace Smoking.API.Controllers
             });
         }
 
-        // 3️⃣ Cập nhật thông tin User (VD: thay đổi Status)
+        // 3️ Cập nhật thông tin User (VD: thay đổi Status)
         [HttpPut("UpdateStatus")]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string newStatus)
         {
+            var allowedStatuses = new[] { "Active", "IsActive", "Locked" };
+
+            if (string.IsNullOrWhiteSpace(newStatus) || !allowedStatuses.Contains(newStatus, StringComparer.OrdinalIgnoreCase))
+            {
+                return BadRequest(new
+                {
+                    Message = "Trạng thái không hợp lệ. Chỉ được phép: Active, IsActive, Locked."
+                });
+            }
+
             var user = await _unitOfWork.Users.GetByIdAsync(id);
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
@@ -71,7 +85,8 @@ namespace Smoking.API.Controllers
             return Ok(new { Message = "Cập nhật trạng thái User thành công." });
         }
 
-        // 4️⃣ Xóa User
+
+        // 4️ Xóa User   
         [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -85,7 +100,7 @@ namespace Smoking.API.Controllers
             return Ok(new { Message = "Xóa User thành công." });
         }
 
-        // 5️⃣ Báo cáo hệ thống (thực tế - dùng DB)
+        // 5️ Báo cáo hệ thống (thực tế - dùng DB)
         //[HttpGet("reports")]
         //public async Task<IActionResult> GetReports()
         //{
@@ -109,17 +124,15 @@ namespace Smoking.API.Controllers
         //    return Ok(report);
         //}
 
-        // 6️⃣ Gửi notification toàn hệ thống (giả sử có NotificationService)
+        // 6 Gửi notification toàn hệ thống (giả sử có NotificationService)
         [HttpPost("Notifications")]
         public IActionResult SendNotification([FromBody] string message)
         {
-            // TODO: Gửi notification đến tất cả user (broadcast)
-            // Nếu có NotificationService thì inject vào và gọi ở đây
 
             return Ok(new { Message = $"Đã gửi notification: {message}" });
         }
 
-        // 7️⃣ (Optional) Cập nhật Role cho User
+        // 7️ (Optional) Cập nhật Role cho User
         [HttpPut("UpdateRole")]
         public async Task<IActionResult> UpdateUserRole(int id, [FromBody] int newRoleId)
         {
@@ -146,10 +159,10 @@ namespace Smoking.API.Controllers
             {
                 FullName = request.FullName,
                 Email = request.Email,
-                Password = request.Password, // TODO: Hash password
+                Password = request.Password,
                 PhoneNumber = request.PhoneNumber,
                 Status = "Active",
-                RoleID = request.RoleID // Admin được chọn
+                RoleID = request.RoleID
             };
 
             await _unitOfWork.Users.AddAsync(user);

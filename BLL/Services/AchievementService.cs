@@ -15,24 +15,6 @@ namespace Smoking.BLL.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Achievement> CreateAsync(Achievement entity)
-        {
-            await _unitOfWork.Achievements.AddAsync(entity);
-            await _unitOfWork.CompleteAsync();
-            return entity;
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var existing = await _unitOfWork.Achievements.GetByIdAsync(id);
-            if (existing == null)
-                return false;
-
-            _unitOfWork.Achievements.Remove(existing);
-            await _unitOfWork.CompleteAsync();
-            return true;
-        }
-
         public async Task<IEnumerable<Achievement>> GetAllAsync()
         {
             return await _unitOfWork.Achievements.GetAllAsync();
@@ -43,20 +25,43 @@ namespace Smoking.BLL.Services
             return await _unitOfWork.Achievements.GetByIdAsync(id);
         }
 
+        public async Task<Achievement> CreateAsync(Achievement entity)
+        {
+            await _unitOfWork.Achievements.AddAsync(entity);
+            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
+            return entity;
+        }
+
         public async Task<bool> UpdateAsync(Achievement entity)
         {
-            var existing = await _unitOfWork.Achievements.GetByIdAsync(entity.AchievementID);
-            if (existing == null)
-                return false;
+            var existingAchievement = await _unitOfWork.Achievements.GetByIdAsync(entity.AchievementID);
+            if (existingAchievement == null)
+            {
+                return false; // Không tìm thấy thành tích để cập nhật
+            }
 
-            existing.AchievementName = entity.AchievementName;
-            existing.Description = entity.Description;
-            existing.Criteria = entity.Criteria;
-            existing.BadgeImage = entity.BadgeImage;
-            existing.PackageType = entity.PackageType;
+            // Cập nhật các thuộc tính
+            existingAchievement.AchievementName = entity.AchievementName;
+            existingAchievement.Description = entity.Description;
+            existingAchievement.Criteria = entity.Criteria;
+            existingAchievement.BadgeImage = entity.BadgeImage;
+            existingAchievement.PackageType = entity.PackageType;
 
-            _unitOfWork.Achievements.Update(existing);
-            await _unitOfWork.CompleteAsync();
+            _unitOfWork.Achievements.Update(existingAchievement);
+            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var achievement = await _unitOfWork.Achievements.GetByIdAsync(id);
+            if (achievement == null)
+            {
+                return false; // Không tìm thấy thành tích để xóa
+            }
+
+            _unitOfWork.Achievements.Remove(achievement);
+            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
             return true;
         }
     }

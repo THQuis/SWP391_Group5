@@ -21,6 +21,11 @@ namespace Smoking.DAL.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
-
+        public async Task<IEnumerable<User>> GetAllWithRolesAsync()
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .ToListAsync();
+        }
     }
 }

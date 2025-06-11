@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "SendNotification",
     "RelativePath": "api/admin/notifications/send",
     "HttpMethod": "POST",
@@ -8,15 +8,15 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "message",
-        "Type": "System.String",
+        "Name": "request",
+        "Type": "Smoking.API.Models.Notification.NotificationRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "GetAllUsers",
     "RelativePath": "api/admin/users",
     "HttpMethod": "GET",
@@ -26,7 +26,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "GetUserById",
     "RelativePath": "api/admin/users/{id}",
     "HttpMethod": "GET",
@@ -42,7 +42,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "DeleteUser",
     "RelativePath": "api/admin/users/{id}",
     "HttpMethod": "DELETE",
@@ -58,7 +58,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "UpdateUserStatus",
     "RelativePath": "api/admin/users/{id}/status",
     "HttpMethod": "PUT",
@@ -169,6 +169,91 @@
       {
         "Name": "request",
         "Type": "Smoking.API.Models.Account.VerifyOtpRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.BlogController",
+    "Method": "GetBlogById",
+    "RelativePath": "api/blogs/{blogId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.BlogController",
+    "Method": "CreateBlog",
+    "RelativePath": "api/blogs/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Blog.BlogRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.BlogController",
+    "Method": "DeleteBlog",
+    "RelativePath": "api/blogs/delete/{blogId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.BlogController",
+    "Method": "UpdateBlog",
+    "RelativePath": "api/blogs/update/{blogId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Blog.BlogRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.BlogController",
+    "Method": "GetBlogsByUser",
+    "RelativePath": "api/blogs/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

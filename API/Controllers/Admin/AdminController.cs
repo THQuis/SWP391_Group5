@@ -4,8 +4,9 @@ using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 using System.Threading.Tasks;
+using Smoking.API.Models.Notification;
 
-namespace Smoking.API.Controllers
+namespace Smoking.API.Controllers.Admin
 {
     [ApiController]
     [Route("api/admin")]
@@ -13,10 +14,12 @@ namespace Smoking.API.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMailService _mailService;
 
-        public AdminController(IUnitOfWork unitOfWork)
+        public AdminController(IUnitOfWork unitOfWork, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
+            _mailService = mailService;
         }
 
         // 1️⃣ Lấy danh sách User
@@ -67,14 +70,47 @@ namespace Smoking.API.Controllers
             return Ok(new { Message = "Xóa User thành công." });
         }
 
-        // 6️⃣ Gửi notification (giả sử có NotificationService)
         [HttpPost("notifications/send")]
-        public IActionResult SendNotification([FromBody] string message)
+        public async Task<IActionResult> SendNotification([FromBody] NotificationRequest request)
         {
-            // TODO: Gửi notification đến tất cả user (broadcast)
-            // Nếu có NotificationService thì inject vào và gọi ở đây
+            // Kiểm tra nếu email được cung cấp
+            if (!string.IsNullOrEmpty(request.Email))
+            {
+                // Tìm người dùng theo email
+                var user = await _unitOfWork.Users.GetByEmailAsync(request.Email);
+                if (user == null)
+                {
+                    return NotFound(new { Message = "User không tồn tại." });
+                }
 
-            return Ok(new { Message = $"Đã gửi notification: {message}" });
+                // Gửi thông báo cho người dùng cụ thể
+                await _mailService.SendEmailAsync(user.Email, "Thông báo từ hệ thống Smoking App", request.Message);
+                return Ok(new { Message = $"Đã gửi thông báo tới email {request.Email}" });
+            }
+
+            // Nếu email không có, gửi cho tất cả người dùng có roleId = 2 hoặc 3
+            if (request.RoleId == 2 || request.RoleId == 3)
+            {
+                var users = await _unitOfWork.Users.GetByRoleIdAsync(request.RoleId);  // Lấy tất cả User hoặc Coach dựa trên RoleId
+                foreach (var user in users)
+                {
+                    await _mailService.SendEmailAsync(user.Email, "Thông báo từ hệ thống Smoking App", request.Message);
+                }
+
+                // Trả lời thông báo cho tất cả User hoặc Coach
+                return Ok(new { Message = $"Đã gửi thông báo cho tất cả người dùng với roleId = {request.RoleId}." });
+            }
+
+            // Nếu không có roleId hợp lệ
+            return BadRequest(new { Message = "RoleId không hợp lệ. Chỉ có thể chọn 2 (User) hoặc 3 (Coach)." });
         }
+
+
+
+
+
+
+
+
     }
 }

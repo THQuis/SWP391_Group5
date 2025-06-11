@@ -3,16 +3,52 @@
   "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\dal\\entities\\blog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\blog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\controllers\\blogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\blogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\controllers\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\controllers\\membershipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\membershipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\models\\blog\\blogrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\blog\\blogrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\dal\\interfaces\\repositories\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\bll\\interfaces\\iblogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iblogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\models\\notifucation\\notificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\notifucation\\notificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\bll\\services\\mailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\mailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\bll\\models\\emailsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,67 +74,132 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MailService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Services\\MailService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\MailService.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Services\\MailService.cs",
-              "RelativeToolTip": "BLL\\Services\\MailService.cs",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAcwGEAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "BlogController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\BlogController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\BlogController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\BlogController.cs",
+              "RelativeToolTip": "API\\Controllers\\BlogController.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAowDoAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T06:05:38.163Z",
+              "WhenOpened": "2025-06-11T09:23:06.371Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "EmailSettings.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Models\\EmailSettings.cs",
-              "RelativeDocumentMoniker": "BLL\\Models\\EmailSettings.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Models\\EmailSettings.cs",
-              "RelativeToolTip": "BLL\\Models\\EmailSettings.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T06:05:33.632Z",
+              "WhenOpened": "2025-06-11T08:52:34.413Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IMailService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Interfaces\\IMailService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IMailService.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Interfaces\\IMailService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IMailService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T06:05:21.163Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAcwDUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T05:41:37.6Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "UserProfileController.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\UserProfileController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\UserProfileController.cs",
               "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\UserProfileController.cs",
               "RelativeToolTip": "API\\Controllers\\UserProfileController.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAowGAAAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T05:24:36.199Z",
+              "WhenOpened": "2025-06-11T08:59:25.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Blog.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Entities\\Blog.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\Blog.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Entities\\Blog.cs",
+              "RelativeToolTip": "DAL\\Entities\\Blog.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T08:57:18.716Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MembershipController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\MembershipController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\MembershipController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\MembershipController.cs",
+              "RelativeToolTip": "API\\Controllers\\MembershipController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T08:59:30.306Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA9wA8AAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T08:48:50.368Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BlogRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Models\\Blog\\BlogRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Blog\\BlogRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Models\\Blog\\BlogRequest.cs",
+              "RelativeToolTip": "API\\Models\\Blog\\BlogRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAQwAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T08:45:34.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IBlogService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Interfaces\\IBlogService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IBlogService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Interfaces\\IBlogService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IBlogService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T08:19:28.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\UserRepository.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAuwB4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T07:13:30.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "NotificationRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Models\\Notifucation\\NotificationRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Notifucation\\NotificationRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Models\\Notifucation\\NotificationRequest.cs",
+              "RelativeToolTip": "API\\Models\\Notifucation\\NotificationRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T06:35:18.533Z",
               "EditorCaption": ""
             },
             {
@@ -132,6 +233,55 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MailService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Services\\MailService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\MailService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Services\\MailService.cs",
+              "RelativeToolTip": "BLL\\Services\\MailService.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAuwG0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T06:05:38.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "EmailSettings.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Models\\EmailSettings.cs",
+              "RelativeDocumentMoniker": "BLL\\Models\\EmailSettings.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Models\\EmailSettings.cs",
+              "RelativeToolTip": "BLL\\Models\\EmailSettings.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T06:05:33.632Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IMailService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Interfaces\\IMailService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IMailService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Interfaces\\IMailService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IMailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T06:05:21.163Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAcwDUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T05:41:37.6Z"
             }
           ]
         }

@@ -1,80 +1,83 @@
 ﻿using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Smoking.BLL.Services
 {
+    /// <summary>
+    /// Xử lý nghiệp vụ blog cho admin (gọi repository, xử lý logic)
+    /// </summary>
     public class BlogService : IBlogService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IBlogRepository _repo;
+        public BlogService(IBlogRepository repo) => _repo = repo;
 
-        public BlogService(IUnitOfWork unitOfWork)
+        public async Task<IEnumerable<Blog>> GetAllWithUserAndRoleAsync()
+            => await _repo.GetAllWithUserAndRoleAsync();
+
+        public async Task<IEnumerable<Blog>> GetAllByStatusWithUserAndRoleAsync(string status)
+            => await _repo.GetAllByStatusWithUserAndRoleAsync(status);
+
+        public async Task<IEnumerable<Blog>> GetAllReportedWithUserAndRoleAsync()
+            => await _repo.GetAllReportedWithUserAndRoleAsync();
+
+        public async Task<int> CountAllAsync() => await _repo.CountAllAsync();
+        public async Task<int> CountByStatusAsync(string status) => await _repo.CountByStatusAsync(status);
+        public async Task<int> CountReportedAsync() => await _repo.CountReportedAsync();
+
+        // Duyệt blog
+        public async Task<bool> ApproveBlogAsync(int blogId)
         {
-            _unitOfWork = unitOfWork;
-        }
-
-        public async Task<IEnumerable<Blog>> GetAllAsync()
-        {
-            return await _unitOfWork.Blogs.GetAllAsync();
-        }
-
-        public async Task<Blog> GetByIdAsync(int id)
-        {
-            return await _unitOfWork.Blogs.GetByIdAsync(id);
-        }
-
-        public async Task<IEnumerable<Blog>> GetByAuthorIdAsync(int authorId)
-        {
-            return await _unitOfWork.Blogs.GetByAuthorIdAsync(authorId);
-        }
-
-        public async Task<Blog> CreateAsync(Blog entity)
-        {
-            entity.CreatedDate = DateTime.Now;
-            entity.LastModifiedDate = DateTime.Now;
-            entity.Status = "Draft"; // Mặc định khi tạo mới
-            entity.Likes = 0;
-            entity.Dislikes = 0;
-
-            await _unitOfWork.Blogs.AddAsync(entity);
-            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
-            return entity;
-        }
-
-        public async Task<bool> UpdateAsync(Blog entity)
-        {
-            var existingBlog = await _unitOfWork.Blogs.GetByIdAsync(entity.BlogId);
-            if (existingBlog == null)
-            {
-                return false; // Không tìm thấy blog để cập nhật
-            }
-
-            // Cập nhật các thuộc tính
-            existingBlog.Title = entity.Title;
-            existingBlog.Content = entity.Content;
-            existingBlog.CategoryName = entity.CategoryName;
-            existingBlog.Status = entity.Status;
-            existingBlog.LastModifiedDate = DateTime.Now; // Cập nhật thời gian sửa đổi
-
-            _unitOfWork.Blogs.Update(existingBlog);
-            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
+            var blog = await _repo.GetByIdWithUserAndRoleAsync(blogId);
+            if (blog == null) return false;
+            blog.Status = "Approved";
+            _repo.Update(blog);
+            await _repo.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        // Từ chối blog
+        public async Task<bool> RejectBlogAsync(int blogId)
         {
-            var blog = await _unitOfWork.Blogs.GetByIdAsync(id);
-            if (blog == null)
-            {
-                return false; // Không tìm thấy blog để xóa
-            }
-
-            _unitOfWork.Blogs.Remove(blog);
-            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
+            var blog = await _repo.GetByIdWithUserAndRoleAsync(blogId);
+            if (blog == null) return false;
+            blog.Status = "Rejected";
+            _repo.Update(blog);
+            await _repo.SaveChangesAsync();
             return true;
+        }
+
+        // Đánh dấu đã xử lý báo cáo
+        public async Task<bool> MarkBlogAsReviewedAsync(int blogId)
+        {
+            var blog = await _repo.GetByIdWithUserAndRoleAsync(blogId);
+            if (blog == null) return false;
+            blog.ReportCount = 0;
+            _repo.Update(blog);
+            await _repo.SaveChangesAsync();
+            return true;
+        }
+
+        // Xóa blog
+        public async Task<bool> DeleteAsync(int blogId)
+        {
+            var blog = await _repo.GetByIdWithUserAndRoleAsync(blogId);
+            if (blog == null) return false;
+            _repo.Delete(blog);
+            await _repo.SaveChangesAsync();
+            return true;
+        }
+
+        // Admin tạo blog mới
+        public async Task<Blog> CreateByAdminAsync(Blog blog)
+        {
+            blog.Status = "Approved";
+            blog.CreatedDate = System.DateTime.Now;
+            await _repo.AddAsync(blog);
+            await _repo.SaveChangesAsync();
+            return blog;
         }
     }
 }

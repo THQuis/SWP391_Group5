@@ -65,13 +65,13 @@ namespace Smoking.API.Controllers.Admin
         [HttpPut("UpdateStatus")]
         public async Task<IActionResult> UpdateUserStatus(int id, [FromBody] string newStatus)
         {
-            var allowedStatuses = new[] { "Active", "IsActive"};
+            var allowedStatuses = new[] { "Active", "InActive"};
 
             if (string.IsNullOrWhiteSpace(newStatus) || !allowedStatuses.Contains(newStatus, StringComparer.OrdinalIgnoreCase))
             {
                 return BadRequest(new
                 {
-                    Message = "Trạng thái không hợp lệ. Chỉ được phép: Active, IsActive"
+                    Message = "Trạng thái không hợp lệ. Chỉ được phép: Active, InActive"
                 });
             }
 

@@ -222,6 +222,126 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "ApproveBlog",
+    "RelativePath": "api/BlogAdmin/approve/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "CreateBlog",
+    "RelativePath": "api/BlogAdmin/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Smoking.API.Models.Blog.BlogCreateModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "DeleteBlog",
+    "RelativePath": "api/BlogAdmin/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "GetAllBlogs",
+    "RelativePath": "api/BlogAdmin/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "GetPendingBlogs",
+    "RelativePath": "api/BlogAdmin/pending",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "RejectBlog",
+    "RelativePath": "api/BlogAdmin/reject/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "GetReportedBlogs",
+    "RelativePath": "api/BlogAdmin/reported",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "MarkBlogAsReviewed",
+    "RelativePath": "api/BlogAdmin/reviewed/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.BlogAdminController",
+    "Method": "GetBlogStatistics",
+    "RelativePath": "api/BlogAdmin/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "DeleteUser",
     "RelativePath": "api/user/delete-user",

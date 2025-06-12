@@ -1,33 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
+    [Table("Blog")]
     public class Blog
     {
         [Key]
         public int BlogId { get; set; }
 
-        [Required, MaxLength(255)]
+        [Required]
         public string Title { get; set; }
 
-        [Required]
-        public string Content { get; set; }
+        public string? Content { get; set; }
 
-        [Required]
+        // Trạng thái bài viết: Pending, Approved, Rejected
+        public string Status { get; set; } = "Pending";
+
+        // Khóa ngoại - ID người dùng (tác giả)
         public int AuthorId { get; set; }
-        public User Author { get; set; }
 
-        [MaxLength(100)]
-        public string CategoryName { get; set; }
+        [ForeignKey("AuthorId")]
+        public User User { get; set; }
+
+        public string? CategoryName { get; set; }
+        public string? BlogType { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime LastModifiedDate { get; set; } = DateTime.Now;
+        public DateTime? LastModifiedDate { get; set; }
 
-        [MaxLength(50)]
-        public string Status { get; set; } = "Draft";
-
+        // Thống kê
         public int Likes { get; set; } = 0;
         public int Dislikes { get; set; } = 0;
+        public int ReportCount { get; set; } = 0;
     }
 }

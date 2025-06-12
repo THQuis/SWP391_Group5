@@ -19,7 +19,9 @@ namespace Smoking.DAL.Repositories
 
         public async Task<User> GetByEmailAndPasswordAsync(string email, string password)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            return await _context.Users.
+                Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
         public async Task<IEnumerable<User>> GetAllWithRolesAsync()
         {

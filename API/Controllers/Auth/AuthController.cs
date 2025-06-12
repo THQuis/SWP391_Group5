@@ -72,7 +72,8 @@ namespace Smoking.API.Controllers.Auth
                     user.Email,
                     user.PhoneNumber,
                     user.Status,
-                    user.RoleID
+                    user.RoleID,
+                    RoleName = user.Role?.RoleName ?? "Unknown"
                 }
             });
         }

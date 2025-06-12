@@ -354,12 +354,6 @@ D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\scopedcss\bundle\Smoking.API.
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets.build.json
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets.development.json
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets\msbuild.Smoking.API.Microsoft.AspNetCore.StaticWebAssets.props
-D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets\msbuild.Smoking.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets\msbuild.build.Smoking.API.props
-D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.Smoking.API.props
-D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.Smoking.API.props
-D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets.pack.json
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\Smoking..870F7192.Up2Date
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\Smoking.API.dll
@@ -367,3 +361,8 @@ D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\refint\Smoking.API.dll
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\Smoking.API.pdb
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\Smoking.API.genruntimeconfig.cache
 D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\ref\Smoking.API.dll
+D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+D:\Ki_5\Project_SWP\SMOKING_1\API\obj\Debug\net9.0\staticwebassets.build.json.cache

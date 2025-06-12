@@ -31,6 +31,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Đăng ký MailService
 builder.Services.AddScoped<IMailService, MailService>();
 
+// ... các service khác
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<IBlogService, BlogService>();
+
 // --- ĐĂNG KÝ USER SERVICE ---
 builder.Services.AddScoped<IUserService, UserService>();
 // --- HẾT ĐĂNG KÝ USER SERVICE ---

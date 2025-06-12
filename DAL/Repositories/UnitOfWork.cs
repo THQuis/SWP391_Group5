@@ -1,4 +1,6 @@
-﻿using Smoking.DAL.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Smoking.DAL.Data;
+using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 using System.Threading.Tasks;
 
@@ -47,6 +49,12 @@ namespace Smoking.DAL.Repositories
         public async Task<int> CompleteAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+        public async Task<User> GetUserWithRoleAsync(int userId)
+        {
+            return await _context.Users
+                .Include(u => u.Role)  
+                .FirstOrDefaultAsync(u => u.UserID == userId);
         }
 
         public void Dispose()

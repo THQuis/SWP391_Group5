@@ -25,13 +25,34 @@ namespace Smoking.API.Controllers
 
         // 1️⃣ Lấy thông tin profile của user
         [HttpGet("profile")]
-        public IActionResult GetProfile()
+        public async Task<IActionResult> GetProfile()
         {
-            // Lấy UserID từ Token:
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
 
-            return Ok(new { Message = "Thông tin profile cá nhân", UserID = userId });
+            // Lấy thông tin User và Role từ UnitOfWork
+            var user = await _unitOfWork.GetUserWithRoleAsync(userId);
+            if (user == null)
+            {
+                return NotFound(new { Message = "User không tồn tại." });
+            }
+
+            return Ok(new
+            {
+                Message = "Thông tin profile cá nhân",
+                User = new
+                {
+                    user.UserID,
+                    user.FullName,
+                    user.Email,
+                    user.PhoneNumber,
+                    user.ProfilePicture,
+                    user.RegistrationDate,
+                    RoleName = user.Role?.RoleName,
+                    user.Status
+                }
+            });
         }
+
 
         [HttpPut("update")] // Cập nhật thông tin User
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
@@ -40,6 +61,7 @@ namespace Smoking.API.Controllers
 
             // Lấy thông tin User từ DB qua UnitOfWork
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            // Nếu cần lấy RoleName, có thể lấy từ user.Role hoặc truy vấn thêm từ _unitOfWork.Roles nếu cần.
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
 

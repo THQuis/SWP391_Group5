@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Smoking.DAL.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace Smoking.DAL.Interfaces.Repositories
@@ -21,5 +22,9 @@ namespace Smoking.DAL.Interfaces.Repositories
         IConsultationBookingRepository ConsultationBookings { get; }
 
         Task<int> CompleteAsync();
+
+
+        // Thêm phương thức để truy vấn tất cả người dùng theo RoleId
+        Task<User> GetUserWithRoleAsync(int userId);
     }
 }

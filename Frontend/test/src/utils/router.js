@@ -8,6 +8,7 @@ export const ROUTERS = {
     },
     ADMIN: {
         DASHBOARD: "/admin",
-        USER: "admin/users"
+        USER: "admin/users",
+        BLOG: "admin/ManagementBlog"
     },
 };

@@ -7,6 +7,7 @@ const UserProfile = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [avatarPreview, setAvatarPreview] = useState(null);
     const [editInfo, setEditInfo] = useState({
+        fullName: '',
         yearOfBirth: '',
         cigarettesPerDay: '',
         frequency: '',
@@ -49,6 +50,7 @@ const UserProfile = () => {
         setTimeout(() => {
             setUser(mockUser);
             setEditInfo({
+                fullName: mockUser.fullName,
                 yearOfBirth: mockUser.yearOfBirth,
                 cigarettesPerDay: mockUser.smokingStatus.cigarettesPerDay,
                 frequency: mockUser.smokingStatus.frequency,
@@ -57,6 +59,36 @@ const UserProfile = () => {
         }, 500);
     }, []);
 
+    // Hàm xử lý xóa tài khoản và token, sau đó chuyển về trang chủ
+    const handleDeleteAccount = async () => {
+        if (window.confirm('Bạn có chắc chắn muốn xóa tài khoản? Hành động này không thể hoàn tác.')) {
+            try {
+                const token = localStorage.getItem('userToken');
+                const email = localStorage.getItem('userEmail');
+                const response = await fetch('/api/user/delete-user', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ email }),
+                });
+                const resText = await response.text();
+                console.log('Status:', response.status, 'Response:', resText);
+                if (response.ok) {
+                    localStorage.removeItem('userToken');
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('userName');
+                    localStorage.removeItem('userEmail');
+                    window.location.href = '/';
+                } else {
+                    alert('Xóa tài khoản thất bại! ' + resText);
+                }
+            } catch (error) {
+                alert('Có lỗi mạng!');
+            }
+        }
+    };
     if (!user) return <div className="text-center mt-5">Đang tải thông tin...</div>;
 
     return (
@@ -80,9 +112,6 @@ const UserProfile = () => {
                     </Button>
                 </div>
                 <h4 className="mt-3">{user.fullName}</h4>
-                {/* <Button variant="outline-primary" size="sm" onClick={() => setShowEditModal(true)}>
-                    ✏️ Chỉnh sửa hồ sơ
-                </Button> */}
             </Card>
 
             {/* Thông tin cá nhân */}
@@ -147,11 +176,18 @@ const UserProfile = () => {
                     ))}
                 </Card.Body>
             </Card>
+            {/* Nút xóa tài khoản căn giữa */}
+            <div className="mt-3 d-flex justify-content-center">
+                <Button variant="danger" onClick={handleDeleteAccount}>
+                    Xóa tài khoản
+                </Button>
+            </div>
+            <br />
 
-            {/* Modal chỉnh sửa (không còn ảnh cover) */}
+            {/* Modal chỉnh sửa (thêm sửa tên) */}
             <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit profile</Modal.Title>
+                    <Modal.Title>Chỉnh sửa hồ sơ</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="text-center mb-3">
@@ -169,6 +205,14 @@ const UserProfile = () => {
 
                     <hr />
                     <h6 className="mt-3">Thông tin cá nhân</h6>
+                    <Form.Group className="mb-2">
+                        <Form.Label>Họ và tên</Form.Label>
+                        <Form.Control
+                            type="text"
+                            value={editInfo.fullName}
+                            onChange={(e) => setEditInfo({ ...editInfo, fullName: e.target.value })}
+                        />
+                    </Form.Group>
                     <Form.Group className="mb-2">
                         <Form.Label>Năm sinh</Form.Label>
                         <Form.Control
@@ -213,6 +257,7 @@ const UserProfile = () => {
                         onClick={() => {
                             setUser((prev) => ({
                                 ...prev,
+                                fullName: editInfo.fullName,
                                 yearOfBirth: editInfo.yearOfBirth,
                                 smokingStatus: {
                                     ...prev.smokingStatus,

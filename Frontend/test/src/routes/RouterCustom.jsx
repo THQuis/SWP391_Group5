@@ -7,9 +7,11 @@ import AuthPage from "../pages/auth/AuthPage";
 import HomePage from "../pages/home/HomePage";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-// import UserProfile from "../pages/user/UserProfile";
+import UserProfile from "../pages/user/UserProfile";
 import ManagementUser from "../pages/admin/ManagementUser";
-import UserProfile from "../pages/user/test";
+// import ManagementBlog from "../pages/admin/ManagementBlog";
+import ManagementBlog from "../pages/admin/test";
+
 
 
 
@@ -47,6 +49,11 @@ const RouterCustom = () => {
             <Route path={ROUTERS.ADMIN.USER} element={
                 <AdminLayout>
                     <ManagementUser />
+                </AdminLayout>
+            } />
+            <Route path={ROUTERS.ADMIN.BLOG} element={
+                <AdminLayout>
+                    <ManagementBlog />
                 </AdminLayout>
             } />
 

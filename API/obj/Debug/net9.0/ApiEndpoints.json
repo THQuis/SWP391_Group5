@@ -247,7 +247,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "Smoking.API.Models.Blog.BlogCreateModel",
+        "Type": "Smoking.API.Models.Admin.BlogCreateModel",
         "IsRequired": true
       }
     ],

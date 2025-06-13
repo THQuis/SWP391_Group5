@@ -7,8 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Smoking.API.Models.Admin;
 using Smoking.BLL.Services;
-using Smoking.API.Models.Achievement;
-using Smoking.API.Models.Blog;
+using Smoking.API.Models.Admin;
 using System.Security.Claims;
 
 namespace Smoking.API.Controllers.Admin

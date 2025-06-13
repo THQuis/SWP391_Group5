@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smoking.BLL.Interfaces;
-using Smoking.API.Models.Blog;
 using Smoking.DAL.Entities;
 using System.Linq;
 using System.Threading.Tasks;
+using Smoking.API.Models.Admin;
 
 namespace Smoking.API.Controllers.Admin
 {

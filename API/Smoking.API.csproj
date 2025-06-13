@@ -30,4 +30,8 @@
     <ProjectReference Include="..\DAL\Smoking.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Blog\" />
+  </ItemGroup>
+
 </Project>

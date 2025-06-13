@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Smoking.API.Models.Blog
+namespace Smoking.API.Models.Admin
 {
     public class BlogViewModel
     {

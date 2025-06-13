@@ -9,6 +9,10 @@ export const ROUTERS = {
     ADMIN: {
         DASHBOARD: "/admin",
         USER: "admin/users",
-        BLOG: "admin/ManagementBlog"
+        BLOG: "admin/ManagementBlog",
+        PACKAGE: "admin/ManagementPackage",
+        ACHIVE: "admin/ManagementPerformance",
+        PLAN: "admin/ManagementPlan",
+        NOTIFICATION: "admin/ManagementNotification"
     },
 };

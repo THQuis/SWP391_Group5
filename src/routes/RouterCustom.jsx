@@ -9,10 +9,17 @@ import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import UserProfile from "../pages/user/UserProfile";
 import ManagementUser from "../pages/admin/ManagementUser";
-// import ManagementBlog from "../pages/admin/ManagementBlog";
-import ManagementBlog from "../pages/admin/test";
+import ManagementBlog from "../pages/admin/ManagementBlog";
+import ManagementPackage from "../pages/admin/ManagementPackage";
+import ManagementPerformance from "../pages/admin/ManagementPerformance";
+import ManagementPlan from "../pages/admin/ManagementPlan";
+import ManagementNotification from "../pages/admin/ManagementNotification";
 
 
+
+
+
+// import ManagementBlog from "../pages/admin/test";
 
 
 
@@ -54,6 +61,28 @@ const RouterCustom = () => {
             <Route path={ROUTERS.ADMIN.BLOG} element={
                 <AdminLayout>
                     <ManagementBlog />
+                </AdminLayout>
+            } />
+
+            <Route path={ROUTERS.ADMIN.PACKAGE} element={
+                <AdminLayout>
+                    <ManagementPackage />
+                </AdminLayout>
+            } />
+            <Route path={ROUTERS.ADMIN.ACHIVE} element={
+                <AdminLayout>
+                    <ManagementPerformance />
+                </AdminLayout>
+            } />
+            <Route path={ROUTERS.ADMIN.PLAN} element={
+                <AdminLayout>
+                    <ManagementPlan />
+                </AdminLayout>
+            } />
+
+            <Route path={ROUTERS.ADMIN.NOTIFICATION} element={
+                <AdminLayout>
+                    <ManagementNotification />
                 </AdminLayout>
             } />
 

@@ -423,8 +423,11 @@ const AuthPage = () => {
                 </form>
             )}
 
-            <div className="auth-divider"><span>Hoặc tiếp tục với</span></div>
-            <div className="auth-social-login"><button className="auth-social-btn"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/search.png?raw=true" alt="Google" width="20" height="20" /> Google</button><button className="auth-social-btn"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/facebook.png?raw=true" alt="Facebook" width="20" height="20" /> Facebook</button></div>
+            {/* <div className="auth-divider"><span>Hoặc tiếp tục với</span></div>
+            <div className="auth-social-login">
+                <button className="auth-social-btn"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/search.png?raw=true" alt="Google" width="20" height="20" /> Google</button>
+                <button className="auth-social-btn"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/facebook.png?raw=true" alt="Facebook" width="20" height="20" /> Facebook</button>
+            </div> */}
         </>
     );
 
@@ -433,7 +436,7 @@ const AuthPage = () => {
         <div className="auth-page">
             <div className="auth-container-wrapper">
                 <div className="auth-left-panel">
-                    <div className="auth-logo"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/logo.png?raw=true" alt="BreathAgain" /></div>
+                    <div className="auth-logo"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Logo.png?raw=true" alt="BreathAgain" /></div>
                     <div className="auth-tagline">Hành trình cai nghiện thuốc lá bắt đầu từ đây</div>
                     <ul className="auth-features">
                         <li>Theo dõi tiến trình cai nghiện hàng ngày</li><li>Nhận lời khuyên từ chuyên gia</li><li>Kết nối với cộng đồng hỗ trợ</li>

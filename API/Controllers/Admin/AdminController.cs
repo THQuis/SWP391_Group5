@@ -21,8 +21,8 @@ namespace Smoking.API.Controllers.Admin
             _unitOfWork = unitOfWork;
             _mailService = mailService;
         }
-
-        // 1️⃣ Lấy danh sách User
+        //
+        // Lấy danh sách User (Member)
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUsers()
         {

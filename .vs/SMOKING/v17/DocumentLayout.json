@@ -82,8 +82,7 @@
               "RelativeToolTip": "DAL\\Repositories\\UserRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T14:59:31.869Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T14:59:31.869Z"
             },
             {
               "$type": "Document",
@@ -95,8 +94,7 @@
               "RelativeToolTip": "BLL\\Services\\AuthService.cs",
               "ViewState": "AgIAAEcAAAAAAAAAAAAgwFAAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T14:55:10.411Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T14:55:10.411Z"
             },
             {
               "$type": "Document",
@@ -108,8 +106,7 @@
               "RelativeToolTip": "API\\Controllers\\Auth\\AuthController.cs",
               "ViewState": "AgIAAIkAAAAAAAAAAAAiwJoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T14:54:07.46Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T14:54:07.46Z"
             },
             {
               "$type": "Document",
@@ -119,7 +116,7 @@
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
               "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\Admin\\AdminController.cs",
               "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAQwCoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAzwCgAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-12T14:50:21.201Z",
               "EditorCaption": ""
@@ -146,8 +143,7 @@
               "RelativeToolTip": "API\\Models\\Admin\\BlogViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T14:26:45.934Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T14:26:45.934Z"
             },
             {
               "$type": "Document",
@@ -171,8 +167,7 @@
               "RelativeToolTip": "API\\Controllers\\Admin\\BlogAdminController .cs",
               "ViewState": "AgIAADsAAAAAAAAAAAAgwEkAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T12:08:39.93Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T12:08:39.93Z"
             },
             {
               "$type": "Document",

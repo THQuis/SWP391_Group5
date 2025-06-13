@@ -96,6 +96,8 @@ const AuthPage = () => {
             // Lấy thông tin trực tiếp từ cấu trúc mới, không cần diễn giải ID nữa
             const userRole = data.user.roleID; // <-- Đơn giản hơn rất nhiều!
             const userName = data.user.fullName;
+            const userEmail = data.user.email;
+
 
 
 
@@ -103,6 +105,8 @@ const AuthPage = () => {
             localStorage.setItem('userToken', data.token);
             localStorage.setItem('userRole', userRole);
             localStorage.setItem('userName', userName);
+            localStorage.setItem('userEmail', userEmail);
+
             console.log("role name", userRole);
 
 

@@ -10,7 +10,6 @@ const STATUS_OPTIONS = ['Đang hoạt động ', 'Ngừng hoạt động'];
 
 const ManagementBlog = () => {
     const [blogs, setBlogs] = useState([]);
-    const [allBlogs, setAllBlogs] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -20,54 +19,35 @@ const ManagementBlog = () => {
     const [selectedBlog, setSelectedBlog] = useState(null);
 
     useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                const token = localStorage.getItem('userToken');
-                const res = await fetch('https://localhost:7049/api/BlogAdmin/list', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                if (!res.ok) throw new Error('Lỗi lấy dữ liệu blog');
-                const data = await res.json();
+        // Giả lập dữ liệu blog
+        const fetchData = async () => {
+            const fakeBlogs = Array.from({ length: 10 }).map((_, idx) => ({
+                BlogId: idx + 1,
+                Title: `Blog ${idx + 1}`,
+                Content: `Đây là nội dung blog số ${idx + 1}`,
+                AuthorId: (idx % 5) + 1,
+                Author: `Tác giả ${idx % 5 + 1}`,
+                CategoryName: idx % 2 === 0 ? 'Sức khỏe' : 'Thể thao',
+                CreatedDate: `2025-06-${(idx % 28) + 1}`,
+                Status: idx % 3 === 0 ? 'Pending' : (idx % 2 === 0 ? 'Published' : 'Draft'),
+                Likes: Math.floor(Math.random() * 100),
+                Image: 'https://via.placeholder.com/50',
+                Reported: idx % 7 === 0,
+            }));
 
-                // Chuyển đổi về format UI cũ nếu cần
-                const mappedBlogs = data.map(b => ({
-                    BlogId: b.blogId,
-                    Title: b.title,
-                    Content: b.content,
-                    Author: b.authorName,
-                    CategoryName: b.categoryName,
-                    BlogType: b.blogType,
-                    CreatedDate: b.createdDate?.split('T')[0],
-                    Status: b.status,
-                    Likes: b.likes,
-                    Dislikes: b.dislikes,
-                    ReportCount: b.reportCount,
-                    Image: 'https://via.placeholder.com/50', // hoặc b.image nếu backend trả về
-                    Reported: b.reportCount > 0
-                }));
-
-                setAllBlogs(mappedBlogs);
-            } catch (err) {
-                setAllBlogs([]);
+            let filtered = fakeBlogs;
+            if (searchTerm.trim()) {
+                filtered = filtered.filter(b =>
+                    b.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    b.Content.toLowerCase().includes(searchTerm.toLowerCase())
+                );
             }
+            setTotalPages(Math.ceil(filtered.length / PAGE_SIZE));
+            setBlogs(filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE));
         };
-        fetchBlogs();
-    }, []);
 
-    // Filter, search, paginate
-    useEffect(() => {
-        let filtered = allBlogs;
-        if (searchTerm.trim()) {
-            filtered = filtered.filter(b =>
-                (b.Title && b.Title.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                (b.Content && b.Content.toLowerCase().includes(searchTerm.toLowerCase()))
-            );
-        }
-        setTotalPages(Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)));
-        setBlogs(filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE));
-    }, [allBlogs, searchTerm, currentPage]);
+        fetchData();
+    }, [searchTerm, currentPage]);
 
     const handleDelete = (blogId) => {
         setBlogs(blogs.filter(blog => blog.BlogId !== blogId));
@@ -171,7 +151,7 @@ const ManagementBlog = () => {
                                             <img src={blog.Image} alt="Post" width="30" style={{ marginRight: 4 }} />
                                             Post
                                         </td>
-                                        <td>{blog.ReportCount}</td>
+                                        <td>{blog.Reported ? 'Bị báo cáo' : ''}</td>
                                         <td>
                                             <Button variant="link" size="sm" onClick={() => handleEdit(blog)} className="me-2" title="Sửa">
                                                 <FaEdit />

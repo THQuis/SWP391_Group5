@@ -23,7 +23,7 @@ namespace Smoking.API.Controllers
             _mailService = mailService;
         }
 
-        // 1️⃣ Lấy thông tin profile của user
+        // 1️ Lấy thông tin profile của user
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {

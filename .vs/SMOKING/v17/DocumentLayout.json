@@ -1,0 +1,136 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\controllers\\member\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\controllers\\auth\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\auth\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\controllers\\admin\\blogadmincontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\blogadmincontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\controllers\\admin\\notificationadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\notificationadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\Auth\\AuthController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Auth\\AuthController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\Auth\\AuthController.cs",
+              "RelativeToolTip": "API\\Controllers\\Auth\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-14T08:45:42.938Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BlogAdminController .cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\Admin\\BlogAdminController .cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\BlogAdminController .cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\Admin\\BlogAdminController .cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\BlogAdminController .cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-14T08:45:35.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NotificationAdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-14T07:10:47.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAABAAAAAAAAAAAAAcwBkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-14T07:06:08.247Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserProfileController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\Member\\UserProfileController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserProfileController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\API\\Controllers\\Member\\UserProfileController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\UserProfileController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-14T07:05:04.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

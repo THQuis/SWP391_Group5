@@ -2,110 +2,108 @@ import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
-function ReportedBlogTab({ reloadBlogList }) {
+function PendingBlogTab({ reloadBlogList }) {
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Fetch reported blogs
-    // Fetch reported blogs
-    const fetchBlogs = async () => {
+    // Hàm gọi API để lấy danh sách blog đang chờ duyệt
+    const fetchPendingBlogs = async () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('userToken');
-            const res = await fetch('/api/BlogAdmin/reported', {
+            const res = await fetch('/api/BlogAdmin/pending', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
+            if (!res.ok) throw new Error("Failed to fetch pending blogs");
             const data = await res.json();
             setBlogs(data);
         } catch (e) {
+            console.error(e);
             setBlogs([]);
         }
         setLoading(false);
     };
 
     useEffect(() => {
-        fetchBlogs();
+        fetchPendingBlogs();
     }, []);
 
-    // Approve or reject
+    // Hàm xử lý khi duyệt bài viết
     const handleApprove = async (blogId) => {
-        if (window.confirm("Duyệt bài viết này?")) {
+        if (window.confirm("Bạn có chắc chắn muốn duyệt bài viết này?")) {
             try {
                 const token = localStorage.getItem('userToken');
                 const res = await fetch(`/api/BlogAdmin/approve/${blogId}`, {
-                    method: 'PUT',
+                    method: 'PUT', // Hoặc POST tùy vào thiết kế API của bạn
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
                 if (!res.ok) throw new Error();
-                alert("Blog đã được duyệt.");
+                alert("Bài viết đã được duyệt thành công.");
+                // Xóa bài viết khỏi danh sách chờ duyệt trên UI
                 setBlogs(blogs.filter(b => b.blogId !== blogId));
+                // Tải lại danh sách chính ở tab "View"
                 if (reloadBlogList) reloadBlogList();
             } catch {
-                alert("Duyệt blog thất bại!");
+                alert("Duyệt bài viết thất bại!");
             }
         }
     };
 
+    // Hàm xử lý khi từ chối bài viết
     const handleReject = async (blogId) => {
-        if (window.confirm("Từ chối bài viết này?")) {
+        if (window.confirm("Bạn có chắc chắn muốn từ chối bài viết này?")) {
             try {
                 const token = localStorage.getItem('userToken');
                 const res = await fetch(`/api/BlogAdmin/reject/${blogId}`, {
-                    method: 'PUT',
+                    method: 'PUT', // Hoặc POST tùy vào thiết kế API của bạn
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
                 if (!res.ok) throw new Error();
-                alert("Blog đã bị từ chối.");
+                alert("Bài viết đã bị từ chối.");
                 setBlogs(blogs.filter(b => b.blogId !== blogId));
                 if (reloadBlogList) reloadBlogList();
             } catch {
-                alert("Từ chối blog thất bại!");
+                alert("Từ chối bài viết thất bại!");
             }
         }
     };
 
     return (
         <div>
-            <h5 className="mb-3">Duyệt bài viết bị báo cáo</h5>
-            <Table bordered hover>
+            <h5 className="mb-3">Danh sách bài viết chờ duyệt</h5>
+            <Table bordered hover responsive>
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Tiêu đề</th>
-                        {/* <th>Nội dung</th> */}
-                        <th>Bị báo cáo</th>
                         <th>Tác giả</th>
-                        <th>Hành động</th>
+                        <th>Ngày tạo</th>
+                        <th className="text-center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                     {loading ? (
                         <tr>
-                            <td colSpan={6} className="text-center">Đang tải...</td>
+                            <td colSpan={5} className="text-center">Đang tải...</td>
                         </tr>
                     ) : blogs.length === 0 ? (
                         <tr>
-                            <td colSpan={6} className="text-center text-secondary">Không có bài viết nào bị báo cáo.</td>
+                            <td colSpan={5} className="text-center text-secondary">Không có bài viết nào cần duyệt.</td>
                         </tr>
                     ) : (
                         blogs.map((blog, idx) => (
                             <tr key={blog.blogId}>
                                 <td>{idx + 1}</td>
                                 <td>{blog.title}</td>
-                                {/* <td style={{ maxWidth: 200, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                                    {blog.content}
-                                </td> */}
-                                <td>
-                                    {blog.reportCount > 0 ? `Bị báo cáo (${blog.reportCount})` : ""}
-                                </td>
                                 <td>{blog.authorName}</td>
-                                <td>
+                                <td>{new Date(blog.createdDate).toLocaleDateString('vi-VN')}</td>
+                                <td className="text-center">
                                     <Button variant="success" size="sm" className="me-2" onClick={() => handleApprove(blog.blogId)}>
                                         <FaCheck /> Duyệt
                                     </Button>
@@ -122,4 +120,4 @@ function ReportedBlogTab({ reloadBlogList }) {
     );
 }
 
-export default ReportedBlogTab;
+export default PendingBlogTab;

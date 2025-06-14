@@ -1,170 +1,332 @@
-import React, { useState, useRef } from "react";
-import { Tabs, Tab, Button, Modal, Form, Row, Col } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Card, Table, Button, Form, Modal } from 'react-bootstrap';
+import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 
-import BlogManagementTab from "../../components/Blog/BlogManagementTab";
-import ReportedBlogTab from "../../components/Blog/ReportedBlogTab";
-import BlogStatsTab from "../../components/Blog/BlogStatsTab";
+const notificationTypeOptions = [
+    { value: 'System', label: 'Hệ thống' },
+    { value: 'advice', label: 'Tư vấn' },
+    { value: 'reminder', label: 'Nhắc nhở' },
+    { value: 'achievement', label: 'Thành tích' },
+    { value: 'feedback', label: 'Phản hồi' },
+];
+const notifyToOptions = [
+    { value: 'All Users', label: 'Tất cả người dùng' },
+    { value: 'coach', label: 'Coach' },
+    { value: 'member', label: 'Member' },
+];
 
-const CATEGORY_OPTIONS = ['Sức khỏe', 'Thể thao', 'Đời sống', 'Thức ăn', 'Giải trí'];
-
-function ManagementBlog() {
-    const [activeTab, setActiveTab] = useState("milestone");
-    const [showCreateModal, setShowCreateModal] = useState(false);
-    const [creating, setCreating] = useState(false);
-
-    const [newBlog, setNewBlog] = useState({
-        title: "",
-        content: "",
-        authorId: "", // hoặc lấy từ localStorage nếu có
-        categoryName: CATEGORY_OPTIONS[0],
-        blogType: ""
+const ManagementNotification = () => {
+    const [notifications, setNotifications] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const [newNotification, setNewNotification] = useState({
+        notificationName: '',
+        message: '',
+        notificationType: '',
+        condition: '',
+        notificationFor: '',
+        notificationDate: '',
     });
 
-    const blogTabRef = useRef();
+    // Lấy danh sách thông báo từ API
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            setLoading(true);
+            try {
+                const token = localStorage.getItem('userToken');
+                const res = await fetch('/api/NotificationAdmin/list', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
+                setNotifications(data);
+            } catch {
+                setNotifications([]);
+            }
+            setLoading(false);
+        };
+        fetchNotifications();
+    }, []);
 
-    // Hàm gửi API tạo mới
-    const handleCreateBlog = async () => {
-        setCreating(true);
+    // Thêm mới: GỬI THÔNG BÁO qua API /api/NotificationAdmin/send
+    const handleAddNotification = async () => {
         try {
             const token = localStorage.getItem('userToken');
-            const res = await fetch("https://localhost:7049/api/BlogAdmin/create", {
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+            const body = {
+                toAllUsers: newNotification.notificationFor === 'All Users',
+                toRole: newNotification.notificationFor !== 'All Users' ? newNotification.notificationFor : undefined,
+                email: "", // nếu gửi cho email cụ thể, có thể bổ sung thêm trường input
+                notificationID: 0, // tạo mới thì để 0
+                userID: 0,
+                message: newNotification.message,
+                notificationDate: newNotification.notificationDate
+                    ? new Date(newNotification.notificationDate).toISOString()
+                    : new Date().toISOString(),
+                sentAt: new Date().toISOString(),
+                notificationType: newNotification.notificationType,
+                notificationName: newNotification.notificationName,
+                condition: newNotification.condition,
+                notificationFor: newNotification.notificationFor,
+                createdBy: userInfo.name || userInfo.username || "Admin"
+            };
+
+            const res = await fetch('/api/NotificationAdmin/send', {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    title: newBlog.title,
-                    content: newBlog.content,
-                    authorId: Number(newBlog.authorId),
-                    categoryName: newBlog.categoryName,
-                    blogType: newBlog.blogType
-                })
+                body: JSON.stringify(body)
             });
             if (!res.ok) throw new Error();
-            alert("Tạo bài viết thành công!");
-            setShowCreateModal(false);
-            setNewBlog({
-                title: "",
-                content: "",
-                authorId: "",
-                categoryName: CATEGORY_OPTIONS[0],
-                blogType: ""
-            });
-            // Reload lại bảng blog
-            if (blogTabRef.current && blogTabRef.current.reload) {
-                blogTabRef.current.reload();
-            }
+            setShowModal(false);
+
+            // Reload lại danh sách
+            const reload = async () => {
+                setLoading(true);
+                try {
+                    const res = await fetch('/api/NotificationAdmin/list', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    const data = await res.json();
+                    setNotifications(data);
+                } catch {
+                    setNotifications([]);
+                }
+                setLoading(false);
+            };
+            reload();
         } catch {
-            alert("Tạo bài viết thất bại!");
+            alert("Tạo và gửi thông báo thất bại!");
         }
-        setCreating(false);
+    };
+
+    // Xử lý edit (mở modal, điền dữ liệu cũ)
+    const handleEdit = (item) => {
+        setNewNotification({
+            notificationName: item.notificationName,
+            message: item.message,
+            notificationType: item.notificationType,
+            condition: item.condition,
+            notificationFor: item.notificationFor,
+            notificationDate: (item.notificationDate || '').slice(0, 10),
+        });
+        setShowModal(true);
+    };
+
+    // Xử lý xóa (gọi API xóa)
+    const handleDelete = async (id) => {
+        if (!window.confirm("Bạn chắc chắn muốn xóa thông báo này?")) return;
+        try {
+            const token = localStorage.getItem('userToken');
+            const res = await fetch(`https://localhost:7049/api/NotificationAdmin/delete/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!res.ok) throw new Error();
+            setNotifications(notifications.filter(n => n.notificationID !== id));
+        } catch {
+            alert("Xóa thông báo thất bại!");
+        }
     };
 
     return (
-        <div className="container py-4">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2 className="mb-0 text-success text-center">Quản lý Blog</h2>
-                <Button variant="success" onClick={() => setShowCreateModal(true)}>
-                    + Tạo bài viết mới
-                </Button>
-            </div>
+        <div>
+            <h2 className="text-center text-success"> Quản lý thông báo </h2>
+            <Row className="mb-3">
+                <Col className="d-flex justify-content-end">
+                    <Button variant="outline-primary" onClick={() => {
+                        setShowModal(true);
+                        setNewNotification({
+                            notificationName: '',
+                            message: '',
+                            notificationType: '',
+                            condition: '',
+                            notificationFor: '',
+                            notificationDate: '',
+                        });
+                    }}>
+                        Tạo thông báo <FaPlus />
+                    </Button>
+                </Col>
+            </Row>
+            <Card>
+                <Card.Body>
+                    <Table bordered hover>
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên thông báo</th>
+                                <th>Nội dung</th>
+                                <th>Loại thông báo</th>
+                                <th>Mô tả/Điều kiện</th>
+                                <th>Thông báo cho</th>
+                                <th>Ngày gửi</th>
+                                <th>Người tạo</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loading ? (
+                                <tr>
+                                    <td colSpan={9} className="text-center">Đang tải...</td>
+                                </tr>
+                            ) : notifications.length === 0 ? (
+                                <tr>
+                                    <td colSpan={9} className="text-center text-secondary">Không có thông báo nào.</td>
+                                </tr>
+                            ) : (
+                                notifications.map((item, idx) => (
+                                    <tr key={item.notificationID}>
+                                        <td>{idx + 1}</td>
+                                        <td>{item.notificationName}</td>
+                                        <td>{item.message}</td>
+                                        <td>{notificationTypeOptions.find(opt => opt.value === item.notificationType)?.label || item.notificationType}</td>
+                                        <td>{item.condition}</td>
+                                        <td>{notifyToOptions.find(opt => opt.value === item.notificationFor)?.label || item.notificationFor}</td>
+                                        <td>{(item.notificationDate || '').slice(0, 10)}</td>
+                                        <td>{item.createdBy}</td>
+                                        <td>
+                                            <Button variant="link" size="sm" onClick={() => handleEdit(item)}><FaEdit /></Button>
+                                            <Button variant="link" size="sm" onClick={() => handleDelete(item.notificationID)}><FaTrash /></Button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </Table>
+                </Card.Body>
+            </Card>
 
-            <Tabs
-                activeKey={activeTab}
-                onSelect={setActiveTab}
-                className="mb-3"
-                justify
+            {/* Modal thêm/sửa thông báo */}
+            <Modal
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                centered
+                size="lg"
+                backdrop="static"
             >
-                <Tab eventKey="milestone" title="View">
-                    <BlogManagementTab ref={blogTabRef} />
-                </Tab>
-                <Tab eventKey="reported" title="Bài viết bị báo cáo">
-                    <ReportedBlogTab reloadBlogList={() => blogTabRef.current && blogTabRef.current.reload()} />
-                </Tab>
-                <Tab eventKey="stats" title="Thống kê">
-                    <BlogStatsTab />
-                </Tab>
-            </Tabs>
-
-            {/* Modal tạo bài viết mới */}
-            <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Tạo bài viết mới</Modal.Title>
+                    <Modal.Title as="h3" style={{ fontWeight: 700 }}>
+                        {newNotification.notificationName ? "Sửa thông báo" : "Thêm thông báo"}
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group as={Row} className="mb-3" controlId="title">
-                            <Form.Label column sm={3}>Tiêu đề</Form.Label>
+                        <Form.Group as={Row} className="mb-3" controlId="notificationName">
+                            <Form.Label column sm={3} className="fst-italic fw-semibold">
+                                Tên thông báo:
+                            </Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="text"
-                                    value={newBlog.title}
-                                    onChange={e => setNewBlog({ ...newBlog, title: e.target.value })}
+                                    placeholder="Nhập tên thông báo"
+                                    value={newNotification.notificationName}
+                                    onChange={e => setNewNotification({ ...newNotification, notificationName: e.target.value })}
+                                    className="rounded-pill px-4 py-2"
                                 />
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="content">
-                            <Form.Label column sm={3}>Nội dung</Form.Label>
+                        <Form.Group as={Row} className="mb-3" controlId="notificationMessage">
+                            <Form.Label column sm={3} className="fst-italic fw-semibold">
+                                Nội dung:
+                            </Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     as="textarea"
-                                    rows={3}
-                                    value={newBlog.content}
-                                    onChange={e => setNewBlog({ ...newBlog, content: e.target.value })}
+                                    rows={2}
+                                    placeholder="Nội dung gửi"
+                                    value={newNotification.message}
+                                    onChange={e => setNewNotification({ ...newNotification, message: e.target.value })}
+                                    className="rounded-pill px-4 py-2"
+                                    style={{ resize: 'none' }}
                                 />
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="authorId">
-                            <Form.Label column sm={3}>Author ID</Form.Label>
-                            <Col sm={9}>
-                                <Form.Control
-                                    type="number"
-                                    value={newBlog.authorId}
-                                    onChange={e => setNewBlog({ ...newBlog, authorId: e.target.value })}
-                                />
-                            </Col>
-                        </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="categoryName">
-                            <Form.Label column sm={3}>Chuyên mục</Form.Label>
+                        <Form.Group as={Row} className="mb-3" controlId="notificationType">
+                            <Form.Label column sm={3} className="fst-italic fw-semibold">
+                                Loại:
+                            </Form.Label>
                             <Col sm={9}>
                                 <Form.Select
-                                    value={newBlog.categoryName}
-                                    onChange={e => setNewBlog({ ...newBlog, categoryName: e.target.value })}
+                                    value={newNotification.notificationType}
+                                    onChange={e => setNewNotification({ ...newNotification, notificationType: e.target.value })}
+                                    className="rounded-pill px-4 py-2"
                                 >
-                                    {CATEGORY_OPTIONS.map(opt => (
-                                        <option key={opt} value={opt}>{opt}</option>
+                                    <option value="">Chọn loại</option>
+                                    {notificationTypeOptions.map(opt => (
+                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
                                     ))}
                                 </Form.Select>
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="blogType">
-                            <Form.Label column sm={3}>Loại blog</Form.Label>
+                        <Form.Group as={Row} className="mb-3" controlId="notificationCondition">
+                            <Form.Label column sm={3} className="fst-italic fw-semibold">
+                                Điều kiện:
+                            </Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="text"
-                                    value={newBlog.blogType}
-                                    onChange={e => setNewBlog({ ...newBlog, blogType: e.target.value })}
+                                    placeholder="Nhập điều kiện"
+                                    value={newNotification.condition}
+                                    onChange={e => setNewNotification({ ...newNotification, condition: e.target.value })}
+                                    className="rounded-pill px-4 py-2"
+                                />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3" controlId="notificationFor">
+                            <Form.Label column sm={3} className="fst-italic fw-semibold">
+                                Thông báo cho:
+                            </Form.Label>
+                            <Col sm={9}>
+                                <Form.Select
+                                    value={newNotification.notificationFor}
+                                    onChange={e => setNewNotification({ ...newNotification, notificationFor: e.target.value })}
+                                    className="rounded-pill px-4 py-2"
+                                >
+                                    <option value="">Chọn đối tượng</option>
+                                    {notifyToOptions.map(opt => (
+                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                    ))}
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3" controlId="notificationDate">
+                            <Form.Label column sm={3} className="fst-italic fw-semibold">
+                                Ngày gửi:
+                            </Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="date"
+                                    value={newNotification.notificationDate}
+                                    onChange={e => setNewNotification({ ...newNotification, notificationDate: e.target.value })}
+                                    className="rounded-pill px-4 py-2"
                                 />
                             </Col>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowCreateModal(false)}>
-                        Đóng
+                    <Button
+                        variant="outline-secondary"
+                        className="rounded-pill px-4 fw-semibold"
+                        onClick={() => setShowModal(false)}>
+                        Hủy
                     </Button>
                     <Button
                         variant="primary"
-                        disabled={creating}
-                        onClick={handleCreateBlog}
-                    >
-                        {creating ? "Đang tạo..." : "Tạo mới"}
+                        className="rounded-pill px-4 fw-semibold"
+                        onClick={handleAddNotification}>
+                        Lưu
                     </Button>
                 </Modal.Footer>
             </Modal>
         </div>
     );
-}
+};
 
-export default ManagementBlog;
+export default ManagementNotification;

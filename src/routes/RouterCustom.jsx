@@ -13,13 +13,15 @@ import ManagementBlog from "../pages/admin/ManagementBlog";
 import ManagementPackage from "../pages/admin/ManagementPackage";
 import ManagementPerformance from "../pages/admin/ManagementPerformance";
 import ManagementPlan from "../pages/admin/ManagementPlan";
-import ManagementNotification from "../pages/admin/ManagementNotification";
+// import ManagementNotification from "../pages/admin/ManagementNotification";
 
 
 
 
 
-// import ManagementBlog from "../pages/admin/test";
+
+
+import ManagementNotification from "../pages/admin/test";
 
 
 

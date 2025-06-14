@@ -4,6 +4,7 @@ import { Tabs, Tab, Button, Modal, Form, Row, Col } from "react-bootstrap";
 import BlogManagementTab from "../../components/Blog/BlogManagementTab";
 import ReportedBlogTab from "../../components/Blog/ReportedBlogTab";
 import BlogStatsTab from "../../components/Blog/BlogStatsTab";
+import PendingBlogTab from "../../components/Blog/PendingBlogTab";
 
 const CATEGORY_OPTIONS = ['Sức khỏe', 'Thể thao', 'Đời sống', 'Thức ăn', 'Giải trí'];
 
@@ -27,7 +28,7 @@ function ManagementBlog() {
         setCreating(true);
         try {
             const token = localStorage.getItem('userToken');
-            const res = await fetch("https://localhost:7049/api/BlogAdmin/create", {
+            const res = await fetch("/api/BlogAdmin/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -85,6 +86,11 @@ function ManagementBlog() {
                 <Tab eventKey="stats" title="Thống kê">
                     <BlogStatsTab />
                 </Tab>
+                <Tab eventKey="pending" title="Blog chờ duyệt">
+                    <PendingBlogTab reloadBlogList={() => blogTabRef.current && blogTabRef.current.reload()} />
+                </Tab>
+
+
             </Tabs>
 
             {/* Modal tạo bài viết mới */}

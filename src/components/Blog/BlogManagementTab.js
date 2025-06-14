@@ -11,7 +11,7 @@ const BlogManagementTab = forwardRef((props, ref) => {
         setLoading(true);
         try {
             const token = localStorage.getItem('userToken');
-            const res = await fetch('https://localhost:7049/api/BlogAdmin/list', {
+            const res = await fetch('/api/BlogAdmin/list', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -29,7 +29,7 @@ const BlogManagementTab = forwardRef((props, ref) => {
         if (window.confirm("Bạn có chắc chắn muốn xóa blog này?")) {
             try {
                 const token = localStorage.getItem('userToken');
-                const res = await fetch(`https://localhost:7049/api/BlogAdmin/delete/${blogId}`, {
+                const res = await fetch(`/api/BlogAdmin/delete/${blogId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`

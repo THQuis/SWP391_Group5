@@ -14,7 +14,7 @@ function BlogStatsTab() {
             setLoadingStats(true);
             try {
                 const token = localStorage.getItem('userToken');
-                const res = await fetch('https://localhost:7049/api/BlogAdmin/stats', {
+                const res = await fetch('/api/BlogAdmin/stats', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -35,7 +35,7 @@ function BlogStatsTab() {
             setLoadingReported(true);
             try {
                 const token = localStorage.getItem('userToken');
-                const res = await fetch('https://localhost:7049/api/BlogAdmin/reported', {
+                const res = await fetch('/api/BlogAdmin/reported', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -55,7 +55,7 @@ function BlogStatsTab() {
         if (window.confirm("Đánh dấu bài viết đã xử lý báo cáo?")) {
             try {
                 const token = localStorage.getItem('userToken');
-                const res = await fetch(`https://localhost:7049/api/BlogAdmin/reviewed/${blogId}`, {
+                const res = await fetch(`/api/BlogAdmin/reviewed/${blogId}`, {
                     method: "PUT",
                     headers: {
                         "Authorization": `Bearer ${token}`

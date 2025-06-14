@@ -4034,11 +4034,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\BLL\\Smoking.BLL.csproj",
       "projectName": "Smoking.BLL",
       "projectPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\BLL\\Smoking.BLL.csproj",
       "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
       "outputPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\BLL\\obj\\",
+=======
+      "projectUniqueName": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Smoking.BLL.csproj",
+      "projectName": "Smoking.BLL",
+      "projectPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Smoking.BLL.csproj",
+      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+      "outputPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\obj\\",
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4059,8 +4067,13 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
+<<<<<<< HEAD
             "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\DAL\\Smoking.DAL.csproj": {
               "projectPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\DAL\\Smoking.DAL.csproj"
+=======
+            "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Smoking.DAL.csproj": {
+              "projectPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Smoking.DAL.csproj"
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
             }
           }
         }

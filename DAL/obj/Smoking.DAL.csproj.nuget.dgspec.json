@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\DAL\\Smoking.DAL.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\DAL\\Smoking.DAL.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
         "outputPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\DAL\\obj\\",
+=======
+    "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Smoking.DAL.csproj": {}
+  },
+  "projects": {
+    "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Smoking.DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Smoking.DAL.csproj",
+        "projectName": "Smoking.DAL",
+        "projectPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Smoking.DAL.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\obj\\",
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

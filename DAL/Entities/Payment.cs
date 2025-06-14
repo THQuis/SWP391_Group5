@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
+<<<<<<< HEAD
+=======
+    [Table("Payment")]
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
     public class Payment
     {
         [Key]

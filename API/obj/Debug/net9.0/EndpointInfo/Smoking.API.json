@@ -323,7 +323,11 @@
     "/api/blogs/user/{userId}": {
       "get": {
         "tags": [
+<<<<<<< HEAD
           "BlogUser"
+=======
+          "Blog"
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         ],
         "parameters": [
           {
@@ -346,7 +350,11 @@
     "/api/blogs/create": {
       "post": {
         "tags": [
+<<<<<<< HEAD
           "BlogUser"
+=======
+          "Blog"
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         ],
         "requestBody": {
           "content": {
@@ -377,7 +385,11 @@
     "/api/blogs/update/{blogId}": {
       "put": {
         "tags": [
+<<<<<<< HEAD
           "BlogUser"
+=======
+          "Blog"
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         ],
         "parameters": [
           {
@@ -419,7 +431,11 @@
     "/api/blogs/delete/{blogId}": {
       "delete": {
         "tags": [
+<<<<<<< HEAD
           "BlogUser"
+=======
+          "Blog"
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         ],
         "parameters": [
           {
@@ -442,7 +458,11 @@
     "/api/blogs/{blogId}": {
       "get": {
         "tags": [
+<<<<<<< HEAD
           "BlogUser"
+=======
+          "Blog"
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         ],
         "parameters": [
           {
@@ -655,6 +675,7 @@
           "roleId": {
             "type": "integer",
             "format": "int32"
+<<<<<<< HEAD
           },
           "notificationType": {
             "type": "string",
@@ -675,6 +696,8 @@
           "createdBy": {
             "type": "string",
             "nullable": true
+=======
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
           }
         },
         "additionalProperties": false

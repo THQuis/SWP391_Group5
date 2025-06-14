@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "WGd0UVAc5ec=",
   "success": true,
   "projectFilePath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\SWP391_Group5\\BLL\\Smoking.BLL.csproj",
+=======
+  "dgSpecHash": "V/p3tGt7iwc=",
+  "success": true,
+  "projectFilePath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BLL\\Smoking.BLL.csproj",
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

@@ -58,7 +58,12 @@ namespace Smoking.BLL.Services
             existing.EndDate = entity.EndDate;
             existing.PlanDetails = entity.PlanDetails;
             existing.Reason = entity.Reason;
+<<<<<<< HEAD
             // CreatedDate giữ nguyên
+=======
+            // CreatedDate giữ nguyên như cũ
+
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
 
             _unitOfWork.QuitPlans.Update(existing);
             await _unitOfWork.CompleteAsync();

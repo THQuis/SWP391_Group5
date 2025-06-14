@@ -474,6 +474,7 @@ D:\Ki_5\PRN212\code\SWP391_Group5\BLL\obj\Debug\net9.0\refint\Smoking.BLL.dll
 D:\Ki_5\PRN212\code\SWP391_Group5\BLL\obj\Debug\net9.0\Smoking.BLL.pdb
 D:\Ki_5\PRN212\code\SWP391_Group5\BLL\obj\Debug\net9.0\Smoking.BLL.genruntimeconfig.cache
 D:\Ki_5\PRN212\code\SWP391_Group5\BLL\obj\Debug\net9.0\ref\Smoking.BLL.dll
+<<<<<<< HEAD
 D:\Ki_5\PRN212\code\SWP391_Group5\BE\SWP391_Group5\BLL\bin\Debug\net9.0\Smoking.DAL.deps.json
 D:\Ki_5\PRN212\code\SWP391_Group5\BE\SWP391_Group5\BLL\bin\Debug\net9.0\Smoking.DAL.runtimeconfig.json
 D:\Ki_5\PRN212\code\SWP391_Group5\BE\SWP391_Group5\BLL\bin\Debug\net9.0\Smoking.DAL.exe
@@ -633,3 +634,5 @@ D:\Ki_5\PRN212\code\SWP391_Group5\BE\SWP391_Group5\BLL\obj\Debug\net9.0\refint\S
 D:\Ki_5\PRN212\code\SWP391_Group5\BE\SWP391_Group5\BLL\obj\Debug\net9.0\Smoking.BLL.pdb
 D:\Ki_5\PRN212\code\SWP391_Group5\BE\SWP391_Group5\BLL\obj\Debug\net9.0\Smoking.BLL.genruntimeconfig.cache
 D:\Ki_5\PRN212\code\SWP391_Group5\BE\SWP391_Group5\BLL\obj\Debug\net9.0\ref\Smoking.BLL.dll
+=======
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828

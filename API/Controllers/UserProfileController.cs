@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+<<<<<<< HEAD
 using Smoking.API.Models.Notification;
+=======
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
+<<<<<<< HEAD
 using System;
 using System.Linq;
+=======
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
 using System.Threading.Tasks;
 
 namespace Smoking.API.Controllers
@@ -17,15 +23,25 @@ namespace Smoking.API.Controllers
     public class UserProfileController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+<<<<<<< HEAD
         private readonly IMailService _mailService;
 
+=======
+        private readonly IMailService _mailService;  // Inject MailService
+
+        // Inject IUnitOfWork và IMailService vào Controller
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         public UserProfileController(IUnitOfWork unitOfWork, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
             _mailService = mailService;
         }
 
+<<<<<<< HEAD
         // 1️⃣ Lấy thông tin profile của user
+=======
+        // 1️ Lấy thông tin profile của user
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
@@ -48,27 +64,50 @@ namespace Smoking.API.Controllers
                     user.Email,
                     user.PhoneNumber,
                     user.ProfilePicture,
+<<<<<<< HEAD
                     RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"), // Định dạng ngày tháng
+=======
+                    user.RegistrationDate,
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
                     RoleName = user.Role?.RoleName,
                     user.Status
                 }
             });
         }
 
+<<<<<<< HEAD
         // 2️⃣ Cập nhật thông tin User
         [HttpPut("update")]
+=======
+
+        [HttpPut("update")] // Cập nhật thông tin User
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
         {
             var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
 
+<<<<<<< HEAD
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
 
+=======
+            // Lấy thông tin User từ DB qua UnitOfWork
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            // Nếu cần lấy RoleName, có thể lấy từ user.Role hoặc truy vấn thêm từ _unitOfWork.Roles nếu cần.
+            if (user == null)
+                return NotFound(new { Message = "User không tồn tại." });
+
+            // Cập nhật thông tin User
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
             user.FullName = request.FullName ?? user.FullName;
             user.PhoneNumber = request.PhoneNumber ?? user.PhoneNumber;
             user.ProfilePicture = request.ProfilePicture ?? user.ProfilePicture;
 
+<<<<<<< HEAD
+=======
+            // Cập nhật thông tin trong DB qua UnitOfWork
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
 
@@ -84,10 +123,18 @@ namespace Smoking.API.Controllers
         {
             var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
 
+<<<<<<< HEAD
+=======
+            // Lấy thông tin User từ DB qua UnitOfWork
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
 
+<<<<<<< HEAD
+=======
+            // Xóa User khỏi hệ thống qua UnitOfWork
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
             _unitOfWork.Users.Remove(user);
             await _unitOfWork.CompleteAsync();
 
@@ -97,10 +144,14 @@ namespace Smoking.API.Controllers
             return Ok(new { Message = "Xóa tài khoản thành công." });
         }
 
+<<<<<<< HEAD
 
 
 
 
+=======
+        // 4 Lấy thông báo và hiển thị trên trang chủ
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
         [HttpGet("notifications")]
         public async Task<IActionResult> GetNotifications()
         {
@@ -114,20 +165,30 @@ namespace Smoking.API.Controllers
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user != null)
             {
+<<<<<<< HEAD
                 // Kết hợp tất cả thông báo thành một chuỗi văn bản đơn giản
                 var allMessages = string.Join("\n", notifications.Select(n => $"{n.NotificationName}: {n.Message}"));
 
                 // Gửi tất cả thông báo trong một email duy nhất (dạng plain text)
+=======
+                // Kết hợp tất cả thông báo thành một chuỗi
+                var allMessages = string.Join("<br/>", notifications.Select(n => n.Message));
+
+                // Gửi tất cả thông báo trong một email duy nhất
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
                 await _mailService.SendEmailAsync(user.Email, "Thông báo từ hệ thống", allMessages);
             }
 
             // Trả về thông báo trên trang chủ
             return Ok(new { Message = "Đã gửi thông báo qua email và hiển thị trên trang chủ", Notifications = notifications });
         }
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> 0883082cd4d76433817b1141a26c07978d461828
     }
 }

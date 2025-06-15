@@ -13,6 +13,8 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task AddAsync(TEntity entity);
         void Update(TEntity entity);
         void Remove(TEntity entity);
+        // Thêm method AnyAsync để kiểm tra điều kiện tồn tại
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
     }
 
 }

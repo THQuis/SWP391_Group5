@@ -1,7 +1,7 @@
 ﻿using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 
 namespace Smoking.BLL.Services
@@ -9,64 +9,64 @@ namespace Smoking.BLL.Services
     public class UserAchievementService : IUserAchievementService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notificationService;
+        private readonly IMailService _mailService;
 
-        public UserAchievementService(IUnitOfWork unitOfWork)
+        public UserAchievementService(IUnitOfWork unitOfWork, INotificationService notificationService, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
+            _notificationService = notificationService;
+            _mailService = mailService;
         }
 
-        // Tạo thành tích cho người dùng
-        public async Task<UserAchievement> CreateAsync(UserAchievement entity)
+        public async Task<bool> GrantAchievementAsync(int userId, int achievementId, bool sendEmail = true)
         {
-            await _unitOfWork.UserAchievements.AddAsync(entity);
-            await _unitOfWork.CompleteAsync();
-            return entity;
-        }
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            var achievement = await _unitOfWork.Achievements.GetByIdAsync(achievementId);
 
-        // Xóa thành tích của người dùng
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var existing = await _unitOfWork.UserAchievements.GetByIdAsync(id);
-            if (existing == null)
+            if (user == null || achievement == null)
                 return false;
 
-            _unitOfWork.UserAchievements.Remove(existing);
-            await _unitOfWork.CompleteAsync();
-            return true;
-        }
-
-        // Lấy tất cả thành tích của người dùng
-        public async Task<IEnumerable<UserAchievement>> GetAllAsync()
-        {
-            return await _unitOfWork.UserAchievements.GetAllAsync();
-        }
-
-        // Lấy thành tích theo UserID
-        public async Task<IEnumerable<UserAchievement>> GetByUserIdAsync(int userId)
-        {
-            return await _unitOfWork.UserAchievements.GetByUserIdAsync(userId);
-        }
-
-        // Lấy thành tích theo ID
-        public async Task<UserAchievement> GetByIdAsync(int id)
-        {
-            return await _unitOfWork.UserAchievements.GetByIdAsync(id);
-        }
-
-        // Cập nhật thành tích của người dùng
-        public async Task<bool> UpdateAsync(UserAchievement entity)
-        {
-            var existing = await _unitOfWork.UserAchievements.GetByIdAsync(entity.UserAchievementID);
-            if (existing == null)
+            var existedList = await _unitOfWork.UserAchievements.FindAsync(x => x.UserID == userId && x.AchievementID == achievementId);
+            if (existedList.Any())
                 return false;
 
-            existing.UserID = entity.UserID;
-            existing.AchievementID = entity.AchievementID;
-            existing.AwardedDate = entity.AwardedDate;
+            var userAchievement = new UserAchievement
+            {
+                UserID = userId,
+                AchievementID = achievementId,
+                AwardedDate = DateTime.Now
+            };
 
-            _unitOfWork.UserAchievements.Update(existing);
-            await _unitOfWork.CompleteAsync();
-            return true;
+            await _unitOfWork.UserAchievements.AddAsync(userAchievement);
+
+            var notify = new Notification
+            {
+                UserID = userId,
+                Message = $"Bạn đã đạt thành tựu: {achievement.AchievementName}. Tiếp tục cố gắng nhé!",
+                NotificationType = "Achievement",
+                NotificationName = "Thành tựu mới",
+                SentAt = DateTime.Now,
+                Condition = "Đã gửi",
+                NotificationFor = "Cá nhân",
+                CreatedBy = "System"
+            };
+
+            await _notificationService.CreateAsync(notify);
+
+            if (sendEmail && !string.IsNullOrEmpty(user.Email))
+            {
+                try
+                {
+                    await _mailService.SendEmailAsync(user.Email, "Bạn vừa đạt thành tựu mới!", notify.Message);
+                }
+                catch { }
+            }
+
+            var saveResult = await _unitOfWork.CompleteAsync();  // gọi đúng method lưu
+
+            return saveResult > 0; // trả true nếu lưu thành công
         }
+
     }
 }

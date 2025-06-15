@@ -1,5 +1,4 @@
 ﻿using Smoking.DAL.Data;
-using Smoking.DAL.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace Smoking.DAL.Interfaces.Repositories
         IPaymentRepository Payments { get; }
         ISmokingStatusRepository SmokingStatuses { get; }
         IQuitPlanRepository QuitPlans { get; }
-        IQuitProgressRepository QuitProgresses { get; }  
+        IQuitProgressRepository QuitProgresses { get; }
         IAchievementRepository Achievements { get; }
         IUserAchievementRepository UserAchievements { get; }
         INotificationRepository Notifications { get; }
@@ -24,7 +23,5 @@ namespace Smoking.DAL.Interfaces.Repositories
 
         Task<int> CompleteAsync();
         AppDbContext DbContext { get; }
-          
-        Task<User> GetUserWithRoleAsync(int userId); 
     }
 }

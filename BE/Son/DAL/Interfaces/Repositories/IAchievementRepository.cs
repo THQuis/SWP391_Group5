@@ -7,6 +7,6 @@ namespace Smoking.DAL.Interfaces.Repositories
     /// </summary>
     public interface IAchievementRepository : IGenericRepository<Achievement>
     {
-        // Nếu cần thêm truy vấn, khai báo ở đây
+        Task<IEnumerable<UserAchievement>> GetByUserIdAsync(int userId);
     }
 }

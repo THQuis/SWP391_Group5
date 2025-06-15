@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Smoking.DAL.Data;
-using Smoking.DAL.Entities;
+﻿using Smoking.DAL.Data;
 using Smoking.DAL.Interfaces.Repositories;
 using System.Threading.Tasks;
 
@@ -46,7 +44,7 @@ namespace Smoking.DAL.Repositories
         public IFeedbackRepository Feedbacks { get; private set; }
         public IConsultationBookingRepository ConsultationBookings { get; private set; }
 
-        public async Task<int> CompleteAsync() 
+        public async Task<int> CompleteAsync()
         {
             return await _context.SaveChangesAsync();
         }
@@ -55,15 +53,5 @@ namespace Smoking.DAL.Repositories
         {
             _context.Dispose();
         }
-        public async Task<User> GetUserWithRoleAsync(int userId)
-        {
-
-            return await _context.Users
-                .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.UserID == userId);
-        }
-
-
-
     }
 }

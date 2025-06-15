@@ -7,7 +7,7 @@ namespace Smoking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "2")] // Chỉ User (RoleID=2) được vào
+  
     public class UserAchievementController : ControllerBase
     {
         private readonly IUserAchievementService _userAchievementService;

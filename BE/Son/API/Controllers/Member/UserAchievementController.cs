@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smoking.BLL.Interfaces;
-using Smoking.DAL.Entities;
 using System.Threading.Tasks;
 
 namespace Smoking.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user-achievement")]
     [ApiController]
-  
+    [Authorize] 
     public class UserAchievementController : ControllerBase
     {
         private readonly IUserAchievementService _userAchievementService;
@@ -17,41 +17,23 @@ namespace Smoking.API.Controllers
             _userAchievementService = userAchievementService;
         }
 
-        // 1:Lấy thành tích của người dùng
-        [HttpGet("get-achievements/{userId}")]
+        [HttpGet("my-achievements/{userId}")]
         public async Task<IActionResult> GetUserAchievements(int userId)
         {
             var achievements = await _userAchievementService.GetByUserIdAsync(userId);
-            if (achievements == null || !achievements.Any())
-            {
-                return NotFound("No achievements found for this user.");
-            }
             return Ok(achievements);
         }
 
-        // 2:Thêm thành tích cho người dùng
-        [HttpPost("add-achievement")]
-        public async Task<IActionResult> AddUserAchievement([FromBody] UserAchievement userAchievement)
+        [HttpPost("grant")]
+        [Authorize(Roles = "1,2")] // ví dụ: admin và coach mới được cấp
+        public async Task<IActionResult> GrantAchievement(int userId, int achievementId)
         {
-            if (userAchievement == null)
-            {
-                return BadRequest("Invalid achievement data.");
-            }
 
-            await _userAchievementService.CreateAsync(userAchievement);
-            return Ok("Achievement added successfully.");
-        }
-
-        // 3:Xóa thành tích của người dùng
-        [HttpDelete("delete-achievement/{id}")]
-        public async Task<IActionResult> DeleteUserAchievement(int id)
-        {
-            var result = await _userAchievementService.DeleteAsync(id);
-            if (!result)
-            {
-                return NotFound("Achievement not found.");
-            }
-            return Ok("Achievement deleted successfully.");
+            var result = await _userAchievementService.GrantAchievementAsync(userId, achievementId);
+            if (result)
+                return Ok(new { Message = "Đã cấp thành tựu thành công" });
+            else
+                return BadRequest(new { Message = "Cấp thất bại: đã có thành tựu trước đó." });
         }
     }
 }

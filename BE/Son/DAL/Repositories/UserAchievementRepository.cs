@@ -16,5 +16,12 @@ namespace Smoking.DAL.Repositories
                 .Include(ua => ua.Achievement)  // Nếu cần, có thể bao gồm thông tin của Achievement
                 .ToListAsync();
         }
+
+        public async Task<bool> CheckIfAchievementGrantedAsync(int userId, int achievementId)
+        {
+            return await _context.UserAchievements
+                .AnyAsync(ua => ua.UserID == userId && ua.AchievementID == achievementId);
+        }
+
     }
 }

@@ -2,6 +2,8 @@
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Smoking.BLL.Services
@@ -21,16 +23,19 @@ namespace Smoking.BLL.Services
 
         public async Task<bool> GrantAchievementAsync(int userId, int achievementId, bool sendEmail = true)
         {
+            // Bước 1: Kiểm tra dữ liệu có tồn tại
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             var achievement = await _unitOfWork.Achievements.GetByIdAsync(achievementId);
 
             if (user == null || achievement == null)
                 return false;
 
+            // Bước 2: Kiểm tra có cấp trước đó chưa (sửa đúng vị trí kiểm tra trùng lặp)
             var existedList = await _unitOfWork.UserAchievements.FindAsync(x => x.UserID == userId && x.AchievementID == achievementId);
             if (existedList.Any())
                 return false;
 
+            // Bước 3: Thêm thành tựu mới
             var userAchievement = new UserAchievement
             {
                 UserID = userId,
@@ -40,6 +45,7 @@ namespace Smoking.BLL.Services
 
             await _unitOfWork.UserAchievements.AddAsync(userAchievement);
 
+            // Bước 4: Tạo thông báo
             var notify = new Notification
             {
                 UserID = userId,
@@ -54,6 +60,7 @@ namespace Smoking.BLL.Services
 
             await _notificationService.CreateAsync(notify);
 
+            // Bước 5: Gửi email (nếu cần)
             if (sendEmail && !string.IsNullOrEmpty(user.Email))
             {
                 try
@@ -63,10 +70,14 @@ namespace Smoking.BLL.Services
                 catch { }
             }
 
-            var saveResult = await _unitOfWork.CompleteAsync();  // gọi đúng method lưu
-
-            return saveResult > 0; // trả true nếu lưu thành công
+            // Bước 6: Lưu thay đổi vào database
+            var saveResult = await _unitOfWork.CompleteAsync();
+            return saveResult > 0;
         }
 
+        public async Task<IEnumerable<UserAchievement>> GetByUserIdAsync(int userId)
+        {
+            return await _unitOfWork.UserAchievements.GetByUserIdAsync(userId);
+        }
     }
 }

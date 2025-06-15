@@ -10,5 +10,6 @@ namespace Smoking.DAL.Interfaces.Repositories
     public interface IUserAchievementRepository : IGenericRepository<UserAchievement>
     {
         Task<IEnumerable<UserAchievement>> GetByUserIdAsync(int userId);
+        Task<bool> CheckIfAchievementGrantedAsync(int userId, int achievementId);
     }
 }

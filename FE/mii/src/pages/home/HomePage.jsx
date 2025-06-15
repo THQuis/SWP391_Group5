@@ -25,7 +25,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Banner.jpg?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn.jpg?raw=true"
                             alt="First slide"
                         />
 
@@ -33,7 +33,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://source.unsplash.com/1600x600/?hope,lifestyle"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Screenshot%202025-06-12%20230308.png?raw=true"
                             alt="Second slide"
                         />
 
@@ -41,7 +41,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://source.unsplash.com/1600x600/?hope,lifestyle"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Banner.jpg?raw=true"
                             alt="Third slide"
                         />
                     </Carousel.Item>

@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\dal\\repositories\\achievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\achievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\models\\admin\\achievementcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\achievementcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\dal\\entities\\blog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\blog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\bll\\services\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\models\\admin\\createuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\createuserrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\controllers\\admin\\userachievementtestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\userachievementtestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\controllers\\admin\\notificationadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\models\\admin\\sendnotificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\sendnotificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\bll\\services\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\bll\\interfaces\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -59,18 +67,6 @@
       "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\consultationbooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\dal\\entities\\blog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\blog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\bll\\interfaces\\iachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -81,14 +77,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\models\\admin\\achievementcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\achievementcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\swp391_group5\\be\\tri\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -106,7 +94,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -138,46 +126,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\appsettings.json",
               "RelativeDocumentMoniker": "API\\appsettings.json",
               "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\appsettings.json",
               "RelativeToolTip": "API\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-15T16:59:50.192Z",
+              "WhenOpened": "2025-06-15T18:05:43.698Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserAchievementTestController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\UserAchievementTestController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\UserAchievementTestController.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\UserAchievementTestController.cs",
-              "RelativeToolTip": "API\\Controllers\\Admin\\UserAchievementTestController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T07:39:21.007Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AchievementRepository.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\AchievementRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Repositories\\AchievementRepository.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\AchievementRepository.cs",
-              "RelativeToolTip": "DAL\\Repositories\\AchievementRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:10:09.587Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "CreateUserRequest.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\CreateUserRequest.cs",
               "RelativeDocumentMoniker": "API\\Models\\Admin\\CreateUserRequest.cs",
@@ -190,19 +152,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "NotificationService.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\NotificationService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\NotificationService.cs",
               "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\NotificationService.cs",
               "RelativeToolTip": "BLL\\Services\\NotificationService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T03:49:40.097Z"
+              "WhenOpened": "2025-06-15T03:49:40.097Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 4,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\AuthService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\AuthService.cs",
+              "RelativeToolTip": "BLL\\Services\\AuthService.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T03:32:07.884Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Blog.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\Blog.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Blog.cs",
@@ -210,23 +186,38 @@
               "RelativeToolTip": "DAL\\Entities\\Blog.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T03:37:37.98Z"
+              "WhenOpened": "2025-06-15T03:37:37.98Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\AuthService.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\AuthService.cs",
-              "RelativeToolTip": "BLL\\Services\\AuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "AchievementCreate.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\AchievementCreate.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementCreate.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\AchievementCreate.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\AchievementCreate.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAowAgAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T03:32:07.884Z"
+              "WhenOpened": "2025-06-15T02:25:48.441Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
+              "Title": "AchievementUpdate.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\AchievementUpdate.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementUpdate.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\AchievementUpdate.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\AchievementUpdate.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAowAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T02:41:51.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "NotificationRequest.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\NotificationRequest.cs",
               "RelativeDocumentMoniker": "API\\Models\\Admin\\NotificationRequest.cs",
@@ -238,7 +229,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "NotificationAdminController.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\NotificationAdminController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\NotificationAdminController.cs",
@@ -250,7 +241,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "ConsultationBooking.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\ConsultationBooking.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\ConsultationBooking.cs",
@@ -262,7 +253,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "SendNotificationRequest.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\SendNotificationRequest.cs",
               "RelativeDocumentMoniker": "API\\Models\\Admin\\SendNotificationRequest.cs",
@@ -274,7 +265,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "NotificationRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\NotificationRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\NotificationRepository.cs",
@@ -286,7 +277,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "INotificationService.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\INotificationService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\INotificationService.cs",
@@ -298,7 +289,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Notification.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\Notification.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Notification.cs",
@@ -310,7 +301,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "Feedback.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\Feedback.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Feedback.cs",
@@ -322,7 +313,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "Achievement.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\Achievement.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Achievement.cs",
@@ -334,31 +325,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "AchievementAdminController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AchievementAdminController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AchievementAdminController.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AchievementAdminController.cs",
-              "RelativeToolTip": "API\\Controllers\\Admin\\AchievementAdminController.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAAwGwAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:14:03.421Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "AchievementUpdate.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\AchievementUpdate.cs",
-              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementUpdate.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\AchievementUpdate.cs",
-              "RelativeToolTip": "API\\Models\\Admin\\AchievementUpdate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:41:51.889Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "AdminController.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
@@ -370,7 +337,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "AchievementService.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\AchievementService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\AchievementService.cs",
@@ -382,7 +349,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "IAchievementService.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IAchievementService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IAchievementService.cs",
@@ -394,19 +361,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "AchievementCreate.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\AchievementCreate.cs",
-              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementCreate.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\API\\Models\\Admin\\AchievementCreate.cs",
-              "RelativeToolTip": "API\\Models\\Admin\\AchievementCreate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:25:48.441Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 19,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
@@ -418,7 +373,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 20,
               "Title": "IAchievementRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",

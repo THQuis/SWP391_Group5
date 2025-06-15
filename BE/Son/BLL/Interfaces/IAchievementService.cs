@@ -11,5 +11,6 @@ namespace Smoking.BLL.Interfaces
         Task<Achievement> CreateAsync(Achievement entity);
         Task<bool> UpdateAsync(Achievement entity);
         Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<Achievement>> SearchAsync(string keyword);
     }
 }

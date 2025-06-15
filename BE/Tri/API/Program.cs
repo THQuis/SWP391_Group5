@@ -45,6 +45,7 @@ builder.Services.AddScoped<INotificationRepository, NotificationRepository>();  
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Đảm bảo bạn đăng ký UnitOfWork nếu chưa có
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IAchievementRepository, AchievementRepository>();
+builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
 
 // --- HẾT ĐĂNG KÝ USER SERVICE ---
 

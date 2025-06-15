@@ -505,6 +505,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Test.UserAchievementTestController",
+    "Method": "GrantAchievement",
+    "RelativePath": "api/test/userachievement/grant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "achievementId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "DeleteUser",
     "RelativePath": "api/user/delete-user",

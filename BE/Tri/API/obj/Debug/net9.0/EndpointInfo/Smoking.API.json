@@ -826,6 +826,36 @@
         }
       }
     },
+    "/api/test/userachievement/grant": {
+      "post": {
+        "tags": [
+          "UserAchievementTest"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "achievementId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/profile": {
       "get": {
         "tags": [

@@ -58,5 +58,10 @@ namespace Smoking.DAL.Repositories
         {
             _dbSet.Remove(entity);
         }
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.AnyAsync(predicate);
+        }
     }
 }

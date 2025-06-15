@@ -68,7 +68,7 @@ const Header = () => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to="/user/profile">👤 Xem Profile</Dropdown.Item>
-                  <Dropdown.Item href="#achievements">🏆 Thành Tích</Dropdown.Item>
+                  <Dropdown.Item href="/User/ranking">🏆 Thành Tích</Dropdown.Item>
                   <Dropdown.Item href="#community">🧑‍⚕️ Coach</Dropdown.Item>
                   <Dropdown.Item href="#dashboard">📊 Dashboard</Dropdown.Item>
                   <Dropdown.Divider />

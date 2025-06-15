@@ -15,6 +15,7 @@ import ManagementPerformance from "../pages/admin/ManagementPerformance";
 import ManagementPlan from "../pages/admin/ManagementPlan";
 import ManagementNotification from "../pages/admin/ManagementNotification";
 import UserBlog from "../pages/user/UserBlog";// user
+import UserRanking from "../pages/user/UserRanking"; // user ranking
 
 
 
@@ -44,6 +45,11 @@ const RouterCustom = () => {
             <Route path={ROUTERS.USER.BLOG} element={
                 <UserLayout>
                     < UserBlog />
+                </UserLayout>
+            } />
+            <Route path={ROUTERS.USER.RANKING} element={
+                <UserLayout>
+                    < UserRanking />
                 </UserLayout>
             } />
 

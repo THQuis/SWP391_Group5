@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2wdPHwwUmMo=",
+  "dgSpecHash": "Ng3ISWOhzJc=",
   "success": true,
-  "projectFilePath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\DAL\\Smoking.DAL.csproj",
+  "projectFilePath": "D:\\Ki_5\\PRN212\\code\\SWP391_Group5\\BE\\Son\\DAL\\Smoking.DAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

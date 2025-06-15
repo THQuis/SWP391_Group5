@@ -454,5 +454,53 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.UserAchievementController",
+    "Method": "AddUserAchievement",
+    "RelativePath": "api/UserAchievement/add-achievement",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userAchievement",
+        "Type": "Smoking.DAL.Entities.UserAchievement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.UserAchievementController",
+    "Method": "DeleteUserAchievement",
+    "RelativePath": "api/UserAchievement/delete-achievement/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.UserAchievementController",
+    "Method": "GetUserAchievements",
+    "RelativePath": "api/UserAchievement/get-achievements/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

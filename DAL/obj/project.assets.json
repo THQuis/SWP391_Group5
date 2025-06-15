@@ -4013,11 +4013,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj",
+      "projectUniqueName": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj",
       "projectName": "Smoking.DAL",
-      "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj",
+      "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\obj\\",
+      "outputPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

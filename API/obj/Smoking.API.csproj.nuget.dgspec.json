@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\API\\Smoking.API.csproj": {}
+    "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Smoking.API.csproj": {}
   },
   "projects": {
-    "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\API\\Smoking.API.csproj": {
+    "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Smoking.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\API\\Smoking.API.csproj",
+        "projectUniqueName": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Smoking.API.csproj",
         "projectName": "Smoking.API",
-        "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\API\\Smoking.API.csproj",
+        "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Smoking.API.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\API\\obj\\",
+        "outputPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,11 +32,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\BLL\\Smoking.BLL.csproj": {
-                "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\BLL\\Smoking.BLL.csproj"
+              "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Smoking.BLL.csproj": {
+                "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Smoking.BLL.csproj"
               },
-              "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj": {
-                "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj"
+              "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj": {
+                "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj"
               }
             }
           }
@@ -125,14 +125,14 @@
         }
       }
     },
-    "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\BLL\\Smoking.BLL.csproj": {
+    "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Smoking.BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\BLL\\Smoking.BLL.csproj",
+        "projectUniqueName": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Smoking.BLL.csproj",
         "projectName": "Smoking.BLL",
-        "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\BLL\\Smoking.BLL.csproj",
+        "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Smoking.BLL.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\BLL\\obj\\",
+        "outputPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -153,8 +153,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj": {
-                "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj"
+              "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj": {
+                "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj"
               }
             }
           }
@@ -220,14 +220,14 @@
         }
       }
     },
-    "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj": {
+    "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj",
+        "projectUniqueName": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj",
         "projectName": "Smoking.DAL",
-        "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\Smoking.DAL.csproj",
+        "projectPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Smoking.DAL.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\Backend\\DAL\\obj\\",
+        "outputPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

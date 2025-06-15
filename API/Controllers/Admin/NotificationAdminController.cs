@@ -63,56 +63,78 @@ namespace Smoking.API.Controllers.Admin
             }));
         }
 
-        // Tạo và gửi thông báo
         [HttpPost("send")]
         public async Task<IActionResult> SendNotification([FromBody] SendNotificationRequest request)
         {
-            List<Notification> sentNotifications = new List<Notification>();
-            IEnumerable<User> users = new List<User>();
+            if (string.IsNullOrWhiteSpace(request.Message))
+                return BadRequest(new { Message = "Vui lòng nhập nội dung thông báo." });
+
+            var users = new List<User>();
 
             if (request.ToAllUsers)
             {
-                users = await _userService.GetAllAsync();
+                users = (await _userService.GetAllAsync()).ToList();
             }
-            else if (request.ToRole != null)
+            else if (!string.IsNullOrEmpty(request.ToRole))
             {
-                users = await _userService.GetUsersByRoleAsync(request.ToRole);
+                users = (await _userService.GetUsersByRoleAsync(request.ToRole)).ToList();
             }
-            else if (!string.IsNullOrEmpty(request.Email))
+            else if (request.Emails != null && request.Emails.Any())
             {
-                var user = await _userService.GetByEmailAsync(request.Email);
-                if (user != null)
+                foreach (var email in request.Emails)
                 {
-                    users = new List<User> { user };
+                    var user = await _userService.GetByEmailAsync(email);
+                    if (user != null)
+                        users.Add(user);
                 }
             }
+            else
+            {
+                return BadRequest(new { Message = "Không có đối tượng nhận thông báo." });
+            }
 
-            foreach (var user in users)
+            var sentResults = new List<object>();
+            foreach (var user in users.DistinctBy(u => u.UserID))
             {
                 var notification = new Notification
                 {
                     UserID = user.UserID,
                     Message = request.Message,
                     NotificationType = request.NotificationType,
-                    SentAt = System.DateTime.UtcNow,
-                    NotificationName = request.NotificationName,
-                    Condition = request.Condition, 
-                    NotificationFor = request.NotificationFor,
-                    CreatedBy = "Admin"  // Hoặc lấy từ hệ thống admin
+                    SentAt = DateTime.UtcNow,
+                    NotificationName = request.NotificationName ?? "Thông báo hệ thống",
+                    Condition = request.Condition ?? "Chờ xử lý",
+                    NotificationFor = request.NotificationFor ?? "All Users",
+                    CreatedBy = request.CreatedBy ?? "Admin"
                 };
 
                 await _notificationService.CreateAsync(notification);
 
-                if (!string.IsNullOrEmpty(user.Email))
+                bool emailSent = false;
+                if (request.SendEmail && !string.IsNullOrEmpty(user.Email))
                 {
-                    await _mailService.SendEmailAsync(user.Email, "Thông báo từ hệ thống", request.Message);
+                    try
+                    {
+                        await _mailService.SendEmailAsync(user.Email, notification.NotificationName, notification.Message);
+                        emailSent = true;
+                    }
+                    catch { emailSent = false; }
                 }
 
-                sentNotifications.Add(notification);
+                sentResults.Add(new
+                {
+                    user.UserID,
+                    user.Email,
+                    notification.NotificationID,
+                    notification.SentAt,
+                    EmailSent = emailSent
+                });
             }
 
-            return Ok(new { Message = "Thông báo đã được gửi." });
+            return Ok(new { Message = "Đã gửi thông báo.", Results = sentResults });
         }
+
+
 
         // Xóa thông báo
         [HttpDelete("deleteNotification")]

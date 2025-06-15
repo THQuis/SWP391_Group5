@@ -45,6 +45,6 @@ namespace Smoking.DAL.Entities
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
         public ICollection<ConsultationBooking> ConsultationBookingsAsUser { get; set; } = new List<ConsultationBooking>();
         public ICollection<ConsultationBooking> ConsultationBookingsAsCoach { get; set; } = new List<ConsultationBooking>();
-    }
 
+    }
 }

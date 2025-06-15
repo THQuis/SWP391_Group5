@@ -28,19 +28,15 @@ namespace Smoking.BLL.Services
         public async Task<Achievement> CreateAsync(Achievement entity)
         {
             await _unitOfWork.Achievements.AddAsync(entity);
-            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
+            await _unitOfWork.CompleteAsync();
             return entity;
         }
 
         public async Task<bool> UpdateAsync(Achievement entity)
         {
             var existingAchievement = await _unitOfWork.Achievements.GetByIdAsync(entity.AchievementID);
-            if (existingAchievement == null)
-            {
-                return false; // Không tìm thấy thành tích để cập nhật
-            }
+            if (existingAchievement == null) return false;
 
-            // Cập nhật các thuộc tính
             existingAchievement.AchievementName = entity.AchievementName;
             existingAchievement.Description = entity.Description;
             existingAchievement.Criteria = entity.Criteria;
@@ -48,21 +44,29 @@ namespace Smoking.BLL.Services
             existingAchievement.PackageType = entity.PackageType;
 
             _unitOfWork.Achievements.Update(existingAchievement);
-            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
+            await _unitOfWork.CompleteAsync();
             return true;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
             var achievement = await _unitOfWork.Achievements.GetByIdAsync(id);
-            if (achievement == null)
-            {
-                return false; // Không tìm thấy thành tích để xóa
-            }
+            if (achievement == null) return false;
 
             _unitOfWork.Achievements.Remove(achievement);
-            await _unitOfWork.CompleteAsync(); // Lưu thay đổi vào DB
+            await _unitOfWork.CompleteAsync();
             return true;
         }
+        public async Task<IEnumerable<Achievement>> SearchAsync(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+                return await _unitOfWork.Achievements.GetAllAsync();
+
+            return await _unitOfWork.Achievements.FindAsync(x =>
+                x.AchievementName.ToLower().Contains(keyword.ToLower()) ||
+                x.Description.ToLower().Contains(keyword.ToLower()));
+        }
+
+
     }
 }

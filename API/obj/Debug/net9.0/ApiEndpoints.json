@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
+    "Method": "Create",
+    "RelativePath": "api/Admin/AddAchivement",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Smoking.API.Models.Admin.AchievementCreate",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "CreateUser",
     "RelativePath": "api/Admin/AddUser",
@@ -11,6 +27,22 @@
         "Name": "request",
         "Type": "Smoking.API.Models.Admin.CreateUserRequest",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
+    "Method": "Delete",
+    "RelativePath": "api/Admin/DeleteAchivement",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -29,6 +61,32 @@
         "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
+    "Method": "GetById",
+    "RelativePath": "api/Admin/GetAchivementById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
+    "Method": "GetAll",
+    "RelativePath": "api/Admin/ListAchievement",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -52,6 +110,43 @@
       {
         "Name": "message",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
+    "Method": "Search",
+    "RelativePath": "api/Admin/Search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "keyword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
+    "Method": "Update",
+    "RelativePath": "api/Admin/UpdateAchievement/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Smoking.API.Models.Admin.AchievementUpdate",
         "IsRequired": true
       }
     ],

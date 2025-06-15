@@ -5,6 +5,156 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Admin/ListAchievement": {
+      "get": {
+        "tags": [
+          "AchievementAdmin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/GetAchivementById": {
+      "get": {
+        "tags": [
+          "AchievementAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/AddAchivement": {
+      "post": {
+        "tags": [
+          "AchievementAdmin"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AchievementCreate"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AchievementCreate"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AchievementCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/UpdateAchievement/{id}": {
+      "put": {
+        "tags": [
+          "AchievementAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AchievementUpdate"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AchievementUpdate"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AchievementUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/DeleteAchivement": {
+      "delete": {
+        "tags": [
+          "AchievementAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/Search": {
+      "get": {
+        "tags": [
+          "AchievementAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Admin/ListUsers": {
       "get": {
         "tags": [
@@ -765,6 +915,58 @@
   },
   "components": {
     "schemas": {
+      "AchievementCreate": {
+        "type": "object",
+        "properties": {
+          "achievementName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "criteria": {
+            "type": "string",
+            "nullable": true
+          },
+          "badgeImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "packageType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AchievementUpdate": {
+        "type": "object",
+        "properties": {
+          "achievementName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "criteria": {
+            "type": "string",
+            "nullable": true
+          },
+          "badgeImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "packageType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "BlogCreateModel": {
         "type": "object",
         "properties": {
@@ -901,33 +1103,20 @@
             "type": "string",
             "nullable": true
           },
-          "email": {
-            "type": "string",
+          "emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
-          },
-          "notificationID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userID": {
-            "type": "integer",
-            "format": "int32"
           },
           "message": {
             "type": "string",
             "nullable": true
           },
-          "notificationDate": {
-            "type": "string",
-            "format": "date-time"
-          },
           "notificationType": {
             "type": "string",
             "nullable": true
-          },
-          "sentAt": {
-            "type": "string",
-            "format": "date-time"
           },
           "notificationName": {
             "type": "string",
@@ -944,6 +1133,9 @@
           "createdBy": {
             "type": "string",
             "nullable": true
+          },
+          "sendEmail": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

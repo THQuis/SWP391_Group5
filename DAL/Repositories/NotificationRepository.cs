@@ -15,8 +15,8 @@ namespace Smoking.DAL.Repositories
         public async Task<IQueryable<Notification>> GetAllWithUserAndRoleAsync()
         {
             return _context.Notifications
-                .Include(n => n.User)           // Bao gồm thông tin User
-                .ThenInclude(u => u.Role);      // Bao gồm Role của User
+                .Include(n => n.User)          
+                .ThenInclude(u => u.Role);     
         }
 
         public async Task<Notification> GetByIdWithUserAndRoleAsync(int id)

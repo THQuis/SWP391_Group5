@@ -26,7 +26,6 @@ namespace Smoking.DAL.Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ConsultationBooking> ConsultationBookings { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -56,9 +55,7 @@ namespace Smoking.DAL.Data
                 .HasForeignKey(n => n.UserID)  // Sử dụng UserID làm khóa ngoại
                 .OnDelete(DeleteBehavior.Restrict);  // Ngừng xóa thông báo khi xóa người dùng (hoặc có thể thay đổi hành vi xóa)
 
-
-
-            // ... các cấu hình khác nếu cần
+            
 
         }
     }

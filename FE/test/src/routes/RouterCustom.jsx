@@ -14,14 +14,18 @@ import ManagementPackage from "../pages/admin/ManagementPackage";
 import ManagementPerformance from "../pages/admin/ManagementPerformance";
 import ManagementPlan from "../pages/admin/ManagementPlan";
 // import ManagementNotification from "../pages/admin/ManagementNotification";
-
-
+import QuitPlanPage from "../pages/user/QuitPlanPage";
+import MilestonesPage from "../pages/user/MilestonesPage";
 
 
 
 
 
 import ManagementNotification from "../pages/admin/test";
+import Page from "../pages/user/test"
+
+// import MilestonesPage from "../pages/user/test";
+
 
 
 
@@ -41,6 +45,23 @@ const RouterCustom = () => {
             <Route path={ROUTERS.USER.PROFILE} element={
                 <UserLayout>
                     <UserProfile />
+                </UserLayout>
+            } />
+
+            <Route path={ROUTERS.USER.QUITPLAN} element={
+                <UserLayout>
+                    <QuitPlanPage />
+                </UserLayout>
+            } />
+
+            <Route path={ROUTERS.USER.MILESTONES} element={
+                <UserLayout>
+                    <MilestonesPage />
+                </UserLayout>
+            } />
+            <Route path={ROUTERS.USER.TEST} element={
+                <UserLayout>
+                    <Page />
                 </UserLayout>
             } />
 

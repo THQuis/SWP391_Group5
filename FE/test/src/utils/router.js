@@ -4,7 +4,10 @@ export const ROUTERS = {
     },
     USER: {
         HOME: "/",
-        PROFILE: "/User/profile"
+        PROFILE: "/User/profile",
+        QUITPLAN: "/User/plan",
+        MILESTONES: "/User/milestones",
+        TEST: "/User/tientrinhAuto",
     },
     ADMIN: {
         DASHBOARD: "/admin",

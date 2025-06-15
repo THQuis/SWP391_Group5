@@ -14,7 +14,7 @@ namespace Smoking.DAL.Interfaces.Repositories
         IPaymentRepository Payments { get; }
         ISmokingStatusRepository SmokingStatuses { get; }
         IQuitPlanRepository QuitPlans { get; }
-        IQuitProgressRepository QuitProgresses { get; }  // Đảm bảo tên là QuitProgresses
+        IQuitProgressRepository QuitProgresses { get; }  
         IAchievementRepository Achievements { get; }
         IUserAchievementRepository UserAchievements { get; }
         INotificationRepository Notifications { get; }
@@ -24,7 +24,7 @@ namespace Smoking.DAL.Interfaces.Repositories
 
         Task<int> CompleteAsync();
         AppDbContext DbContext { get; }
-
-        Task<User> GetUserWithRoleAsync(int userId);
+          
+        Task<User> GetUserWithRoleAsync(int userId); 
     }
 }

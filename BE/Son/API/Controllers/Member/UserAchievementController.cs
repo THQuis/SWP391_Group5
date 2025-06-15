@@ -7,6 +7,7 @@ namespace Smoking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "2")] // Chỉ User (RoleID=2) được vào
     public class UserAchievementController : ControllerBase
     {
         private readonly IUserAchievementService _userAchievementService;
@@ -16,7 +17,7 @@ namespace Smoking.API.Controllers
             _userAchievementService = userAchievementService;
         }
 
-        // Lấy thành tích của người dùng
+        // 1:Lấy thành tích của người dùng
         [HttpGet("get-achievements/{userId}")]
         public async Task<IActionResult> GetUserAchievements(int userId)
         {
@@ -28,7 +29,7 @@ namespace Smoking.API.Controllers
             return Ok(achievements);
         }
 
-        // Thêm thành tích cho người dùng
+        // 2:Thêm thành tích cho người dùng
         [HttpPost("add-achievement")]
         public async Task<IActionResult> AddUserAchievement([FromBody] UserAchievement userAchievement)
         {
@@ -41,7 +42,7 @@ namespace Smoking.API.Controllers
             return Ok("Achievement added successfully.");
         }
 
-        // Xóa thành tích của người dùng
+        // 3:Xóa thành tích của người dùng
         [HttpDelete("delete-achievement/{id}")]
         public async Task<IActionResult> DeleteUserAchievement(int id)
         {

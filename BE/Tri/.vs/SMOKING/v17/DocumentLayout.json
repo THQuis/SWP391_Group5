@@ -1,49 +1,61 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\",
+  "WorkspaceRootPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\models\\admin\\notificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\notificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\models\\admin\\sendnotificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\sendnotificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\controllers\\admin\\notificationadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\notificationadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\interfaces\\iachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\bll\\interfaces\\iachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\bll\\services\\achievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\bll\\services\\achievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\achievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\models\\admin\\achievementcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\models\\admin\\achievementcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\achievementcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\dal\\entities\\achievement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\dal\\entities\\achievement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\achievement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\dal\\repositories\\achievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\dal\\repositories\\achievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\achievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\dal\\interfaces\\repositories\\iachievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\dal\\interfaces\\repositories\\iachievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iachievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -59,10 +71,49 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "NotificationRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\Admin\\NotificationRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\NotificationRequest.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\Admin\\NotificationRequest.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\NotificationRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T03:17:07.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NotificationAdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAhwEIAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T03:16:04.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SendNotificationRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\Admin\\SendNotificationRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\SendNotificationRequest.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\Admin\\SendNotificationRequest.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\SendNotificationRequest.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAywBMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T03:16:10.825Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "AchievementAdminController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Admin\\AchievementAdminController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AchievementAdminController.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Admin\\AchievementAdminController.cs",
               "RelativeToolTip": "API\\Controllers\\Admin\\AchievementAdminController.cs",
               "ViewState": "AgIAAGAAAAAAAAAAAAAAwGwAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -71,133 +122,123 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "Achievement.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Entities\\Achievement.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Entities\\Achievement.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Achievement.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Entities\\Achievement.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Entities\\Achievement.cs",
               "RelativeToolTip": "DAL\\Entities\\Achievement.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAwwBgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:09:47.726Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AchievementUpdate.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Admin\\AchievementUpdate.cs",
-              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementUpdate.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Admin\\AchievementUpdate.cs",
-              "RelativeToolTip": "API\\Models\\Admin\\AchievementUpdate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:41:51.889Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\Admin\\AdminController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Controllers\\Admin\\AdminController.cs",
-              "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABsAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:20:38.404Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AchievementService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\AchievementService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\AchievementService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Services\\AchievementService.cs",
-              "RelativeToolTip": "BLL\\Services\\AchievementService.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAiwEUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:09:38.911Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IAchievementService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IAchievementService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IAchievementService.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BLL\\Interfaces\\IAchievementService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IAchievementService.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:09:26.87Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AchievementRepository.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Repositories\\AchievementRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Repositories\\AchievementRepository.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Repositories\\AchievementRepository.cs",
-              "RelativeToolTip": "DAL\\Repositories\\AchievementRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:10:09.587Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AchievementCreate.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Admin\\AchievementCreate.cs",
-              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementCreate.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Models\\Admin\\AchievementCreate.cs",
-              "RelativeToolTip": "API\\Models\\Admin\\AchievementCreate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:25:48.441Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Program.cs",
-              "RelativeDocumentMoniker": "API\\Program.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\API\\Program.cs",
-              "RelativeToolTip": "API\\Program.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAmwC8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:17:11.158Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T02:09:47.726Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAQwBIAAAA0AAAAAAAAAA==",
+              "Title": "AchievementUpdate.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\Admin\\AchievementUpdate.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementUpdate.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\Admin\\AchievementUpdate.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\AchievementUpdate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:19:27.176Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T02:41:51.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T02:20:38.404Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AchievementService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Services\\AchievementService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\AchievementService.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Services\\AchievementService.cs",
+              "RelativeToolTip": "BLL\\Services\\AchievementService.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAiwEUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T02:09:38.911Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAchievementService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Interfaces\\IAchievementService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IAchievementService.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Interfaces\\IAchievementService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IAchievementService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T02:09:26.87Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
+              "Title": "AchievementRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Repositories\\AchievementRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\AchievementRepository.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Repositories\\AchievementRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\AchievementRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T02:10:09.587Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AchievementCreate.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\Admin\\AchievementCreate.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementCreate.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\Admin\\AchievementCreate.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\AchievementCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T02:25:48.441Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAmwC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T02:17:11.158Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwBIAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T02:19:27.176Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "IAchievementRepository.cs",
-              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
-              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
               "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:10:01.005Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T02:10:01.005Z"
             }
           ]
         }

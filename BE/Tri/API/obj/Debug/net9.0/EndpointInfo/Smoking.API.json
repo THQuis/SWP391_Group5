@@ -155,6 +155,29 @@
         }
       }
     },
+    "/api/AchievementAndProgress/user/{userId}": {
+      "get": {
+        "tags": [
+          "AchievementAndProgress"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Admin/ListUsers": {
       "get": {
         "tags": [
@@ -826,6 +849,37 @@
         }
       }
     },
+    "/api/QuitPlanAuto/auto-create": {
+      "post": {
+        "tags": [
+          "QuitPlanAuto"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutoQuitPlanRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutoQuitPlanRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutoQuitPlanRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/test/userachievement/grant": {
       "post": {
         "tags": [
@@ -993,6 +1047,28 @@
           "packageType": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AutoQuitPlanRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cigarettesPerDay": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pricePerPack": {
+            "type": "number",
+            "format": "double"
+          },
+          "cigarettesPerPack": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -26,5 +26,11 @@ namespace Smoking.DAL.Repositories
                 .ThenInclude(u => u.Role)
                 .FirstOrDefaultAsync(n => n.NotificationID == id);
         }
+
+
+        public async Task CreateNotificationAsync(Notification notification)
+        {
+            await _context.Notifications.AddAsync(notification);
+        }
     }
 }

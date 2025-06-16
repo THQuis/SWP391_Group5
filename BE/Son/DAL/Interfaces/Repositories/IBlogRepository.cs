@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 namespace Smoking.DAL.Interfaces.Repositories
 {
     /// <summary>
-    /// Repository pattern cho Blog, lấy được luôn User/Role
+    /// Repository pattern cho Blog (quản lý cho cả Admin và User)
     /// </summary>
     public interface IBlogRepository
     {
+        // ================= ADMIN =================
+
         Task<IEnumerable<Blog>> GetAllWithUserAndRoleAsync();
         Task<IEnumerable<Blog>> GetAllByStatusWithUserAndRoleAsync(string status);
         Task<IEnumerable<Blog>> GetAllReportedWithUserAndRoleAsync();
@@ -16,7 +18,16 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task<int> CountReportedAsync();
         Task<int> CountAllAsync();
         Task<Blog> GetByIdWithUserAndRoleAsync(int id);
-        Task<IEnumerable<Blog>> GetByAuthorIdWithUserAndRoleAsync(int authorId);
+
+        // ================= USER =================
+
+        Task<IEnumerable<Blog>> GetAllByUserIdAsync(int userId);
+        Task<Blog> GetByIdAsync(int blogId);
+        Task<int> CountAllByUserAsync(int userId);
+        Task<int> CountByUserAndStatusAsync(int userId, string status);
+
+        // ================= COMMON =================
+
         Task AddAsync(Blog blog);
         void Update(Blog blog);
         void Delete(Blog blog);

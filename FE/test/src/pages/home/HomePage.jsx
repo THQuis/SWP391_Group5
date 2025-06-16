@@ -33,7 +33,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/ThienEdit.jpg?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Thien1.2.jpg?raw=true"
                             alt="Second slide"
                         />
 
@@ -42,6 +42,13 @@ const HomePage = () => {
                         <img
                             className="d-block w-100"
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Coach.png?raw=true"
+                            alt="Third slide"
+                        />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.1.jpg?raw=true"
                             alt="Third slide"
                         />
                     </Carousel.Item>

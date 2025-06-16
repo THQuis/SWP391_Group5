@@ -24,6 +24,8 @@ namespace Smoking.API.Models.Admin
     {
         public string Title { get; set; }
         public string? Content { get; set; }
+
+        //sửa test thử
         public int AuthorId { get; set; }
         public string? CategoryName { get; set; }
         public string? BlogType { get; set; }

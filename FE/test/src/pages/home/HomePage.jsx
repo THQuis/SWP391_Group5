@@ -21,7 +21,9 @@ const HomePage = () => {
             </section> */}
 
             <section className="hero-carousel" id="home">
-                <Carousel fade controls={false} indicators={false} interval={1000}>
+
+                <Carousel fade controls={false} indicators={false} interval={500}>
+
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
@@ -42,6 +44,14 @@ const HomePage = () => {
                         <img
                             className="d-block w-100"
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Coach.png?raw=true"
+
+                            alt="Third slide"
+                        />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.1.jpg?raw=true"
                             alt="Third slide"
                         />
                     </Carousel.Item>

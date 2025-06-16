@@ -21,11 +21,11 @@ const HomePage = () => {
             </section> */}
 
             <section className="hero-carousel" id="home">
-                <Carousel fade controls={false} indicators={false} interval={4000}>
+                <Carousel fade controls={false} indicators={false} interval={500}>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/bannerpng.png?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.3.jpg?raw=true"
                             alt="First slide"
                         />
 
@@ -33,7 +33,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://source.unsplash.com/1600x600/?hope,lifestyle"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/ThienEdit.jpg?raw=true"
                             alt="Second slide"
                         />
 
@@ -41,7 +41,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://source.unsplash.com/1600x600/?hope,lifestyle"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Coach.png?raw=true"
                             alt="Third slide"
                         />
                     </Carousel.Item>

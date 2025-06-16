@@ -69,14 +69,14 @@ const Header = () => {
                   Tài khoản
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/user/profile">Xem Profile</Dropdown.Item>
+                  <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>Xem Profile</Dropdown.Item>
                   <Dropdown.Item href="#achievements">Thành Tích</Dropdown.Item>
                   <Dropdown.Item href="#community">Coach</Dropdown.Item>
                   <Dropdown.Item href="#dashboard">Dashboard</Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item href="#settings">Cài đặt</Dropdown.Item>
                   <Dropdown.Item href="#support">Hỗ trợ</Dropdown.Item>
-                  <Dropdown.Item href="#about">Về Chúng Tôi</Dropdown.Item>
+                  <Dropdown.Item as={Link} to={ROUTERS.USER.HOME}>Về Chúng Tôi</Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item as="button" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                 </Dropdown.Menu>

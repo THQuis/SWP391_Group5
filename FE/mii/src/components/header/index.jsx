@@ -49,9 +49,10 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
           <Nav className="me-auto gap-3 align-items-center">
             <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
-            <Nav.Link href="/User/plan" className="nav-item-custom">Kế hoạch</Nav.Link>
-            <Nav.Link href="/User/blog" className="nav-item-custom">Cộng đồng</Nav.Link>
-            <Nav.Link href="/User/progress" className="nav-item-custom">Tiến trình</Nav.Link>
+            <Nav.Link as={Link} to={ROUTERS.USER.TEST} className="nav-item-custom">Dashboard</Nav.Link>
+            <Nav.Link as={Link} to={ROUTERS.USER.QUITPLAN} className="nav-item-custom">Kế hoạch</Nav.Link>
+            <Nav.Link as={Link} to={ROUTERS.USER.BLOG} className="nav-item-custom">Cộng đồng</Nav.Link>
+            <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">Tiến trình</Nav.Link>
           </Nav>
           <Nav>
             {isLoggedIn ? (
@@ -67,17 +68,17 @@ const Header = () => {
                   Tài khoản
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/user/profile">👤 Xem Profile</Dropdown.Item>
-                  <Dropdown.Item href="/User/ranking">🏆 Thành Tích</Dropdown.Item>
-                  <Dropdown.Item href="#community">🧑‍⚕️ Coach</Dropdown.Item>
-                  <Dropdown.Item href="#dashboard">📊 Dashboard</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/user/profile"> Xem Profile</Dropdown.Item>
+                  <Dropdown.Item href="/User/ranking"> Thành Tích</Dropdown.Item>
+                  <Dropdown.Item href="/User/coach">Coach</Dropdown.Item>
+                  <Dropdown.Item href="/User/coachdashboard">Dashboard</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item href="#settings">⚙️ Cài đặt</Dropdown.Item>
+                  <Dropdown.Item href="#settings">Cài đặt</Dropdown.Item>
                   <Dropdown.Item href="/User/package"> Mua Gói</Dropdown.Item>
-                  <Dropdown.Item href="#support">💬 Hỗ trợ</Dropdown.Item>
-                  <Dropdown.Item href="#about">ℹ️ Về Chúng Tôi</Dropdown.Item>
+                  <Dropdown.Item href="#support">Hỗ trợ</Dropdown.Item>
+                  <Dropdown.Item href="#about">Về Chúng Tôi</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item as="button" onClick={handleLogout}>🚪 Đăng xuất</Dropdown.Item>
+                  <Dropdown.Item as="button" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (

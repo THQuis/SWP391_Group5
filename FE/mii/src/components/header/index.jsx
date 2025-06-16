@@ -40,7 +40,7 @@ const Header = () => {
       <Container>
         <Navbar.Brand as={Link} to={ROUTERS.USER.HOME}>
           <Image
-            src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Logo.png?raw=true"
+            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true"
             alt="Logo"
             width="80"
           />
@@ -58,7 +58,7 @@ const Header = () => {
               <Dropdown align="end">
                 <Dropdown.Toggle variant="success" id="dropdown-user">
                   <Image
-                    src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/IconUser.png?raw=true"
+                    src="https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true"
                     width={30}
                     height={30}
                     roundedCircle
@@ -68,7 +68,7 @@ const Header = () => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to="/user/profile">👤 Xem Profile</Dropdown.Item>
-                  <Dropdown.Item href="#achievements">🏆 Thành Tích</Dropdown.Item>
+                  <Dropdown.Item href="/User/ranking">🏆 Thành Tích</Dropdown.Item>
                   <Dropdown.Item href="#community">🧑‍⚕️ Coach</Dropdown.Item>
                   <Dropdown.Item href="#dashboard">📊 Dashboard</Dropdown.Item>
                   <Dropdown.Divider />

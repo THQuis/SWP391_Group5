@@ -25,7 +25,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Banner.jpg?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/bannerpng.png?raw=true"
                             alt="First slide"
                         />
 

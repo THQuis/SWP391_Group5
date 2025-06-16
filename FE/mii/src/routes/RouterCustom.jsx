@@ -17,7 +17,11 @@ import ManagementNotification from "../pages/admin/ManagementNotification";
 import UserBlog from "../pages/user/UserBlog";// user
 import UserRanking from "../pages/user/UserRanking"; // user ranking
 import UserPackage from "../pages/user/UserPackage"; // user package
-
+import QuitPlanPage from "../pages/user/QuitPlanPage"; // user quit plan
+import MilestonesPage from "../pages/user/MilestonesPage";// user milestones
+import Page from "../pages/user/test"; // user test page (Dashboard)
+import UserButtonCoach from "../pages/user/UserButtonCoach"; // user coach button
+import CoachDashboard from "../pages/user/CoachDashboard"; //  coach dashboard
 
 
 // import ManagementBlog from "../pages/admin/test";
@@ -58,6 +62,36 @@ const RouterCustom = () => {
                     < UserPackage />
                 </UserLayout>
             } />
+
+            <Route path={ROUTERS.USER.QUITPLAN} element={
+                <UserLayout>
+                    <QuitPlanPage />
+                </UserLayout>
+            } />
+
+            <Route path={ROUTERS.USER.MILESTONES} element={
+                <UserLayout>
+                    <MilestonesPage />
+                </UserLayout>
+            } />
+            <Route path={ROUTERS.USER.TEST} element={
+                <UserLayout>
+                    <Page />
+                </UserLayout>
+            } />
+            <Route path={ROUTERS.USER.COACH} element={
+                <UserLayout>
+                    <UserButtonCoach />
+                </UserLayout>
+            } />
+            {/* Coach dashboard */}
+            <Route path={ROUTERS.USER.COACHDASHBOARD} element={
+                <UserLayout>
+                    <CoachDashboard />
+                </UserLayout>
+            } />
+
+
             {/* Admin layout */}
             <Route path={ROUTERS.ADMIN.DASHBOARD} element={
                 <AdminLayout>

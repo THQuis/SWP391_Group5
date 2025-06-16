@@ -40,7 +40,7 @@ const Header = () => {
       <Container>
         <Navbar.Brand as={Link} to={ROUTERS.USER.HOME}>
           <Image
-            src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Logo.png?raw=true"
+            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true"
             alt="Logo"
             width="80"
           />
@@ -58,7 +58,7 @@ const Header = () => {
               <Dropdown align="end">
                 <Dropdown.Toggle variant="success" id="dropdown-user">
                   <Image
-                    src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/IconUser.png?raw=true"
+                    src="https://scontent.fsgn2-11.fna.fbcdn.net/v/t39.30808-1/492103928_1330450674698672_3871763749774199059_n.jpg?stp=c0.17.541.541a_dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=lGKKYzKkgfIQ7kNvwGljziI&_nc_oc=Adlzp7moIe-dlIJIUKv6w9Bnrw6RnjGfhXgcALsMpyR1Adhoq6Y3GFiIBErWQbrlblk&_nc_zt=24&_nc_ht=scontent.fsgn2-11.fna&_nc_gid=IGNMo7SfRU6hW7L9AAgIYA&oh=00_AfM8SSNbJD8nqna1KJT-WmasO6ZdzGrCrthnAEshqi87YQ&oe=685547F2"
                     width={30}
                     height={30}
                     roundedCircle

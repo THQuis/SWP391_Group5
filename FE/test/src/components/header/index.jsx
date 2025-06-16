@@ -49,8 +49,10 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
           <Nav className="me-auto gap-3 align-items-center">
             <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
+            <Nav.Link as={Link} to={ROUTERS.USER.TEST} className="nav-item-custom">Dashboard</Nav.Link>
+
             <Nav.Link as={Link} to={ROUTERS.USER.QUITPLAN} className="nav-item-custom">Kế hoạch</Nav.Link>
-            <Nav.Link as={Link} to={ROUTERS.USER.TEST} className="nav-item-custom">Cộng đồng</Nav.Link>
+            <Nav.Link as={Link} to={ROUTERS.USER.BLOG} className="nav-item-custom">Cộng đồng</Nav.Link>
             <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">Tiến trình</Nav.Link>
           </Nav>
           <Nav>

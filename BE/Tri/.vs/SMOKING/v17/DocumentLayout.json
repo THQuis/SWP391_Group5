@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\models\\system\\membership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\system\\membership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\project_swp\\smoking_1\\be\\tri\\api\\controllers\\member\\achievementandprogresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\achievementandprogresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -107,6 +111,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Membership.cs",
+              "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\System\\Membership.cs",
+              "RelativeDocumentMoniker": "API\\Models\\System\\Membership.cs",
+              "ToolTip": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Models\\System\\Membership.cs",
+              "RelativeToolTip": "API\\Models\\System\\Membership.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T15:15:17.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "AchievementAndProgressController.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Member\\AchievementAndProgressController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\AchievementAndProgressController.cs",
@@ -119,7 +136,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Repositories\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\UnitOfWork.cs",
@@ -127,12 +144,11 @@
               "RelativeToolTip": "DAL\\Repositories\\UnitOfWork.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAADkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T12:24:33.217Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T12:24:33.217Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "QuitPlan.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Entities\\QuitPlan.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\QuitPlan.cs",
@@ -144,7 +160,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Program.cs",
               "RelativeDocumentMoniker": "API\\Program.cs",
@@ -152,12 +168,11 @@
               "RelativeToolTip": "API\\Program.cs",
               "ViewState": "AgIAACUAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T11:38:03.209Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T11:38:03.209Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "QuitPlanAutoController.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\System\\QuitPlanAutoController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\System\\QuitPlanAutoController.cs",
@@ -165,12 +180,11 @@
               "RelativeToolTip": "API\\Controllers\\System\\QuitPlanAutoController.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwBoAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T12:25:57.383Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T12:25:57.383Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "QuitProgressService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Services\\QuitProgressService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\QuitProgressService.cs",
@@ -178,12 +192,11 @@
               "RelativeToolTip": "BLL\\Services\\QuitProgressService.cs",
               "ViewState": "AgIAAFMAAAAAAAAAAAAmwIAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T11:34:43.436Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T11:34:43.436Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "QuitPlanAutoService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Services\\QuitPlanAutoService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\QuitPlanAutoService.cs",
@@ -195,7 +208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "UserAchievementTestController.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Admin\\UserAchievementTestController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\UserAchievementTestController.cs",
@@ -207,7 +220,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "IQuitProgressService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Interfaces\\IQuitProgressService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IQuitProgressService.cs",
@@ -219,7 +232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "IQuitProgressRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IQuitProgressRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IQuitProgressRepository.cs",
@@ -231,7 +244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "QuitProgress.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Entities\\QuitProgress.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\QuitProgress.cs",
@@ -243,7 +256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "QuitPlanService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Services\\QuitPlanService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\QuitPlanService.cs",
@@ -255,7 +268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "AchievementAdminController.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Admin\\AchievementAdminController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AchievementAdminController.cs",
@@ -267,7 +280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "IUnitOfWork.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
@@ -279,7 +292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "AchievementEvaluatorService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Services\\AchievementEvaluatorService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\AchievementEvaluatorService.cs",
@@ -291,7 +304,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "UserAchievementService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Services\\UserAchievementService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\UserAchievementService.cs",
@@ -303,7 +316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "UserProfileController.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\API\\Controllers\\Member\\UserProfileController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserProfileController.cs",
@@ -315,7 +328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "IUserAchievementService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Interfaces\\IUserAchievementService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IUserAchievementService.cs",
@@ -327,7 +340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "IAchievementEvaluatorService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Interfaces\\IAchievementEvaluatorService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IAchievementEvaluatorService.cs",
@@ -339,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "IAchievementService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Interfaces\\IAchievementService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IAchievementService.cs",
@@ -351,7 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "IQuitPlanAutoService.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\BLL\\Interfaces\\IQuitPlanAutoService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IQuitPlanAutoService.cs",
@@ -363,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "Notification.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Entities\\Notification.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Notification.cs",
@@ -375,7 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "UserAchievement.cs",
               "DocumentMoniker": "D:\\Ki_5\\Project_SWP\\SMOKING_1\\BE\\Tri\\DAL\\Entities\\UserAchievement.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\UserAchievement.cs",

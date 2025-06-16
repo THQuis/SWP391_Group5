@@ -21,11 +21,11 @@ const HomePage = () => {
             </section> */}
 
             <section className="hero-carousel" id="home">
-                <Carousel fade controls={false} indicators={false} interval={4000}>
+                <Carousel fade controls={false} indicators={false} interval={500}>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/PhoiBreathAgain.jpg?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Banner1.jpg?raw=true"
                             alt="First slide"
                         />
 

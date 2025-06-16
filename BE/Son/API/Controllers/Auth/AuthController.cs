@@ -11,9 +11,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smoking.API.Controllers.Auth
-    {
-        [ApiController]
+namespace Smoking.API.Controllers
+
+{
+    [ApiController]
         [Route("api/Auth")]
         public class AuthController : ControllerBase
         {
@@ -80,9 +81,10 @@ namespace Smoking.API.Controllers.Auth
 
 
         // Tạo JWT Token
-        private string GenerateJwtToken(User user)
-            {
-                var tokenHandler = new JwtSecurityTokenHandler();
+        private string GenerateJwtToken(Smoking.DAL.Entities.User user)
+
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.UTF8.GetBytes(_jwtSettings.SecretKey);
 
                 var tokenDescriptor = new SecurityTokenDescriptor

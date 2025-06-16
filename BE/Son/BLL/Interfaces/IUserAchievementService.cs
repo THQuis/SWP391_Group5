@@ -1,16 +1,16 @@
-﻿using Smoking.DAL.Entities;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Smoking.BLL.Interfaces
 {
     public interface IUserAchievementService
     {
-        Task<IEnumerable<UserAchievement>> GetAllAsync();
-        Task<UserAchievement> GetByIdAsync(int id);
+        Task<bool> GrantAchievementAsync(int userId, int achievementId, bool sendEmail = true);
         Task<IEnumerable<UserAchievement>> GetByUserIdAsync(int userId);
-        Task<UserAchievement> CreateAsync(UserAchievement entity);
-        Task<bool> UpdateAsync(UserAchievement entity);
-        Task<bool> DeleteAsync(int id);
+
     }
+
 }

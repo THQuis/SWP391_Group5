@@ -48,8 +48,13 @@ builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
 // Thêm MemoryCache (bắt buộc nếu dùng để lưu OTP tạm)
 builder.Services.AddMemoryCache();
 
-// Thêm Controller
-builder.Services.AddControllers();
+// Thêm Controller và cấu hình JsonOptions để tránh lỗi circular reference
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.MaxDepth = 64;  // Tăng chiều sâu nếu cần thiết
+    });
 
 // Cấu hình Authentication dùng JWT Bearer
 var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);

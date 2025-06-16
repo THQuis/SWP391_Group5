@@ -4,7 +4,7 @@ using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using System.Linq;
 using System.Threading.Tasks;
-using Smoking.API.Models.Admin; // Dùng BlogViewModel từ Admin
+using Smoking.API.Models.Admin;
 using System.Security.Claims;
 
 namespace Smoking.API.Controllers.User
@@ -23,18 +23,16 @@ namespace Smoking.API.Controllers.User
             _userService = userService;
         }
 
-        // 1️ Tạo blog mới (trạng thái sẽ là Published ngay lập tức)
+        // 1️⃣ Tạo blog mới (trạng thái sẽ là Published ngay lập tức)
         [HttpPost("create")]
         public async Task<IActionResult> CreateBlog([FromBody] BlogCreateModel model)
         {
-            // Lấy authorId từ JWT Token (thông tin người dùng đang đăng nhập)
             var authorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (authorIdClaim == null)
                 return Unauthorized("Chưa đăng nhập");
 
             var authorId = int.Parse(authorIdClaim); // Chuyển claim thành kiểu int
 
-            // Kiểm tra nếu người dùng không tồn tại
             var user = await _userService.GetByIdAsync(authorId);
             if (user == null)
                 return BadRequest("User không tồn tại");
@@ -48,7 +46,7 @@ namespace Smoking.API.Controllers.User
                 BlogType = model.BlogType,
                 Status = "Published", // Trạng thái là Published ngay lập tức
                 CreatedDate = System.DateTime.Now,
-                LastModifiedDate = System.DateTime.Now, // Cập nhật LastModifiedDate tại thời điểm tạo
+                LastModifiedDate = System.DateTime.Now,
                 Likes = 0,
                 Dislikes = 0,
                 ReportCount = 0
@@ -58,12 +56,10 @@ namespace Smoking.API.Controllers.User
             return Ok(created);
         }
 
-
         // 2️⃣ Xem danh sách blog cá nhân
         [HttpGet("my-blogs")]
         public async Task<IActionResult> GetMyBlogs()
         {
-            // Lấy authorId từ JWT Token (thông tin người dùng đang đăng nhập)
             var authorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (authorIdClaim == null)
                 return Unauthorized("Chưa đăng nhập");
@@ -83,8 +79,8 @@ namespace Smoking.API.Controllers.User
                 Likes = b.Likes,
                 Dislikes = b.Dislikes,
                 ReportCount = b.ReportCount,
-                AuthorName = b.User?.FullName ?? "Unknown",  // Lấy tên của tác giả nếu có
-                RoleName = b.User?.Role?.RoleName ?? "Unknown", // Lấy tên vai trò của tác giả nếu có
+                AuthorName = b.User?.FullName ?? "Unknown",
+                RoleName = b.User?.Role?.RoleName ?? "Unknown",
                 CreatedDate = b.CreatedDate,
                 LastModifiedDate = b.LastModifiedDate
             }));
@@ -122,7 +118,6 @@ namespace Smoking.API.Controllers.User
             var blog = await _blogService.GetByIdAsync(blogId);
             if (blog == null) return NotFound();
 
-            // Kiểm tra nếu là bài viết của chính người dùng đang đăng nhập
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (blog.AuthorId != int.Parse(userIdClaim))
                 return BadRequest("Bạn không thể sửa bài viết của người khác.");
@@ -144,7 +139,6 @@ namespace Smoking.API.Controllers.User
             var blog = await _blogService.GetByIdAsync(blogId);
             if (blog == null) return NotFound();
 
-            // Kiểm tra nếu là bài viết của chính người dùng đang đăng nhập
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (blog.AuthorId != int.Parse(userIdClaim))
                 return BadRequest("Bạn không thể xoá bài viết của người khác.");
@@ -157,7 +151,6 @@ namespace Smoking.API.Controllers.User
         [HttpGet("stats")]
         public async Task<IActionResult> GetUserBlogStats()
         {
-            // Lấy authorId từ JWT Token (thông tin người dùng đang đăng nhập)
             var authorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (authorIdClaim == null)
                 return Unauthorized("Chưa đăng nhập");

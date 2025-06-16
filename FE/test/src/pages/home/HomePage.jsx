@@ -72,10 +72,14 @@ const HomePage = () => {
                     <div className="about-content">
                         <div className="about-text">
                             <h3>BreathAgain</h3>
-                            <p>không chỉ là một nền tảng hỗ trợ cai thuốc.</p>
+                            <p>Hãy để BreathAgain đồng hành cùng bạn trên con đường vượt qua sự phụ thuộc vào thuốc lá. Chúng tôi tin rằng mỗi người đều xứng đáng có một cuộc sống khỏe mạnh hơn, tự do hơn và hạnh phúc hơn. Tại đây, bạn sẽ nhận được không chỉ là các công cụ hỗ trợ, mà còn là sự động viên, chia sẻ từ cộng đồng cũng như những lời khuyên tận tâm từ các chuyên gia.</p>
                             <p>
-                                Đó là nơi bắt đầu của một hành trình hồi sinh - cả về thể chất lẫn
-                                tinh thần - dành cho hàng triệu người đang mắc kẹt trong lần khói thuốc.
+                                Bạn không đơn độc trên hành trình này! Hàng ngàn người đã và đang thành công nhờ sự giúp đỡ của BreathAgain. Mỗi bước tiến nhỏ của bạn sẽ được ghi nhận, mỗi thành tựu của bạn sẽ được tôn vinh và lan tỏa để truyền cảm hứng cho những người khác.
+                            </p>
+                            <p>
+                                Hãy bắt đầu thay đổi vì chính bạn, vì những người thân yêu và vì tương lai không còn khói thuốc. BreathAgain – Khơi lại một cuộc sống mới, khỏe mạnh hơn từng ngày cùng bạn!
+
+
                             </p>
                         </div>
                         <div className="about-image">🫁</div>
@@ -91,17 +95,18 @@ const HomePage = () => {
                         <div className="feature-card">
                             <h3>💚 Sứ mệnh của chúng tôi</h3>
                             <p>
-                                Giúp lại hơi thở tự do, giúp người hút thuốc phục hồi sức khỏe một
-                                cách toàn diện và lâu dài - không chỉ để bỏ thuốc, mà để có một
-                                cuộc sống.
+                                Chúng tôi luôn tin rằng, mỗi hành trình thay đổi bắt đầu từ một quyết tâm nhỏ. BreathAgain không chỉ đồng hành cùng bạn trên con đường cai nghiện thuốc lá mà còn là người bạn hỗ trợ, cổ vũ bạn mỗi ngày. Mỗi thành tựu dù nhỏ nhất của bạn đều được ghi nhận, mỗi khó khăn bạn gặp phải đều có cộng đồng chia sẻ và động viên.
+                            </p>
+                            <p>
+                                Đừng để thuốc lá lấy đi sức khỏe, hạnh phúc và những khoảnh khắc quý giá bên gia đình. Hãy để chúng tôi giúp bạn sống khỏe mạnh hơn, gắn kết hơn và truyền cảm hứng cho những người xung quanh. Hãy bắt đầu hành trình mới - vì bạn, vì người thân yêu, và vì cả cộng đồng. BreathAgain – nơi mọi thay đổi đều được trân trọng và hỗ trợ không ngừng!
                             </p>
                         </div>
                         <div className="feature-card">
                             <h3>🌱 Chúng tôi đồng hành để bạn:</h3>
                             <ul>
-                                <li>Sống khỏe mỗi ngày</li>
-                                <li>Gắn kết lại với người thân</li>
-                                <li>Truyền cảm hứng cho cộng đồng</li>
+                                <li>Sống khỏe mỗi ngày: Bạn sẽ cảm nhận rõ sự thay đổi tích cực của cơ thể và tinh thần sau từng ngày không còn khói thuốc, để mỗi ngày trôi qua là một ngày khỏe mạnh hơn, tươi mới hơn.</li>
+                                <li>Gắn kết lại với người thân: Cai nghiện thuốc lá không chỉ vì chính bạn mà còn cho những người bạn yêu thương. Hãy lấy lại những khoảnh khắc quý giá bên gia đình và bạn bè, cùng nhau tận hưởng cuộc sống trọn vẹn.</li>
+                                <li>Truyền cảm hứng cho cộng đồng: Câu chuyện thay đổi của bạn sẽ là động lực mạnh mẽ cho những người xung quanh. Chúng tôi khuyến khích bạn chia sẻ thành tựu, kinh nghiệm và lan tỏa niềm tin vào cuộc sống không khói thuốc.</li>
                             </ul>
                         </div>
                     </div>

@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "AchievementAndProgressController",
+    "Method": "GetAchievementAndProgressStats",
+    "RelativePath": "api/AchievementAndProgress/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
     "Method": "Create",
     "RelativePath": "api/Admin/AddAchivement",
@@ -499,6 +515,22 @@
       {
         "Name": "request",
         "Type": "Smoking.API.Models.Admin.SendNotificationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuitPlanAutoController",
+    "Method": "AutoCreateQuitPlan",
+    "RelativePath": "api/QuitPlanAuto/auto-create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.System.AutoQuitPlanRequest",
         "IsRequired": true
       }
     ],

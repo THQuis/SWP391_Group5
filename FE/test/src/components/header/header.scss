@@ -13,3 +13,13 @@
     transform: translateY(-2px);
     text-decoration: none;
 }
+
+.sticky-navbar {
+    position: sticky !important;
+    top: 0;
+    left: 0;
+    width: 99vw;
+    z-index: 1050;
+    background-color: #C1DCDC !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}

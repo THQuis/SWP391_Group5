@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Form, Button, Card, Row, Col, Alert, Spinner, Badge } from 'react-bootstrap';
-import "../user/style.scss";
+import "../user/Plan.scss";
 
 // --- GIẢ LẬP API ---
 

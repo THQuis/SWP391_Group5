@@ -46,6 +46,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Đảm bảo bạn đ�
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IAchievementRepository, AchievementRepository>();
 builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
+builder.Services.AddScoped<IQuitPlanService, QuitPlanService>();
+builder.Services.AddScoped<IQuitPlanAutoService, QuitPlanAutoService>();
+builder.Services.AddScoped<IAchievementEvaluatorService, AchievementEvaluatorService>();
+builder.Services.AddScoped<IQuitProgressService, QuitProgressService>();
+builder.Services.AddScoped<IQuitProgressRepository, QuitProgressRepository>();
+
 
 // --- HẾT ĐĂNG KÝ USER SERVICE ---
 

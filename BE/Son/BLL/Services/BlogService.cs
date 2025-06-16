@@ -95,7 +95,9 @@ namespace Smoking.BLL.Services
 
         // Lấy tất cả blog của user
         public async Task<IEnumerable<Blog>> GetAllByUserIdAsync(int userId)
-            => await _repo.GetAllByUserIdAsync(userId);
+        {
+            return await _repo.GetByAuthorIdWithUserAndRoleAsync(userId);  // Use the repository method that includes User and Role
+        }
 
         // Lấy chi tiết blog theo ID
         public async Task<Blog> GetByIdAsync(int blogId)

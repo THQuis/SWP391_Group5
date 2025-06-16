@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Smoking.API.Controllers.Admin
+namespace Smoking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -68,7 +68,7 @@ namespace Smoking.API.Controllers.Admin
         public async Task<IActionResult> SendNotification([FromBody] SendNotificationRequest request)
         {
             List<Notification> sentNotifications = new List<Notification>();
-            IEnumerable<User> users = new List<User>();
+            IEnumerable<Smoking.DAL.Entities.User> users = new List<Smoking.DAL.Entities.User>();
 
             if (request.ToAllUsers)
             {
@@ -83,7 +83,7 @@ namespace Smoking.API.Controllers.Admin
                 var user = await _userService.GetByEmailAsync(request.Email);
                 if (user != null)
                 {
-                    users = new List<User> { user };
+                    users = new List<Smoking.DAL.Entities.User> { user };
                 }
             }
 

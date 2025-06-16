@@ -36,7 +36,7 @@ const Header = () => {
   const isLoggedIn = !!localStorage.getItem('userToken');
 
   return (
-    <Navbar expand="lg" bg="light" className="shadow-sm border-bottom" style={{ backgroundColor: '#C1DCDC' }}>
+    <Navbar expand="lg" bg="light" className="shadow-sm border-bottom sticky-navbar" style={{ backgroundColor: '#C1DCDC' }}>
       <Container>
         <Navbar.Brand as={Link} to={ROUTERS.USER.HOME}>
           <Image
@@ -69,16 +69,16 @@ const Header = () => {
                   Tài khoản
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/user/profile">👤 Xem Profile</Dropdown.Item>
-                  <Dropdown.Item href="#achievements">🏆 Thành Tích</Dropdown.Item>
-                  <Dropdown.Item href="#community">🧑‍⚕️ Coach</Dropdown.Item>
-                  <Dropdown.Item href="#dashboard">📊 Dashboard</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/user/profile">Xem Profile</Dropdown.Item>
+                  <Dropdown.Item href="#achievements">Thành Tích</Dropdown.Item>
+                  <Dropdown.Item href="#community">Coach</Dropdown.Item>
+                  <Dropdown.Item href="#dashboard">Dashboard</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item href="#settings">⚙️ Cài đặt</Dropdown.Item>
-                  <Dropdown.Item href="#support">💬 Hỗ trợ</Dropdown.Item>
-                  <Dropdown.Item href="#about">ℹ️ Về Chúng Tôi</Dropdown.Item>
+                  <Dropdown.Item href="#settings">Cài đặt</Dropdown.Item>
+                  <Dropdown.Item href="#support">Hỗ trợ</Dropdown.Item>
+                  <Dropdown.Item href="#about">Về Chúng Tôi</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item as="button" onClick={handleLogout}>🚪 Đăng xuất</Dropdown.Item>
+                  <Dropdown.Item as="button" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (

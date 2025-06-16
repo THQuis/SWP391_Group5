@@ -16,7 +16,7 @@ import ManagementPlan from "../pages/admin/ManagementPlan";
 import ManagementNotification from "../pages/admin/ManagementNotification";
 import UserBlog from "../pages/user/UserBlog";// user
 import UserRanking from "../pages/user/UserRanking"; // user ranking
-
+import UserPackage from "../pages/user/UserPackage"; // user package
 
 
 
@@ -53,15 +53,17 @@ const RouterCustom = () => {
                 </UserLayout>
             } />
 
-
+            <Route path={ROUTERS.USER.PACKAGE} element={
+                <UserLayout>
+                    < UserPackage />
+                </UserLayout>
+            } />
             {/* Admin layout */}
             <Route path={ROUTERS.ADMIN.DASHBOARD} element={
                 <AdminLayout>
                     <AdminDashboard />
                 </AdminLayout>
             } />
-
-
 
             <Route path={ROUTERS.ADMIN.USER} element={
                 <AdminLayout>

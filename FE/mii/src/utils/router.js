@@ -9,6 +9,7 @@ export const ROUTERS = {
         PROGRESS: "/User/progress",
         PLAN: "/User/plan",
         RANKING: "/User/ranking",
+        PACKAGE: "/User/package",
     },
     ADMIN: {
         DASHBOARD: "/admin",

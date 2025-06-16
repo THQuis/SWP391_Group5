@@ -73,6 +73,7 @@ const Header = () => {
                   <Dropdown.Item href="#dashboard">📊 Dashboard</Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item href="#settings">⚙️ Cài đặt</Dropdown.Item>
+                  <Dropdown.Item href="/User/package"> Mua Gói</Dropdown.Item>
                   <Dropdown.Item href="#support">💬 Hỗ trợ</Dropdown.Item>
                   <Dropdown.Item href="#about">ℹ️ Về Chúng Tôi</Dropdown.Item>
                   <Dropdown.Divider />

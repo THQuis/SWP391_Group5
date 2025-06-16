@@ -10,7 +10,7 @@ using Smoking.BLL.Services;
 using Smoking.API.Models.Admin;
 using System.Security.Claims;
 
-namespace Smoking.API.Controllers.Admin
+namespace Smoking.API.Controllers
 {
     [ApiController]
     [Route("api/Admin")]
@@ -176,7 +176,7 @@ namespace Smoking.API.Controllers.Admin
             if (existing != null)
                 return BadRequest(new { Message = "Email đã tồn tại." });
 
-            var user = new User
+            var user = new Smoking.DAL.Entities.User
             {
                 FullName = request.FullName,
                 Email = request.Email,

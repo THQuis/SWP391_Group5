@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Smoking.API.Models;
 using Smoking.BLL.Interfaces;
-using Smoking.BLL.Models; // Đảm bảo namespace này tồn tại và chứa EmailSettings nếu bạn dùng
+using Smoking.BLL.Models;
 using Smoking.BLL.Services;
 using Smoking.DAL.Data;
 using Smoking.DAL.Interfaces.Repositories;
@@ -31,23 +31,19 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Đăng ký MailService
 builder.Services.AddScoped<IMailService, MailService>();
 
-// ... các service khác
+// Các service cho Blog
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 
-// --- ĐĂNG KÝ USER SERVICE ---
+// --- Đăng ký USER SERVICE ---
 builder.Services.AddScoped<IUserService, UserService>();
 
-// Thêm các dòng sau trong ConfigureServices
-
-builder.Services.AddScoped<INotificationService, NotificationService>();  // Đăng ký NotificationService
-builder.Services.AddScoped<INotificationRepository, NotificationRepository>();  // Đăng ký NotificationRepository
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Đảm bảo bạn đăng ký UnitOfWork nếu chưa có
+// Thêm các service và repository liên quan đến Notification, Achievement
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IAchievementRepository, AchievementRepository>();
 builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
-
-// --- HẾT ĐĂNG KÝ USER SERVICE ---
 
 // Thêm MemoryCache (bắt buộc nếu dùng để lưu OTP tạm)
 builder.Services.AddMemoryCache();
@@ -110,21 +106,22 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Enable Swagger UI in development environment
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Smoking API V1");
-        c.RoutePrefix = "swagger";
+        c.RoutePrefix = "swagger";  // Set route prefix for Swagger UI
     });
 }
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthentication();  // Enable JWT Authentication middleware
+app.UseAuthorization();  // Enable Authorization middleware
 
-app.MapControllers();
+app.MapControllers();  // Map controllers for API endpoints
 
 app.Run();

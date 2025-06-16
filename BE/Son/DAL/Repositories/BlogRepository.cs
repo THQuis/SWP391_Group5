@@ -68,6 +68,16 @@ namespace Smoking.DAL.Repositories
                 .FirstOrDefaultAsync(b => b.BlogId == id);
         }
 
+        // Get blogs by AuthorId, including User and Role
+        public async Task<IEnumerable<Blog>> GetByAuthorIdWithUserAndRoleAsync(int authorId)
+        {
+            return await _context.Blogs
+                .Include(b => b.User)  // Ensure User is eagerly loaded
+                .ThenInclude(u => u.Role)  // Ensure Role is eagerly loaded
+                .Where(b => b.AuthorId == authorId)
+                .ToListAsync();
+        }
+
 
         // ================= USER =================
 

@@ -48,7 +48,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Banner.jpg?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.1.jpg?raw=true"
                             alt="Four slide"
                         />
                     </Carousel.Item>

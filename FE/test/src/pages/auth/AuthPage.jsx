@@ -436,7 +436,7 @@ const AuthPage = () => {
         <div className="auth-page">
             <div className="auth-container-wrapper">
                 <div className="auth-left-panel">
-                    <div className="auth-logo"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Logo.png?raw=true" alt="BreathAgain" /></div>
+                    <div className="auth-logo"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true" alt="BreathAgain" /></div>
                     <div className="auth-tagline">Hành trình cai nghiện thuốc lá bắt đầu từ đây</div>
                     <ul className="auth-features">
                         <li>Theo dõi tiến trình cai nghiện hàng ngày</li><li>Nhận lời khuyên từ chuyên gia</li><li>Kết nối với cộng đồng hỗ trợ</li>

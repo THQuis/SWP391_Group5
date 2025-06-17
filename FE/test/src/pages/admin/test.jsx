@@ -1,326 +1,227 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Table, Button, Form, Modal } from 'react-bootstrap';
+import { Row, Col, Card, Button, Table, Modal, Form } from 'react-bootstrap';
 import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import axios from 'axios';
 
-const notificationTypeOptions = [
-    { value: 'System', label: 'Hệ thống' },
-    { value: 'advice', label: 'Tư vấn' },
-    { value: 'reminder', label: 'Nhắc nhở' },
-    { value: 'achievement', label: 'Thành tích' },
-    { value: 'feedback', label: 'Phản hồi' },
-];
-const notifyToOptions = [
-    { value: 'All Users', label: 'Tất cả người dùng' },
-    { value: 'coach', label: 'Coach' },
-    { value: 'member', label: 'Member' },
-];
-
-const ManagementNotification = () => {
-    const [notifications, setNotifications] = useState([]);
-    const [loading, setLoading] = useState(true);
+const ManagementPerformance = () => {
+    const [badges, setBadges] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [newNotification, setNewNotification] = useState({
-        notificationName: '',
-        message: '',
-        notificationType: '',
-        condition: '',
-        notificationFor: '',
-        notificationDate: '',
-    });
+    const [newBadge, setNewBadge] = useState({ name: '', image: '', condition: '', description: '' });
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingBadge, setEditingBadge] = useState(null);
 
-    // Lấy danh sách thông báo từ API
+    // Lấy dữ liệu huy hiệu từ API
     useEffect(() => {
-        const fetchNotifications = async () => {
-            setLoading(true);
+        const fetchBadges = async () => {
             try {
-                const token = localStorage.getItem('userToken');
-                const res = await fetch('/api/NotificationAdmin/list', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                const data = await res.json();
-                setNotifications(data);
-            } catch {
-                setNotifications([]);
+                const res = await axios.get('/api/badges');  // Gọi API lấy danh sách huy hiệu
+                setBadges(res.data);
+            } catch (err) {
+                console.error('Error fetching data', err);
             }
-            setLoading(false);
         };
-        fetchNotifications();
+
+        fetchBadges();
     }, []);
 
-    // Thêm mới: GỬI THÔNG BÁO qua API /api/NotificationAdmin/send
-    const handleAddNotification = async () => {
+    // Thêm huy hiệu mới
+    const handleAddBadge = async () => {
         try {
-            const token = localStorage.getItem('userToken');
-            const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-            const body = {
-                toAllUsers: newNotification.notificationFor === 'All Users',
-                toRole: newNotification.notificationFor !== 'All Users' ? newNotification.notificationFor : undefined,
-                email: "", // nếu gửi cho email cụ thể, có thể bổ sung thêm trường input
-                notificationID: 0, // tạo mới thì để 0
-                userID: 0,
-                message: newNotification.message,
-                notificationDate: newNotification.notificationDate
-                    ? new Date(newNotification.notificationDate).toISOString()
-                    : new Date().toISOString(),
-                sentAt: new Date().toISOString(),
-                notificationType: newNotification.notificationType,
-                notificationName: newNotification.notificationName,
-                condition: newNotification.condition,
-                notificationFor: newNotification.notificationFor,
-                createdBy: userInfo.name || userInfo.username || "Admin"
-            };
-
-            const res = await fetch('/api/NotificationAdmin/send', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(body)
-            });
-            if (!res.ok) throw new Error();
+            const res = await axios.post('/api/badges', newBadge);  // Gửi API để thêm huy hiệu mới
+            setBadges([...badges, res.data]);
             setShowModal(false);
-
-            // Reload lại danh sách
-            const reload = async () => {
-                setLoading(true);
-                try {
-                    const res = await fetch('/api/NotificationAdmin/list', {
-                        headers: { 'Authorization': `Bearer ${token}` }
-                    });
-                    const data = await res.json();
-                    setNotifications(data);
-                } catch {
-                    setNotifications([]);
-                }
-                setLoading(false);
-            };
-            reload();
-        } catch {
-            alert("Tạo và gửi thông báo thất bại!");
+            setNewBadge({ name: '', image: '', condition: '', description: '' });
+        } catch (err) {
+            console.error('Lỗi khi thêm huy hiệu:', err);
         }
     };
 
-    // Xử lý edit (mở modal, điền dữ liệu cũ)
-    const handleEdit = (item) => {
-        setNewNotification({
-            notificationName: item.notificationName,
-            message: item.message,
-            notificationType: item.notificationType,
-            condition: item.condition,
-            notificationFor: item.notificationFor,
-            notificationDate: (item.notificationDate || '').slice(0, 10),
-        });
-        setShowModal(true);
+    // Sửa huy hiệu
+    const handleEdit = (badge) => {
+        setEditingBadge(badge); // Lưu thông tin huy hiệu cần sửa
+        setShowEditModal(true);  // Mở modal chỉnh sửa
     };
 
-    // Xử lý xóa (gọi API xóa)
-    const handleDelete = async (id) => {
-        if (!window.confirm("Bạn chắc chắn muốn xóa thông báo này?")) return;
+    const handleSaveEdit = async () => {
         try {
-            const token = localStorage.getItem('userToken');
-            const res = await fetch(`https://localhost:7049/api/NotificationAdmin/delete/${id}`, {
-                method: "DELETE",
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            if (!res.ok) throw new Error();
-            setNotifications(notifications.filter(n => n.notificationID !== id));
-        } catch {
-            alert("Xóa thông báo thất bại!");
+            const res = await axios.put(`/api/badges/${editingBadge.id}`, editingBadge); // Gửi API để sửa huy hiệu
+            setBadges(badges.map(b => (b.id === editingBadge.id ? res.data : b))); // Cập nhật danh sách huy hiệu
+            setShowEditModal(false);  // Đóng modal sau khi sửa
+        } catch (err) {
+            console.error('Lỗi khi sửa huy hiệu:', err);
+        }
+    };
+
+    // Xóa huy hiệu
+    const handleDelete = async (badgeId) => {
+        try {
+            await axios.delete(`/api/badges/${badgeId}`); // Gửi API để xóa huy hiệu
+            setBadges(badges.filter(b => b.id !== badgeId));  // Xóa huy hiệu khỏi danh sách
+        } catch (err) {
+            console.error('Lỗi khi xóa huy hiệu:', err);
         }
     };
 
     return (
-        <div>
-            <h2 className="text-center text-success"> Quản lý thông báo </h2>
-            <Row className="mb-3">
+        <div className="badge-management">
+            <h2 className="text-center text-success">Quản lý Thành tích - Huy hiệu</h2>
+
+            {/* Bảng huy hiệu */}
+            <Row className="mb-4">
                 <Col className="d-flex justify-content-end">
-                    <Button variant="outline-primary" onClick={() => {
-                        setShowModal(true);
-                        setNewNotification({
-                            notificationName: '',
-                            message: '',
-                            notificationType: '',
-                            condition: '',
-                            notificationFor: '',
-                            notificationDate: '',
-                        });
-                    }}>
-                        Tạo thông báo <FaPlus />
+                    <Button variant="outline-primary" onClick={() => setShowModal(true)}>
+                        <FaPlus /> Tạo huy hiệu
                     </Button>
                 </Col>
             </Row>
-            <Card>
-                <Card.Body>
-                    <Table bordered hover>
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Tên thông báo</th>
-                                <th>Nội dung</th>
-                                <th>Loại thông báo</th>
-                                <th>Mô tả/Điều kiện</th>
-                                <th>Thông báo cho</th>
-                                <th>Ngày gửi</th>
-                                <th>Người tạo</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loading ? (
-                                <tr>
-                                    <td colSpan={9} className="text-center">Đang tải...</td>
-                                </tr>
-                            ) : notifications.length === 0 ? (
-                                <tr>
-                                    <td colSpan={9} className="text-center text-secondary">Không có thông báo nào.</td>
-                                </tr>
-                            ) : (
-                                notifications.map((item, idx) => (
-                                    <tr key={item.notificationID}>
-                                        <td>{idx + 1}</td>
-                                        <td>{item.notificationName}</td>
-                                        <td>{item.message}</td>
-                                        <td>{notificationTypeOptions.find(opt => opt.value === item.notificationType)?.label || item.notificationType}</td>
-                                        <td>{item.condition}</td>
-                                        <td>{notifyToOptions.find(opt => opt.value === item.notificationFor)?.label || item.notificationFor}</td>
-                                        <td>{(item.notificationDate || '').slice(0, 10)}</td>
-                                        <td>{item.createdBy}</td>
-                                        <td>
-                                            <Button variant="link" size="sm" onClick={() => handleEdit(item)}><FaEdit /></Button>
-                                            <Button variant="link" size="sm" onClick={() => handleDelete(item.notificationID)}><FaTrash /></Button>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </Table>
-                </Card.Body>
-            </Card>
 
-            {/* Modal thêm/sửa thông báo */}
-            <Modal
-                show={showModal}
-                onHide={() => setShowModal(false)}
-                centered
-                size="lg"
-                backdrop="static"
-            >
+            <Row className="mb-4">
+                <Col>
+                    <Card>
+                        <Card.Body>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên huy hiệu</th>
+                                        <th>Mô tả</th>
+                                        <th>Biểu tượng</th>
+                                        <th>Điều kiện</th>
+                                        <th>Số người đạt được</th>
+                                        <th>Trạng thái</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {badges.map((badge, index) => (
+                                        <tr key={badge.id}>
+                                            <td>{index + 1}</td>
+                                            <td>{badge.name}</td>
+                                            <td>{badge.description}</td>
+                                            <td><img src={badge.image} alt={badge.name} width="50" /></td>
+                                            <td>{badge.condition}</td>
+                                            <td>{badge.achievedCount}</td>
+                                            <td>{badge.status}</td>
+                                            <td>
+                                                <Button variant="link" size="sm" onClick={() => handleEdit(badge)}>
+                                                    <FaEdit />
+                                                </Button>
+                                                <Button variant="link" size="sm" onClick={() => handleDelete(badge.id)}>
+                                                    <FaTrash />
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+
+            {/* Modal tạo huy hiệu */}
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title as="h3" style={{ fontWeight: 700 }}>
-                        {newNotification.notificationName ? "Sửa thông báo" : "Thêm thông báo"}
-                    </Modal.Title>
+                    <Modal.Title>Tạo huy hiệu</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group as={Row} className="mb-3" controlId="notificationName">
-                            <Form.Label column sm={3} className="fst-italic fw-semibold">
-                                Tên thông báo:
-                            </Form.Label>
-                            <Col sm={9}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Nhập tên thông báo"
-                                    value={newNotification.notificationName}
-                                    onChange={e => setNewNotification({ ...newNotification, notificationName: e.target.value })}
-                                    className="rounded-pill px-4 py-2"
-                                />
-                            </Col>
+                        <Form.Group controlId="formName">
+                            <Form.Label>Tên huy hiệu:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newBadge.name}
+                                onChange={e => setNewBadge({ ...newBadge, name: e.target.value })}
+                            />
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="notificationMessage">
-                            <Form.Label column sm={3} className="fst-italic fw-semibold">
-                                Nội dung:
-                            </Form.Label>
-                            <Col sm={9}>
-                                <Form.Control
-                                    as="textarea"
-                                    rows={2}
-                                    placeholder="Nội dung gửi"
-                                    value={newNotification.message}
-                                    onChange={e => setNewNotification({ ...newNotification, message: e.target.value })}
-                                    className="rounded-pill px-4 py-2"
-                                    style={{ resize: 'none' }}
-                                />
-                            </Col>
+
+                        <Form.Group controlId="formImage">
+                            <Form.Label>Ảnh:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newBadge.image}
+                                onChange={e => setNewBadge({ ...newBadge, image: e.target.value })}
+                            />
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="notificationType">
-                            <Form.Label column sm={3} className="fst-italic fw-semibold">
-                                Loại:
-                            </Form.Label>
-                            <Col sm={9}>
-                                <Form.Select
-                                    value={newNotification.notificationType}
-                                    onChange={e => setNewNotification({ ...newNotification, notificationType: e.target.value })}
-                                    className="rounded-pill px-4 py-2"
-                                >
-                                    <option value="">Chọn loại</option>
-                                    {notificationTypeOptions.map(opt => (
-                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
-                                    ))}
-                                </Form.Select>
-                            </Col>
+
+                        <Form.Group controlId="formCondition">
+                            <Form.Label>Điều kiện:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newBadge.condition}
+                                onChange={e => setNewBadge({ ...newBadge, condition: e.target.value })}
+                            />
                         </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="notificationCondition">
-                            <Form.Label column sm={3} className="fst-italic fw-semibold">
-                                Điều kiện:
-                            </Form.Label>
-                            <Col sm={9}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Nhập điều kiện"
-                                    value={newNotification.condition}
-                                    onChange={e => setNewNotification({ ...newNotification, condition: e.target.value })}
-                                    className="rounded-pill px-4 py-2"
-                                />
-                            </Col>
-                        </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="notificationFor">
-                            <Form.Label column sm={3} className="fst-italic fw-semibold">
-                                Thông báo cho:
-                            </Form.Label>
-                            <Col sm={9}>
-                                <Form.Select
-                                    value={newNotification.notificationFor}
-                                    onChange={e => setNewNotification({ ...newNotification, notificationFor: e.target.value })}
-                                    className="rounded-pill px-4 py-2"
-                                >
-                                    <option value="">Chọn đối tượng</option>
-                                    {notifyToOptions.map(opt => (
-                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
-                                    ))}
-                                </Form.Select>
-                            </Col>
-                        </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="notificationDate">
-                            <Form.Label column sm={3} className="fst-italic fw-semibold">
-                                Ngày gửi:
-                            </Form.Label>
-                            <Col sm={9}>
-                                <Form.Control
-                                    type="date"
-                                    value={newNotification.notificationDate}
-                                    onChange={e => setNewNotification({ ...newNotification, notificationDate: e.target.value })}
-                                    className="rounded-pill px-4 py-2"
-                                />
-                            </Col>
+
+                        <Form.Group controlId="formDescription">
+                            <Form.Label>Mô tả:</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                value={newBadge.description}
+                                onChange={e => setNewBadge({ ...newBadge, description: e.target.value })}
+                            />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button
-                        variant="outline-secondary"
-                        className="rounded-pill px-4 fw-semibold"
-                        onClick={() => setShowModal(false)}>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
                         Hủy
                     </Button>
-                    <Button
-                        variant="primary"
-                        className="rounded-pill px-4 fw-semibold"
-                        onClick={handleAddNotification}>
+                    <Button variant="primary" onClick={handleAddBadge}>
+                        Lưu
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Modal chỉnh sửa huy hiệu */}
+            <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Sửa huy hiệu</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formName">
+                            <Form.Label>Tên huy hiệu:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={editingBadge?.name}
+                                onChange={e => setEditingBadge({ ...editingBadge, name: e.target.value })}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formImage">
+                            <Form.Label>Ảnh:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={editingBadge?.image}
+                                onChange={e => setEditingBadge({ ...editingBadge, image: e.target.value })}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formCondition">
+                            <Form.Label>Điều kiện:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={editingBadge?.condition}
+                                onChange={e => setEditingBadge({ ...editingBadge, condition: e.target.value })}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formDescription">
+                            <Form.Label>Mô tả:</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                value={editingBadge?.description}
+                                onChange={e => setEditingBadge({ ...editingBadge, description: e.target.value })}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="primary" onClick={handleSaveEdit}>
                         Lưu
                     </Button>
                 </Modal.Footer>
@@ -329,4 +230,4 @@ const ManagementNotification = () => {
     );
 };
 
-export default ManagementNotification;
+export default ManagementPerformance;

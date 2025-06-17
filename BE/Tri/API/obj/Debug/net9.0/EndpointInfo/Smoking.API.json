@@ -178,6 +178,48 @@
         }
       }
     },
+    "/api/AchievementAndProgress/user/{userId}/update-progress": {
+      "post": {
+        "tags": [
+          "AchievementAndProgress"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuitProgressRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuitProgressRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuitProgressRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Admin/ListUsers": {
       "get": {
         "tags": [
@@ -1263,6 +1305,37 @@
           },
           "profilePicture": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateQuitProgressRequest": {
+        "type": "object",
+        "properties": {
+          "quitPlanId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "progressDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cigarettesSmoked": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pricePerPack": {
+            "type": "number",
+            "format": "double"
+          },
+          "cigarettesPerPack": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cigarettesSmokedToday": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },

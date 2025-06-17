@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
-using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -63,4 +60,26 @@ public class AchievementAndProgressController : ControllerBase
         return Ok(stats);
     }
 
+    // API để người dùng nhập số điếu thuốc đã hút trong ngày và tính tiền tiết kiệm
+    [HttpPost("user/{userId}/update-progress")]
+    public async Task<IActionResult> UpdateQuitProgress(int userId, [FromBody] UpdateQuitProgressRequest request)
+    {
+        // Gọi phương thức UpdateQuitProgressAsync để xử lý
+        var result = await _quitProgressService.UpdateQuitProgressAsync(
+            userId,
+            request.ProgressDate,
+            request.CigarettesSmoked,
+            request.PricePerPack,
+            request.CigarettesPerPack,
+            request.CigarettesSmokedToday);
+
+        if (result)
+        {
+            return Ok("Tiến trình cai thuốc đã được cập nhật thành công.");
+        }
+        else
+        {
+            return BadRequest("Có lỗi khi cập nhật tiến trình cai thuốc.");
+        }
+    }
 }

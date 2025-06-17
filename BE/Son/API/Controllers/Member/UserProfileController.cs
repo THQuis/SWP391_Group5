@@ -110,24 +110,43 @@ namespace Smoking.API.Controllers.Member
         {
             var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
 
-            // Lấy thông báo hỗ trợ cai thuốc từ cơ sở dữ liệu (hoặc từ dịch vụ)
-            // Ví dụ: lấy tất cả thông báo chưa đọc
+            // Lấy tất cả thông báo của user từ cơ sở dữ liệu (hoặc có thể lấy thông báo chưa đọc nếu cần)
             var notifications = await _unitOfWork.Notifications.GetAllAsync();
 
-            // Gửi thông báo qua email (ví dụ gửi tất cả thông báo cho user qua email)
-            var user = await _unitOfWork.Users.GetByIdAsync(userId);
-            if (user != null)
-            {
-                // Kết hợp tất cả thông báo thành một chuỗi văn bản đơn giản
-                var allMessages = string.Join("\n", notifications.Select(n => $"{n.NotificationName}: {n.Message}"));
+            // Lọc thông báo của người dùng hiện tại (nếu có)
+            var userNotifications = notifications.Where(n => n.UserID == userId).ToList();
 
-                // Gửi tất cả thông báo trong một email duy nhất (dạng plain text)
-                await _mailService.SendEmailAsync(user.Email, "Thông báo từ hệ thống", allMessages);
+            // Kiểm tra nếu có thông báo cho người dùng
+            if (userNotifications.Any())
+            {
+                var user = await _unitOfWork.Users.GetByIdAsync(userId);
+
+                // Nếu người dùng có email, gửi thông báo qua email
+                if (user != null && !string.IsNullOrEmpty(user.Email))
+                {
+                    // Kết hợp tất cả thông báo thành một chuỗi văn bản đơn giản
+                    var allMessages = string.Join("\n", userNotifications.Select(n => $"{n.NotificationName}: {n.Message}"));
+
+                    // Gửi tất cả thông báo qua email (dạng plain text)
+                    try
+                    {
+                        await _mailService.SendEmailAsync(user.Email, "Thông báo từ hệ thống", allMessages);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Nếu có lỗi khi gửi email, log lỗi và trả về thông báo lỗi
+                        return BadRequest(new { Message = "Lỗi khi gửi email thông báo: " + ex.Message });
+                    }
+                }
+
+                // Trả về thông báo trên trang chủ
+                return Ok(new { Message = "Đã gửi thông báo qua email và hiển thị trên trang chủ", Notifications = userNotifications });
             }
 
-            // Trả về thông báo trên trang chủ
-            return Ok(new { Message = "Đã gửi thông báo qua email và hiển thị trên trang chủ", Notifications = notifications });
+            // Nếu không có thông báo, trả về thông báo cho người dùng
+            return NotFound(new { Message = "Không có thông báo nào." });
         }
+
 
 
 

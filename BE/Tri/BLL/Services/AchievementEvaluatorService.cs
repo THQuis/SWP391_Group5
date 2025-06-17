@@ -25,12 +25,12 @@ public class AchievementEvaluatorService : IAchievementEvaluatorService
 
         var quitProgresses = await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == quitPlan.QuitPlanID);
 
-        int smokeFreeDays = quitProgresses.Count(x => x.CigarettesSmoked == 0);
+        int smokeFreeDays = quitProgresses.Count(x => x.CigarettesSmokedToday == 0);
         decimal moneySaved = quitProgresses.Sum(x => x.MoneySaved);
 
         if (smokeFreeDays >= 7)
         {
-            await GrantAchievement(userId, 1); // Giả sử AchievementID = 1 là thành tựu 1 tuần
+            await GrantAchievement(userId, 1);
         }
 
         if (moneySaved >= 100000)

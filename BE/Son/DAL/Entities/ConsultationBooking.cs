@@ -1,39 +1,41 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
+    [Table("ConsultationBooking")]
     public class ConsultationBooking
     {
         [Key]
         public int BookingID { get; set; }
 
         [Required]
-        public int UserID { get; set; }  // Mã người dùng
-        public User User { get; set; }  // Thông tin người dùng
+        public int UserID { get; set; }
+        public User User { get; set; }
 
         [Required]
-        public int CoachID { get; set; }  // Mã huấn luyện viên
-        public User Coach { get; set; }  // Thông tin huấn luyện viên
+        public int CoachID { get; set; }
+        public User Coach { get; set; }
 
         [Required]
-        public DateTime BookingDate { get; set; }  // Ngày và giờ đặt lịch
+        public DateTime BookingDate { get; set; }
 
         [Required]
-        public int Duration { get; set; }  // Thời gian tư vấn (phút)
+        public int Duration { get; set; }
 
         [Required]
-        [RegularExpression("Pending|Confirmed|Cancelled|Completed")]  // Trạng thái: Pending, Confirmed, Cancelled, Completed
+        [RegularExpression("Pending|Confirmed|Cancelled|Completed")]
         public string Status { get; set; }
 
-        public string MeetingLink { get; set; }  // Link cuộc họp trực tuyến (nếu có)
-        public string Notes { get; set; }  // Ghi chú của người dùng về cuộc tư vấn
-        public string CoachNotes { get; set; }  // Ghi chú của huấn luyện viên về cuộc tư vấn
+        public string? MeetingLink { get; set; }  // Nullable string
+        public string? Notes { get; set; }  // Nullable string
+        public string? CoachNotes { get; set; }  // Nullable string
 
         [MaxLength(50)]
-        public string PreferredLanguage { get; set; }  // Ngôn ngữ ưa thích của người dùng
+        public string? PreferredLanguage { get; set; }  // Nullable string
 
-        public bool ReminderSent { get; set; } = false;  // Đánh dấu xem thông báo nhắc nhở đã được gửi chưa
-        public DateTime CreatedDate { get; set; } = DateTime.Now;  // Ngày tạo lịch tư vấn (mặc định là hiện tại)
+        public bool ReminderSent { get; set; } = false;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

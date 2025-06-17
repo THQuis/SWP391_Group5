@@ -6,19 +6,8 @@ import "../home/home.scss";
 
 const HomePage = () => {
     return (
-        <>
-            {/* Hero Section */}
-            {/* <section className="hero" id="home">
-                <img
-                    src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Banner.jpg?raw=true"
-                    alt="banner"
-                />
-                <div className="container">
-                    <div className="hero-content">
-                        {/* bạn có thể thêm tiêu đề/btn tại đây */}
-            {/* </div>
-                </div>
-            </section> */}
+        <div>
+
 
             <section className="hero-carousel" id="home">
                 <Carousel fade controls={false} indicators={false} interval={500}>
@@ -73,6 +62,8 @@ const HomePage = () => {
                             </p>
                         </div>
                         <div className="about-image">🫁</div>
+                        {/* <div className="about-image"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Phoi4.png?raw=true" alt=""/></div> */}
+
                     </div>
                 </div>
             </section>
@@ -177,7 +168,7 @@ const HomePage = () => {
                     </button>
                 </div>
             </section>
-        </>
+        </div>
     );
 };
 

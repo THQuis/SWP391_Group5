@@ -1,6 +1,9 @@
 ﻿using Smoking.DAL.Data;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Smoking.DAL.Repositories
 {
@@ -10,6 +13,20 @@ namespace Smoking.DAL.Repositories
         {
         }
 
-        // Hiện tại chưa có truy vấn đặc thù, dùng hết các phương thức từ GenericRepository
+        // Phương thức cập nhật MembershipPackage
+        public async Task Update(MembershipPackage entity)
+        {
+            _context.MembershipPackages.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        // Phương thức xóa MembershipPackage
+        public async Task Remove(MembershipPackage entity)
+        {
+            _context.MembershipPackages.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        // Các phương thức tìm kiếm hoặc truy vấn có thể thêm vào đây nếu cần
     }
 }

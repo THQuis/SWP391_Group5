@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Emit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Smoking.DAL.Entities;
 
 namespace Smoking.DAL.Data
@@ -25,13 +23,12 @@ namespace Smoking.DAL.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
-        public DbSet<ConsultationBooking> ConsultationBookings { get; set; }
+        public DbSet<ConsultationBooking> ConsultationBookings { get; set; }  // Đảm bảo rằng DbSet này có mặt
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Ví dụ: nếu cần cấu hình thêm relationships, indexes, v.v.
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
@@ -51,15 +48,10 @@ namespace Smoking.DAL.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Notification>()
-                .HasOne(n => n.User)    // Mỗi thông báo sẽ có một User
-                .WithMany(u => u.Notifications)  // Người dùng có thể có nhiều thông báo
-                .HasForeignKey(n => n.UserID)  // Sử dụng UserID làm khóa ngoại
-                .OnDelete(DeleteBehavior.Restrict);  // Ngừng xóa thông báo khi xóa người dùng (hoặc có thể thay đổi hành vi xóa)
-
-
-
-            // ... các cấu hình khác nếu cần
-
+                .HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserID)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

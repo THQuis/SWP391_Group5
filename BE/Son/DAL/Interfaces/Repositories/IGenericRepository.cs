@@ -5,16 +5,14 @@ using System.Threading.Tasks;
 
 namespace Smoking.DAL.Interfaces.Repositories
 {
-    public interface IGenericRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<T> where T : class
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<TEntity> GetByIdAsync(object id);
-        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
-        Task AddAsync(TEntity entity);
-        void Update(TEntity entity);
-        void Remove(TEntity entity);
-        // Thêm method AnyAsync để kiểm tra điều kiện tồn tại
-        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(object id);
+        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+        Task AddAsync(T entity);
+        Task Update(T entity);  // Phải có kiểu trả về là Task
+        Task Remove(T entity);  // Phải có kiểu trả về là Task
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
     }
-
 }

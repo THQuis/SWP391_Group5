@@ -14,12 +14,27 @@ namespace Smoking.DAL.Repositories
         {
         }
 
+        // Lấy tất cả các payment theo UserMembershipID
         public async Task<IEnumerable<Payment>> GetByUserMembershipIdAsync(int userMembershipId)
         {
             return await _context.Payments
                                  .Where(p => p.UserMembershipID == userMembershipId)
                                  .AsNoTracking()
                                  .ToListAsync();
+        }
+
+        // Cập nhật thông tin Payment
+        public async Task Update(Payment entity)
+        {
+            _context.Payments.Update(entity); // Cập nhật Payment
+            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+        }
+
+        // Xóa Payment
+        public async Task Remove(Payment entity)
+        {
+            _context.Payments.Remove(entity); // Xóa Payment
+            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
         }
     }
 }

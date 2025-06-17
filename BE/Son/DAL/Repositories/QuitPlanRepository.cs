@@ -14,12 +14,27 @@ namespace Smoking.DAL.Repositories
         {
         }
 
+        // Lấy tất cả các QuitPlan của một người dùng
         public async Task<IEnumerable<QuitPlan>> GetByUserIdAsync(int userId)
         {
             return await _context.QuitPlans
                                  .Where(q => q.UserID == userId)
                                  .AsNoTracking()
                                  .ToListAsync();
+        }
+
+        // Cập nhật thông tin QuitPlan
+        public async Task Update(QuitPlan entity)
+        {
+            _context.QuitPlans.Update(entity); // Cập nhật QuitPlan
+            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+        }
+
+        // Xóa QuitPlan
+        public async Task Remove(QuitPlan entity)
+        {
+            _context.QuitPlans.Remove(entity); // Xóa QuitPlan
+            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
         }
     }
 }

@@ -22,5 +22,19 @@ namespace Smoking.DAL.Repositories
                                  .AsNoTracking()
                                  .ToListAsync();
         }
+
+        // Phương thức Update (cập nhật thông tin thành viên)
+        public async Task Update(UserMembership entity)
+        {
+            _context.UserMemberships.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        // Phương thức Remove (xóa thành viên)
+        public async Task Remove(UserMembership entity)
+        {
+            _context.UserMemberships.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 }

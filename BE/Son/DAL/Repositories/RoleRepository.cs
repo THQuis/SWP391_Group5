@@ -12,11 +12,26 @@ namespace Smoking.DAL.Repositories
         {
         }
 
+        // Phương thức lấy Role theo tên
         public async Task<Role> GetByNameAsync(string roleName)
         {
             return await _context.Roles
                                  .AsNoTracking()
                                  .FirstOrDefaultAsync(r => r.RoleName == roleName);
+        }
+
+        // Cài đặt phương thức Update cho Role
+        public async Task Update(Role entity)
+        {
+            _context.Roles.Update(entity); // Cập nhật Role
+            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+        }
+
+        // Cài đặt phương thức Remove cho Role
+        public async Task Remove(Role entity)
+        {
+            _context.Roles.Remove(entity); // Xóa Role
+            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Smoking.DAL.Entities;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,16 +14,17 @@ namespace Smoking.DAL.Entities
         [Required]
         public int UserID { get; set; }
 
-        public User User { get; set; }  // Mối quan hệ với User
+        public virtual User User { get; set; }  // Nếu dùng lazy loading
 
         public DateTime StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
 
-        // Thêm các thuộc tính sau
-        public int CigarettesPerDayAtStart { get; set; }  // Số điếu thuốc mỗi ngày
-        public decimal PricePerPackAtStart { get; set; }  // Giá mỗi gói thuốc
-        public int CigarettesPerPack { get; set; }  // Số điếu trong mỗi gói thuốc
+        public int CigarettesPerDayAtStart { get; set; }
+
+        public decimal PricePerPackAtStart { get; set; }
+
+        public int CigarettesPerPack { get; set; }
 
         public string PlanDetails { get; set; }
 
@@ -34,8 +36,6 @@ namespace Smoking.DAL.Entities
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-        // Mối quan hệ với QuitProgress
-        public ICollection<QuitProgress> QuitProgresses { get; set; }
+        public virtual ICollection<QuitProgress> QuitProgresses { get; set; }
     }
-
 }

@@ -2,6 +2,9 @@
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Interfaces.Repositories;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -11,75 +14,78 @@ public class AchievementAndProgressController : ControllerBase
     private readonly IUserAchievementService _userAchievementService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public AchievementAndProgressController(IQuitProgressService quitProgressService,
-                                             IUserAchievementService userAchievementService,
-                                             IUnitOfWork unitOfWork)
+    public AchievementAndProgressController(
+        IQuitProgressService quitProgressService,
+        IUserAchievementService userAchievementService,
+        IUnitOfWork unitOfWork)
     {
         _quitProgressService = quitProgressService;
         _userAchievementService = userAchievementService;
         _unitOfWork = unitOfWork;
     }
 
-    // API lấy thông tin thành tựu và tiến trình cai thuốc của người dùng
+    // ✅ API lấy thông tin tổng hợp tiến trình và thành tựu của người dùng
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetAchievementAndProgressStats(int userId)
     {
-        // Lấy thông tin về kế hoạch cai thuốc của người dùng
         var quitPlans = await _unitOfWork.QuitPlans.FindAsync(x => x.UserID == userId && x.Status == "Active");
 
         if (quitPlans == null || !quitPlans.Any())
-        {
             return NotFound("Không có kế hoạch cai thuốc cho người dùng.");
-        }
 
-        // Tổng số tiền tiết kiệm và số điếu bỏ
         decimal totalMoneySaved = 0;
         int totalCigarettesDropped = 0;
 
-        // Lặp qua các kế hoạch cai thuốc và tính tổng số tiền tiết kiệm và số điếu bỏ
-        foreach (var quitPlan in quitPlans)
+        foreach (var plan in quitPlans)
         {
-            if (quitPlan.QuitProgresses != null && quitPlan.QuitProgresses.Any())
+            var progresses = await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == plan.QuitPlanID);
+
+            if (progresses != null && progresses.Any())
             {
-                totalMoneySaved += quitPlan.QuitProgresses.Sum(y => y.MoneySaved);  // Tính tổng tiền tiết kiệm
-                totalCigarettesDropped += quitPlan.QuitProgresses.Sum(y => y.CigarettesSmoked);  // Tính tổng số điếu bỏ
+                totalMoneySaved += progresses.Sum(p => p.MoneySaved);
+                totalCigarettesDropped += progresses.Sum(p => p.CigarettesDropped ?? 0);
             }
         }
 
-        // Lấy thông tin thành tựu của người dùng
         var achievements = await _userAchievementService.GetAchievementsByUserIdAsync(userId);
-        int totalAchievements = achievements.Count();
 
-        var stats = new
+        return Ok(new
         {
-            TotalAchievements = totalAchievements,
+            TotalAchievements = achievements.Count(),
             TotalCigarettesDropped = totalCigarettesDropped,
             TotalMoneySaved = totalMoneySaved
-        };
-
-        return Ok(stats);
+        });
     }
 
-    // API để người dùng nhập số điếu thuốc đã hút trong ngày và tính tiền tiết kiệm
+    // ✅ API cập nhật tiến trình cai thuốc (số thuốc hút hôm nay)
     [HttpPost("user/{userId}/update-progress")]
     public async Task<IActionResult> UpdateQuitProgress(int userId, [FromBody] UpdateQuitProgressRequest request)
     {
-        // Gọi phương thức UpdateQuitProgressAsync để xử lý
-        var result = await _quitProgressService.UpdateQuitProgressAsync(
-            userId,
-            request.ProgressDate,
-            request.CigarettesSmoked,
-            request.PricePerPack,
-            request.CigarettesPerPack,
-            request.CigarettesSmokedToday);
+        var quitPlans = await _unitOfWork.QuitPlans.FindAsync(x => x.UserID == userId && x.Status == "Active");
 
-        if (result)
+        if (quitPlans == null || !quitPlans.Any())
+            return NotFound("Không tìm thấy kế hoạch cai thuốc.");
+
+        var quitPlan = quitPlans.First();
+        var progressDate = DateTime.Today;
+
+        var updateResult = await _quitProgressService.UpdateQuitProgressAsync(
+            quitPlan.QuitPlanID,
+            progressDate,
+            request.CigarettesSmokedToday,
+            quitPlan.PricePerPackAtStart,
+            quitPlan.CigarettesPerPack
+        );
+
+        if (!updateResult)
+            return BadRequest("Cập nhật tiến trình thất bại.");
+
+        var updatedProgressList = await _quitProgressService.GetByPlanIdAsync(quitPlan.QuitPlanID);
+
+        return Ok(new
         {
-            return Ok("Tiến trình cai thuốc đã được cập nhật thành công.");
-        }
-        else
-        {
-            return BadRequest("Có lỗi khi cập nhật tiến trình cai thuốc.");
-        }
+            Message = "Tiến trình cai thuốc đã được cập nhật thành công.",
+            QuitProgress = updatedProgressList
+        });
     }
 }

@@ -1313,30 +1313,9 @@
       "UpdateQuitProgressRequest": {
         "type": "object",
         "properties": {
-          "quitPlanId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "progressDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "cigarettesSmoked": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pricePerPack": {
-            "type": "number",
-            "format": "double"
-          },
-          "cigarettesPerPack": {
-            "type": "integer",
-            "format": "int32"
-          },
           "cigarettesSmokedToday": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -25,5 +25,19 @@ namespace Smoking.DAL.Repositories
             return await _context.UserAchievements
                 .AnyAsync(ua => ua.UserID == userId && ua.AchievementID == achievementId);
         }
+
+        // Phương thức Update (cập nhật thông tin thành tích người dùng)
+        public async Task Update(UserAchievement entity)
+        {
+            _context.UserAchievements.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        // Phương thức Remove (xóa thành tích của người dùng)
+        public async Task Remove(UserAchievement entity)
+        {
+            _context.UserAchievements.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 }

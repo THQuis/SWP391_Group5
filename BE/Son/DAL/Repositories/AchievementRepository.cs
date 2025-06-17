@@ -17,6 +17,7 @@ namespace Smoking.DAL.Repositories
             _context = context;
         }
 
+        // Tìm kiếm các thành tích theo từ khóa
         public async Task<IEnumerable<Achievement>> SearchAsync(string keyword)
         {
             return await _context.Achievements
@@ -24,6 +25,20 @@ namespace Smoking.DAL.Repositories
                          || a.Description.Contains(keyword)
                          || a.Criteria.Contains(keyword))
                 .ToListAsync();
+        }
+
+        // Phương thức cập nhật thông tin Achievement
+        public async Task Update(Achievement entity)
+        {
+            _context.Achievements.Update(entity);  // Cập nhật Achievement
+            await _context.SaveChangesAsync();  // Lưu thay đổi vào cơ sở dữ liệu
+        }
+
+        // Phương thức xóa Achievement
+        public async Task Remove(Achievement entity)
+        {
+            _context.Achievements.Remove(entity);  // Xóa Achievement
+            await _context.SaveChangesAsync();  // Lưu thay đổi vào cơ sở dữ liệu
         }
     }
 }

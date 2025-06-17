@@ -19,6 +19,7 @@ namespace Smoking.DAL.Repositories
                 .ThenInclude(u => u.Role);      // Bao gồm Role của User
         }
 
+        // Lấy Notification theo ID với thông tin User và Role
         public async Task<Notification> GetByIdWithUserAndRoleAsync(int id)
         {
             return await _context.Notifications
@@ -27,10 +28,24 @@ namespace Smoking.DAL.Repositories
                 .FirstOrDefaultAsync(n => n.NotificationID == id);
         }
 
-
+        // Tạo mới một Notification
         public async Task CreateNotificationAsync(Notification notification)
         {
             await _context.Notifications.AddAsync(notification);
+        }
+
+        // Cập nhật thông tin Notification
+        public async Task Update(Notification entity)
+        {
+            _context.Notifications.Update(entity); // Cập nhật Notification
+            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+        }
+
+        // Xóa Notification
+        public async Task Remove(Notification entity)
+        {
+            _context.Notifications.Remove(entity); // Xóa Notification
+            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
         }
     }
 }

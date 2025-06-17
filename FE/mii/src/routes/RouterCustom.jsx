@@ -22,6 +22,7 @@ import MilestonesPage from "../pages/user/MilestonesPage";// user milestones
 import Page from "../pages/user/test"; // user test page (Dashboard)
 import UserButtonCoach from "../pages/user/UserButtonCoach"; // user coach button
 import CoachDashboard from "../pages/user/CoachDashboard"; //  coach dashboard
+import ProfileOfCoach from "../pages/user/ProfileOfCoach"; // coach profile
 
 
 // import ManagementBlog from "../pages/admin/test";
@@ -90,7 +91,12 @@ const RouterCustom = () => {
                     <CoachDashboard />
                 </UserLayout>
             } />
-
+            {/* Profile of coach */}
+            <Route path={ROUTERS.USER.COACHPROFILE} element={
+                <UserLayout>
+                    <ProfileOfCoach />
+                </UserLayout>
+            } />
 
             {/* Admin layout */}
             <Route path={ROUTERS.ADMIN.DASHBOARD} element={

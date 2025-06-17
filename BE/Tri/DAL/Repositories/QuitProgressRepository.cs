@@ -4,6 +4,7 @@ using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Smoking.DAL.Repositories
@@ -20,6 +21,11 @@ namespace Smoking.DAL.Repositories
                                  .Where(p => p.QuitPlanID == quitPlanId)
                                  .AsNoTracking()
                                  .ToListAsync();
+        }
+
+        public async Task<QuitProgress> FindFirstOrDefaultAsync(Expression<Func<QuitProgress, bool>> predicate)
+        {
+            return await _context.QuitProgresses.FirstOrDefaultAsync(predicate);
         }
     }
 }

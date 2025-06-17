@@ -16,6 +16,7 @@ namespace Smoking.BLL.Services
             _emailSettings = emailSettings.Value;
         }
 
+        // Gửi email xác thực đăng ký tài khoản (OTP)
         public async Task SendOtpEmailAsync(string toEmail, string otpCode)
         {
             string subject = "Xác thực đăng ký tài khoản - Smoking App";
@@ -40,8 +41,7 @@ namespace Smoking.BLL.Services
             await SendHtmlEmailAsync(toEmail, subject, htmlBody);
         }
 
-
-
+        // Gửi email dạng HTML (dùng cho quên mật khẩu)
         public async Task SendHtmlEmailAsync(string toEmail, string subject, string htmlBody)
         {
             using var smtpClient = new SmtpClient(_emailSettings.SmtpServer)
@@ -63,6 +63,7 @@ namespace Smoking.BLL.Services
             await smtpClient.SendMailAsync(mailMessage);
         }
 
+        // Gửi email cơ bản (không có HTML)
         public async Task SendEmailAsync(string toEmail, string subject, string body)
         {
             using var smtpClient = new SmtpClient(_emailSettings.SmtpServer)

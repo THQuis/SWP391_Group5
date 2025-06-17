@@ -940,21 +940,10 @@
         }
       }
     },
-    "/api/UserBlog/my-blogs/{userId}": {
+    "/api/UserBlog/my-blogs": {
       "get": {
         "tags": [
           "UserBlog"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1051,21 +1040,10 @@
         }
       }
     },
-    "/api/UserBlog/stats/{userId}": {
+    "/api/UserBlog/stats": {
       "get": {
         "tags": [
           "UserBlog"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {

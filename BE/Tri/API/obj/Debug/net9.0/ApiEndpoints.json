@@ -16,6 +16,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AchievementAndProgressController",
+    "Method": "UpdateQuitProgress",
+    "RelativePath": "api/AchievementAndProgress/user/{userId}/update-progress",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.User.UpdateQuitProgressRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
     "Method": "Create",
     "RelativePath": "api/Admin/AddAchivement",

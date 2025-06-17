@@ -13,6 +13,7 @@ export const ROUTERS = {
         TEST: "/User/tientrinhAuto",
         COACH: "/User/coach",
         COACHDASHBOARD: "/User/coachdashboard",
+        COACHPROFILE: "User/coach/profile/:id",
     },
     ADMIN: {
         DASHBOARD: "/admin",

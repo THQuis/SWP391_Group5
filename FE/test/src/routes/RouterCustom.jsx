@@ -17,15 +17,15 @@ import ManagementPlan from "../pages/admin/ManagementPlan";
 import QuitPlanPage from "../pages/user/QuitPlanPage";
 import MilestonesPage from "../pages/user/MilestonesPage";
 
+import MockAutomatedProgress from "../pages/user/MockAutomatedProgress";
+import BlogPage from "../pages/user/BlogPage";
+import PackagePage from "../pages/user/PackagePage";
+import CoachList from "../pages/user/CoachList";
+import RankingPage from "../pages/user/RankingPage";
 
-
-
-
-import ManagementNotification from "../pages/admin/test";
-import Page from "../pages/user/test"
 
 // import MilestonesPage from "../pages/user/test";
-
+import ManagementNotification from "../pages/admin/test";
 
 
 
@@ -59,11 +59,35 @@ const RouterCustom = () => {
                     <MilestonesPage />
                 </UserLayout>
             } />
-            <Route path={ROUTERS.USER.TEST} element={
+            <Route path={ROUTERS.USER.PROGRESS} element={
                 <UserLayout>
-                    <Page />
+                    <MockAutomatedProgress />
                 </UserLayout>
             } />
+            <Route path={ROUTERS.USER.BLOG} element={
+                <UserLayout>
+                    <BlogPage />
+                </UserLayout>
+            } />
+            <Route path={ROUTERS.USER.PACKAGE} element={
+                <UserLayout>
+                    <PackagePage />
+                </UserLayout>
+            } />
+            <Route path={ROUTERS.USER.COACH} element={
+                <UserLayout>
+                    <CoachList />
+                </UserLayout>
+            } />
+
+            <Route path={ROUTERS.USER.RANKING} element={
+                <UserLayout>
+                    <RankingPage />
+                </UserLayout>
+            } />
+
+
+
 
 
 

@@ -5,10 +5,18 @@ export const ROUTERS = {
     USER: {
         HOME: "/",
         PROFILE: "/User/profile",
-        QUITPLAN: "/User/plan",
+        QUITPLAN: "/User/quitplan",
         MILESTONES: "/User/milestones",
-        TEST: "/User/tientrinhAuto",
+        COACH: "/User/coachList",
+        PACKAGE: "/User/package",
+        BLOG: "/User/blog",
+        RANKING: "/User/ranking",
+        PROGRESS: "/User/progress"
     },
+    COACH: {
+
+    },
+
     ADMIN: {
         DASHBOARD: "/admin",
         USER: "admin/users",

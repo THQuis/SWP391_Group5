@@ -12,7 +12,6 @@ namespace Smoking.DAL.Repositories
         {
             _context = context;
 
-            // Khởi tạo từng repository
             Roles = new RoleRepository(_context);
             Users = new UserRepository(_context);
             MembershipPackages = new MembershipPackageRepository(_context);
@@ -48,7 +47,9 @@ namespace Smoking.DAL.Repositories
         {
             return await _context.SaveChangesAsync();
         }
+
         public AppDbContext DbContext => _context;
+
         public void Dispose()
         {
             _context.Dispose();

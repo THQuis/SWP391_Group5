@@ -2,49 +2,45 @@
 using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
-using Smoking.BLL.Services;
 using Smoking.DAL.Interfaces.Repositories;
-using Smoking.DAL.Entities;
+using System;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Smoking.API.Controllers.Member
 {
     [ApiController]
     [Route("api/user")]
-    [Authorize(Roles = "2")] // Chỉ User (RoleID=2) được vào
+    [Authorize(Roles = "2")] // Chỉ User (RoleID = 2) được vào
     public class UserProfileController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IUnitOfWork _unitOfWork; // Inject IUnitOfWork
-        private readonly IMailService _mailService;  // Inject MailService
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMailService _mailService;
 
-        // Inject IUnitOfWork và IMailService vào Controller
         public UserProfileController(IUserService userService, IUnitOfWork unitOfWork, IMailService mailService)
         {
             _userService = userService;
-            _unitOfWork = unitOfWork;  // Initialize IUnitOfWork
-            _mailService = mailService;  // Initialize IMailService
+            _unitOfWork = unitOfWork;
+            _mailService = mailService;
         }
 
-        // 1️⃣ Lấy thông tin profile của user
+        // 1️⃣ Lấy thông tin hồ sơ cá nhân
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
-            {
-                return Unauthorized(new { Message = "Invalid user." });
-            }
+                return Unauthorized(new { Message = "Không xác định được người dùng." });
 
             var user = await _userService.GetByIdAsync(userId);
             if (user == null)
-            {
-                return NotFound(new { Message = "User không tồn tại." });
-            }
+                return NotFound(new { Message = "Người dùng không tồn tại." });
 
             return Ok(new
             {
-                Message = "Thông tin profile cá nhân",
+                Message = "Thông tin cá nhân",
                 User = new
                 {
                     user.UserID,
@@ -59,27 +55,21 @@ namespace Smoking.API.Controllers.Member
             });
         }
 
-        // 2️⃣ Cập nhật thông tin User
+        // 2️⃣ Cập nhật hồ sơ cá nhân
         [HttpPut("update-profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var user = await _unitOfWork.Users.GetByIdAsync(userId);
-
+            var user = await _userService.GetByIdAsync(userId);
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
 
-            // Cập nhật thông tin User
             user.FullName = request.FullName ?? user.FullName;
             user.PhoneNumber = request.PhoneNumber ?? user.PhoneNumber;
             user.ProfilePicture = request.ProfilePicture ?? user.ProfilePicture;
 
-            _unitOfWork.Users.Update(user);
+            await _userService.UpdateAsync(user);
 
-            // ❗️Lưu trước khi thực hiện thao tác khác
-            await _unitOfWork.CompleteAsync();
-
-            // ❗️Chỉ sau khi SaveChanges xong mới gửi email
             await _mailService.SendEmailAsync(
                 user.Email,
                 "Cập nhật thông tin thành công",
@@ -89,73 +79,76 @@ namespace Smoking.API.Controllers.Member
             return Ok(new { Message = "Cập nhật thông tin thành công!" });
         }
 
-
-        // 3️⃣ Xóa User
+        // 3️⃣ Xoá tài khoản (xoá mềm - chỉ đổi trạng thái)
         [HttpDelete("profile")]
         public async Task<IActionResult> DeleteProfile()
         {
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
-
-            // Lấy thông tin User từ DB qua UnitOfWork
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             if (user == null)
-                return NotFound(new { Message = "User không tồn tại." });
+                return NotFound(new { Message = "Người dùng không tồn tại." });
 
-            // Xóa User khỏi hệ thống qua UnitOfWork
-            _unitOfWork.Users.Remove(user);
+            // Xoá mềm
+            user.Status = "Deleted";
+            _unitOfWork.Users.Update(user);
+
+            // Lưu thay đổi trước
             await _unitOfWork.CompleteAsync();
 
-            // Gửi email thông báo
-            await _mailService.SendEmailAsync(user.Email, "Tài khoản đã bị xóa", "Tài khoản của bạn đã bị xóa thành công.");
+            try
+            {
+                await _mailService.SendEmailAsync(
+                    user.Email,
+                    "Tài khoản bị vô hiệu hoá",
+                    "Tài khoản của bạn đã bị vô hiệu hoá khỏi hệ thống."
+                );
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Message = "Tài khoản đã được vô hiệu hoá, nhưng lỗi khi gửi email.", Error = ex.Message });
+            }
 
-            return Ok(new { Message = "Xóa tài khoản thành công." });
+            return Ok(new { Message = "Tài khoản đã được vô hiệu hoá." });
         }
 
-        // 4️⃣ Lấy thông báo và hiển thị trên trang chủ
+        // 4️⃣ Lấy danh sách thông báo của user
         [HttpGet("notifications")]
         public async Task<IActionResult> GetNotifications()
         {
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
-
-            // Lấy tất cả thông báo của user từ cơ sở dữ liệu (hoặc có thể lấy thông báo chưa đọc nếu cần)
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var notifications = await _unitOfWork.Notifications.GetAllAsync();
 
-            // Lọc thông báo của người dùng hiện tại (nếu có)
-            var userNotifications = notifications.Where(n => n.UserID == userId).ToList();
+            var userNotifications = notifications
+                .Where(n => n.UserID == userId)
+                .ToList();
 
-            // Kiểm tra nếu có thông báo cho người dùng
-            if (userNotifications.Any())
+            if (!userNotifications.Any())
+                return NotFound(new { Message = "Không có thông báo nào." });
+
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user != null && !string.IsNullOrWhiteSpace(user.Email))
             {
-                var user = await _unitOfWork.Users.GetByIdAsync(userId);
+                var allMessages = string.Join("\n", userNotifications.Select(n => $"{n.NotificationName}: {n.Message}"));
 
-                // Nếu người dùng có email, gửi thông báo qua email
-                if (user != null && !string.IsNullOrEmpty(user.Email))
+                try
                 {
-                    // Kết hợp tất cả thông báo thành một chuỗi văn bản đơn giản
-                    var allMessages = string.Join("\n", userNotifications.Select(n => $"{n.NotificationName}: {n.Message}"));
-
-                    // Gửi tất cả thông báo qua email (dạng plain text)
-                    try
-                    {
-                        await _mailService.SendEmailAsync(user.Email, "Thông báo từ hệ thống", allMessages);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Nếu có lỗi khi gửi email, log lỗi và trả về thông báo lỗi
-                        return BadRequest(new { Message = "Lỗi khi gửi email thông báo: " + ex.Message });
-                    }
+                    await _mailService.SendEmailAsync(
+                        user.Email,
+                        "Thông báo từ hệ thống",
+                        allMessages
+                    );
                 }
-
-                // Trả về thông báo trên trang chủ
-                return Ok(new { Message = "Đã gửi thông báo qua email và hiển thị trên trang chủ", Notifications = userNotifications });
+                catch (Exception ex)
+                {
+                    return BadRequest(new { Message = "Lỗi gửi email: " + ex.Message });
+                }
             }
 
-            // Nếu không có thông báo, trả về thông báo cho người dùng
-            return NotFound(new { Message = "Không có thông báo nào." });
+            return Ok(new
+            {
+                Message = "Lấy thông báo thành công",
+                Notifications = userNotifications
+            });
         }
-
-
-
-
     }
 }

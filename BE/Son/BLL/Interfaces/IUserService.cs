@@ -14,13 +14,11 @@ namespace Smoking.BLL.Interfaces
         Task<bool> DeleteAsync(int id);
         Task<User> AuthenticateAsync(string email, string password);
 
-        // MỚI THÊM: task
         Task DeleteUserByEmailAsync(string email);
         Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture);
 
-        // Các phương thức mới
-        Task<User> GetUserByEmailAsync(string email); // Lấy user theo email
-        Task<IEnumerable<User>> GetAllUsersAsync(); // Lấy tất cả người dùng
-        Task<IEnumerable<User>> GetUsersByRoleAsync(string role); // Lấy người dùng theo role
+        Task<User> GetUserByEmailAsync(string email);
+        Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<IEnumerable<User>> GetUsersByRoleAsync(string role);
     }
 }

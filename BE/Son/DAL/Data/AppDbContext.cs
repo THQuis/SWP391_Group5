@@ -5,10 +5,7 @@ namespace Smoking.DAL.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
@@ -23,7 +20,7 @@ namespace Smoking.DAL.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
-        public DbSet<ConsultationBooking> ConsultationBookings { get; set; }  // Đảm bảo rằng DbSet này có mặt
+        public DbSet<ConsultationBooking> ConsultationBookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

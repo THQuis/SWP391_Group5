@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\System\" />
     <Folder Include="Models\System\" />
   </ItemGroup>
 

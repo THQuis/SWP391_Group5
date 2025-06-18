@@ -337,37 +337,6 @@
         }
       }
     },
-    "/api/Admin/Notifications": {
-      "post": {
-        "tags": [
-          "Admin"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Admin/UpdateRole": {
       "put": {
         "tags": [
@@ -1020,6 +989,108 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/ListAllPlans": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/ListAllProgress": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/GetUserIDPlan": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/GetUserIDProgress": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/DeleteQuitPlanAndProgressUserID": {
+      "delete": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/Statistics": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
         ],
         "responses": {
           "200": {

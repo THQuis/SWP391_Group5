@@ -153,19 +153,81 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
-    "Method": "SendNotification",
-    "RelativePath": "api/Admin/Notifications",
-    "HttpMethod": "POST",
+    "ContainingType": "Smoking.API.Controllers.Admin.QuitPlanAdminController",
+    "Method": "DeleteAllByUser",
+    "RelativePath": "api/admin/quitplan/DeleteQuitPlanAndProgressUserID",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "message",
-        "Type": "System.String",
-        "IsRequired": true
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.QuitPlanAdminController",
+    "Method": "GetUserQuitPlans",
+    "RelativePath": "api/admin/quitplan/GetUserIDPlan",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.QuitPlanAdminController",
+    "Method": "GetUserQuitProgresses",
+    "RelativePath": "api/admin/quitplan/GetUserIDProgress",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.QuitPlanAdminController",
+    "Method": "GetAllQuitPlans",
+    "RelativePath": "api/admin/quitplan/ListAllPlans",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.QuitPlanAdminController",
+    "Method": "GetAllQuitProgresses",
+    "RelativePath": "api/admin/quitplan/ListAllProgress",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.QuitPlanAdminController",
+    "Method": "GetGlobalQuitStatistics",
+    "RelativePath": "api/admin/quitplan/Statistics",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

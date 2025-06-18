@@ -13,50 +13,52 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Cấu hình JwtSettings
+// ======== CẤU HÌNH JWT & EMAIL =========
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
-
-// Cấu hình EmailSettings
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
-// Đăng ký DbContext với SQL Server
+// ======== ĐĂNG KÝ DB CONTEXT =========
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Đăng ký các service, repository
-builder.Services.AddScoped<IAuthService, AuthService>();
+// ======== ĐĂNG KÝ CÁC REPOSITORY & SERVICE =========
+// UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Đăng ký MailService
+// Auth, Mail, User
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
-// Các service cho Blog
+// Blog
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 
-// --- Đăng ký USER SERVICE ---
-builder.Services.AddScoped<IUserService, UserService>();
-
-// Thêm các service và repository liên quan đến Notification, Achievement
-builder.Services.AddScoped<INotificationService, NotificationService>();
+// Notification, Achievement
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IAchievementRepository, AchievementRepository>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
 
-// Thêm MemoryCache (bắt buộc nếu dùng để lưu OTP tạm)
+// ======== THÊM CHO GÓI THÀNH VIÊN (QUAN TRỌNG) =========
+builder.Services.AddScoped<IMembershipPackageService, MembershipPackageService>();
+builder.Services.AddScoped<IUserMembershipService, UserMembershipService>();
+builder.Services.AddScoped<IMembershipPackageRepository, MembershipPackageRepository>();
+builder.Services.AddScoped<IUserMembershipRepository, UserMembershipRepository>();
+
+// ======== CACHE & JSON OPTIONS =========
 builder.Services.AddMemoryCache();
 
-// Thêm Controller và cấu hình JsonOptions để tránh lỗi circular reference
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-        options.JsonSerializerOptions.MaxDepth = 64;  // Tăng chiều sâu nếu cần thiết
+        options.JsonSerializerOptions.MaxDepth = 64;
     });
 
-// Cấu hình Authentication dùng JWT Bearer
+// ======== AUTHENTICATION - JWT =========
 var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
 builder.Services.AddAuthentication(options =>
 {
@@ -78,10 +80,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Thêm Authorization
 builder.Services.AddAuthorization();
 
-// Cấu hình Swagger để hỗ trợ JWT Bearer token
+// ======== SWAGGER =========
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -111,22 +112,18 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Enable Swagger UI in development environment
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Smoking API V1");
-        c.RoutePrefix = "swagger";  // Set route prefix for Swagger UI
+        c.RoutePrefix = "swagger";
     });
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthentication();  // Enable JWT Authentication middleware
-app.UseAuthorization();  // Enable Authorization middleware
-
-app.MapControllers();  // Map controllers for API endpoints
-
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 app.Run();

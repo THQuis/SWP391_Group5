@@ -17,24 +17,24 @@ namespace Smoking.DAL.Repositories
         public async Task<IEnumerable<UserMembership>> GetByUserIdAsync(int userId)
         {
             return await _context.UserMemberships
-                                 .Include(um => um.Package)
-                                 .Where(um => um.UserID == userId)
-                                 .AsNoTracking()
-                                 .ToListAsync();
+                .Include(um => um.Package)
+                .Where(um => um.UserID == userId)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         // Phương thức Update (cập nhật thông tin thành viên)
-        public async Task Update(UserMembership entity)
+        public new Task Update(UserMembership entity)
         {
             _context.UserMemberships.Update(entity);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
         // Phương thức Remove (xóa thành viên)
-        public async Task Remove(UserMembership entity)
+        public new Task Remove(UserMembership entity)
         {
             _context.UserMemberships.Remove(entity);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
     }
 }

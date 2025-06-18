@@ -155,6 +155,91 @@
         }
       }
     },
+    "/api/AchievementAndProgress/user/ProgressInformation": {
+      "get": {
+        "tags": [
+          "AchievementAndProgress"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/AchievementAndProgress/user/UpdateProgress": {
+      "post": {
+        "tags": [
+          "AchievementAndProgress"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuitProgressRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuitProgressRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuitProgressRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/AchievementAndProgress/user/showAllProgress": {
+      "get": {
+        "tags": [
+          "AchievementAndProgress"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Admin/ListUsers": {
       "get": {
         "tags": [
@@ -245,37 +330,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Admin/Notifications": {
-      "post": {
-        "tags": [
-          "Admin"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -949,6 +1003,225 @@
         }
       }
     },
+    "/api/QuitPlan/CreateQuitPlan": {
+      "post": {
+        "tags": [
+          "QuitPlan"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutoQuitPlanRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutoQuitPlanRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutoQuitPlanRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuitPlan/UpdateQuitPlan": {
+      "patch": {
+        "tags": [
+          "QuitPlan"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitPlanUpdateCoreRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitPlanUpdateCoreRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitPlanUpdateCoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuitPlan/DeleteQuitPlanAndProgress": {
+      "delete": {
+        "tags": [
+          "QuitPlan"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuitPlan/user/{userId}": {
+      "get": {
+        "tags": [
+          "QuitPlan"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/ListAllPlans": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/ListAllProgress": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/GetUserIDPlan": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/GetUserIDProgress": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/DeleteQuitPlanAndProgressUserID": {
+      "delete": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/quitplan/Statistics": {
+      "get": {
+        "tags": [
+          "QuitPlanAdmin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user-achievement/my-achievements/{userId}": {
       "get": {
         "tags": [
@@ -1241,6 +1514,135 @@
         }
       }
     },
+    "/api/user-memberships/List": {
+      "get": {
+        "tags": [
+          "UserMembership"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user-memberships/user/{userId}": {
+      "get": {
+        "tags": [
+          "UserMembership"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user-memberships": {
+      "post": {
+        "tags": [
+          "UserMembership"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMembership"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMembership"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMembership"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user-memberships/{id}": {
+      "put": {
+        "tags": [
+          "UserMembership"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMembership"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMembership"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMembership"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "UserMembership"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/profile": {
       "get": {
         "tags": [
@@ -1311,6 +1713,48 @@
   },
   "components": {
     "schemas": {
+      "Achievement": {
+        "required": [
+          "achievementName"
+        ],
+        "type": "object",
+        "properties": {
+          "achievementID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievementName": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "criteria": {
+            "type": "string",
+            "nullable": true
+          },
+          "badgeImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "packageType": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "userAchievements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAchievement"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AchievementCreate": {
         "type": "object",
         "properties": {
@@ -1363,6 +1807,89 @@
         },
         "additionalProperties": false
       },
+      "AutoQuitPlanRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cigarettesPerDay": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pricePerPack": {
+            "type": "number",
+            "format": "double"
+          },
+          "cigarettesPerPack": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Blog": {
+        "required": [
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "blogId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "authorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "categoryName": {
+            "type": "string",
+            "nullable": true
+          },
+          "blogType": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "likes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dislikes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reportCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "BlogCreateModel": {
         "type": "object",
         "properties": {
@@ -1403,6 +1930,74 @@
           "preferredLanguage": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ConsultationBooking": {
+        "required": [
+          "bookingDate",
+          "coachID",
+          "duration",
+          "status",
+          "userID"
+        ],
+        "type": "object",
+        "properties": {
+          "bookingID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "coachID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coach": {
+            "$ref": "#/components/schemas/User"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "minLength": 1,
+            "pattern": "Pending|Confirmed|Cancelled|Completed",
+            "type": "string"
+          },
+          "meetingLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "coachNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "preferredLanguage": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "reminderSent": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -1455,6 +2050,40 @@
         },
         "additionalProperties": false
       },
+      "Feedback": {
+        "required": [
+          "feedbackContent",
+          "rating",
+          "userID"
+        ],
+        "type": "object",
+        "properties": {
+          "feedbackID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "feedbackContent": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rating": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "feedbackDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "ForgotPasswordRequest": {
         "type": "object",
         "properties": {
@@ -1474,6 +2103,304 @@
           },
           "password": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MembershipPackage": {
+        "required": [
+          "duration",
+          "packageName",
+          "packageType",
+          "price"
+        ],
+        "type": "object",
+        "properties": {
+          "packageID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "packageName": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "packageType": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userMemberships": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserMembership"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Notification": {
+        "required": [
+          "message",
+          "notificationType",
+          "userID"
+        ],
+        "type": "object",
+        "properties": {
+          "notificationID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "message": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "notificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notificationType": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notificationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "condition": {
+            "type": "string",
+            "nullable": true
+          },
+          "notificationFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Payment": {
+        "required": [
+          "amount",
+          "paymentMethod",
+          "status",
+          "userMembershipID"
+        ],
+        "type": "object",
+        "properties": {
+          "paymentID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userMembershipID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userMembership": {
+            "$ref": "#/components/schemas/UserMembership"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "paymentMethod": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "transactionReference": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuitPlan": {
+        "required": [
+          "status",
+          "userID"
+        ],
+        "type": "object",
+        "properties": {
+          "quitPlanID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "cigarettesPerDayAtStart": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pricePerPackAtStart": {
+            "type": "number",
+            "format": "double"
+          },
+          "cigarettesPerPack": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "planDetails": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "quitProgresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuitProgress"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuitPlanUpdateCoreRequest": {
+        "type": "object",
+        "properties": {
+          "cigarettesPerDayAtStart": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pricePerPackAtStart": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cigarettesPerPack": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuitProgress": {
+        "required": [
+          "quitPlanID"
+        ],
+        "type": "object",
+        "properties": {
+          "progressID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quitPlanID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quitPlan": {
+            "$ref": "#/components/schemas/QuitPlan"
+          },
+          "progressDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cigarettesPerDayBaseline": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "moneySaved": {
+            "type": "number",
+            "format": "double"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastSmokeDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "cigarettesSmokedToday": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cigarettesDropped": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalCigarettesDropped": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalMoneySaved": {
+            "type": "number",
+            "format": "double",
             "nullable": true
           }
         },
@@ -1519,6 +2446,35 @@
         },
         "additionalProperties": false
       },
+      "Role": {
+        "required": [
+          "roleName"
+        ],
+        "type": "object",
+        "properties": {
+          "roleID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roleName": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SendNotificationRequest": {
         "type": "object",
         "properties": {
@@ -1529,33 +2485,20 @@
             "type": "string",
             "nullable": true
           },
-          "email": {
-            "type": "string",
+          "emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
-          },
-          "notificationID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userID": {
-            "type": "integer",
-            "format": "int32"
           },
           "message": {
             "type": "string",
             "nullable": true
           },
-          "notificationDate": {
-            "type": "string",
-            "format": "date-time"
-          },
           "notificationType": {
             "type": "string",
             "nullable": true
-          },
-          "sentAt": {
-            "type": "string",
-            "format": "date-time"
           },
           "notificationName": {
             "type": "string",
@@ -1572,6 +2515,45 @@
           "createdBy": {
             "type": "string",
             "nullable": true
+          },
+          "sendEmail": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SmokingStatus": {
+        "required": [
+          "userID"
+        ],
+        "type": "object",
+        "properties": {
+          "smokingStatusID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "cigarettesPerDay": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "monthlyCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "pricePerPack": {
+            "type": "number",
+            "format": "double"
+          },
+          "lastUpdated": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -1593,6 +2575,223 @@
           },
           "description": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateQuitProgressRequest": {
+        "type": "object",
+        "properties": {
+          "cigarettesSmokedToday": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "required": [
+          "email",
+          "fullName",
+          "password",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fullName": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "phoneNumber": {
+            "maxLength": 15,
+            "type": "string",
+            "nullable": true
+          },
+          "roleID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "registrationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "profilePicture": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "userMemberships": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserMembership"
+            },
+            "nullable": true
+          },
+          "smokingStatuses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SmokingStatus"
+            },
+            "nullable": true
+          },
+          "quitPlans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuitPlan"
+            },
+            "nullable": true
+          },
+          "userAchievements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAchievement"
+            },
+            "nullable": true
+          },
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true
+          },
+          "blogs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Blog"
+            },
+            "nullable": true
+          },
+          "feedbacks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Feedback"
+            },
+            "nullable": true
+          },
+          "consultationBookingsAsUser": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConsultationBooking"
+            },
+            "nullable": true
+          },
+          "consultationBookingsAsCoach": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConsultationBooking"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserAchievement": {
+        "required": [
+          "achievementID",
+          "userID"
+        ],
+        "type": "object",
+        "properties": {
+          "userAchievementID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievementID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "awardedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "achievement": {
+            "$ref": "#/components/schemas/Achievement"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserMembership": {
+        "required": [
+          "endDate",
+          "packageID",
+          "paymentStatus",
+          "startDate",
+          "userID"
+        ],
+        "type": "object",
+        "properties": {
+          "userMembershipID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "packageID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "package": {
+            "$ref": "#/components/schemas/MembershipPackage"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "paymentStatus": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "payments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Payment"
+            },
             "nullable": true
           }
         },

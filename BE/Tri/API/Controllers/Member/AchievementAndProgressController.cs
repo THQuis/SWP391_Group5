@@ -25,7 +25,7 @@ public class AchievementAndProgressController : ControllerBase
     }
 
     // ✅ API lấy thông tin tổng hợp tiến trình và thành tựu của người dùng
-    [HttpGet("user/{userId}")]
+    [HttpGet("user/ProgressInformation")]
     public async Task<IActionResult> GetAchievementAndProgressStats(int userId)
     {
         var quitPlans = await _unitOfWork.QuitPlans.FindAsync(x => x.UserID == userId && x.Status == "Active");
@@ -35,6 +35,7 @@ public class AchievementAndProgressController : ControllerBase
 
         decimal totalMoneySaved = 0;
         int totalCigarettesDropped = 0;
+        int totalProgressDays = 0;
 
         foreach (var plan in quitPlans)
         {
@@ -44,6 +45,7 @@ public class AchievementAndProgressController : ControllerBase
             {
                 totalMoneySaved += progresses.Sum(p => p.MoneySaved);
                 totalCigarettesDropped += progresses.Sum(p => p.CigarettesDropped ?? 0);
+                totalProgressDays += progresses.Count(); // Mỗi bản ghi là 1 ngày
             }
         }
 
@@ -53,12 +55,13 @@ public class AchievementAndProgressController : ControllerBase
         {
             TotalAchievements = achievements.Count(),
             TotalCigarettesDropped = totalCigarettesDropped,
-            TotalMoneySaved = totalMoneySaved
+            TotalMoneySaved = totalMoneySaved,
+            TotalProgressDays = totalProgressDays
         });
     }
 
-    // ✅ API cập nhật tiến trình cai thuốc (số thuốc hút hôm nay)
-    [HttpPost("user/{userId}/update-progress")]
+
+    [HttpPost("user/UpdateProgress")]
     public async Task<IActionResult> UpdateQuitProgress(int userId, [FromBody] UpdateQuitProgressRequest request)
     {
         var quitPlans = await _unitOfWork.QuitPlans.FindAsync(x => x.UserID == userId && x.Status == "Active");
@@ -88,4 +91,59 @@ public class AchievementAndProgressController : ControllerBase
             QuitProgress = updatedProgressList
         });
     }
+
+    [HttpGet("user/showAllProgress")]
+    public async Task<IActionResult> GetAllQuitProgress(int userId)
+    {
+        var quitPlans = await _unitOfWork.QuitPlans.FindAsync(x => x.UserID == userId);
+
+        if (quitPlans == null || !quitPlans.Any())
+            return NotFound("Người dùng chưa có kế hoạch nào.");
+
+        var allProgress = new List<object>();
+
+        foreach (var plan in quitPlans)
+        {
+            var progresses = (await _unitOfWork.QuitProgresses
+                .FindAsync(p => p.QuitPlanID == plan.QuitPlanID))
+                .OrderBy(p => p.ProgressDate)
+                .ToList();
+
+            if (!progresses.Any()) continue;
+
+            decimal cumulativeMoney = 0;
+            int cumulativeCigarettes = 0;
+
+            var progressListWithTotals = progresses.Select(p =>
+            {
+                cumulativeMoney += p.MoneySaved;
+                cumulativeCigarettes += p.CigarettesDropped ?? 0;
+
+                return new
+                {
+                    p.ProgressDate,
+                    p.CigarettesPerDayBaseline,
+                    p.CigarettesSmokedToday,
+                    p.CigarettesDropped,
+                    p.MoneySaved,
+                    p.Notes,
+                    p.LastSmokeDate,
+                    TotalCigarettesDropped = cumulativeCigarettes,
+                    TotalMoneySaved = cumulativeMoney
+                };
+            });
+
+            allProgress.Add(new
+            {
+                PlanId = plan.QuitPlanID,
+                PlanStartDate = plan.StartDate,
+                PlanStatus = plan.Status,
+                ProgressList = progressListWithTotals
+            });
+        }
+
+        return Ok(allProgress);
+    }
+
+
 }

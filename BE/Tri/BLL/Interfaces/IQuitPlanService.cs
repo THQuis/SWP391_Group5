@@ -12,5 +12,7 @@ namespace Smoking.BLL.Interfaces
         Task<QuitPlan> CreateAsync(QuitPlan entity);
         Task<bool> UpdateAsync(QuitPlan entity);
         Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAllPlansAndProgressByUserAsync(int userId);
+
     }
 }

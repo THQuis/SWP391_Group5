@@ -155,7 +155,7 @@
         }
       }
     },
-    "/api/AchievementAndProgress/user/{userId}": {
+    "/api/AchievementAndProgress/user/ProgressInformation": {
       "get": {
         "tags": [
           "AchievementAndProgress"
@@ -163,8 +163,7 @@
         "parameters": [
           {
             "name": "userId",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -178,7 +177,7 @@
         }
       }
     },
-    "/api/AchievementAndProgress/user/{userId}/update-progress": {
+    "/api/AchievementAndProgress/user/UpdateProgress": {
       "post": {
         "tags": [
           "AchievementAndProgress"
@@ -186,8 +185,7 @@
         "parameters": [
           {
             "name": "userId",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -213,6 +211,28 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/AchievementAndProgress/user/showAllProgress": {
+      "get": {
+        "tags": [
+          "AchievementAndProgress"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -891,10 +911,10 @@
         }
       }
     },
-    "/api/QuitPlanAuto/auto-create": {
+    "/api/QuitPlan/CreateQuitPlan": {
       "post": {
         "tags": [
-          "QuitPlanAuto"
+          "QuitPlan"
         ],
         "requestBody": {
           "content": {
@@ -915,6 +935,92 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuitPlan/UpdateQuitPlan": {
+      "patch": {
+        "tags": [
+          "QuitPlan"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitPlanUpdateCoreRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitPlanUpdateCoreRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitPlanUpdateCoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuitPlan/DeleteQuitPlanAndProgress": {
+      "delete": {
+        "tags": [
+          "QuitPlan"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuitPlan/user/{userId}": {
+      "get": {
+        "tags": [
+          "QuitPlan"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1196,6 +1302,27 @@
           },
           "password": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuitPlanUpdateCoreRequest": {
+        "type": "object",
+        "properties": {
+          "cigarettesPerDayAtStart": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pricePerPackAtStart": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cigarettesPerPack": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },

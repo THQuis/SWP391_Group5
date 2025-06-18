@@ -1,4 +1,4 @@
-﻿namespace Smoking.API.Models.System
+﻿namespace Smoking.API.Models.User
 {
     public class AutoQuitPlanRequest
     {

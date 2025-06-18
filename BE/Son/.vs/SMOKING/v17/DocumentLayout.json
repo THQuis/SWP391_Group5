@@ -7,20 +7,12 @@
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\son\\api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\son\\api\\controllers\\coach\\coachconsultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\coach\\coachconsultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\son\\bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\son\\bll\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\son\\dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\son\\api\\models\\coach\\coachupdaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\coach\\coachupdaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\son\\dal\\interfaces\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -107,53 +99,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UpdateProfileRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\API\\Models\\User\\UpdateProfileRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\User\\UpdateProfileRequest.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\API\\Models\\User\\UpdateProfileRequest.cs",
-              "RelativeToolTip": "API\\Models\\User\\UpdateProfileRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Title": "CoachConsultationController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\API\\Controllers\\Coach\\CoachConsultationController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Coach\\CoachConsultationController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\API\\Controllers\\Coach\\CoachConsultationController.cs",
+              "RelativeToolTip": "API\\Controllers\\Coach\\CoachConsultationController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T09:46:37.49Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Repositories\\UserRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Repositories\\UserRepository.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Repositories\\UserRepository.cs",
-              "RelativeToolTip": "DAL\\Repositories\\UserRepository.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAIwB8AAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T09:42:06.441Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\BLL\\Interfaces\\IUserService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IUserService.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\BLL\\Interfaces\\IUserService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IUserService.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAiwBQAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T09:41:50.645Z",
+              "WhenOpened": "2025-06-18T10:24:54.64Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\BLL\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\UserService.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\BLL\\Services\\UserService.cs",
-              "RelativeToolTip": "BLL\\Services\\UserService.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAArwFYAAAAxAAAAAAAAAA==",
+              "Title": "CoachUpdateRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\API\\Models\\Coach\\CoachUpdateRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Coach\\CoachUpdateRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\API\\Models\\Coach\\CoachUpdateRequest.cs",
+              "RelativeToolTip": "API\\Models\\Coach\\CoachUpdateRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T09:40:38.768Z",
+              "WhenOpened": "2025-06-18T10:24:14.531Z",
               "EditorCaption": ""
             },
             {
@@ -164,14 +130,14 @@
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserProfileController.cs",
               "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\API\\Controllers\\Member\\UserProfileController.cs",
               "RelativeToolTip": "API\\Controllers\\Member\\UserProfileController.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAYwFgAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAgwA4AAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-18T09:18:08.986Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Interfaces\\Repositories\\IUserRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUserRepository.cs",
@@ -179,12 +145,11 @@
               "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUserRepository.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAqwA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T09:42:01.605Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T09:42:01.605Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Entities\\User.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\User.cs",
@@ -192,12 +157,11 @@
               "RelativeToolTip": "DAL\\Entities\\User.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAqwCMAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T09:31:14.877Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T09:31:14.877Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "ConsultationBookingRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Repositories\\ConsultationBookingRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\ConsultationBookingRepository.cs",
@@ -205,12 +169,11 @@
               "RelativeToolTip": "DAL\\Repositories\\ConsultationBookingRepository.cs",
               "ViewState": "AgIAAFAAAAAAAAAAAAAYwFkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T08:23:21.197Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T08:23:21.197Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 7,
               "Title": "IGenericRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
@@ -218,12 +181,11 @@
               "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAADwvxIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T06:55:20.117Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T06:55:20.117Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 8,
               "Title": "GenericRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Repositories\\GenericRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\GenericRepository.cs",
@@ -231,12 +193,11 @@
               "RelativeToolTip": "DAL\\Repositories\\GenericRepository.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAA8wC4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T06:53:52.052Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T06:53:52.052Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Repositories\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\UnitOfWork.cs",
@@ -244,12 +205,11 @@
               "RelativeToolTip": "DAL\\Repositories\\UnitOfWork.cs",
               "ViewState": "AgIAACkAAAAAAAAAAIAzwC0AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T08:12:15.36Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T08:12:15.36Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 11,
               "Title": "IMailService.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\BLL\\Interfaces\\IMailService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IMailService.cs",
@@ -257,12 +217,11 @@
               "RelativeToolTip": "BLL\\Interfaces\\IMailService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T08:01:46.776Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T08:01:46.776Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 12,
               "Title": "MailService.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\BLL\\Services\\MailService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\MailService.cs",
@@ -270,12 +229,11 @@
               "RelativeToolTip": "BLL\\Services\\MailService.cs",
               "ViewState": "AgIAADIAAAAAAAAAAAAAAEkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T08:01:41.109Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T08:01:41.109Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 9,
               "Title": "UserConsultationController.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\API\\Controllers\\Member\\UserConsultationController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserConsultationController.cs",
@@ -283,12 +241,11 @@
               "RelativeToolTip": "API\\Controllers\\Member\\UserConsultationController.cs",
               "ViewState": "AgIAAH0AAAAAAAAAAAAAwJUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T08:00:19.925Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T08:00:19.925Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 10,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\Son\\DAL\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
@@ -296,8 +253,7 @@
               "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAAwDYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T08:02:08.227Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T08:02:08.227Z"
             }
           ]
         }

@@ -102,41 +102,48 @@ namespace Smoking.API.Controllers.Member
         }
 
         // 3️⃣ Hủy lịch tư vấn (Nếu lịch chưa được xác nhận)
+        // 3️⃣ Hủy lịch tư vấn (Nếu lịch chưa được xác nhận)
         [HttpDelete("cancel/{bookingId}")]
         public async Task<IActionResult> CancelConsultation(int bookingId)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
-            {
                 return Unauthorized(new { Message = "Người dùng không hợp lệ." });
-            }
 
             var consultation = await _unitOfWork.ConsultationBookings.GetByIdAsync(bookingId);
             if (consultation == null)
-            {
                 return NotFound(new { Message = "Lịch tư vấn không tồn tại." });
-            }
 
             if (consultation.UserID != userId)
-            {
                 return BadRequest(new { Message = "Bạn không thể hủy lịch của người khác." });
-            }
 
             if (consultation.Status != "Pending")
-            {
                 return BadRequest(new { Message = "Không thể hủy lịch đã được duyệt hoặc đã hoàn thành." });
-            }
 
-            // Hủy lịch tư vấn
+            // 🔐 Lưu ID trước khi context dispose
+            var bookingIdCopy = consultation.BookingID;
+
+            // Cập nhật trạng thái
             consultation.Status = "Cancelled";
             _unitOfWork.ConsultationBookings.Update(consultation);
+
+            // 1️⃣ Gọi SaveChanges trước
             await _unitOfWork.CompleteAsync();
 
-            // Gửi email thông báo hủy
-            var user = await _unitOfWork.Users.GetByIdAsync(userId);
-            await _mailService.SendEmailAsync(user.Email, "Lịch tư vấn đã bị hủy", $"Lịch tư vấn của bạn với Coach {consultation.Coach?.FullName} vào {consultation.BookingDate} đã bị hủy.");
+            // 2️⃣ Sau đó mới gửi email - không truy cập consultation nữa
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "noreply@example.com";
+            var message = $"Lịch tư vấn #{bookingIdCopy} của bạn đã bị huỷ.";
 
-            return Ok(new { Message = "Lịch tư vấn đã bị hủy thành công." });
+            await _mailService.SendEmailAsync(userEmail, "Huỷ lịch tư vấn", message);
+
+            return Ok(new { Message = "Huỷ lịch thành công." });
         }
+
+
+
+
+
+
+
     }
 }

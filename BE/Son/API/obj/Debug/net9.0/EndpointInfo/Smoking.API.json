@@ -1128,16 +1128,6 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "UserProfile"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/api/user/update-profile": {
@@ -1164,6 +1154,18 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user/delete-profile": {
+      "delete": {
+        "tags": [
+          "UserProfile"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1445,6 +1447,10 @@
             "nullable": true
           },
           "profilePicture": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
             "type": "string",
             "nullable": true
           }

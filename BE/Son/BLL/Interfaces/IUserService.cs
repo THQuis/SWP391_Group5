@@ -15,7 +15,8 @@ namespace Smoking.BLL.Interfaces
         Task<User> AuthenticateAsync(string email, string password);
 
         Task DeleteUserByEmailAsync(string email);
-        Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture);
+        Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture, string? description);
+
 
         Task<User> GetUserByEmailAsync(string email);
         Task<IEnumerable<User>> GetAllUsersAsync();

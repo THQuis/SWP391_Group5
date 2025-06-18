@@ -739,6 +739,129 @@
         }
       }
     },
+    "/api/coach/consultation/my-appointments": {
+      "get": {
+        "tags": [
+          "CoachConsultation"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/coach/consultation/approve/{bookingId}": {
+      "put": {
+        "tags": [
+          "CoachConsultation"
+        ],
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/coach/consultation/reject/{bookingId}": {
+      "put": {
+        "tags": [
+          "CoachConsultation"
+        ],
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/coach/consultation/update/{bookingId}": {
+      "put": {
+        "tags": [
+          "CoachConsultation"
+        ],
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoachUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoachUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoachUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/coach/consultation/complete/{bookingId}": {
+      "put": {
+        "tags": [
+          "CoachConsultation"
+        ],
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/NotificationAdmin/list": {
       "get": {
         "tags": [
@@ -1260,6 +1383,24 @@
             "nullable": true
           },
           "blogType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoachUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "meetingLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "coachNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "preferredLanguage": {
             "type": "string",
             "nullable": true
           }

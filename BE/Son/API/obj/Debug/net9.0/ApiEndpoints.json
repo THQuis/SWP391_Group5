@@ -447,6 +447,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
+    "Method": "ApproveBooking",
+    "RelativePath": "api/coach/consultation/approve/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
+    "Method": "CompleteConsultation",
+    "RelativePath": "api/coach/consultation/complete/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
+    "Method": "GetAppointments",
+    "RelativePath": "api/coach/consultation/my-appointments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
+    "Method": "RejectBooking",
+    "RelativePath": "api/coach/consultation/reject/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
+    "Method": "UpdateConsultation",
+    "RelativePath": "api/coach/consultation/update/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Coach.CoachUpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.NotificationAdminController",
     "Method": "DeleteNotification",
     "RelativePath": "api/NotificationAdmin/deleteNotification",

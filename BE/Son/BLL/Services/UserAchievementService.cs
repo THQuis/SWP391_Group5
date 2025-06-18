@@ -30,7 +30,7 @@ namespace Smoking.BLL.Services
             if (user == null || achievement == null)
                 return false;
 
-            // Bước 2: Kiểm tra có cấp trước đó chưa (sửa đúng vị trí kiểm tra trùng lặp)
+            // Bước 2: Kiểm tra có cấp trước đó chưa
             var existedList = await _unitOfWork.UserAchievements.FindAsync(x => x.UserID == userId && x.AchievementID == achievementId);
             if (existedList.Any())
                 return false;
@@ -67,7 +67,10 @@ namespace Smoking.BLL.Services
                 {
                     await _mailService.SendEmailAsync(user.Email, "Bạn vừa đạt thành tựu mới!", notify.Message);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    // Log any email send errors
+                }
             }
 
             // Bước 6: Lưu thay đổi vào database
@@ -78,6 +81,18 @@ namespace Smoking.BLL.Services
         public async Task<IEnumerable<UserAchievement>> GetByUserIdAsync(int userId)
         {
             return await _unitOfWork.UserAchievements.GetByUserIdAsync(userId);
+        }
+
+        // Implement the GetUserByIdAsync method
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await _unitOfWork.Users.GetByIdAsync(userId);
+        }
+
+        // Implement the GetAchievementByIdAsync method
+        public async Task<Achievement> GetAchievementByIdAsync(int achievementId)
+        {
+            return await _unitOfWork.Achievements.GetByIdAsync(achievementId);
         }
     }
 }

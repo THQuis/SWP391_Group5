@@ -9,6 +9,7 @@ namespace Smoking.BLL.Interfaces
     public interface IUserAchievementService
     {
         Task<bool> GrantAchievementAsync(int userId, int achievementId, bool sendEmail = true);
+        Task<IEnumerable<UserAchievement>> GetAchievementsByUserIdAsync(int userId);
     }
 
 }

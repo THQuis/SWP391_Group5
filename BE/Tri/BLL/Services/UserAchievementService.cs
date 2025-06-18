@@ -2,6 +2,7 @@
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Smoking.BLL.Services
@@ -63,10 +64,16 @@ namespace Smoking.BLL.Services
                 catch { }
             }
 
-            var saveResult = await _unitOfWork.CompleteAsync();  // gọi đúng method lưu
+            var saveResult = await _unitOfWork.CompleteAsync();
 
-            return saveResult > 0; // trả true nếu lưu thành công
+            return saveResult > 0;
         }
 
+        // Cài đặt phương thức GetAchievementsByUserIdAsync
+        public async Task<IEnumerable<UserAchievement>> GetAchievementsByUserIdAsync(int userId)
+        {
+            // Lấy danh sách thành tựu của người dùng từ cơ sở dữ liệu
+            return await _unitOfWork.UserAchievements.FindAsync(x => x.UserID == userId);
+        }
     }
 }

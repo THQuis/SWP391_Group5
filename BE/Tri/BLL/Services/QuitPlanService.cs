@@ -31,9 +31,11 @@ public class QuitPlanService : IQuitPlanService
 
     public async Task<bool> UpdateAsync(QuitPlan entity)
     {
+        _unitOfWork.QuitPlans.Update(entity); // 🔧 Dòng này cần thêm
         await _unitOfWork.CompleteAsync();
         return true;
     }
+
 
     public async Task<bool> DeleteAsync(int id)
     {
@@ -43,4 +45,27 @@ public class QuitPlanService : IQuitPlanService
         await _unitOfWork.CompleteAsync();
         return true;
     }
+
+    public async Task<bool> DeleteAllPlansAndProgressByUserAsync(int userId)
+    {
+        // Lấy tất cả kế hoạch của người dùng
+        var plans = await _unitOfWork.QuitPlans.FindAsync(q => q.UserID == userId);
+        if (!plans.Any()) return false;
+
+        foreach (var plan in plans)
+        {
+            // Lấy tất cả tiến trình của kế hoạch
+            var progresses = await _unitOfWork.QuitProgresses.FindAsync(p => p.QuitPlanID == plan.QuitPlanID);
+            foreach (var p in progresses)
+            {
+                _unitOfWork.QuitProgresses.Remove(p);
+            }
+
+            _unitOfWork.QuitPlans.Remove(plan);
+        }
+
+        var result = await _unitOfWork.CompleteAsync();
+        return result > 0;
+    }
+
 }

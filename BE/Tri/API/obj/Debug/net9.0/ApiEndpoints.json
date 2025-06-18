@@ -2,7 +2,7 @@
   {
     "ContainingType": "AchievementAndProgressController",
     "Method": "GetAchievementAndProgressStats",
-    "RelativePath": "api/AchievementAndProgress/user/{userId}",
+    "RelativePath": "api/AchievementAndProgress/user/ProgressInformation",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -10,7 +10,23 @@
       {
         "Name": "userId",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AchievementAndProgressController",
+    "Method": "GetAllQuitProgress",
+    "RelativePath": "api/AchievementAndProgress/user/showAllProgress",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -18,7 +34,7 @@
   {
     "ContainingType": "AchievementAndProgressController",
     "Method": "UpdateQuitProgress",
-    "RelativePath": "api/AchievementAndProgress/user/{userId}/update-progress",
+    "RelativePath": "api/AchievementAndProgress/user/UpdateProgress",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -26,7 +42,7 @@
       {
         "Name": "userId",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       },
       {
         "Name": "request",
@@ -542,16 +558,69 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QuitPlanAutoController",
+    "ContainingType": "QuitPlanController",
     "Method": "AutoCreateQuitPlan",
-    "RelativePath": "api/QuitPlanAuto/auto-create",
+    "RelativePath": "api/QuitPlan/CreateQuitPlan",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Smoking.API.Models.System.AutoQuitPlanRequest",
+        "Type": "Smoking.API.Models.User.AutoQuitPlanRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuitPlanController",
+    "Method": "DeleteAllByUser",
+    "RelativePath": "api/QuitPlan/DeleteQuitPlanAndProgress",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuitPlanController",
+    "Method": "UpdateCoreInfoByUserId",
+    "RelativePath": "api/QuitPlan/UpdateQuitPlan",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.User.QuitPlanUpdateCoreRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuitPlanController",
+    "Method": "GetByUserId",
+    "RelativePath": "api/QuitPlan/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

@@ -112,38 +112,7 @@ namespace Smoking.API.Controllers.Admin
             return Ok(new { Message = "Xóa User thành công." });
         }
 
-        // 5️ Báo cáo hệ thống (thực tế - dùng DB)
-        //[HttpGet("reports")]
-        //public async Task<IActionResult> GetReports()
-        //{
-        //    var users = await _unitOfWork.Users.GetAllAsync();
-        //    var totalUsers = users.Count();
-        //    var activeUsers = users.Count(u => u.Status == "Active");
-        //    var lockedUsers = users.Count(u => u.Status == "Locked");
-
-        //    // TODO: sau này có thêm bảng LoginHistory thì tính thêm login count, new user...
-
-        //    var report = new
-        //    {
-        //        TotalUsers = totalUsers,
-        //        ActiveUsers = activeUsers,
-        //        LockedUsers = lockedUsers,
-        //        // Example static value - có thể cập nhật sau này
-        //        NewUsersThisMonth = 5,
-        //        TotalLoginCount = 500
-        //    };
-
-        //    return Ok(report);
-        //}
-
-        // 6 Gửi notification toàn hệ thống (giả sử có NotificationService)
-        [HttpPost("Notifications")]
-        public IActionResult SendNotification([FromBody] string message)
-        {
-
-            return Ok(new { Message = $"Đã gửi notification: {message}" });
-        }
-
+ 
         // 7️ (Optional) Cập nhật Role cho User
         [HttpPut("UpdateRole")]
         public async Task<IActionResult> UpdateUserRole(int id, [FromBody] int newRoleId)

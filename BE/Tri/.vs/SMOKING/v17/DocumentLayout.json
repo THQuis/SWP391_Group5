@@ -3,32 +3,12 @@
   "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\services\\quitprogressservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\quitprogressservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\achievementandprogresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\achievementandprogresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\entities\\quitprogress.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\quitprogress.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\services\\quitplanautoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\quitplanautoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\entities\\quitplan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\quitplan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\interfaces\\iquitprogressservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iquitprogressservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\updatequitprogressrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\updatequitprogressrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,45 +18,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "QuitPlan.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\QuitPlan.cs",
-              "RelativeDocumentMoniker": "DAL\\Entities\\QuitPlan.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\QuitPlan.cs",
-              "RelativeToolTip": "DAL\\Entities\\QuitPlan.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAuwFoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T12:06:30.644Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "QuitPlanAutoService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\QuitPlanAutoService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\QuitPlanAutoService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\QuitPlanAutoService.cs",
-              "RelativeToolTip": "BLL\\Services\\QuitPlanAutoService.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAqwDsAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T12:02:48.858Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "QuitProgress.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\QuitProgress.cs",
-              "RelativeDocumentMoniker": "DAL\\Entities\\QuitProgress.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\QuitProgress.cs",
-              "RelativeToolTip": "DAL\\Entities\\QuitProgress.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAcwCUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T11:58:46.415Z",
+              "WhenOpened": "2025-06-18T08:26:17.118Z",
               "EditorCaption": ""
             },
             {
@@ -87,48 +41,9 @@
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\AchievementAndProgressController.cs",
               "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\AchievementAndProgressController.cs",
               "RelativeToolTip": "API\\Controllers\\Member\\AchievementAndProgressController.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAmwDkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAgwBsAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T11:08:14.041Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IQuitProgressService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IQuitProgressService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IQuitProgressService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IQuitProgressService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IQuitProgressService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T11:05:42.168Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "QuitProgressService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\QuitProgressService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\QuitProgressService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\QuitProgressService.cs",
-              "RelativeToolTip": "BLL\\Services\\QuitProgressService.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAkwEcAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T11:04:40.671Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UpdateQuitProgressRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\UpdateQuitProgressRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\User\\UpdateQuitProgressRequest.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\UpdateQuitProgressRequest.cs",
-              "RelativeToolTip": "API\\Models\\User\\UpdateQuitProgressRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T11:02:44.512Z",
+              "WhenOpened": "2025-06-18T08:14:18.669Z",
               "EditorCaption": ""
             }
           ]

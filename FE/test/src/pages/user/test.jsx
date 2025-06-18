@@ -1,337 +1,280 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Form, Button, Card, Row, Col, Alert, Spinner, Badge } from 'react-bootstrap';
-import "../../styles/QuitPlanPage.scss";
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Spinner, Button, Modal, Form, Table } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import '../../styles/ProgressDashboard.scss';
 
-// --- GIẢ LẬP API ---
-
-// 1. API trả về các câu hỏi khảo sát động
-const mockApiQuestions = [
-    {
-        questionID: 1,
-        questionText: "Bạn đã hút thuốc trong bao lâu?",
-        questionType: "RADIO",
-        answerOptions: [
-            { answerOptionID: 101, answerText: "Dưới 1 năm" },
-            { answerOptionID: 102, answerText: "1-5 năm" },
-            { answerOptionID: 103, answerText: "6-10 năm" },
-            { answerOptionID: 104, answerText: "Trên 10 năm" },
-        ]
-    },
-    {
-        questionID: 2,
-        questionText: "Lý do bạn muốn cai thuốc (chọn các lý do chính)?",
-        questionType: "CHECKBOX",
-        answerOptions: [
-            { answerOptionID: 201, answerText: "Cải thiện sức khỏe" },
-            { answerOptionID: 202, answerText: "Tiết kiệm chi phí" },
-            { answerOptionID: 203, answerText: "Bảo vệ gia đình khỏi khói thuốc" },
-            { answerOptionID: 204, answerText: "Mang thai hoặc dự định mang thai" },
-            { answerOptionID: 205, answerText: "Áp lực từ người thân/bác sĩ" },
-        ]
-    },
-    {
-        questionID: 3,
-        questionText: "Những tác nhân nào thường khiến bạn muốn hút thuốc?",
-        questionType: "CHECKBOX",
-        answerOptions: [
-            { answerOptionID: 301, answerText: 'Khi uống cà phê hoặc rượu bia' },
-            { answerOptionID: 302, answerText: 'Khi cảm thấy căng thẳng (stress)' },
-            { answerOptionID: 303, answerText: 'Sau bữa ăn' },
-            { answerOptionID: 304, answerText: 'Khi nói chuyện điện thoại' },
-        ]
-    }
-];
-
-// 2. API trả về kế hoạch đã có của người dùng
-// Để kiểm tra chế độ "Tạo mới", hãy đặt biến này thành `null`
-const mockUserPlan = {
-    id: 123,
-    cigarettesPerDay: 15,
-    cigarettesPerPack: 20,
-    pricePerPack: 22000,
-    startDate: '2025-06-10',
-    endDate: '2025-09-10',
-    otherReason: 'Bị vợ cằn nhằn',
-    confidence: 7,
-    dynamicAnswers: {
-        "1": 103,
-        "2": [201, 202],
-        "3": [301]
-    }
-};
-// const mockUserPlan = null; // Dùng dòng này để test chế độ TẠO MỚI
-
-
-const QuitPlanPage = () => {
-    // --- STATE ---
-    const [existingPlan, setExistingPlan] = useState(null);
-    const [surveyQuestions, setSurveyQuestions] = useState([]);
+const ProgressDashboardPage = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const [showRelapseModal, setShowRelapseModal] = useState(false);
+    const [relapseCount, setRelapseCount] = useState(1);
+    const [progress, setProgress] = useState(null);
+    const [progressHistory, setProgressHistory] = useState([]);
+    const [showHistory, setShowHistory] = useState(false);
 
-    const [formData, setFormData] = useState({
-        cigarettesPerDay: 10,
-        cigarettesPerPack: 20,
-        pricePerPack: 20000,
-        startDate: '',
-        endDate: '',
-        otherReason: '',
-        confidence: 5,
-        dynamicAnswers: {},
-    });
+    const userId = localStorage.getItem("userId");
+    const navigate = useNavigate();
 
-    const [submitted, setSubmitted] = useState({ show: false, message: '', variant: 'success' });
-
-    const isEditMode = existingPlan !== null;
-
-    // --- LOGIC ---
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchProgressData = async () => {
             try {
-                const [questionsResponse, planResponse] = await Promise.all([
-                    new Promise(resolve => setTimeout(() => resolve(mockApiQuestions), 500)),
-                    new Promise(resolve => setTimeout(() => resolve(mockUserPlan), 500))
-                ]);
-
-                setSurveyQuestions(questionsResponse || []);
-
-                if (planResponse) {
-                    setExistingPlan(planResponse);
-                    setFormData({
-                        cigarettesPerDay: planResponse.cigarettesPerDay,
-                        cigarettesPerPack: planResponse.cigarettesPerPack,
-                        pricePerPack: planResponse.pricePerPack,
-                        startDate: planResponse.startDate,
-                        endDate: planResponse.endDate || '',
-                        otherReason: planResponse.otherReason || '',
-                        confidence: planResponse.confidence,
-                        dynamicAnswers: planResponse.dynamicAnswers || {},
-                    });
-                }
+                const response = await fetch(`/api/AchievementAndProgress/user/ProgressInformation?userId=${userId}`, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("userToken"),
+                        "accept": "*/*"
+                    }
+                });
+                const data = await response.json();
+                setProgress({
+                    achievementsUnlocked: data.totalAchievements,
+                    cigarettesAvoided: data.totalCigarettesDropped,
+                    moneySaved: data.totalMoneySaved,
+                    daysSinceStart: data.totalProgressDays
+                });
             } catch (error) {
-                console.error("Lỗi khi tải dữ liệu:", error);
+                console.error("Failed to fetch progress data:", error);
+                setProgress(null);
             } finally {
                 setIsLoading(false);
             }
         };
-        fetchData();
-    }, []);
 
-    const { dailyCost, weeklyCost, monthlyCost } = useMemo(() => {
-        const { cigarettesPerDay, cigarettesPerPack, pricePerPack } = formData;
-        if (!cigarettesPerDay || !cigarettesPerPack || !pricePerPack || cigarettesPerPack <= 0) {
-            return { dailyCost: 0, weeklyCost: 0, monthlyCost: 0 };
-        }
-        const pricePerCigarette = pricePerPack / cigarettesPerPack;
-        const daily = pricePerCigarette * cigarettesPerDay;
-        return {
-            dailyCost: daily,
-            weeklyCost: daily * 7,
-            monthlyCost: daily * 30,
-        };
-    }, [formData.cigarettesPerDay, formData.cigarettesPerPack, formData.pricePerPack]);
-
-    const handleStaticChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleDynamicChange = (e, questionID, questionType) => {
-        const { value, checked } = e.target;
-        const answerId = parseInt(value);
-
-        setFormData(prev => {
-            const newDynamicAnswers = { ...prev.dynamicAnswers };
-            if (questionType === 'RADIO') {
-                newDynamicAnswers[questionID] = answerId;
-            } else if (questionType === 'CHECKBOX') {
-                const currentAnswers = newDynamicAnswers[questionID] || [];
-                if (checked) {
-                    newDynamicAnswers[questionID] = [...currentAnswers, answerId];
-                } else {
-                    newDynamicAnswers[questionID] = currentAnswers.filter(id => id !== answerId);
-                }
+        const fetchProgressHistory = async () => {
+            try {
+                const response = await fetch(`/api/AchievementAndProgress/user/showAllProgress?userId=${userId}`, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("userToken"),
+                        "accept": "*/*"
+                    }
+                });
+                const data = await response.json();
+                // Flatten all progressList from all plans and sort by date descending
+                const allProgress = data
+                    .flatMap(plan => plan.progressList || [])
+                    .sort((a, b) => new Date(b.progressDate) - new Date(a.progressDate));
+                setProgressHistory(allProgress);
+            } catch (error) {
+                console.error("Failed to fetch progress history:", error);
+                setProgressHistory([]);
             }
-            return { ...prev, dynamicAnswers: newDynamicAnswers };
-        });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!formData.startDate) {
-            alert('Vui lòng chọn ngày bắt đầu cai thuốc!');
-            return;
-        }
-
-        // Lấy userId từ localStorage
-        const userId = Number(localStorage.getItem('userId'));
-        if (!userId) {
-            setSubmitted({ show: true, message: 'Không tìm thấy userId trong localStorage. Vui lòng đăng nhập lại!', variant: 'danger' });
-            return;
-        }
-
-        // Dữ liệu gửi lên API (nếu backend yêu cầu bổ sung trường, hãy thêm vào đây)
-        const apiPayload = {
-            userId: userId,
-            cigarettesPerDay: formData.cigarettesPerDay,
-            cigarettesPerPack: formData.cigarettesPerPack,
-            pricePerPack: formData.pricePerPack,
-            startDate: formData.startDate,
-            endDate: formData.endDate,
-            reason: formData.otherReason,
-            confidence: formData.confidence,
-            selectedAnswerIds: Object.values(formData.dynamicAnswers).flat(),
         };
 
+        fetchProgressData();
+        fetchProgressHistory();
+        const interval = setInterval(fetchProgressData, 3600000); // Refresh every 1 hour
+        return () => clearInterval(interval);
+    }, [userId]);
+
+    const navigateToCreatePlan = () => {
+        navigate('/User/quitplan');
+    };
+
+    const handleShowRelapseModal = () => setShowRelapseModal(true);
+    const handleCloseRelapseModal = () => setShowRelapseModal(false);
+
+    const handleLogRelapse = async () => {
         try {
-            const res = await fetch('/api/QuitPlanAuto/auto-create', {
+            const response = await fetch(`/api/AchievementAndProgress/user/UpdateProgress?userId=${userId}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("userToken")
                 },
-                body: JSON.stringify(apiPayload)
+                body: JSON.stringify({
+                    cigarettesSmokedToday: relapseCount
+                })
             });
-            if (res.ok) {
-                const data = await res.text();
-                setSubmitted({ show: true, message: data || 'Tạo kế hoạch thành công!', variant: 'success' });
+
+            if (response.ok) {
+                alert(`Cảm ơn bạn đã ghi nhận. Đừng nản lòng, hãy tiếp tục cố gắng nhé! Đã ghi nhận: ${relapseCount} điếu hôm nay.`);
             } else {
-                const errMsg = await res.text();
-                setSubmitted({ show: true, message: "Lỗi: " + errMsg, variant: 'danger' });
+                const errorMessage = await response.text();
+                alert(`Không thể ghi nhận lỗi. Chi tiết: ${errorMessage}`);
             }
         } catch (error) {
-            setSubmitted({ show: true, message: "Lỗi kết nối: " + error.message, variant: 'danger' });
+            console.error("Failed to log relapse:", error);
+            alert("Đã xảy ra lỗi khi ghi nhận. Vui lòng thử lại sau.");
+        } finally {
+            handleCloseRelapseModal();
         }
-        window.scrollTo(0, 0);
     };
 
-    // --- RENDER ---
     if (isLoading) {
         return (
-            <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-                <Spinner animation="border" variant="success" />
-                <h4 className="ms-3">Đang tải dữ liệu...</h4>
-            </Container>
+            <div className="loading-container">
+                <div className="loading-content">
+                    <div className="custom-spinner">
+                        <Spinner animation="border" variant="success" />
+                    </div>
+                    <h4 className="loading-text">Đang tải tiến trình của bạn...</h4>
+                </div>
+            </div>
+        );
+    }
+
+    if (!progress) {
+        return (
+            <div className="no-plan-container">
+                <Card className="no-plan-card">
+                    <Card.Body className="text-center">
+                        <div className="no-plan-icon">📋</div>
+                        <h4 className="no-plan-title">Bạn chưa có kế hoạch nào</h4>
+                        <p className="no-plan-text">Hãy tạo một kế hoạch để bắt đầu hành trình của bạn!</p>
+                        <Button className="create-plan-btn" onClick={navigateToCreatePlan}>Tạo kế hoạch mới</Button>
+                    </Card.Body>
+                </Card>
+            </div>
         );
     }
 
     return (
-        <Container className="my-5">
-            <Row className="justify-content-center">
-                <Col md={10} lg={8}>
-                    <div className="text-center mb-4">
-                        <h1>{isEditMode ? 'Chỉnh sửa Kế hoạch' : 'Lập kế hoạch cai thuốc'}</h1>
-                        <div className="motivation-section animated fadeIn">
-                            {/* Thay link ảnh bên dưới bằng hình động lực bạn muốn (ảnh minh họa, gif, v.v.) */}
-                            {/* <img
-                                src="https://github.com/THQuis/SWP391_Group5/blob/main/image/bannerpng.png?raw=true"
-                                alt="Motivation"
-                                style={{ maxWidth: 120, marginBottom: 10 }}
-                            /> */}
-                            <p className="motivation-text" style={{ color: '#28a745', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                                Hãy nhớ: Mỗi điều chỉnh hôm nay là một bước tiến tới sức khỏe và hạnh phúc của bạn!<br />
-                                Đừng bỏ cuộc – bạn hoàn toàn có thể làm được. Cộng đồng luôn đồng hành cùng bạn!
-                            </p>
-                        </div>
-                        <p className="text-muted">
-                            {isEditMode
-                                ? 'Bạn có thể điều chỉnh lại các thông tin và mục tiêu dưới đây.'
-                                : 'Trả lời các câu hỏi sau để nhận một lộ trình được cá nhân hóa.'}
-                        </p>
-                    </div>
-
-                    {submitted.show && (
-                        <Alert variant={submitted.variant} onClose={() => setSubmitted({ ...submitted, show: false })} dismissible>
-                            {submitted.message}
-                        </Alert>
-                    )}
-
-                    <Form onSubmit={handleSubmit}>
-                        <Card className="mb-4">
-                            <Card.Header as="h5">1. Thói quen hiện tại</Card.Header>
-                            <Card.Body>
-                                <Form.Group as={Row} className="mb-3">
-                                    <Form.Label column sm={6}>Bạn hút bao nhiêu điếu mỗi ngày?</Form.Label>
-                                    <Col sm={6}><Form.Control type="number" name="cigarettesPerDay" value={formData.cigarettesPerDay} onChange={handleStaticChange} /></Col>
-                                </Form.Group>
-                                <Form.Group as={Row} className="mb-3">
-                                    <Form.Label column sm={6}>Một gói bạn hút có bao nhiêu điếu?</Form.Label>
-                                    <Col sm={6}><Form.Control type="number" name="cigarettesPerPack" value={formData.cigarettesPerPack} onChange={handleStaticChange} /></Col>
-                                </Form.Group>
-                                <Form.Group as={Row} className="mb-3">
-                                    <Form.Label column sm={6}>Giá tiền một gói (VND)?</Form.Label>
-                                    <Col sm={6}><Form.Control type="number" name="pricePerPack" value={formData.pricePerPack} onChange={handleStaticChange} /></Col>
-                                </Form.Group>
-                                {dailyCost > 0 && (
-                                    <Alert variant="info" className="mt-3">
-                                        <div className="d-flex justify-content-between"><span>Chi phí mỗi ngày:</span> <strong>{dailyCost.toLocaleString('vi-VN')} VND</strong></div>
-                                        <div className="d-flex justify-content-between"><span>Chi phí mỗi tuần:</span> <strong>{weeklyCost.toLocaleString('vi-VN')} VND</strong></div>
-                                        <div className="d-flex justify-content-between"><span>Chi phí mỗi tháng:</span> <strong>{monthlyCost.toLocaleString('vi-VN')} VND</strong></div>
-                                    </Alert>
-                                )}
-                            </Card.Body>
-                        </Card>
-
-                        <Card className="mb-4">
-                            <Card.Header as="h5">2. Tìm hiểu về bạn</Card.Header>
-                            <Card.Body>
-                                {surveyQuestions.map(q => (
-                                    <Form.Group key={q.questionID} className="mb-4">
-                                        <Form.Label className="fw-bold">{q.questionText}</Form.Label>
-                                        {q.answerOptions.map(opt => (
-                                            <Form.Check
-                                                key={opt.answerOptionID}
-                                                type={q.questionType.toLowerCase()}
-                                                id={`q-${q.questionID}-a-${opt.answerOptionID}`}
-                                                label={opt.answerText}
-                                                name={`question-${q.questionID}`}
-                                                value={opt.answerOptionID}
-                                                checked={
-                                                    q.questionType === 'RADIO'
-                                                        ? formData.dynamicAnswers[q.questionID] === opt.answerOptionID
-                                                        : (formData.dynamicAnswers[q.questionID] || []).includes(opt.answerOptionID)
-                                                }
-                                                onChange={(e) => handleDynamicChange(e, q.questionID, q.questionType)}
-                                            />
-                                        ))}
-                                        {q.questionID === 2 && (
-                                            <Form.Control className="mt-2" type="text" name="otherReason" placeholder="Nhập lý do khác của bạn..." value={formData.otherReason} onChange={handleStaticChange} />
-                                        )}
-                                    </Form.Group>
-                                ))}
-                            </Card.Body>
-                        </Card>
-
-                        <Card className="mb-4">
-                            <Card.Header as="h5">3. Thiết lập mục tiêu</Card.Header>
-                            <Card.Body>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="fw-bold">Ngày bắt đầu cai thuốc (*)</Form.Label>
-                                    <Form.Control type="date" name="startDate" value={formData.startDate} onChange={handleStaticChange} required />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="fw-bold">Ngày mong muốn cai hoàn toàn (tùy chọn)</Form.Label>
-                                    <Form.Control type="date" name="endDate" value={formData.endDate} onChange={handleStaticChange} />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="fw-bold">Mức độ tự tin của bạn (1-10)</Form.Label>
-                                    <div className="d-flex align-items-center">
-                                        <Form.Range name="confidence" min="1" max="10" value={formData.confidence} onChange={handleStaticChange} className="me-3" />
-                                        <Badge pill bg="success" style={{ fontSize: '1rem' }}>{formData.confidence}</Badge>
+        <div className="dashboard-wrapper">
+            <Container className="dashboard-content">
+                {/* Main Progress Card */}
+                <Card className="main-progress-card">
+                    <Card.Body>
+                        <div className="progress-card-content">
+                            <h2 className="progress-subtitle">Ngừng hút thuốc được</h2>
+                            {/* Main Circle */}
+                            <div className="main-circle-container">
+                                <div className="main-circle">
+                                    <div className="circle-inner">
+                                        <div className="days-number">{progress.daysSinceStart}</div>
+                                        <div className="days-label">NGÀY</div>
                                     </div>
-                                </Form.Group>
+                                    <div className="circle-glow"></div>
+                                </div>
+                            </div>
+                            {/* Achievement Stats */}
+                            <Row className="achievement-stats">
+                                <Col xs={4}>
+                                    <div className="stat-card">
+                                        <div className="stat-icon">🏆</div>
+                                        <div className="stat-value">{progress.achievementsUnlocked}</div>
+                                        <div className="stat-label">Thành tích</div>
+                                    </div>
+                                </Col>
+                                <Col xs={4}>
+                                    <div className="stat-card">
+                                        <div className="stat-icon">🚭</div>
+                                        <div className="stat-value">{progress.cigarettesAvoided}</div>
+                                        <div className="stat-label">Điếu đã bỏ</div>
+                                    </div>
+                                </Col>
+                                <Col xs={4}>
+                                    <div className="stat-card">
+                                        <div className="stat-icon">💰</div>
+                                        <div className="stat-value">{progress.moneySaved.toLocaleString('vi-VN')} đ</div>
+                                        <div className="stat-label">Tiền tiết kiệm</div>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                    </Card.Body>
+                </Card>
+                {/* Action Button */}
+                <div className="action-button-container">
+                    <Button
+                        variant="outline-secondary"
+                        className="relapse-button"
+                        onClick={handleShowRelapseModal}
+                    >
+                        <span className="button-icon">😔</span>
+                        Tôi đã lỡ hút thuốc hôm nay...
+                    </Button>
+                </div>
+                {/* History Section */}
+                <div className="history-table-section" style={{ marginTop: 32, textAlign: 'center' }}>
+                    <Button
+                        variant={showHistory ? "outline-primary" : "primary"}
+                        onClick={() => setShowHistory(!showHistory)}
+                        style={{ marginBottom: 12 }}
+                    >
+                        {showHistory ? "Ẩn lịch sử từng ngày" : "Xem chi tiết từng ngày"}
+                    </Button>
+                    {showHistory && (
+                        <Card className="history-table-card" style={{ marginTop: 10 }}>
+                            <Card.Body>
+                                <h5>Lịch sử từng ngày</h5>
+                                <div className="table-responsive">
+                                    <Table bordered hover className="mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Ngày</th>
+                                                <th>Điếu thường ngày</th>
+                                                <th>Điếu đã hút</th>
+                                                <th>Điếu bỏ được</th>
+                                                <th>Tiết kiệm hôm đó</th>
+                                                <th>Điếu bỏ tích lũy</th>
+                                                <th>Tiền tích lũy</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {progressHistory && progressHistory.length > 0 ? (
+                                                progressHistory.map((item, idx) => (
+                                                    <tr key={idx}>
+                                                        <td>{item.progressDate ? item.progressDate.slice(0, 10) : ""}</td>
+                                                        <td>{item.cigarettesPerDayBaseline || 0}</td>
+                                                        <td>{item.cigarettesSmokedToday || 0}</td>
+                                                        <td>{item.cigarettesDropped || 0}</td>
+                                                        <td>{item.moneySaved ? item.moneySaved.toLocaleString('vi-VN') + " đ" : ""}</td>
+                                                        <td>{item.totalCigarettesDropped || 0}</td>
+                                                        <td>{item.totalMoneySaved ? item.totalMoneySaved.toLocaleString('vi-VN') + " đ" : ""}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={7} className="text-center text-muted">
+                                                        Không có dữ liệu lịch sử.
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </Table>
+                                </div>
                             </Card.Body>
                         </Card>
-
-                        <div className="d-grid">
-                            <Button variant={isEditMode ? "primary" : "success"} size="lg" type="submit">
-                                {isEditMode ? 'Lưu thay đổi' : 'Hoàn thành và Tạo kế hoạch'}
-                            </Button>
-                        </div>
-                    </Form>
-                </Col>
-            </Row>
-        </Container>
+                    )}
+                </div>
+            </Container>
+            {/* Relapse Modal */}
+            <Modal
+                show={showRelapseModal}
+                onHide={handleCloseRelapseModal}
+                centered
+                className="relapse-modal"
+            >
+                <Modal.Header closeButton className="modal-header-custom">
+                    <Modal.Title>Ghi nhận sai sót</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal-body-custom">
+                    <div className="modal-icon-container">
+                        <div className="modal-icon">🤗</div>
+                    </div>
+                    <p className="modal-description">
+                        Không sao cả, đây là một phần của quá trình. Việc ghi nhận lại sẽ giúp hệ thống tính toán chính xác hơn.
+                    </p>
+                    <Form.Group>
+                        <Form.Label className="modal-form-label">Hôm nay bạn đã hút bao nhiêu điếu?</Form.Label>
+                        <Form.Control
+                            type="number"
+                            value={relapseCount}
+                            onChange={(e) => setRelapseCount(parseInt(e.target.value) || 1)}
+                            min="1"
+                            className="modal-form-input"
+                        />
+                    </Form.Group>
+                </Modal.Body>
+                <Modal.Footer className="modal-footer-custom">
+                    <Button variant="outline-secondary" onClick={handleCloseRelapseModal} className="modal-btn-cancel">
+                        Hủy
+                    </Button>
+                    <Button variant="success" onClick={handleLogRelapse} className="modal-btn-confirm">
+                        Xác nhận
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
     );
 };
 
-export default QuitPlanPage;
+export default ProgressDashboardPage;

@@ -3,7 +3,8 @@ import { Row, Col, Card } from 'react-bootstrap';
 import ProgressPieChart from '../../components/Chart/ProgressPieChart';
 import FeedbackBarChart from '../../components/Chart/FeedbackBarChart';
 import RevenueLineChart from '../../components/Chart/RevenueLineChart';
-import '../../pages/admin/AdminDashboard.scss';
+import '../../styles/AdminDashboard.scss';
+
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState({

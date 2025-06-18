@@ -1,147 +1,279 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Spinner, Button, Modal, Form } from 'react-bootstrap';
-
-// --- GIẢ LẬP API ---
-// API GET /api/quit-plans/current giờ đây sẽ trả về các chỉ số đã được Backend tự động tính toán
-const mockAutomatedProgress = {
-    // Thông tin từ bảng QuitPlan
-    planId: 123,
-    startDate: '2025-06-06', // Bắt đầu từ 10 ngày trước
-
-    // Các chỉ số được Backend TỰ ĐỘNG TÍNH TOÁN
-    // Giả sử người dùng khai báo hút 5 điếu/ngày và giá 2000đ/điếu
-    daysSinceStart: 10,
-    cigarettesAvoided: 50, // 10 ngày * 5 điếu/ngày
-    moneySaved: 100000, // 50 điếu * 2000đ/điếu
-    achievementsUnlocked: 4, // Đạt mốc 1 ngày, 3 ngày, 7 ngày, 50 điếu...
-};
+import { Container, Row, Col, Card, Spinner, Button, Modal, Form, Table } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import '../../styles/ProgressDashboard.scss';
 
 const ProgressDashboardPage = () => {
-    const [progress, setProgress] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-
-    // State cho Modal ghi nhận sai sót
     const [showRelapseModal, setShowRelapseModal] = useState(false);
     const [relapseCount, setRelapseCount] = useState(1);
+    const [progress, setProgress] = useState(null);
+    const [progressHistory, setProgressHistory] = useState([]);
+    const [showHistory, setShowHistory] = useState(false);
+
+    const userId = localStorage.getItem("userId");
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // Giả lập gọi API
-        setTimeout(() => {
-            setProgress(mockAutomatedProgress);
-            setIsLoading(false);
-        }, 1000);
-    }, []);
+        const fetchProgressData = async () => {
+            try {
+                const response = await fetch(`/api/AchievementAndProgress/user/ProgressInformation?userId=${userId}`, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("userToken"),
+                        "accept": "*/*"
+                    }
+                });
+                const data = await response.json();
+                setProgress({
+                    achievementsUnlocked: data.totalAchievements,
+                    cigarettesAvoided: data.totalCigarettesDropped,
+                    moneySaved: data.totalMoneySaved,
+                    daysSinceStart: data.totalProgressDays
+                });
+            } catch (error) {
+                console.error("Failed to fetch progress data:", error);
+                setProgress(null);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        const fetchProgressHistory = async () => {
+            try {
+                const response = await fetch(`/api/AchievementAndProgress/user/showAllProgress?userId=${userId}`, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("userToken"),
+                        "accept": "*/*"
+                    }
+                });
+                const data = await response.json();
+                // Flatten all progressList from all plans and sort by date descending
+                const allProgress = data
+                    .flatMap(plan => plan.progressList || [])
+                    .sort((a, b) => new Date(b.progressDate) - new Date(a.progressDate));
+                setProgressHistory(allProgress);
+            } catch (error) {
+                console.error("Failed to fetch progress history:", error);
+                setProgressHistory([]);
+            }
+        };
+
+        fetchProgressData();
+        fetchProgressHistory();
+        const interval = setInterval(fetchProgressData, 3600000); // Refresh every 1 hour
+        return () => clearInterval(interval);
+    }, [userId]);
+
+    const navigateToCreatePlan = () => {
+        navigate('/User/quitplan');
+    };
 
     const handleShowRelapseModal = () => setShowRelapseModal(true);
     const handleCloseRelapseModal = () => setShowRelapseModal(false);
 
-    const handleLogRelapse = () => {
-        // Trong thực tế, bạn sẽ gửi một request POST đến Backend
-        // POST /api/quit-progress
-        // Body: { quitPlanId: progress.planId, progressDate: "HÔM NAY", cigarettesSmoked: relapseCount }
-        console.log(`GHI NHẬN SAI SÓT: Gửi lên Backend thông tin đã hút ${relapseCount} điếu hôm nay.`);
+    const handleLogRelapse = async () => {
+        try {
+            const response = await fetch(`/api/AchievementAndProgress/user/UpdateProgress?userId=${userId}`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("userToken")
+                },
+                body: JSON.stringify({
+                    cigarettesSmokedToday: relapseCount
+                })
+            });
 
-        // Sau khi thành công, Backend sẽ tính toán lại và bạn có thể gọi lại API để làm mới dữ liệu
-        alert("Cảm ơn bạn đã ghi nhận. Đừng nản lòng, hãy tiếp tục cố gắng nhé!");
-        handleCloseRelapseModal();
+            if (response.ok) {
+                alert(`Cảm ơn bạn đã ghi nhận. Đừng nản lòng, hãy tiếp tục cố gắng nhé! Đã ghi nhận: ${relapseCount} điếu hôm nay.`);
+            } else {
+                const errorMessage = await response.text();
+                alert(`Không thể ghi nhận lỗi. Chi tiết: ${errorMessage}`);
+            }
+        } catch (error) {
+            console.error("Failed to log relapse:", error);
+            alert("Đã xảy ra lỗi khi ghi nhận. Vui lòng thử lại sau.");
+        } finally {
+            handleCloseRelapseModal();
+        }
     };
 
     if (isLoading) {
         return (
-            <Container className="text-center my-5 d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
-                <Spinner animation="border" variant="success" />
-                <h4 className="ms-3">Đang tải tiến trình của bạn...</h4>
-            </Container>
+            <div className="loading-container">
+                <div className="loading-content">
+                    <div className="custom-spinner">
+                        <Spinner animation="border" variant="success" />
+                    </div>
+                    <h4 className="loading-text">Đang tải tiến trình của bạn...</h4>
+                </div>
+            </div>
         );
     }
 
     if (!progress) {
         return (
-            <Container className="text-center my-5">
-                <h4>Bạn chưa có kế hoạch nào.</h4>
-                <p>Hãy tạo một kế hoạch để bắt đầu hành trình của bạn!</p>
-            </Container>
+            <div className="no-plan-container">
+                <Card className="no-plan-card">
+                    <Card.Body className="text-center">
+                        <div className="no-plan-icon">📋</div>
+                        <h4 className="no-plan-title">Bạn chưa có kế hoạch nào</h4>
+                        <p className="no-plan-text">Hãy tạo một kế hoạch để bắt đầu hành trình của bạn!</p>
+                        <Button className="create-plan-btn" onClick={navigateToCreatePlan}>Tạo kế hoạch mới</Button>
+                    </Card.Body>
+                </Card>
+            </div>
         );
     }
 
     return (
-        <>
-            <Container className="my-5">
-                <Card className="text-center shadow-lg" style={{ backgroundColor: '#2d3a3a', color: 'white', borderRadius: '20px' }}>
-                    <Card.Body className="p-sm-5 p-4">
-                        <h4 className="text-white-50 mb-4">Ngừng hút thuốc được</h4>
-
-                        <div className="d-flex justify-content-center align-items-center mb-5">
-                            <div style={{
-                                width: '150px',
-                                height: '150px',
-                                borderRadius: '50%',
-                                border: '5px solid #4caf50',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                            }}>
-                                <h1 className="display-3 fw-bold m-0">{progress.daysSinceStart}</h1>
-                                <p className="m-0">NGÀY</p>
+        <div className="dashboard-wrapper">
+            <Container className="dashboard-content">
+                {/* Main Progress Card */}
+                <Card className="main-progress-card">
+                    <Card.Body>
+                        <div className="progress-card-content">
+                            <h2 className="progress-subtitle">Ngừng hút thuốc được</h2>
+                            {/* Main Circle */}
+                            <div className="main-circle-container">
+                                <div className="main-circle">
+                                    <div className="circle-inner">
+                                        <div className="days-number">{progress.daysSinceStart}</div>
+                                        <div className="days-label">NGÀY</div>
+                                    </div>
+                                    <div className="circle-glow"></div>
+                                </div>
                             </div>
+                            {/* Achievement Stats */}
+                            <Row className="achievement-stats">
+                                <Col xs={4}>
+                                    <div className="stat-card">
+                                        <div className="stat-icon">🏆</div>
+                                        <div className="stat-value">{progress.achievementsUnlocked}</div>
+                                        <div className="stat-label">Thành tích</div>
+                                    </div>
+                                </Col>
+                                <Col xs={4}>
+                                    <div className="stat-card">
+                                        <div className="stat-icon">🚭</div>
+                                        <div className="stat-value">{progress.cigarettesAvoided}</div>
+                                        <div className="stat-label">Điếu đã bỏ</div>
+                                    </div>
+                                </Col>
+                                <Col xs={4}>
+                                    <div className="stat-card">
+                                        <div className="stat-icon">💰</div>
+                                        <div className="stat-value">{progress.moneySaved.toLocaleString('vi-VN')} đ</div>
+                                        <div className="stat-label">Tiền tiết kiệm</div>
+                                    </div>
+                                </Col>
+                            </Row>
                         </div>
-
-                        <Row>
-                            <Col xs={4}>
-                                <div className="mb-3 fs-3">🏆</div>
-                                <h3 className="fw-bold">{progress.achievementsUnlocked}</h3>
-                                <p className="text-white-50 small">Thành tích</p>
-                            </Col>
-                            <Col xs={4}>
-                                <div className="mb-3 fs-3">🚭</div>
-                                <h3 className="fw-bold">{progress.cigarettesAvoided}</h3>
-                                <p className="text-white-50 small">Điếu đã bỏ</p>
-                            </Col>
-                            <Col xs={4}>
-                                <div className="mb-3 fs-3">💰</div>
-                                <h3 className="fw-bold">{progress.moneySaved.toLocaleString('vi-VN')} đ</h3>
-                                <p className="text-white-50 small">Tiền tiết kiệm</p>
-                            </Col>
-                        </Row>
                     </Card.Body>
                 </Card>
-
-                <div className="text-center mt-4">
-                    <Button variant="outline-secondary" onClick={handleShowRelapseModal}>
+                {/* Action Button */}
+                <div className="action-button-container">
+                    <Button
+                        variant="outline-secondary"
+                        className="relapse-button"
+                        onClick={handleShowRelapseModal}
+                    >
+                        <span className="button-icon">😔</span>
                         Tôi đã lỡ hút thuốc hôm nay...
                     </Button>
                 </div>
+                {/* History Section */}
+                <div className="history-table-section" style={{ marginTop: 32, textAlign: 'center' }}>
+                    <Button
+                        variant={showHistory ? "outline-primary" : "primary"}
+                        onClick={() => setShowHistory(!showHistory)}
+                        style={{ marginBottom: 12 }}
+                    >
+                        {showHistory ? "Ẩn lịch sử từng ngày" : "Xem chi tiết từng ngày"}
+                    </Button>
+                    {showHistory && (
+                        <Card className="history-table-card" style={{ marginTop: 10 }}>
+                            <Card.Body>
+                                <h5>Lịch sử từng ngày</h5>
+                                <div className="table-responsive">
+                                    <Table bordered hover className="mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Ngày</th>
+                                                <th>Điếu thường ngày</th>
+                                                <th>Điếu đã hút</th>
+                                                <th>Điếu bỏ được</th>
+                                                <th>Tiết kiệm hôm đó</th>
+                                                <th>Điếu bỏ tích lũy</th>
+                                                <th>Tiền tích lũy</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {progressHistory && progressHistory.length > 0 ? (
+                                                progressHistory.map((item, idx) => (
+                                                    <tr key={idx}>
+                                                        <td>{item.progressDate ? item.progressDate.slice(0, 10) : ""}</td>
+                                                        <td>{item.cigarettesPerDayBaseline || 0}</td>
+                                                        <td>{item.cigarettesSmokedToday || 0}</td>
+                                                        <td>{item.cigarettesDropped || 0}</td>
+                                                        <td>{item.moneySaved ? item.moneySaved.toLocaleString('vi-VN') + " đ" : ""}</td>
+                                                        <td>{item.totalCigarettesDropped || 0}</td>
+                                                        <td>{item.totalMoneySaved ? item.totalMoneySaved.toLocaleString('vi-VN') + " đ" : ""}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={7} className="text-center text-muted">
+                                                        Không có dữ liệu lịch sử.
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </Table>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    )}
+                </div>
             </Container>
-
-            {/* Modal để người dùng ghi nhận sai sót */}
-            <Modal show={showRelapseModal} onHide={handleCloseRelapseModal} centered>
-                <Modal.Header closeButton>
+            {/* Relapse Modal */}
+            <Modal
+                show={showRelapseModal}
+                onHide={handleCloseRelapseModal}
+                centered
+                className="relapse-modal"
+            >
+                <Modal.Header closeButton className="modal-header-custom">
                     <Modal.Title>Ghi nhận sai sót</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <p>Không sao cả, đây là một phần của quá trình. Việc ghi nhận lại sẽ giúp hệ thống tính toán chính xác hơn.</p>
+                <Modal.Body className="modal-body-custom">
+                    <div className="modal-icon-container">
+                        <div className="modal-icon">🤗</div>
+                    </div>
+                    <p className="modal-description">
+                        Không sao cả, đây là một phần của quá trình. Việc ghi nhận lại sẽ giúp hệ thống tính toán chính xác hơn.
+                    </p>
                     <Form.Group>
-                        <Form.Label>Hôm nay bạn đã hút bao nhiêu điếu?</Form.Label>
+                        <Form.Label className="modal-form-label">Hôm nay bạn đã hút bao nhiêu điếu?</Form.Label>
                         <Form.Control
                             type="number"
                             value={relapseCount}
-                            onChange={(e) => setRelapseCount(parseInt(e.target.value))}
+                            onChange={(e) => setRelapseCount(parseInt(e.target.value) || 1)}
                             min="1"
+                            className="modal-form-input"
                         />
                     </Form.Group>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseRelapseModal}>
+                <Modal.Footer className="modal-footer-custom">
+                    <Button variant="outline-secondary" onClick={handleCloseRelapseModal} className="modal-btn-cancel">
                         Hủy
                     </Button>
-                    <Button variant="primary" onClick={handleLogRelapse}>
+                    <Button variant="success" onClick={handleLogRelapse} className="modal-btn-confirm">
                         Xác nhận
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </>
+        </div>
     );
 };
 

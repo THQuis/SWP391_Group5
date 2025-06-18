@@ -97,6 +97,7 @@ const AuthPage = () => {
             const userRole = data.user.roleID; // <-- Đơn giản hơn rất nhiều!
             const userName = data.user.fullName;
             const userEmail = data.user.email;
+            const userId = data.user.userID;
 
 
 
@@ -106,6 +107,8 @@ const AuthPage = () => {
             localStorage.setItem('userRole', userRole);
             localStorage.setItem('userName', userName);
             localStorage.setItem('userEmail', userEmail);
+            localStorage.setItem('userId', userId);
+
 
             console.log("role name", userRole);
 

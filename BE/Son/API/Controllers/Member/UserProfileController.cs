@@ -63,8 +63,9 @@ namespace Smoking.API.Controllers.Member
         [HttpPut("update-profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
         {
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
+
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
 
@@ -73,15 +74,21 @@ namespace Smoking.API.Controllers.Member
             user.PhoneNumber = request.PhoneNumber ?? user.PhoneNumber;
             user.ProfilePicture = request.ProfilePicture ?? user.ProfilePicture;
 
-            // Cập nhật thông tin trong DB qua UnitOfWork
             _unitOfWork.Users.Update(user);
+
+            // ❗️Lưu trước khi thực hiện thao tác khác
             await _unitOfWork.CompleteAsync();
 
-            // Gửi email thông báo
-            await _mailService.SendEmailAsync(user.Email, "Cập nhật thông tin thành công", "Thông tin của bạn đã được cập nhật thành công.");
+            // ❗️Chỉ sau khi SaveChanges xong mới gửi email
+            await _mailService.SendEmailAsync(
+                user.Email,
+                "Cập nhật thông tin thành công",
+                "Thông tin của bạn đã được cập nhật thành công."
+            );
 
             return Ok(new { Message = "Cập nhật thông tin thành công!" });
         }
+
 
         // 3️⃣ Xóa User
         [HttpDelete("profile")]

@@ -76,18 +76,21 @@ namespace Smoking.BLL.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture)
+        public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture, string? description)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
-            if (user == null) throw new System.Exception("Không tìm thấy user với email này.");
+            if (user == null)
+                throw new Exception("Không tìm thấy user với email này.");
 
             user.FullName = fullName;
             user.PhoneNumber = phoneNumber;
             user.ProfilePicture = profilePicture;
+            user.Description = description; // 👈 Thêm dòng này
 
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
         }
+
 
         public async Task<User> GetUserByEmailAsync(string email)
             => await _unitOfWork.Users.GetByEmailAsync(email);

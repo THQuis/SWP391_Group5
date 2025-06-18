@@ -606,6 +606,16 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
+    "Method": "DeleteProfile",
+    "RelativePath": "api/user/delete-profile",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "GetNotifications",
     "RelativePath": "api/user/notifications",
     "HttpMethod": "GET",
@@ -619,16 +629,6 @@
     "Method": "GetProfile",
     "RelativePath": "api/user/profile",
     "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
-    "Method": "DeleteProfile",
-    "RelativePath": "api/user/profile",
-    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [],

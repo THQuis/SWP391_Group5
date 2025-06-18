@@ -48,12 +48,14 @@ namespace Smoking.API.Controllers.Member
                     user.Email,
                     user.PhoneNumber,
                     user.ProfilePicture,
+                    user.Description, // ✅ THÊM MÔ TẢ
                     RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"),
                     RoleName = user.Role?.RoleName,
                     user.Status
                 }
             });
         }
+
 
         // 2️⃣ Cập nhật hồ sơ cá nhân
         [HttpPut("update-profile")]
@@ -67,6 +69,7 @@ namespace Smoking.API.Controllers.Member
             user.FullName = request.FullName ?? user.FullName;
             user.PhoneNumber = request.PhoneNumber ?? user.PhoneNumber;
             user.ProfilePicture = request.ProfilePicture ?? user.ProfilePicture;
+            user.Description = request.Description ?? user.Description; // ✅ THÊM MÔ TẢ
 
             await _userService.UpdateAsync(user);
 
@@ -79,8 +82,9 @@ namespace Smoking.API.Controllers.Member
             return Ok(new { Message = "Cập nhật thông tin thành công!" });
         }
 
+
         // 3️⃣ Xoá tài khoản (xoá mềm - chỉ đổi trạng thái)
-        [HttpDelete("profile")]
+        [HttpDelete("delete-profile")]
         public async Task<IActionResult> DeleteProfile()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -88,28 +92,32 @@ namespace Smoking.API.Controllers.Member
             if (user == null)
                 return NotFound(new { Message = "Người dùng không tồn tại." });
 
-            // Xoá mềm
             user.Status = "Deleted";
             _unitOfWork.Users.Update(user);
-
-            // Lưu thay đổi trước
             await _unitOfWork.CompleteAsync();
 
+            // ✅ Gửi mail sau khi context đã xong và KHÔNG chạy song song bằng Task.Run
             try
             {
                 await _mailService.SendEmailAsync(
                     user.Email,
-                    "Tài khoản bị vô hiệu hoá",
-                    "Tài khoản của bạn đã bị vô hiệu hoá khỏi hệ thống."
+                            "Tài khoản bị vô hiệu hoá",
+                            @"Tài khoản của bạn đã bị vô hiệu hoá khỏi hệ thống.
+                            Nếu bạn thực hiện thao tác này một cách nhầm lẫn hoặc muốn khôi phục tài khoản, vui lòng liên hệ Ban quản lý hoặc Quản trị viên để được hỗ trợ."
                 );
             }
             catch (Exception ex)
             {
-                return Ok(new { Message = "Tài khoản đã được vô hiệu hoá, nhưng lỗi khi gửi email.", Error = ex.Message });
+                return Ok(new
+                {
+                    Message = "Tài khoản đã được vô hiệu hoá, nhưng lỗi khi gửi email.",
+                    Error = ex.Message
+                });
             }
 
             return Ok(new { Message = "Tài khoản đã được vô hiệu hoá." });
         }
+
 
         // 4️⃣ Lấy danh sách thông báo của user
         [HttpGet("notifications")]

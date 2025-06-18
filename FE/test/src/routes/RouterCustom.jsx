@@ -11,10 +11,10 @@ import UserProfile from "../pages/user/UserProfile";
 import ManagementUser from "../pages/admin/ManagementUser";
 import ManagementBlog from "../pages/admin/ManagementBlog";
 import ManagementPackage from "../pages/admin/ManagementPackage";
-// import ManagementPerformance from "../pages/admin/ManagementPerformance";
+import ManagementPerformance from "../pages/admin/ManagementPerformance";
 import ManagementPlan from "../pages/admin/ManagementPlan";
 import ManagementNotification from "../pages/admin/ManagementNotification";
-import QuitPlanPage from "../pages/user/QuitPlanPage";
+// import QuitPlanPage from "../pages/user/QuitPlanPage";
 import MilestonesPage from "../pages/user/MilestonesPage";
 
 import MockAutomatedProgress from "../pages/user/MockAutomatedProgress";
@@ -24,8 +24,8 @@ import CoachList from "../pages/user/CoachList";
 import RankingPage from "../pages/user/RankingPage";
 
 
-// import MilestonesPage from "../pages/user/test";
-import ManagementPerformance from "../pages/admin/test";
+import QuitPlanPage from "../pages/user/test";
+// import ManagementPerformance from "../pages/admin/test";
 
 
 

@@ -1,36 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button, Table, Modal, Form } from 'react-bootstrap';
-import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import { Row, Col, Card, Button, Table, Modal, Form, InputGroup } from 'react-bootstrap';
+import { FaPlus, FaEdit, FaTrash, FaSearch } from 'react-icons/fa';
 import axios from 'axios';
+import { FaHandsClapping } from 'react-icons/fa6';
 
 const ManagementPerformance = () => {
     const [badges, setBadges] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [newBadge, setNewBadge] = useState({ name: '', image: '', condition: '', description: '' });
+    const [newBadge, setNewBadge] = useState({ achievementName: '', badgeImage: '', criteria: '', description: '', packageType: 'Basic' });
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingBadge, setEditingBadge] = useState(null);
+    const [search, setSearch] = useState('');
 
-    // Lấy dữ liệu huy hiệu từ API
+    // Lấy dữ liệu huy hiệu từ API mới (ListAchievement)
     useEffect(() => {
-        const fetchBadges = async () => {
-            try {
-                const res = await axios.get('/api/badges');  // Gọi API lấy danh sách huy hiệu
-                setBadges(res.data);
-            } catch (err) {
-                console.error('Error fetching data', err);
-            }
-        };
-
         fetchBadges();
     }, []);
+
+    const fetchBadges = async () => {
+        try {
+            const token = localStorage.getItem('userToken');
+            const res = await axios.get('/api/Admin/ListAchievement', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            setBadges(res.data);
+        } catch (err) {
+            console.error('Error fetching data', err);
+        }
+    };
+
+    // Xử lý tìm kiếm
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('userToken');
+            if (!search.trim()) {
+                fetchBadges();
+                return;
+            }
+            const res = await axios.get(`/api/Admin/Search`, {
+                params: { keyword: search },
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setBadges(res.data.data || []);
+        } catch (err) {
+            console.error('Lỗi khi tìm kiếm:', err);
+        }
+    };
 
     // Thêm huy hiệu mới
     const handleAddBadge = async () => {
         try {
-            const res = await axios.post('/api/badges', newBadge);  // Gửi API để thêm huy hiệu mới
-            setBadges([...badges, res.data]);
+            const token = localStorage.getItem('userToken');
+            const res = await axios.post('/api/Admin/AddAchivement', {
+                achievementName: newBadge.achievementName,
+                badgeImage: newBadge.badgeImage,
+                criteria: newBadge.criteria,
+                description: newBadge.description,
+                packageType: newBadge.packageType
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            setBadges([...badges, res.data.data]);
             setShowModal(false);
-            setNewBadge({ name: '', image: '', condition: '', description: '' });
+            setNewBadge({ achievementName: '', badgeImage: '', criteria: '', description: '', packageType: 'Basic' });
         } catch (err) {
             console.error('Lỗi khi thêm huy hiệu:', err);
         }
@@ -38,15 +75,31 @@ const ManagementPerformance = () => {
 
     // Sửa huy hiệu
     const handleEdit = (badge) => {
-        setEditingBadge(badge); // Lưu thông tin huy hiệu cần sửa
-        setShowEditModal(true);  // Mở modal chỉnh sửa
+        setEditingBadge({ ...badge });
+        setShowEditModal(true);
     };
 
     const handleSaveEdit = async () => {
         try {
-            const res = await axios.put(`/api/badges/${editingBadge.id}`, editingBadge); // Gửi API để sửa huy hiệu
-            setBadges(badges.map(b => (b.id === editingBadge.id ? res.data : b))); // Cập nhật danh sách huy hiệu
-            setShowEditModal(false);  // Đóng modal sau khi sửa
+            const token = localStorage.getItem('userToken');
+            await axios.put(
+                `/api/Admin/UpdateAchievement/${editingBadge.achievementID}`,
+                {
+                    achievementName: editingBadge.achievementName,
+                    description: editingBadge.description,
+                    criteria: editingBadge.criteria,
+                    badgeImage: editingBadge.badgeImage,
+                    packageType: editingBadge.packageType
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+            // Cập nhật lại danh sách badge sau khi sửa
+            await fetchBadges();
+            setShowEditModal(false);
         } catch (err) {
             console.error('Lỗi khi sửa huy hiệu:', err);
         }
@@ -55,8 +108,12 @@ const ManagementPerformance = () => {
     // Xóa huy hiệu
     const handleDelete = async (badgeId) => {
         try {
-            await axios.delete(`/api/badges/${badgeId}`); // Gửi API để xóa huy hiệu
-            setBadges(badges.filter(b => b.id !== badgeId));  // Xóa huy hiệu khỏi danh sách
+            const token = localStorage.getItem('userToken');
+            await axios.delete(`/api/Admin/DeleteAchivement?id=${badgeId}`, {
+                params: { id: badgeId },
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            await fetchBadges();
         } catch (err) {
             console.error('Lỗi khi xóa huy hiệu:', err);
         }
@@ -65,6 +122,25 @@ const ManagementPerformance = () => {
     return (
         <div className="badge-management">
             <h2 className="text-center text-success">Quản lý Thành tích - Huy hiệu</h2>
+
+            {/* Thanh tìm kiếm */}
+            <Row className="mb-3">
+                <Col xs={12} sm={6} md={4} lg={3}>
+                    <Form onSubmit={handleSearch}>
+                        <InputGroup>
+                            <Form.Control
+                                type="text"
+                                placeholder="Tìm kiếm theo tên, mô tả..."
+                                value={search}
+                                onChange={e => setSearch(e.target.value)}
+                            />
+                            <Button variant="primary" type="submit">
+                                <FaSearch />
+                            </Button>
+                        </InputGroup>
+                    </Form>
+                </Col>
+            </Row>
 
             {/* Bảng huy hiệu */}
             <Row className="mb-4">
@@ -82,31 +158,31 @@ const ManagementPerformance = () => {
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>ID</th>
                                         <th>Tên huy hiệu</th>
                                         <th>Mô tả</th>
                                         <th>Biểu tượng</th>
                                         <th>Điều kiện</th>
-                                        <th>Số người đạt được</th>
-                                        <th>Trạng thái</th>
+                                        <th>Loại gói</th>
                                         <th>Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {badges.map((badge, index) => (
-                                        <tr key={badge.id}>
-                                            <td>{index + 1}</td>
-                                            <td>{badge.name}</td>
+                                    {badges.map((badge) => (
+                                        <tr key={badge.achievementID}>
+                                            <td>{badge.achievementID}</td>
+                                            <td>{badge.achievementName}</td>
                                             <td>{badge.description}</td>
-                                            <td><img src={badge.image} alt={badge.name} width="50" /></td>
-                                            <td>{badge.condition}</td>
-                                            <td>{badge.achievedCount}</td>
-                                            <td>{badge.status}</td>
+                                            <td>
+                                                <FaHandsClapping color="#f7b801" size={22} title="Clap" />
+                                            </td>
+                                            <td>{badge.criteria}</td>
+                                            <td>{badge.packageType}</td>
                                             <td>
                                                 <Button variant="link" size="sm" onClick={() => handleEdit(badge)}>
                                                     <FaEdit />
                                                 </Button>
-                                                <Button variant="link" size="sm" onClick={() => handleDelete(badge.id)}>
+                                                <Button variant="link" size="sm" onClick={() => handleDelete(badge.achievementID)}>
                                                     <FaTrash />
                                                 </Button>
                                             </td>
@@ -130,8 +206,8 @@ const ManagementPerformance = () => {
                             <Form.Label>Tên huy hiệu:</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={newBadge.name}
-                                onChange={e => setNewBadge({ ...newBadge, name: e.target.value })}
+                                value={newBadge.achievementName}
+                                onChange={e => setNewBadge({ ...newBadge, achievementName: e.target.value })}
                             />
                         </Form.Group>
 
@@ -139,8 +215,8 @@ const ManagementPerformance = () => {
                             <Form.Label>Ảnh:</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={newBadge.image}
-                                onChange={e => setNewBadge({ ...newBadge, image: e.target.value })}
+                                value={newBadge.badgeImage}
+                                onChange={e => setNewBadge({ ...newBadge, badgeImage: e.target.value })}
                             />
                         </Form.Group>
 
@@ -148,8 +224,8 @@ const ManagementPerformance = () => {
                             <Form.Label>Điều kiện:</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={newBadge.condition}
-                                onChange={e => setNewBadge({ ...newBadge, condition: e.target.value })}
+                                value={newBadge.criteria}
+                                onChange={e => setNewBadge({ ...newBadge, criteria: e.target.value })}
                             />
                         </Form.Group>
 
@@ -160,6 +236,17 @@ const ManagementPerformance = () => {
                                 value={newBadge.description}
                                 onChange={e => setNewBadge({ ...newBadge, description: e.target.value })}
                             />
+                        </Form.Group>
+
+                        <Form.Group controlId="formPackageType">
+                            <Form.Label>Loại gói:</Form.Label>
+                            <Form.Select
+                                value={newBadge.packageType}
+                                onChange={e => setNewBadge({ ...newBadge, packageType: e.target.value })}
+                            >
+                                <option value="Basic">Basic</option>
+                                <option value="Premium">Premium</option>
+                            </Form.Select>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -184,8 +271,8 @@ const ManagementPerformance = () => {
                             <Form.Label>Tên huy hiệu:</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={editingBadge?.name}
-                                onChange={e => setEditingBadge({ ...editingBadge, name: e.target.value })}
+                                value={editingBadge?.achievementName}
+                                onChange={e => setEditingBadge({ ...editingBadge, achievementName: e.target.value })}
                             />
                         </Form.Group>
 
@@ -193,8 +280,8 @@ const ManagementPerformance = () => {
                             <Form.Label>Ảnh:</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={editingBadge?.image}
-                                onChange={e => setEditingBadge({ ...editingBadge, image: e.target.value })}
+                                value={editingBadge?.badgeImage}
+                                onChange={e => setEditingBadge({ ...editingBadge, badgeImage: e.target.value })}
                             />
                         </Form.Group>
 
@@ -202,8 +289,8 @@ const ManagementPerformance = () => {
                             <Form.Label>Điều kiện:</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={editingBadge?.condition}
-                                onChange={e => setEditingBadge({ ...editingBadge, condition: e.target.value })}
+                                value={editingBadge?.criteria}
+                                onChange={e => setEditingBadge({ ...editingBadge, criteria: e.target.value })}
                             />
                         </Form.Group>
 
@@ -214,6 +301,17 @@ const ManagementPerformance = () => {
                                 value={editingBadge?.description}
                                 onChange={e => setEditingBadge({ ...editingBadge, description: e.target.value })}
                             />
+                        </Form.Group>
+
+                        <Form.Group controlId="formEditPackageType">
+                            <Form.Label>Loại gói:</Form.Label>
+                            <Form.Select
+                                value={editingBadge?.packageType}
+                                onChange={e => setEditingBadge({ ...editingBadge, packageType: e.target.value })}
+                            >
+                                <option value="Basic">Basic</option>
+                                <option value="Premium">Premium</option>
+                            </Form.Select>
                         </Form.Group>
                     </Form>
                 </Modal.Body>

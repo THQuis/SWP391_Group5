@@ -1,0 +1,191 @@
+--Content Milestone
+
+------------- =========================thêm một cột mới vào bảng Milestone===================================================-------
+ALTER TABLE [dbo].[Milestone]
+ADD [IsPremium] BIT NOT NULL DEFAULT 0
+-- để set gói pre với gói basic cho user 
+-----------------------------THÊM DỮ LIỆU CHO BẢNG------------------------------------
+INSERT INTO [dbo].[MilestoneGroup] ([GroupName]) VALUES (N'Sinh thái');
+INSERT INTO [dbo].[MilestoneGroup] ([GroupName]) VALUES (N'Thời gian');
+INSERT INTO [dbo].[MilestoneGroup] ([GroupName]) VALUES (N'Tiết kiệm');
+
+-- Xóa dữ liệu cũ (nếu muốn làm lại từ đầu, cẩn thận khi dùng!)
+-- DELETE FROM [dbo].[Milestone];
+
+-- Các mốc cho từng nhóm, mỗi nhóm đều giống nhau về mốc
+
+-- 1.Thể trạng (MilestoneGroupID=1) - BASIC
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(1, N'Khởi động', N'Chúc mừng bạn đã bắt đầu hành trình từ bỏ thuốc lá! 1 phút đầu tiên không hút thuốc có thể nhỏ nhoi, nhưng chính khoảnh khắc này là nền móng cho mọi thay đổi tích cực trong tương lai. Mỗi phút trôi qua bạn đang giúp cơ thể làm quen dần với trạng thái không còn nicotin, đồng thời tiếp thêm động lực tinh thần để vượt qua thử thách tiếp theo.', 1, N'phút', 0, 0),
+(1, N'Bắt đầu chuyển biến', N'5 phút không hút thuốc – tưởng chừng ngắn ngủi nhưng đã đủ để cơ thể bạn bắt đầu nhận ra sự thay đổi. Đầu óc bạn sẽ dần tỉnh táo hơn, nhịp tim ổn định lại, các mạch máu bắt đầu thư giãn do không còn tác động của nicotin. Đây là tiền đề giúp bạn cảm nhận rõ sự khác biệt về mặt thể chất cũng như tinh thần chỉ sau một khoảng thời gian ngắn.', 5, N'phút', 0, 0),
+(1, N'Nicotine', N'Chỉ sau một giờ đầu tiên không hút thuốc, nồng độ nicotin trong máu bạn bắt đầu giảm xuống rõ rệt. Cơ thể khởi động quá trình loại bỏ các chất độc hại, đồng thời hệ thần kinh cũng dần thích nghi với trạng thái không còn phụ thuộc vào thuốc lá. Bạn có thể cảm nhận một chút bồn chồn, nhưng hãy kiên trì – đây là dấu hiệu tích cực cho thấy cơ thể đang phục hồi.', 1, N'giờ', 1, 0),
+(1, N'Tuần hoàn máu', N'Sau 4 tiếng, các mạch máu trong cơ thể bạn trở nên linh hoạt hơn, máu lưu thông dễ dàng hơn tới các chi. Bạn có thể cảm thấy đôi tay, đôi chân ấm hơn, màu da tươi sáng hơn. Hệ tuần hoàn khỏe mạnh sẽ giúp nuôi dưỡng từng tế bào, đẩy nhanh quá trình phục hồi sau nhiều năm bị tác động bởi thuốc lá.', 4, N'giờ', 5, 0),
+(1, N'Hoạt động phổi', N'9 tiếng không hút thuốc, phổi của bạn bắt đầu “tự làm sạch” bằng cách loại bỏ bụi bẩn và chất độc tích tụ lâu ngày. Khả năng trao đổi khí được cải thiện, nhịp thở nhẹ nhàng hơn và sức bền dần trở lại. Đây là một bước tiến lớn trên hành trình lấy lại sức khỏe hô hấp vốn quý.', 9, N'giờ', 10, 0),
+(1, N'Tim mạch', N'Chỉ sau 24 giờ không hút thuốc, nguy cơ nhồi máu cơ tim của bạn đã giảm đáng kể so với người vẫn còn hút. Lượng oxy trong máu tăng lên, tim đập đều và khoẻ hơn, cơ thể dần lấy lại phong độ vốn có. Bạn có thể cảm thấy tự hào vì đã bảo vệ trái tim mình khỏi những hiểm họa vô hình của thuốc lá.', 1, N'ngày', 20, 0),
+(1, N'Khứu giác', N'Sau 5 ngày không hút thuốc, các tế bào vị giác và khứu giác vốn bị tê liệt bởi khói thuốc bắt đầu hồi phục. Bạn sẽ cảm nhận mùi vị thức ăn ngon miệng hơn, không khí trong lành hơn và tận hưởng cuộc sống với những trải nghiệm giác quan trọn vẹn hơn trước.', 5, N'ngày', 40, 0),
+(1, N'Thể trạng', N'10 ngày liên tiếp không hút thuốc là dấu mốc tuyệt vời, chứng minh ý chí mạnh mẽ và khả năng làm chủ bản thân của bạn. Sức bền, sức mạnh cơ bắp và sự dẻo dai của bạn đều được cải thiện đáng kể, giúp bạn tự tin hơn khi tham gia các hoạt động thể thao, vui chơi hay lao động hằng ngày.', 10, N'ngày', 70, 0),
+(1, N'Thể trạng', N'15 ngày không thuốc lá là thành quả xứng đáng cho nỗ lực không ngừng nghỉ của bạn. Lúc này, bạn sẽ cảm nhận rõ rệt sự thay đổi tích cực ở cả thể chất lẫn tinh thần: giấc ngủ sâu hơn, tinh thần minh mẫn, sức bền và sự dẻo dai tăng lên rõ rệt. Đặc biệt, nguy cơ mắc các bệnh mãn tính liên quan tới thuốc lá đã giảm đi rất nhiều, mở ra cho bạn một tương lai khỏe mạnh và tràn đầy năng lượng.', 15, N'ngày', 100, 0);
+go
+
+
+-- 2. Sức khỏe (MilestoneGroupID=2)
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(2, N'Hơi thở mới', N'Chỉ 1 phút không hút thuốc, phổi và hệ hô hấp của bạn đã bắt đầu làm quen với không khí sạch, không còn khói độc hại. Bạn đang chủ động đưa sức khỏe của mình sang một trang mới tốt đẹp hơn, dù chỉ một khoảng khắc nhỏ nhoi.', 1, N'phút', 0, 0),
+(2, N'Khởi đầu phục hồi', N'5 phút đầu tiên không hút thuốc là lúc cơ thể bạn bắt đầu quá trình phục hồi. Trong thời gian ngắn này, các mao mạch nhỏ trong phổi và tim đã nhận ra sự vắng mặt của độc tố và bắt đầu thích nghi với một môi trường lành mạnh hơn, đặt nền móng cho một hành trình hồi sinh sức khỏe lâu dài.', 5, N'phút', 0, 0),
+(2, N'Huyết áp', N'Chỉ sau một giờ không hút thuốc, nhịp tim và huyết áp của bạn đã ổn định đáng kể so với trạng thái khi hút thuốc. Hệ tuần hoàn máu hoạt động hiệu quả hơn, giảm gánh nặng cho tim và giúp toàn bộ cơ thể được cung cấp oxy đầy đủ.', 1, N'giờ', 1, 0),
+(2, N'Lượng CO', N'Sau 4 tiếng, nồng độ CO (carbon monoxide) trong máu giảm xuống, nhường chỗ cho oxy. Các tế bào trong cơ thể bạn được nuôi dưỡng tốt hơn, giảm nguy cơ thiếu máu và các biến chứng nguy hiểm khác.', 4, N'giờ', 5, 0),
+(2, N'Phổi', N'9 tiếng không hút thuốc, hệ hô hấp của bạn đã bắt đầu làm sạch chính mình. Phổi tăng cường khả năng loại bỏ bụi bẩn và độc tố, bạn sẽ cảm nhận hơi thở thông thoáng, nhẹ nhàng hơn, và sức đề kháng của cơ thể cũng dần tăng lên.', 9, N'giờ', 10, 0),
+(2, N'Tim', N'Sau 24 giờ không hút thuốc, nguy cơ đau tim bắt đầu giảm rõ rệt. Tim của bạn được nghỉ ngơi, máu lưu thông tốt hơn, giúp bạn cảm thấy khoẻ khoắn, linh hoạt và tràn đầy sinh lực.', 1, N'ngày', 20, 0),
+(2, N'Hô hấp', N'5 ngày không hút thuốc là cột mốc quan trọng: hệ hô hấp hoạt động ổn định hơn, các vết thương nhỏ trong phổi, khí quản bắt đầu lành lại. Bạn sẽ cảm nhận rõ ràng sự giảm dần của ho, khó thở hay cảm giác mệt mỏi.', 5, N'ngày', 40, 0),
+(2, N'Cơ thể', N'10 ngày không chạm đến thuốc lá, cơ thể bạn đã phục hồi rõ rệt, nguy cơ mắc các bệnh về phổi giảm mạnh. Bạn sẽ cảm thấy tràn đầy năng lượng, tinh thần thoải mái, sẵn sàng cho những thử thách mới của cuộc sống.', 10, N'ngày', 70, 0),
+(2, N'Sức khỏe', N'15 ngày không thuốc lá là thành quả tuyệt vời. Hệ miễn dịch khoẻ mạnh hơn, phổi, tim, gan đều hoạt động ổn định. Bạn đang đặt nền móng vững chắc cho một cuộc sống khoẻ mạnh, hạnh phúc dài lâu.', 15, N'ngày', 100, 0);
+
+go
+
+
+-- 3. Sinh thái (MilestoneGroupID=3)
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(3, N'Bảo vệ môi trường', N'Mỗi phút không hút thuốc, bạn đã góp phần giảm một lượng nhỏ khí thải độc ra ngoài môi trường. Hành động nhỏ này, nếu được duy trì, sẽ mang lại lợi ích to lớn cho bầu không khí và sức khoẻ của cộng đồng.', 1, N'phút', 0, 0),
+(3, N'Thanh lọc không gian', N'5 phút không hút thuốc, bạn đã giữ cho không khí xung quanh mình sạch hơn một chút, giúp những người thân yêu không phải tiếp xúc với khói thuốc thụ động. Đó là một hành động tử tế và trách nhiệm với xã hội.', 5, N'phút', 0, 0),
+(3, N'Ngăn chặn độc', N'Chỉ sau một giờ không hút thuốc, bạn đã giảm bớt lượng chất độc thải ra môi trường. Không chỉ bảo vệ bản thân, bạn còn góp phần giữ gìn hành tinh xanh cho các thế hệ tương lai.', 1, N'giờ', 1, 0),
+(3, N'Rác thuốc lá', N'4 tiếng không hút thuốc giúp giảm lượng tàn thuốc, đầu lọc vứt ra môi trường tự nhiên. Bạn đang góp phần bảo vệ đất, nước và động vật khỏi tác động của rác thải nguy hại.', 4, N'giờ', 5, 0),
+(3, N'Bảo vệ môi trường', N'9 tiếng không hút thuốc, bạn đã góp phần giảm lượng tàn thuốc, khí độc thải ra không khí và đất. Hành động này giúp làm sạch môi trường sống, tạo ra không gian trong lành, khoẻ mạnh hơn.', 9, N'giờ', 10, 0),
+(3, N'Hành tinh xanh', N'24 giờ không hút thuốc, bạn đã ngăn chặn việc tạo ra hàng chục đầu lọc thuốc lá – loại rác thải nhựa nhỏ nhưng cực kỳ khó phân huỷ. Một ngày, một người, một hành động nhỏ, nhưng ý nghĩa lớn cho Trái Đất.', 1, N'ngày', 20, 0),
+(3, N'Rác thải nhựa', N'5 ngày không hút thuốc, bạn đã hạn chế đáng kể rác thải nhựa từ vỏ bao, đầu lọc và bao bì thuốc lá – các loại rác tồn tại hàng trăm năm ngoài thiên nhiên. Hành động này giúp bảo vệ hệ sinh thái bền vững.', 5, N'ngày', 40, 0),
+(3, N'Hóa chất độc hại', N'10 ngày không hút thuốc, bạn đã ngăn chặn hàng loạt hóa chất độc hại từ thuốc lá thấm vào nước ngầm, đất và môi trường sống. Đó là món quà tuyệt vời không chỉ cho bản thân mà còn cho cộng đồng.', 10, N'ngày', 70, 0),
+(3, N'Giảm ô nhiễm', N'15 ngày không hút thuốc là 15 ngày bạn góp phần giảm thiểu ô nhiễm không khí, đất, nước. Bạn đang trở thành người bảo vệ môi trường thực thụ – mỗi ngày không hút thuốc là một ngày xanh hơn cho thế giới.', 15, N'ngày', 100, 0);
+
+go
+
+
+-- 4. Thời gian (MilestoneGroupID=4)
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(4, N'Bước đầu tiên', N'1 phút đầu tiên không hút thuốc – bạn đã bắt đầu một hành trình mới đầy thử thách nhưng cũng rất xứng đáng. Mỗi phút trôi qua là bạn đang chứng minh cho bản thân thấy sức mạnh ý chí và quyết tâm thay đổi.', 1, N'phút', 0, 0),
+(4, N'Kiên trì từng phút', N'5 phút không hút thuốc: mỗi phút bạn kiên trì là một chiến thắng nhỏ trước những cám dỗ của thuốc lá. Sự kiên nhẫn này sẽ giúp bạn xây dựng thói quen tốt trong tương lai.', 5, N'phút', 0, 0),
+(4, N'Khởi đầu', N'1 giờ trôi qua, bạn đã vượt qua giai đoạn khó khăn đầu tiên. Khởi đầu hành trình mới đầy hy vọng và tự hào, bạn đang từng bước tiến gần đến mục tiêu sống khoẻ mạnh.', 1, N'giờ', 1, 0),
+(4, N'Nền móng', N'4 tiếng không hút thuốc là nền móng vững chắc cho thành công lâu dài. Bạn đang tạo dựng một thói quen lành mạnh và chứng minh rằng bạn hoàn toàn có thể kiểm soát bản thân.', 4, N'giờ', 5, 0),
+(4, N'Bước ngoặc', N'9 tiếng không hút thuốc – một bước ngoặt lớn trên hành trình làm chủ cuộc sống. Bạn đã vượt qua những giờ phút khó khăn nhất và tiến gần hơn tới sự tự do khỏi thuốc lá.', 9, N'giờ', 10, 0),
+(4, N'1 ngày không hút', N'24 giờ đầu tiên không hút thuốc là một thành tích tuyệt vời. Bạn đã chiến thắng bản thân, mở ra một tương lai tươi sáng hơn. Hãy tự hào về chính mình vì đã không bỏ cuộc.', 1, N'ngày', 20, 0),
+(4, N'Quyết tâm', N'5 ngày liên tiếp không hút thuốc là minh chứng cho ý chí mạnh mẽ và lòng quyết tâm của bạn. Thói quen mới đang dần hình thành, thay thế niềm tin vào bản thân và cuộc sống.', 5, N'ngày', 40, 0),
+(4, N'Điều tuyệt vời', N'10 ngày không hút thuốc – bạn đã làm được điều mà nhiều người từng nghĩ là không thể. Mỗi ngày trôi qua, bạn càng trở nên mạnh mẽ và tự tin hơn trên con đường này.', 10, N'ngày', 70, 0),
+(4, N'Mục tiêu sống', N'15 ngày kiên trì không hút thuốc, bạn đang tiến gần hơn bao giờ hết đến mục tiêu sống khoẻ mạnh, tự do và hạnh phúc. Hãy tiếp tục giữ vững niềm tin và truyền cảm hứng cho những người xung quanh.', 15, N'ngày', 100, 0);
+
+go
+
+
+-- 5. Tiết kiệm (MilestoneGroupID=5)
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(5, N'Khởi động tiết kiệm', N'Chỉ 1 phút không hút thuốc, bạn đã tiết kiệm được một phần nhỏ chi phí – dù rất nhỏ, nhưng mỗi đồng tiết kiệm đều mang ý nghĩa tích cực cho tương lai tài chính của bạn.', 1, N'phút', 0, 0),
+(5, N'Tiết kiệm từng phút', N'5 phút không thuốc lá: bạn đang bắt đầu xây dựng thói quen tiết kiệm cho bản thân. Số tiền nhỏ này góp lại theo thời gian sẽ tạo thành khoản lớn giúp bạn thực hiện những ước mơ mới.', 5, N'phút', 0, 0),
+(5, N'Khởi đầu', N'Sau 1 giờ không hút thuốc, bạn đã tiết kiệm được một phần chi phí thuốc lá. Đây là bước khởi đầu tốt đẹp cho kế hoạch tài chính lâu dài.', 1, N'giờ', 1, 0),
+(5, N'Nền móng', N'4 tiếng không hút thuốc đồng nghĩa với việc bạn giữ lại được số tiền lẽ ra sẽ chi cho thuốc lá. Số tiền này sẽ dần lớn lên nếu bạn kiên trì.', 4, N'giờ', 5, 0),
+(5, N'Bước ngoặc', N'9 tiếng không hút thuốc, số tiền bạn tiết kiệm được có thể dùng cho những điều có ý nghĩa hơn, như mua sách, học một kỹ năng mới hoặc tự thưởng cho bản thân.', 9, N'giờ', 10, 0),
+(5, N'1 ngày không hút', N'Một ngày không hút thuốc, bạn đã tiết kiệm đủ để mua một bữa ăn ngon, một cuốn sách hoặc một món đồ nhỏ bạn yêu thích. Hãy tự thưởng cho mình!', 1, N'ngày', 20, 0),
+(5, N'Quyết tâm', N'5 ngày không hút thuốc, khoản tiền tiết kiệm bắt đầu đáng kể. Bạn có thể dùng số tiền này để làm điều mình thích hoặc đầu tư cho tương lai.', 5, N'ngày', 40, 0),
+(5, N'Điều tuyệt vời', N'10 ngày không thuốc, số tiền tích lũy có thể đủ để bạn tặng người thân một món quà nhỏ, hoặc đưa bản thân đi trải nghiệm điều mới mẻ. Niềm vui không chỉ là sức khỏe mà còn là tài chính vững vàng.', 10, N'ngày', 70, 0),
+(5, N'Mục tiêu sống', N'15 ngày tiết kiệm tiền thuốc lá, bạn đang xây dựng một thói quen tài chính bền vững. Số tiền này sẽ là nền tảng cho những mục tiêu lớn hơn trong cuộc sống.', 15, N'ngày', 100, 0);
+
+go
+
+--==========================================Premium==============================================================================
+-- 1. Thể trạng (MilestoneGroupID=1) - PREMIUM 
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(1, N'Khởi động', N'Chúc mừng bạn đã vượt qua phút đầu tiên không hút thuốc – một chiến thắng nhỏ, nhưng là nền tảng cho mọi thay đổi lớn lao phía trước. Ngay lúc này, các tế bào trong cơ thể đã bắt đầu làm quen với trạng thái không còn nicotin. Hãy tự hào vì bạn đã thực sự bắt đầu hành trình làm chủ sức khỏe của chính mình.', 1, N'phút', 0, 1),
+(1, N'Bắt đầu chuyển biến', N'5 phút không hút thuốc: các cơ quan bắt đầu cảm nhận sự khác biệt. Nhịp tim, huyết áp dần ổn định, mạch máu giãn nở tốt hơn và từng dòng máu khỏe mạnh đi nuôi mọi tế bào. Bạn đang chủ động trao cho cơ thể mình cơ hội phục hồi từ những điều nhỏ nhất.', 5, N'phút', 0, 1),
+(1, N'Nicotine', N'Chỉ sau một giờ đầu tiên không hút thuốc, mức nicotine trong máu bạn đã giảm rõ rệt. Cơ thể bắt đầu khởi động quá trình loại bỏ các chất độc hại, các bộ phận như phổi, gan, thận phối hợp để giải phóng độc tố ra ngoài. Đây là bước ngoặt quan trọng, đánh dấu sức mạnh ý chí và mong muốn làm chủ sức khỏe của bạn.', 1, N'giờ', 1, 1),
+(1, N'Ý chí mạnh mẽ', N'3 tiếng đầu không hút thuốc là giai đoạn thách thức nhất. Bạn đã vượt qua những cơn thèm thuốc, những cảm giác bồn chồn, lo lắng đầu tiên. Ý chí và lòng quyết tâm lúc này được tôi luyện từng phút, từng giây, giúp bạn kiên cường hơn trước mọi cám dỗ.', 3, N'giờ', 3, 1),
+(1, N'Tuần hoàn máu', N'Sau 4 tiếng, các mạch máu trong cơ thể linh hoạt, máu lưu thông tốt hơn, các chi ấm dần lên, làn da tươi sáng hơn. Sức khỏe tuần hoàn được cải thiện rõ rệt, giúp bạn cảm nhận sự sống tràn đầy năng lượng mỗi ngày.', 4, N'giờ', 5, 1),
+(1, N'Hệ thần kinh ổn định', N'6 tiếng không hút thuốc, hệ thần kinh dần trở về trạng thái cân bằng. Sự bồn chồn, cáu kỉnh giảm bớt, cảm xúc dần ổn định hơn. Bạn sẽ cảm nhận được sự thư giãn, nhẹ nhõm và làm chủ cảm xúc tốt hơn.', 6, N'giờ', 7, 1),
+(1, N'Hoạt động phổi', N'9 tiếng không hút thuốc, phổi của bạn bắt đầu đẩy các chất bẩn, độc tố ra ngoài. Khả năng trao đổi khí được cải thiện, hơi thở sâu, đều và dễ chịu hơn. Bạn sẽ nhận thấy sự khác biệt rõ rệt khi vận động, đi bộ hoặc leo cầu thang.', 9, N'giờ', 10, 1),
+(1, N'Tim mạch', N'24 giờ không hút thuốc, trái tim bạn đã được bảo vệ khỏi những nguy cơ nhồi máu cơ tim, đột quỵ. Máu giàu oxy hơn, tim đập ổn định, sức bền và sức khỏe tổng thể được củng cố mạnh mẽ.', 1, N'ngày', 20, 1),
+(1, N'Cơ thể sạch độc', N'3 ngày không hút thuốc: phần lớn nicotine và các chất độc hại đã được đào thải ra khỏi cơ thể. Bạn sẽ cảm nhận rõ sự nhẹ nhõm, khỏe khoắn, các triệu chứng mệt mỏi, đau đầu giảm dần. Đây là dấu mốc quan trọng cho sự hồi phục toàn diện.', 3, N'ngày', 35, 1),
+(1, N'Khứu giác', N'Sau 5 ngày, các tế bào vị giác và khứu giác bị tê liệt bởi khói thuốc dần phục hồi. Bạn sẽ cảm nhận rõ mùi vị thức ăn ngon hơn, tận hưởng không khí trong lành, và cảm thấy cuộc sống trọn vẹn hơn mỗi ngày.', 5, N'ngày', 40, 1),
+(1, N'Tái tạo mô', N'6 ngày không hút thuốc, các mô phổi và niêm mạc đường hô hấp được tái tạo, chức năng phổi cải thiện rõ rệt. Sức đề kháng của cơ thể tăng lên, giúp bạn phòng ngừa bệnh tật tốt hơn.', 6, N'ngày', 55, 1),
+(1, N'Nền tảng thể chất', N'9 ngày không hút thuốc: bạn đã xây dựng một nền tảng thể chất vững chắc, giảm nguy cơ mắc các bệnh mãn tính và tăng sức đề kháng. Thể lực, sức bền, sự dẻo dai đều được nâng tầm.', 9, N'ngày', 75, 1),
+(1, N'Thể trạng', N'10 ngày liên tiếp không hút thuốc: sức khỏe tổng thể vượt trội, năng lượng dồi dào hơn, bạn cảm nhận rõ sức bền khi tham gia vận động, làm việc và sinh hoạt thường ngày.', 10, N'ngày', 80, 1),
+(1, N'Thể chất ổn định', N'12 ngày không thuốc, các cơ quan trong cơ thể hoạt động ổn định, hệ miễn dịch khỏe mạnh, bạn cảm thấy mình trẻ trung, khỏe khoắn và tràn đầy sức sống.', 12, N'ngày', 90, 1),
+(1, N'Thể trạng', N'15 ngày không thuốc lá là thành quả lớn lao cho ý chí, nghị lực và niềm tin vào bản thân. Lúc này bạn sẽ thấy rõ sự thay đổi tích cực ở cả thể chất, tinh thần và tâm hồn: giấc ngủ sâu hơn, tinh thần sảng khoái, sức bền và sự dẻo dai tăng lên rõ rệt. Bạn đã thực sự làm chủ cuộc sống mới – khỏe mạnh, tự do và hạnh phúc hơn.', 15, N'ngày', 100, 1);
+
+go
+
+
+-- 2. Sức khỏe (MilestoneGroupID=2) - PREMIUM
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(2, N'Hơi thở mới', N'Chỉ 1 phút không hút thuốc, bạn đã chủ động trao cho phổi mình một cơ hội được thanh lọc. Dù là thời gian rất ngắn, mỗi hơi thở trong lành lúc này đều góp phần giúp các tế bào hô hấp phục hồi và bắt đầu loại bỏ những tàn dư độc hại còn sót lại.', 1, N'phút', 0, 1),
+(2, N'Khởi đầu phục hồi', N'5 phút đầu tiên không hút thuốc, hệ hô hấp, tim mạch và mạch máu đã ghi nhận sự thay đổi tích cực. Các mao mạch bắt đầu thích nghi với môi trường sạch sẽ hơn, lượng oxy được vận chuyển dần dần tăng lên, là nền móng cho sức khỏe lâu dài.', 5, N'phút', 0, 1),
+(2, N'Huyết áp', N'1 giờ không hút thuốc, huyết áp và nhịp tim của bạn không còn bị tác động tiêu cực bởi chất nicotin. Đây là dấu hiệu đầu tiên cho thấy hệ tim mạch đã bắt đầu phục hồi, giúp bạn cảm thấy nhẹ nhàng và ổn định hơn từng phút giây.', 1, N'giờ', 1, 1),
+(2, N'Oxy tăng lên', N'Chỉ trong 3 tiếng đầu tiên, lượng oxy trong máu của bạn đã tăng lên rõ rệt, mang lại cảm giác tỉnh táo, dễ chịu cho toàn bộ cơ thể. Bạn sẽ cảm nhận được sự khác biệt tích cực ở cả thể chất lẫn tinh thần.', 3, N'giờ', 3, 1),
+(2, N'Lượng CO', N'Sau 4 tiếng, lượng khí CO độc hại trong máu giảm đi đáng kể, nhường chỗ cho oxy được vận chuyển đến từng tế bào. Cơ thể bạn đang dần lấy lại trạng thái cân bằng, sẵn sàng cho một hành trình sống khoẻ mạnh.', 4, N'giờ', 5, 1),
+(2, N'Mao mạch phục hồi', N'6 tiếng không hút thuốc, các mao mạch nhỏ mở rộng, giúp máu lưu thông hiệu quả hơn. Bạn sẽ cảm nhận được sự ấm áp ở các đầu ngón tay, ngón chân, chứng tỏ toàn thân đang hấp thụ nhiều dưỡng chất và oxy hơn.', 6, N'giờ', 7, 1),
+(2, N'Phổi', N'9 tiếng không hút thuốc, phổi của bạn đang chủ động làm sạch, đào thải các chất độc. Bạn sẽ dần cảm nhận hơi thở sâu, đều và dễ dàng hơn, đồng thời hệ miễn dịch cũng mạnh mẽ hơn từng ngày.', 9, N'giờ', 10, 1),
+(2, N'Tim', N'24 giờ không hút thuốc, nguy cơ đau tim giảm xuống rõ rệt. Tim bạn không còn bị căng thẳng bởi độc tố, máu lưu thông tốt hơn, cung cấp oxy cho toàn bộ cơ thể, mang lại cảm giác khoẻ khoắn và tràn đầy sinh lực.', 1, N'ngày', 20, 1),
+(2, N'Phổi sạch độc', N'3 ngày không hút thuốc, các chất độc hại gần như đã được loại bỏ khỏi phổi và máu. Bạn sẽ cảm nhận sự nhẹ nhõm khi hít thở, ít ho, ít đờm hơn và thấy rõ sự cải thiện về sức bền.', 3, N'ngày', 35, 1),
+(2, N'Hô hấp', N'5 ngày không hút thuốc, hệ hô hấp hoạt động ổn định hơn, các tổn thương nhỏ trong phổi và khí quản đang dần lành lại. Hơi thở của bạn trở nên sâu hơn, nhẹ nhàng và khoẻ mạnh hơn từng ngày.', 5, N'ngày', 40, 1),
+(2, N'Đề kháng tăng', N'6 ngày không thuốc, hệ miễn dịch của bạn đã mạnh hơn, giúp cơ thể chống lại nhiều bệnh tật. Bạn sẽ thấy mình ít mệt mỏi, ít cảm cúm, và luôn tràn đầy năng lượng tích cực.', 6, N'ngày', 55, 1),
+(2, N'Hô hấp tốt', N'9 ngày không hút thuốc, nguy cơ mắc các bệnh phổi mãn tính đã giảm đi rõ rệt. Bạn có thể vận động, chơi thể thao hoặc làm việc lâu hơn mà không bị hụt hơi.', 9, N'ngày', 75, 1),
+(2, N'Cơ thể', N'10 ngày không hút thuốc, các tổn thương trong phổi và hệ hô hấp được phục hồi đáng kể. Bạn sẽ cảm nhận sự thay đổi tích cực ở cả thể chất lẫn tinh thần.', 10, N'ngày', 80, 1),
+(2, N'Phổi hồi phục', N'12 ngày không thuốc, các tế bào phổi được tái tạo, bạn hít thở dễ dàng, thoải mái hơn. Cơ thể khoẻ mạnh là nền tảng cho một cuộc sống hạnh phúc lâu dài.', 12, N'ngày', 90, 1),
+(2, N'Sức khỏe', N'15 ngày không thuốc lá, cơ thể bạn đã đạt đến trạng thái cân bằng mới, sức đề kháng mạnh mẽ, hệ hô hấp và tim mạch hoạt động ổn định. Đây là thành quả tuyệt vời cho sự kiên trì của bạn.', 15, N'ngày', 100, 1);
+
+go
+
+
+-- 3. Sinh thái (MilestoneGroupID=3) - PREMIUM
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(3, N'Bảo vệ môi trường', N'Chỉ 1 phút không hút thuốc, bạn đã góp phần nhỏ bé vào việc giảm lượng khí thải độc hại ra môi trường. Sự thay đổi tích cực này, dù rất nhỏ, nhưng có ý nghĩa lớn nếu duy trì đều đặn mỗi ngày.', 1, N'phút', 0, 1),
+(3, N'Thanh lọc không gian', N'5 phút không hút thuốc, bạn đã giữ cho không khí quanh mình và những người thân yêu sạch hơn. Mỗi phút trôi qua, môi trường sống của bạn trở nên trong lành hơn, góp phần bảo vệ sức khỏe cộng đồng.', 5, N'phút', 0, 1),
+(3, N'Ngăn chặn độc', N'1 giờ không hút thuốc, bạn đã chủ động giảm lượng chất độc thả ra môi trường. Không chỉ bảo vệ bản thân, bạn còn đang đóng góp vào việc gìn giữ hành tinh xanh cho các thế hệ tương lai.', 1, N'giờ', 1, 1),
+(3, N'Giảm đầu lọc', N'3 tiếng không hút thuốc, bạn đã giảm được số lượng đầu lọc rác thải ra môi trường đáng kể. Sự thay đổi này góp phần giảm lượng rác nhựa tồn tại lâu dài trên trái đất.', 3, N'giờ', 3, 1),
+(3, N'Rác thuốc lá', N'4 tiếng không hút thuốc, bạn đã giúp giảm hàng chục tàn thuốc và đầu lọc vứt ra ngoài tự nhiên. Cứ mỗi giờ không hút thuốc, bạn lại góp phần làm sạch môi trường sống cho cộng đồng.', 4, N'giờ', 5, 1),
+(3, N'Sinh thái ổn định', N'6 tiếng giữ môi trường trong lành hơn, bạn đang góp phần bảo vệ hệ sinh thái quanh mình. Những sinh vật nhỏ bé quanh bạn cũng được hưởng lợi từ không khí sạch.', 6, N'giờ', 7, 1),
+(3, N'Bảo vệ môi trường', N'9 tiếng không hút thuốc, bạn đã giảm lượng độc tố và khí thải ra không khí, đất và nước. Đây là hành động ý nghĩa, giúp môi trường sống của bạn ngày càng xanh sạch hơn.', 9, N'giờ', 10, 1),
+(3, N'Hành tinh xanh', N'24 giờ không hút thuốc, bạn đã góp phần ngăn chặn việc tạo ra đầu lọc thuốc lá – loại rác thải nhựa khó phân hủy nhất hành tinh. Mỗi ngày không hút thuốc là mỗi ngày bạn góp phần bảo vệ hành tinh xanh.', 1, N'ngày', 20, 1),
+(3, N'Bảo vệ tương lai', N'3 ngày không thuốc lá: bạn đã và đang bảo vệ môi trường sống cho thế hệ mai sau, giảm thiểu rác thải nhựa và hóa chất độc hại tồn đọng.', 3, N'ngày', 35, 1),
+(3, N'Rác thải nhựa', N'5 ngày không hút thuốc, bạn đã hạn chế được số lượng lớn rác thải nhựa từ vỏ bao, đầu lọc thuốc lá – hành động này giúp bảo vệ đất, nước và động vật.', 5, N'ngày', 40, 1),
+(3, N'Bảo vệ đất', N'6 ngày không thuốc, bạn đã tiết kiệm được nhiều diện tích đất khỏi rác thải nguy hại. Đất đai sẽ sạch hơn, cây cối và động vật sẽ phát triển khỏe mạnh hơn.', 6, N'ngày', 55, 1),
+(3, N'Không khí sạch', N'9 ngày không hút thuốc – giảm thiểu ô nhiễm không khí một cách rõ rệt. Bạn đang chung tay cùng cộng đồng bảo vệ bầu không khí trong lành.', 9, N'ngày', 75, 1),
+(3, N'Hóa chất độc hại', N'10 ngày không hút thuốc, bạn đã góp phần bảo vệ môi trường nước khỏi hóa chất độc hại từ thuốc lá, giúp nguồn nước sạch hơn cho mọi người.', 10, N'ngày', 80, 1),
+(3, N'Môi trường an toàn', N'12 ngày không thuốc: giảm thiểu đáng kể lượng chất độc trong môi trường sống. Điều này giúp nâng cao chất lượng cuộc sống cho cả gia đình và cộng đồng.', 12, N'ngày', 90, 1),
+(3, N'Giảm ô nhiễm', N'15 ngày không hút thuốc, bạn đã góp phần giảm thiểu ô nhiễm môi trường đáng kể. Đây là minh chứng cho tinh thần trách nhiệm và ý thức bảo vệ hành tinh chung của bạn.', 15, N'ngày', 100, 1);
+go
+
+
+-- 4. Thời gian (MilestoneGroupID=4) - PREMIUM
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(4, N'Bước đầu tiên', N'1 phút đầu tiên không hút thuốc – bạn đã bắt đầu một hành trình mới đầy thử thách nhưng cũng vô cùng ý nghĩa. Mỗi phút trôi qua là một chiến thắng nhỏ, thể hiện ý chí và quyết tâm thay đổi của chính bạn.', 1, N'phút', 0, 1),
+(4, N'Kiên trì từng phút', N'5 phút không thuốc lá: mỗi phút bạn kiên trì là một bước gần hơn đến mục tiêu lớn. Những thành công nhỏ này sẽ tạo nên kết quả lớn lao về lâu dài.', 5, N'phút', 0, 1),
+(4, N'Khởi đầu', N'1 giờ trôi qua, bạn đã vượt qua giai đoạn khó khăn đầu tiên. Đây là minh chứng rõ ràng cho sức mạnh ý chí, đặt nền móng cho một hành trình ngập tràn hy vọng và tự hào.', 1, N'giờ', 1, 1),
+(4, N'Bước đệm', N'3 tiếng không thuốc – mỗi giờ trôi qua, bạn càng khẳng định bản lĩnh và sự quyết đoán của mình. Bước đệm này sẽ giúp bạn tự tin hơn trên con đường phía trước.', 3, N'giờ', 3, 1),
+(4, N'Nền móng', N'4 tiếng kiên trì là nền móng vững chắc cho thành công lâu dài. Bạn đang từng bước xây dựng một thói quen lành mạnh, tích cực hơn mỗi ngày.', 4, N'giờ', 5, 1),
+(4, N'Chiến thắng đầu tiên', N'6 tiếng không hút thuốc, bạn đã chiến thắng cơn thèm thuốc đầu tiên của ngày. Đây là thành tựu lớn giúp bạn tin tưởng vào khả năng làm chủ cuộc sống.', 6, N'giờ', 7, 1),
+(4, N'Bước ngoặc', N'9 tiếng không hút thuốc – một bước ngoặt lớn, bạn đã vượt qua những giờ phút thách thức nhất và tiến gần hơn tới sự tự do khỏi thuốc lá.', 9, N'giờ', 10, 1),
+(4, N'1 ngày không hút', N'24 giờ đầu tiên không hút thuốc là một thành tích tuyệt vời. Bạn đã chiến thắng chính mình, mở ra một tương lai tươi sáng, khỏe mạnh và tự do.', 1, N'ngày', 20, 1),
+(4, N'Bền bỉ', N'3 ngày không thuốc lá – bạn đã làm được điều mà nhiều người từng thất bại. Sự kiên trì này là nền tảng cho những thay đổi tích cực lâu dài.', 3, N'ngày', 35, 1),
+(4, N'Quyết tâm', N'5 ngày liên tiếp không hút thuốc là minh chứng cho ý chí mạnh mẽ và lòng quyết tâm của bạn. Thói quen mới đang dần hình thành, thay thế niềm tin vào bản thân và cuộc sống.', 5, N'ngày', 40, 1),
+(4, N'Thói quen mới', N'6 ngày không thuốc: bạn đã hình thành thói quen mới lành mạnh hơn, biết tận hưởng từng khoảnh khắc không khói thuốc.', 6, N'ngày', 55, 1),
+(4, N'Làm chủ bản thân', N'9 ngày không hút thuốc, bạn đang dần làm chủ bản thân và cảm xúc, biết kiểm soát những cám dỗ nhất thời.', 9, N'ngày', 75, 1),
+(4, N'Điều tuyệt vời', N'10 ngày không hút thuốc: bạn đã làm được điều tuyệt vời mà nhiều người từng nghĩ là không thể.', 10, N'ngày', 80, 1),
+(4, N'Bền ý chí', N'12 ngày không thuốc: bạn đã bền bỉ vượt qua thử thách lớn, tạo dựng niềm tin vững chắc vào bản thân.', 12, N'ngày', 90, 1),
+(4, N'Mục tiêu sống', N'15 ngày kiên trì không hút thuốc, bạn đang tiến gần hơn bao giờ hết đến mục tiêu sống khoẻ mạnh, tự do và hạnh phúc. Hãy tiếp tục giữ vững niềm tin và truyền cảm hứng cho những người xung quanh.', 15, N'ngày', 100, 1);
+go
+
+
+-- 5. Tiết kiệm (MilestoneGroupID=5) - PREMIUM
+INSERT INTO [dbo].[Milestone] (MilestoneGroupID, [Name], [Description], MilestoneTime, TimeUnit, [Percent], IsPremium) VALUES
+(5, N'Khởi động tiết kiệm', N'Chỉ 1 phút không hút thuốc, bạn đã bắt đầu tiết kiệm những đồng tiền đầu tiên cho tương lai của chính mình. Khoản nhỏ này sẽ trở thành động lực để bạn tiếp tục duy trì thói quen tốt mỗi ngày.', 1, N'phút', 0, 1),
+(5, N'Tiết kiệm từng phút', N'5 phút không thuốc lá: số tiền bạn không tiêu cho thuốc lá trong từng phút sẽ dần tích lũy thành một khoản đáng kể, có thể dùng cho những điều ý nghĩa hơn trong cuộc sống.', 5, N'phút', 0, 1),
+(5, N'Khởi đầu', N'Sau 1 giờ không hút thuốc, bạn đã tiết kiệm được một phần chi phí thuốc lá. Khoản tiền nhỏ này, nếu được tích góp đều đặn, sẽ giúp bạn thực hiện được những mục tiêu mới trong tương lai.', 1, N'giờ', 1, 1),
+(5, N'Tiết kiệm đầu lọc', N'3 tiếng không hút thuốc, bạn đã dùng số tiền tiết kiệm được cho bản thân hoặc gia đình. Hãy tận hưởng cảm giác tự chủ tài chính và tự hào về lựa chọn của mình.', 3, N'giờ', 3, 1),
+(5, N'Nền móng', N'4 tiếng không hút thuốc đồng nghĩa với việc bạn giữ lại được số tiền lẽ ra sẽ chi cho thuốc lá. Số tiền này sẽ dần lớn lên nếu bạn kiên trì.', 4, N'giờ', 5, 1),
+(5, N'Tích lũy bền vững', N'Sau 6 tiếng không thuốc, bạn đã tích lũy thêm chi phí cho mục tiêu lớn hơn, ví dụ như mua sách, dụng cụ thể thao hoặc chăm sóc sức khỏe.', 6, N'giờ', 7, 1),
+(5, N'Bước ngoặc', N'9 tiếng không hút thuốc, số tiền bạn tiết kiệm được có thể dùng cho những điều có ý nghĩa hơn, như mua sách, học một kỹ năng mới hoặc tự thưởng cho bản thân.', 9, N'giờ', 10, 1),
+(5, N'1 ngày không hút', N'Một ngày không hút thuốc, bạn đã tiết kiệm đủ để mua một bữa ăn ngon, một cuốn sách hoặc một món đồ nhỏ bạn yêu thích. Hãy tự thưởng cho mình!', 1, N'ngày', 20, 1),
+(5, N'Ý nghĩa mới', N'3 ngày không thuốc: số tiền tiết kiệm có thể dùng để làm điều tốt cho bản thân hoặc người thân. Đầu tư cho sức khỏe, học tập hoặc trải nghiệm mới.', 3, N'ngày', 35, 1),
+(5, N'Quyết tâm', N'Tiền tiết kiệm sau 5 ngày có thể dành cho sở thích cá nhân, giúp bạn tận hưởng cuộc sống theo cách tích cực và ý nghĩa nhất.', 5, N'ngày', 40, 1),
+(5, N'Tích lũy cho tương lai', N'6 ngày không thuốc: số tiền bạn tích lũy được sẽ giúp bạn có động lực bền vững hơn và hướng đến những mục tiêu lớn hơn trong tương lai.', 6, N'ngày', 55, 1),
+(5, N'Đầu tư cho bản thân', N'9 ngày không hút thuốc, số tiền bạn tiết kiệm được có thể dành cho việc học, phát triển bản thân hoặc chăm sóc những người thân yêu.', 9, N'ngày', 75, 1),
+(5, N'Điều tuyệt vời', N'10 ngày không thuốc, số tiền tích lũy đã đủ để bạn mua quà cho bản thân hoặc dành tặng người thân, tạo thêm niềm vui và động lực.', 10, N'ngày', 80, 1),
+(5, N'Ước mơ gần hơn', N'12 ngày không thuốc: số tiền tích lũy giúp bạn tiến gần hơn đến một ước mơ nhỏ, một chuyến đi, một món đồ bạn hằng mong ước.', 12, N'ngày', 90, 1),
+(5, N'Mục tiêu sống', N'15 ngày tiết kiệm tiền thuốc lá, bạn đang xây dựng một thói quen tài chính bền vững, tạo nền tảng cho những mục tiêu lớn hơn và cuộc sống hạnh phúc hơn.', 15, N'ngày', 100, 1);
+go
+

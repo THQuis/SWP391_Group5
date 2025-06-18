@@ -22,7 +22,7 @@ namespace Smoking.API.Controllers
         [HttpGet("my-achievements/{userId}")]
         public async Task<IActionResult> GetUserAchievements(int userId)
         {
-            var achievements = await _userAchievementService.GetByUserIdAsync(userId);
+            var achievements = await _userAchievementService.GetAchievementsByUserIdAsync(userId);
             return Ok(achievements);
         }
 

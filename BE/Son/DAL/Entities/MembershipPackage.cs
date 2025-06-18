@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
+    [Table("MembershipPackage")]
     public class MembershipPackage
     {
         [Key]

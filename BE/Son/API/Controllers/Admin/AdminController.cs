@@ -137,12 +137,12 @@ namespace Smoking.API.Controllers
         //}
 
         // 6 Gửi notification toàn hệ thống (giả sử có NotificationService)
-        [HttpPost("Notifications")]
-        public IActionResult SendNotification([FromBody] string message)
-        {
+        //[HttpPost("Notifications")]
+        //public IActionResult SendNotification([FromBody] string message)
+        //{
 
-            return Ok(new { Message = $"Đã gửi notification: {message}" });
-        }
+        //    return Ok(new { Message = $"Đã gửi notification: {message}" });
+        //}
 
         // 7️ (Optional) Cập nhật Role cho User
         [HttpPut("UpdateRole")]

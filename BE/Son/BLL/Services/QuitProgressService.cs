@@ -1,7 +1,9 @@
 ﻿using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Smoking.BLL.Services
@@ -15,56 +17,83 @@ namespace Smoking.BLL.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<QuitProgress> CreateAsync(QuitProgress entity)
+        public async Task<IEnumerable<QuitProgress>> GetByPlanIdAsync(int quitPlanId)
         {
-            await _unitOfWork.QuitProgresses.AddAsync(entity);
-            await _unitOfWork.CompleteAsync();
-            return entity;
+            return await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == quitPlanId);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<QuitProgress> GetByDateAsync(int quitPlanId, DateTime progressDate)
         {
-            var existing = await _unitOfWork.QuitProgresses.GetByIdAsync(id);
-            if (existing == null)
-                return false;
+            return await _unitOfWork.QuitProgresses.FindFirstOrDefaultAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate == progressDate);
+        }
 
-            _unitOfWork.QuitProgresses.Remove(existing);
-            await _unitOfWork.CompleteAsync();
+        public async Task<bool> UpdateQuitProgressAsync(int quitPlanId, DateTime progressDate, int cigarettesSmokedToday, decimal pricePerPack, int cigarettesPerPack)
+        {
+            var quitPlan = await _unitOfWork.QuitPlans.GetByIdAsync(quitPlanId);
+            if (quitPlan == null) return false;
+
+            decimal pricePerCigarette = pricePerPack / cigarettesPerPack;
+            int cigarettesPerDayAtStart = quitPlan.CigarettesPerDayAtStart;
+            int cigarettesDropped = cigarettesPerDayAtStart - cigarettesSmokedToday;
+            decimal moneySaved = (cigarettesDropped > 0) ? cigarettesDropped * pricePerCigarette : 0;
+
+            var quitProgress = await _unitOfWork.QuitProgresses.FindFirstOrDefaultAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate == progressDate);
+
+            if (quitProgress != null)
+            {
+                quitProgress.CigarettesSmokedToday = cigarettesSmokedToday;
+                quitProgress.CigarettesDropped = cigarettesDropped;
+                quitProgress.MoneySaved = moneySaved;
+                quitProgress.LastSmokeDate = progressDate;
+                quitProgress.CigarettesPerDayBaseline = cigarettesPerDayAtStart;
+                quitProgress.Notes = "Đã cập nhật tiến trình";
+
+                _unitOfWork.QuitProgresses.Update(quitProgress);
+            }
+            else
+            {
+                quitProgress = new QuitProgress
+                {
+                    QuitPlanID = quitPlanId,
+                    ProgressDate = progressDate,
+                    CigarettesSmokedToday = cigarettesSmokedToday,
+                    CigarettesDropped = cigarettesDropped,
+                    MoneySaved = moneySaved,
+                    LastSmokeDate = progressDate,
+                    CigarettesPerDayBaseline = cigarettesPerDayAtStart,
+                    Notes = "Tiến trình mới"
+                };
+
+                await _unitOfWork.QuitProgresses.AddAsync(quitProgress);
+            }
+
+            var result = await _unitOfWork.CompleteAsync();
+
+            if (result > 0)
+            {
+                var previousProgresses = await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate < progressDate);
+                int totalCigsDroppedBefore = previousProgresses.Sum(p => p.CigarettesDropped ?? 0);
+                decimal totalMoneySavedBefore = previousProgresses.Sum(p => p.MoneySaved);
+
+                quitProgress.TotalCigarettesDropped = totalCigsDroppedBefore + cigarettesDropped;
+                quitProgress.TotalMoneySaved = totalMoneySavedBefore + moneySaved;
+
+                _unitOfWork.QuitProgresses.Update(quitProgress);
+                await _unitOfWork.CompleteAsync();
+            }
+
             return true;
         }
 
-        public async Task<IEnumerable<QuitProgress>> GetAllAsync()
+        public async Task<bool> DeleteProgressAsync(int progressId)
         {
-            return await _unitOfWork.QuitProgresses.GetAllAsync();
-        }
+            var quitProgress = await _unitOfWork.QuitProgresses.GetByIdAsync(progressId);
+            if (quitProgress == null) return false;
 
-        public async Task<IEnumerable<QuitProgress>> GetByQuitPlanIdAsync(int quitPlanId)
-        {
-            return await _unitOfWork.QuitProgresses.GetByQuitPlanIdAsync(quitPlanId);
-        }
+            _unitOfWork.QuitProgresses.Remove(quitProgress);
+            var result = await _unitOfWork.CompleteAsync();
 
-        public async Task<QuitProgress> GetByIdAsync(int id)
-        {
-            return await _unitOfWork.QuitProgresses.GetByIdAsync(id);
-        }
-
-        public async Task<bool> UpdateAsync(QuitProgress entity)
-        {
-            var existing = await _unitOfWork.QuitProgresses.GetByIdAsync(entity.ProgressID);
-            if (existing == null)
-                return false;
-
-            existing.Date = entity.Date;
-            existing.CigarettesSmoked = entity.CigarettesSmoked;
-            existing.PacksUsed = entity.PacksUsed;
-            existing.MoneySaved = entity.MoneySaved;
-            existing.Notes = entity.Notes;
-            existing.DaysSmokeFree = entity.DaysSmokeFree;
-            existing.HealthImprovement = entity.HealthImprovement;
-
-            _unitOfWork.QuitProgresses.Update(existing);
-            await _unitOfWork.CompleteAsync();
-            return true;
+            return result > 0;
         }
     }
 }

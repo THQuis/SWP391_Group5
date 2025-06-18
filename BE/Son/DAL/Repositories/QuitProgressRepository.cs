@@ -4,6 +4,7 @@ using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Smoking.DAL.Repositories
@@ -14,7 +15,6 @@ namespace Smoking.DAL.Repositories
         {
         }
 
-        // Lấy tất cả các tiến trình từ một QuitPlan
         public async Task<IEnumerable<QuitProgress>> GetByQuitPlanIdAsync(int quitPlanId)
         {
             return await _context.QuitProgresses
@@ -23,18 +23,9 @@ namespace Smoking.DAL.Repositories
                                  .ToListAsync();
         }
 
-        // Cập nhật thông tin tiến trình
-        public async Task Update(QuitProgress entity)
+        public async Task<QuitProgress> FindFirstOrDefaultAsync(Expression<Func<QuitProgress, bool>> predicate)
         {
-            _context.QuitProgresses.Update(entity); // Cập nhật tiến trình
-            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
-        }
-
-        // Xóa tiến trình
-        public async Task Remove(QuitProgress entity)
-        {
-            _context.QuitProgresses.Remove(entity); // Xóa tiến trình
-            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+            return await _context.QuitProgresses.FirstOrDefaultAsync(predicate);
         }
     }
 }

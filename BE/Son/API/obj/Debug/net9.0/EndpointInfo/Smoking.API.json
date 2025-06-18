@@ -1436,10 +1436,6 @@
       "UpdateProfileRequest": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
           "fullName": {
             "type": "string",
             "nullable": true

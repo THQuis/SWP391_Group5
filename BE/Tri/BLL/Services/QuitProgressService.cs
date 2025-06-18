@@ -12,28 +12,21 @@ namespace Smoking.BLL.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        // Constructor nhận vào IUnitOfWork
         public QuitProgressService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        // Lấy tiến trình cai thuốc của một kế hoạch (QuitPlan)
         public async Task<IEnumerable<QuitProgress>> GetByPlanIdAsync(int quitPlanId)
         {
-            var quitProgresses = await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == quitPlanId);
-            return quitProgresses;
+            return await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == quitPlanId);
         }
 
-        // Lấy tiến trình cai thuốc theo ngày
         public async Task<QuitProgress> GetByDateAsync(int quitPlanId, DateTime progressDate)
         {
-            var quitProgress = await _unitOfWork.QuitProgresses.FindFirstOrDefaultAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate == progressDate);
-            return quitProgress;
+            return await _unitOfWork.QuitProgresses.FindFirstOrDefaultAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate == progressDate);
         }
 
-
-        // Cập nhật tiến trình cai thuốc
         public async Task<bool> UpdateQuitProgressAsync(int quitPlanId, DateTime progressDate, int cigarettesSmokedToday, decimal pricePerPack, int cigarettesPerPack)
         {
             var quitPlan = await _unitOfWork.QuitPlans.GetByIdAsync(quitPlanId);
@@ -41,13 +34,10 @@ namespace Smoking.BLL.Services
 
             decimal pricePerCigarette = pricePerPack / cigarettesPerPack;
             int cigarettesPerDayAtStart = quitPlan.CigarettesPerDayAtStart;
-
-            // Tính số điếu đã bỏ hôm nay (có thể âm nếu hút nhiều hơn ban đầu)
             int cigarettesDropped = cigarettesPerDayAtStart - cigarettesSmokedToday;
             decimal moneySaved = (cigarettesDropped > 0) ? cigarettesDropped * pricePerCigarette : 0;
 
-            var quitProgress = await _unitOfWork.QuitProgresses
-                .FindFirstOrDefaultAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate == progressDate);
+            var quitProgress = await _unitOfWork.QuitProgresses.FindFirstOrDefaultAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate == progressDate);
 
             if (quitProgress != null)
             {
@@ -55,13 +45,13 @@ namespace Smoking.BLL.Services
                 quitProgress.CigarettesDropped = cigarettesDropped;
                 quitProgress.MoneySaved = moneySaved;
                 quitProgress.LastSmokeDate = progressDate;
+                quitProgress.CigarettesPerDayBaseline = cigarettesPerDayAtStart;
                 quitProgress.Notes = "Đã cập nhật tiến trình";
 
                 _unitOfWork.QuitProgresses.Update(quitProgress);
             }
             else
             {
-                // Nếu chưa có bản ghi hôm nay, tạo mới
                 quitProgress = new QuitProgress
                 {
                     QuitPlanID = quitPlanId,
@@ -70,25 +60,21 @@ namespace Smoking.BLL.Services
                     CigarettesDropped = cigarettesDropped,
                     MoneySaved = moneySaved,
                     LastSmokeDate = progressDate,
+                    CigarettesPerDayBaseline = cigarettesPerDayAtStart,
                     Notes = "Tiến trình mới"
                 };
 
                 await _unitOfWork.QuitProgresses.AddAsync(quitProgress);
             }
 
-            // Lưu thay đổi đầu tiên (tạo hoặc cập nhật bản ghi hôm nay)
             var result = await _unitOfWork.CompleteAsync();
 
             if (result > 0)
             {
-                // ✅ Cộng dồn tổng thuốc bỏ và tiền tiết kiệm trước ngày hôm nay
-                var previousProgresses = await _unitOfWork.QuitProgresses
-                    .FindAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate < progressDate);
-
+                var previousProgresses = await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == quitPlanId && x.ProgressDate < progressDate);
                 int totalCigsDroppedBefore = previousProgresses.Sum(p => p.CigarettesDropped ?? 0);
                 decimal totalMoneySavedBefore = previousProgresses.Sum(p => p.MoneySaved);
 
-                // Ghi tổng cộng dồn vào bản ghi hôm nay
                 quitProgress.TotalCigarettesDropped = totalCigsDroppedBefore + cigarettesDropped;
                 quitProgress.TotalMoneySaved = totalMoneySavedBefore + moneySaved;
 
@@ -99,17 +85,11 @@ namespace Smoking.BLL.Services
             return true;
         }
 
-
-
-
-
-        // Xóa tiến trình cai thuốc
         public async Task<bool> DeleteProgressAsync(int progressId)
         {
             var quitProgress = await _unitOfWork.QuitProgresses.GetByIdAsync(progressId);
             if (quitProgress == null) return false;
 
-            // Xóa tiến trình
             _unitOfWork.QuitProgresses.Remove(quitProgress);
             var result = await _unitOfWork.CompleteAsync();
 

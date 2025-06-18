@@ -19,13 +19,19 @@ public class QuitPlanAutoController : ControllerBase
     [HttpPost("auto-create")]
     public async Task<IActionResult> AutoCreateQuitPlan([FromBody] AutoQuitPlanRequest request)
     {
-        var success = await _quitPlanAutoService.CreateAutoQuitPlanAsync(
+        var plan = await _quitPlanAutoService.CreateAutoQuitPlanAsync(
             request.UserId, request.CigarettesPerDay, request.PricePerPack, request.CigarettesPerPack
         );
 
-        if (!success)
-            return BadRequest("Không thể tạo kế hoạch tự động. vì bạn đã có kế hoạch rồi");
+        if (plan == null)
+            return BadRequest("Bạn đã có kế hoạch đang hoạt động.");
 
-        return Ok("Tạo kế hoạch cai thuốc thành công.");
+        return Ok(new
+        {
+            message = "Tạo kế hoạch cai thuốc thành công.",
+            startDate = plan.StartDate.ToString("dd/MM/yyyy"),
+            planDetails = plan.PlanDetails.Split(Environment.NewLine)
+        });
     }
+
 }

@@ -63,5 +63,10 @@ namespace Smoking.DAL.Repositories
         {
             return await _dbSet.AnyAsync(predicate);
         }
+        public async Task<TEntity?> FindFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
+        }
+
     }
 }

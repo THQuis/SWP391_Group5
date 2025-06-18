@@ -15,6 +15,9 @@ namespace Smoking.DAL.Interfaces.Repositories
         void Remove(TEntity entity);
         // Thêm method AnyAsync để kiểm tra điều kiện tồn tại
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity?> FindFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+
+
     }
 
 }

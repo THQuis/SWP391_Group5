@@ -6,6 +6,7 @@
         public int CigarettesPerDay { get; set; }
         public decimal PricePerPack { get; set; }
         public int CigarettesPerPack { get; set; }
+        public DateTime StartDate { get; set; }  // nullable, có thể không nhập
+        public DateTime? EndDate { get; set; }    // nullable, có thể không nhập
     }
-
 }

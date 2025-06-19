@@ -51,6 +51,7 @@ builder.Services.AddScoped<IQuitPlanAutoService, QuitPlanAutoService>();
 builder.Services.AddScoped<IAchievementEvaluatorService, AchievementEvaluatorService>();
 builder.Services.AddScoped<IQuitProgressService, QuitProgressService>();
 builder.Services.AddScoped<IQuitProgressRepository, QuitProgressRepository>();
+builder.Services.AddScoped<IQuestionnaireService, QuestionnaireService>();
 
 
 // --- HẾT ĐĂNG KÝ USER SERVICE ---

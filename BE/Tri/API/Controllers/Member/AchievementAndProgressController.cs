@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Interfaces.Repositories;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "2")]
 public class AchievementAndProgressController : ControllerBase
 {
     private readonly IQuitProgressService _quitProgressService;

@@ -37,6 +37,7 @@ public class QuitPlanController : ControllerBase
         });
     }
 
+
     [HttpPatch("UpdateQuitPlan")]
     public async Task<IActionResult> UpdateCoreInfoByUserId(int userId, [FromBody] QuitPlanUpdateCoreRequest request)
     {

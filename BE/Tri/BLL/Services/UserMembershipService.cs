@@ -9,60 +9,54 @@ namespace Smoking.BLL.Services
     public class UserMembershipService : IUserMembershipService
     {
         private readonly IUnitOfWork _unitOfWork;
-
         public UserMembershipService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UserMembership> CreateAsync(UserMembership entity)
+        public async Task<UserMembership> CreateOrUpdateMembershipAsync(int userId, int packageId)
         {
-            await _unitOfWork.UserMemberships.AddAsync(entity);
+            var now = DateTime.Now;
+            var package = await _unitOfWork.MembershipPackages.GetByIdAsync(packageId);
+            if (package == null) throw new Exception("Gói không tồn tại");
+
+            var end = package.Duration > 0
+            ? now.AddMonths(package.Duration)
+            : DateTime.MaxValue;
+
+
+            var current = await _unitOfWork.UserMemberships.GetActiveByUserIdAsync(userId);
+
+            if (current != null)
+            {
+                current.PackageID = packageId;
+                current.StartDate = now;
+                current.EndDate = end;
+                current.PaymentStatus = "Completed";
+                await _unitOfWork.UserMemberships.UpdateAsync(current);
+                await _unitOfWork.CompleteAsync();
+                return current;
+            }
+
+            var newMembership = new UserMembership
+            {
+                UserID = userId,
+                PackageID = packageId,
+                StartDate = now,
+                EndDate = end,
+                PaymentStatus = "Completed"
+            };
+            await _unitOfWork.UserMemberships.AddAsync(newMembership);
             await _unitOfWork.CompleteAsync();
-            return entity;
+            return newMembership;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<UserMembership?> GetActiveByUserIdAsync(int userId)
         {
-            var existing = await _unitOfWork.UserMemberships.GetByIdAsync(id);
-            if (existing == null)
-                return false;
-
-            _unitOfWork.UserMemberships.Remove(existing);
-            await _unitOfWork.CompleteAsync();
-            return true;
+            return await _unitOfWork.UserMemberships.GetActiveByUserIdAsync(userId);
         }
 
-        public async Task<IEnumerable<UserMembership>> GetAllAsync()
-        {
-            return await _unitOfWork.UserMemberships.GetAllAsync();
-        }
 
-        public async Task<IEnumerable<UserMembership>> GetByUserIdAsync(int userId)
-        {
-            return await _unitOfWork.UserMemberships.GetByUserIdAsync(userId);
-        }
-
-        public async Task<UserMembership> GetByIdAsync(int id)
-        {
-            return await _unitOfWork.UserMemberships.GetByIdAsync(id);
-        }
-
-        public async Task<bool> UpdateAsync(UserMembership entity)
-        {
-            var existing = await _unitOfWork.UserMemberships.GetByIdAsync(entity.UserMembershipID);
-            if (existing == null)
-                return false;
-
-            existing.UserID = entity.UserID;
-            existing.PackageID = entity.PackageID;
-            existing.StartDate = entity.StartDate;
-            existing.EndDate = entity.EndDate;
-            existing.PaymentStatus = entity.PaymentStatus;
-
-            _unitOfWork.UserMemberships.Update(existing);
-            await _unitOfWork.CompleteAsync();
-            return true;
-        }
     }
+
 }

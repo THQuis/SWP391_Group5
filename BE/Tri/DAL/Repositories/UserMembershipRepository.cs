@@ -10,17 +10,23 @@ namespace Smoking.DAL.Repositories
 {
     public class UserMembershipRepository : GenericRepository<UserMembership>, IUserMembershipRepository
     {
+        private readonly AppDbContext _context;
         public UserMembershipRepository(AppDbContext context) : base(context)
         {
+            _context = context;
         }
 
-        public async Task<IEnumerable<UserMembership>> GetByUserIdAsync(int userId)
+        public async Task<UserMembership?> GetActiveByUserIdAsync(int userId)
         {
-            return await _context.UserMemberships
-                                 .Include(um => um.Package)
-                                 .Where(um => um.UserID == userId)
-                                 .AsNoTracking()
-                                 .ToListAsync();
+            return await _context.Set<UserMembership>()
+                .FirstOrDefaultAsync(x => x.UserID == userId && x.PaymentStatus == "Completed" && x.EndDate > DateTime.UtcNow);
         }
+
+        public async Task UpdateAsync(UserMembership entity)
+        {
+            _context.Set<UserMembership>().Update(entity);
+            await Task.CompletedTask;
+        }
+
     }
 }

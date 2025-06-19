@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col, Card, Spinner, Button, Modal, Form, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/ProgressDashboard.scss';
@@ -14,55 +14,58 @@ const ProgressDashboardPage = () => {
     const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
 
+    // Đưa fetch logic ra ngoài useEffect để tái sử dụng sau khi cập nhật relapse
+    const fetchProgressData = useCallback(async () => {
+        try {
+            const response = await fetch(`/api/AchievementAndProgress/user/ProgressInformation?userId=${userId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("userToken"),
+                    "accept": "*/*"
+                }
+            });
+            const data = await response.json();
+            setProgress({
+                achievementsUnlocked: data.totalAchievements,
+                cigarettesAvoided: data.totalCigarettesDropped,
+                moneySaved: data.totalMoneySaved,
+                daysSinceStart: data.totalProgressDays
+            });
+        } catch (error) {
+            console.error("Failed to fetch progress data:", error);
+            setProgress(null);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [userId]);
+
+    const fetchProgressHistory = useCallback(async () => {
+        try {
+            const response = await fetch(`/api/AchievementAndProgress/user/showAllProgress?userId=${userId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("userToken"),
+                    "accept": "*/*"
+                }
+            });
+            const data = await response.json();
+            // Flatten all progressList from all plans and sort by date descending
+            const allProgress = data
+                .flatMap(plan => plan.progressList || [])
+                .sort((a, b) => new Date(b.progressDate) - new Date(a.progressDate));
+            setProgressHistory(allProgress);
+        } catch (error) {
+            console.error("Failed to fetch progress history:", error);
+            setProgressHistory([]);
+        }
+    }, [userId]);
+
+    // useEffect chỉ gọi khi userId đổi
     useEffect(() => {
-        const fetchProgressData = async () => {
-            try {
-                const response = await fetch(`/api/AchievementAndProgress/user/ProgressInformation?userId=${userId}`, {
-                    headers: {
-                        "Authorization": "Bearer " + localStorage.getItem("userToken"),
-                        "accept": "*/*"
-                    }
-                });
-                const data = await response.json();
-                setProgress({
-                    achievementsUnlocked: data.totalAchievements,
-                    cigarettesAvoided: data.totalCigarettesDropped,
-                    moneySaved: data.totalMoneySaved,
-                    daysSinceStart: data.totalProgressDays
-                });
-            } catch (error) {
-                console.error("Failed to fetch progress data:", error);
-                setProgress(null);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        const fetchProgressHistory = async () => {
-            try {
-                const response = await fetch(`/api/AchievementAndProgress/user/showAllProgress?userId=${userId}`, {
-                    headers: {
-                        "Authorization": "Bearer " + localStorage.getItem("userToken"),
-                        "accept": "*/*"
-                    }
-                });
-                const data = await response.json();
-                // Flatten all progressList from all plans and sort by date descending
-                const allProgress = data
-                    .flatMap(plan => plan.progressList || [])
-                    .sort((a, b) => new Date(b.progressDate) - new Date(a.progressDate));
-                setProgressHistory(allProgress);
-            } catch (error) {
-                console.error("Failed to fetch progress history:", error);
-                setProgressHistory([]);
-            }
-        };
-
+        setIsLoading(true);
         fetchProgressData();
         fetchProgressHistory();
         const interval = setInterval(fetchProgressData, 3600000); // Refresh every 1 hour
         return () => clearInterval(interval);
-    }, [userId]);
+    }, [userId, fetchProgressData, fetchProgressHistory]);
 
     const navigateToCreatePlan = () => {
         navigate('/User/quitplan');
@@ -86,6 +89,10 @@ const ProgressDashboardPage = () => {
 
             if (response.ok) {
                 alert(`Cảm ơn bạn đã ghi nhận. Đừng nản lòng, hãy tiếp tục cố gắng nhé! Đã ghi nhận: ${relapseCount} điếu hôm nay.`);
+                // Reload lại dữ liệu progress và history sau khi ghi nhận relapse
+                setIsLoading(true);
+                await fetchProgressData();
+                await fetchProgressHistory();
             } else {
                 const errorMessage = await response.text();
                 alert(`Không thể ghi nhận lỗi. Chi tiết: ${errorMessage}`);

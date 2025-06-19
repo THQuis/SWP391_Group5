@@ -118,7 +118,7 @@ const AuthPage = () => {
             if (userRole === 1) {
                 navigate('/admin');
             } else {
-                navigate('/');
+                navigate('/User/progress');
             }
         } catch (error) {
             alert('❌ Lỗi: ' + error.message);
@@ -127,39 +127,7 @@ const AuthPage = () => {
         }
     };
 
-    // // 2. ĐĂNG KÝ (BƯỚC 1 - GỬI THÔNG TIN)
-    // const handleRegister = async (e) => {
-    //     e.preventDefault();
-    //     if (registerForm.password !== registerForm.confirmPassword) {
-    //         return alert('❗ Mật khẩu xác nhận không khớp!');
-    //     }
-    //     if (!registerForm.agree) {
-    //         return alert('❗ Bạn cần đồng ý với điều khoản sử dụng.');
-    //     }
-    //     setIsLoading(true);
-    //     try {
-    //         const res = await fetch(`/api/Auth/register`, {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({
-    //                 fullName: registerForm.name,
-    //                 email: registerForm.email,
-    //                 password: registerForm.password,
-    //                 phone: registerForm.phone
-    //             })
-    //         });
-    //         const data = await res.json();
-    //         if (!res.ok) {
-    //             throw new Error(data.message || 'Đăng ký không thành công.');
-    //         }
-    //         alert('✅ ' + data.message + ' Vui lòng kiểm tra email để nhận mã OTP.');
-    //         setShowRegisterOTP(true); // Chuyển sang màn hình nhập OTP đăng ký
-    //     } catch (error) {
-    //         alert('❌ Lỗi: ' + error.message);
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // };
+
 
     // 2. ĐĂNG KÝ (BƯỚC 1 - GỬI THÔNG TIN) - PHIÊN BẢN CÓ GỠ LỖI
     const handleRegister = async (e) => {

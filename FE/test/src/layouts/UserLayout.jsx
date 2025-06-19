@@ -6,7 +6,12 @@ const UserLayout = ({ children }) => {
     return (
         <>
             <Header />
-            <main>{children}</main>
+            <main style={{
+                background: "linear-gradient(135deg, #e8f5e8 0%, #d4edd4 50%, #c1e6c1 100%)",
+                minHeight: "100vh"  // đảm bảo background phủ toàn bộ
+            }}>
+                {children}
+            </main>
             <Footer />
         </>
     );

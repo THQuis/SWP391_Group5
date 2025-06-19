@@ -12,7 +12,7 @@ import ManagementUser from "../pages/admin/ManagementUser";
 import ManagementBlog from "../pages/admin/ManagementBlog";
 import ManagementPackage from "../pages/admin/ManagementPackage";
 import ManagementPerformance from "../pages/admin/ManagementPerformance";
-import ManagementPlan from "../pages/admin/ManagementPlan";
+// import ManagementPlan from "../pages/admin/ManagementPlan";
 import ManagementNotification from "../pages/admin/ManagementNotification";
 import QuitPlanPage from "../pages/user/QuitPlanPage";
 import MilestonesPage from "../pages/user/MilestonesPage";
@@ -26,7 +26,7 @@ import RankingPage from "../pages/user/RankingPage";
 
 // import MockAutomatedProgress from "../pages/user/test";
 
-// import ManagementPerformance from "../pages/admin/test";
+import ManagementPlan from "../pages/admin/test";
 
 
 

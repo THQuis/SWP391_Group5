@@ -21,22 +21,37 @@ namespace Smoking.DAL.Repositories
 
         public async Task<IEnumerable<ConsultationBooking>> GetAllAsync()
         {
-            return await _context.ConsultationBookings.AsNoTracking().ToListAsync();
+            return await _context.ConsultationBookings
+                .Include(cb => cb.User)  // Bao gồm User
+                .Include(cb => cb.Coach) // Bao gồm Coach
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<ConsultationBooking> GetByIdAsync(object id)
         {
-            return await _context.ConsultationBookings.FirstOrDefaultAsync(cb => cb.BookingID == (int)id);
+            return await _context.ConsultationBookings
+                .Include(cb => cb.User)  // Bao gồm User
+                .Include(cb => cb.Coach) // Bao gồm Coach
+                .FirstOrDefaultAsync(cb => cb.BookingID == (int)id);
         }
 
         public async Task<ConsultationBooking> GetByIdAsync(int bookingId)
         {
-            return await _context.ConsultationBookings.FirstOrDefaultAsync(cb => cb.BookingID == bookingId);
+            return await _context.ConsultationBookings
+                .Include(cb => cb.User)  // Bao gồm User
+                .Include(cb => cb.Coach) // Bao gồm Coach
+                .FirstOrDefaultAsync(cb => cb.BookingID == bookingId);
         }
 
         public async Task<IEnumerable<ConsultationBooking>> FindAsync(Expression<Func<ConsultationBooking, bool>> predicate)
         {
-            return await _context.ConsultationBookings.AsNoTracking().Where(predicate).ToListAsync();
+            return await _context.ConsultationBookings
+                .Include(cb => cb.User)  // Bao gồm User
+                .Include(cb => cb.Coach) // Bao gồm Coach
+                .AsNoTracking()
+                .Where(predicate)
+                .ToListAsync();
         }
 
         public async Task AddAsync(ConsultationBooking entity)
@@ -58,13 +73,16 @@ namespace Smoking.DAL.Repositories
 
         public async Task<bool> AnyAsync(Expression<Func<ConsultationBooking, bool>> predicate)
         {
-            return await _context.ConsultationBookings.AnyAsync(predicate);
+            return await _context.ConsultationBookings
+                .AsNoTracking()
+                .AnyAsync(predicate);
         }
 
         public async Task<IEnumerable<ConsultationBooking>> GetByUserIdAsync(int userId)
         {
             return await _context.ConsultationBookings
-                .Include(cb => cb.Coach)
+                .Include(cb => cb.Coach)  // Bao gồm Coach
+                .Include(cb => cb.User)   // Bao gồm User
                 .Where(cb => cb.UserID == userId)
                 .AsNoTracking()
                 .ToListAsync();
@@ -73,7 +91,8 @@ namespace Smoking.DAL.Repositories
         public async Task<IEnumerable<ConsultationBooking>> GetByCoachIdAsync(int coachId)
         {
             return await _context.ConsultationBookings
-                .Include(cb => cb.User)
+                .Include(cb => cb.User)  // Bao gồm User
+                .Include(cb => cb.Coach) // Bao gồm Coach
                 .Where(cb => cb.CoachID == coachId)
                 .AsNoTracking()
                 .ToListAsync();

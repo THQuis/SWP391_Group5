@@ -85,6 +85,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AdminConsultationController",
+    "Method": "GetAllAppointments",
+    "RelativePath": "api/admin/consultation/all-appointments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AdminConsultationController",
+    "Method": "ApproveBooking",
+    "RelativePath": "api/admin/consultation/approve/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AdminConsultationController",
+    "Method": "CancelBooking",
+    "RelativePath": "api/admin/consultation/cancel/{bookingId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AdminConsultationController",
+    "Method": "RejectBooking",
+    "RelativePath": "api/admin/consultation/reject/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AdminConsultationController",
+    "Method": "UpdateConsultation",
+    "RelativePath": "api/admin/consultation/update/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Admin.AdminUpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
     "Method": "Delete",
     "RelativePath": "api/Admin/DeleteAchivement",

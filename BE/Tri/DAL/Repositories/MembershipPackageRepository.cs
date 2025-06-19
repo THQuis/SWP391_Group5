@@ -9,7 +9,5 @@ namespace Smoking.DAL.Repositories
         public MembershipPackageRepository(AppDbContext context) : base(context)
         {
         }
-
-        // Hiện tại chưa có truy vấn đặc thù, dùng hết các phương thức từ GenericRepository
     }
 }

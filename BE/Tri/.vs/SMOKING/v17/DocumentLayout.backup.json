@@ -1,12 +1,339 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\questionnairecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\questionnairecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\quitplanselectedanswerviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\quitplanselectedanswerviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\quitplanselectedanswerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\quitplanselectedanswerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\quitplanupdatecorerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\quitplanupdatecorerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\entities\\quitplanselectedanswers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\quitplanselectedanswers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\entities\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\services\\questionnaireservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\questionnaireservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\interfaces\\iquestionnaireservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iquestionnaireservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\autoquitplanrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\autoquitplanrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\interfaces\\repositories\\iquitplanrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iquitplanrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\entities\\answeroption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\answeroption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\repositories\\quitplanselectedanswerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\quitplanselectedanswerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\repositories\\questionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\questionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\interfaces\\repositories\\iquitplanselectedanswerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iquitplanselectedanswerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\interfaces\\repositories\\iquestionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iquestionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "QuitPlanSelectedAnswerViewDto.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\QuitPlanSelectedAnswerViewDto.cs",
+              "RelativeDocumentMoniker": "API\\Models\\User\\QuitPlanSelectedAnswerViewDto.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\QuitPlanSelectedAnswerViewDto.cs",
+              "RelativeToolTip": "API\\Models\\User\\QuitPlanSelectedAnswerViewDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T03:56:17.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAwFgAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T03:00:23.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "QuitPlanUpdateCoreRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\QuitPlanUpdateCoreRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\User\\QuitPlanUpdateCoreRequest.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\QuitPlanUpdateCoreRequest.cs",
+              "RelativeToolTip": "API\\Models\\User\\QuitPlanUpdateCoreRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T02:34:11.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "QuitPlanSelectedAnswerDto.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\QuitPlanSelectedAnswerDto.cs",
+              "RelativeDocumentMoniker": "API\\Models\\User\\QuitPlanSelectedAnswerDto.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\QuitPlanSelectedAnswerDto.cs",
+              "RelativeToolTip": "API\\Models\\User\\QuitPlanSelectedAnswerDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T02:28:11.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "QuestionnaireController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\QuestionnaireController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\QuestionnaireController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\QuestionnaireController.cs*",
+              "RelativeToolTip": "API\\Controllers\\Member\\QuestionnaireController.cs*",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAswGMAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:08:13.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "QuestionnaireService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\QuestionnaireService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\QuestionnaireService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\QuestionnaireService.cs",
+              "RelativeToolTip": "BLL\\Services\\QuestionnaireService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAqwBUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:06:48.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\GenericRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAuwEYAAABtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T02:55:51.189Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAIwBMAAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:19:24.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "QuitPlanSelectedAnswers.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\QuitPlanSelectedAnswers.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\QuitPlanSelectedAnswers.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\QuitPlanSelectedAnswers.cs",
+              "RelativeToolTip": "DAL\\Entities\\QuitPlanSelectedAnswers.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T02:43:46.854Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UpdateProfileRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\UpdateProfileRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\User\\UpdateProfileRequest.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\UpdateProfileRequest.cs",
+              "RelativeToolTip": "API\\Models\\User\\UpdateProfileRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T02:34:18.197Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Question.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\Question.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\Question.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\Question.cs",
+              "RelativeToolTip": "DAL\\Entities\\Question.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T02:36:50.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AutoQuitPlanRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\AutoQuitPlanRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\User\\AutoQuitPlanRequest.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\AutoQuitPlanRequest.cs",
+              "RelativeToolTip": "API\\Models\\User\\AutoQuitPlanRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T02:28:12.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IQuestionnaireService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IQuestionnaireService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IQuestionnaireService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IQuestionnaireService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IQuestionnaireService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:06:22.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IQuitPlanRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IQuitPlanRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IQuitPlanRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IQuitPlanRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IQuitPlanRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:20:08.111Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AnswerOption.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\AnswerOption.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\AnswerOption.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\AnswerOption.cs",
+              "RelativeToolTip": "DAL\\Entities\\AnswerOption.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:13:19.786Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "QuitPlanSelectedAnswerRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\QuitPlanSelectedAnswerRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\QuitPlanSelectedAnswerRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\QuitPlanSelectedAnswerRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\QuitPlanSelectedAnswerRepository.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:05:54.759Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "QuestionRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\QuestionRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\QuestionRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\QuestionRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\QuestionRepository.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:05:39.13Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "IQuitPlanSelectedAnswerRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IQuitPlanSelectedAnswerRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IQuitPlanSelectedAnswerRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IQuitPlanSelectedAnswerRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IQuitPlanSelectedAnswerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:05:15.913Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IQuestionRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IQuestionRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IQuestionRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IQuestionRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IQuestionRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T01:04:49.223Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

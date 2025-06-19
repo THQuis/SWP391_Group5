@@ -26,6 +26,11 @@ namespace Smoking.DAL.Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ConsultationBooking> ConsultationBookings { get; set; }
+        public DbSet<QuitPlanSelectedAnswers> QuitPlanSelectedAnswers { get; set; }
+        public DbSet<AnswerOption> AnswerOptions { get; set; }
+        public DbSet<Question> Questions { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -55,7 +60,36 @@ namespace Smoking.DAL.Data
                 .HasForeignKey(n => n.UserID)  // Sử dụng UserID làm khóa ngoại
                 .OnDelete(DeleteBehavior.Restrict);  // Ngừng xóa thông báo khi xóa người dùng (hoặc có thể thay đổi hành vi xóa)
 
-            
+
+
+            modelBuilder.Entity<SmokingStatus>()
+                .Property(s => s.MonthlyCost)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<SmokingStatus>()
+                .Property(s => s.PricePerPack)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<QuitPlan>()
+                .Property(q => q.PricePerPackAtStart)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<QuitProgress>()
+                .Property(qp => qp.MoneySaved)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<QuitProgress>()
+                .Property(qp => qp.TotalMoneySaved)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<MembershipPackage>()
+                .Property(mp => mp.Price)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.Amount)
+                .HasPrecision(18, 2);
+
 
         }
     }

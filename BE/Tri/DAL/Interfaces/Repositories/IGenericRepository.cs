@@ -17,6 +17,8 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity?> FindFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
+        Task<IEnumerable<TEntity>> FindIncludingAsync(Expression<Func<TEntity, bool>> predicate,params Expression<Func<TEntity, object>>[] includes);
+
 
     }
 

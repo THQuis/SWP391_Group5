@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Smoking.DAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+770282b82ebe168806ae59fa23aeb1f0361cf6ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2bcb3e33eddcf8dc2486809cd4f40a5acf58b37")]
 [assembly: System.Reflection.AssemblyProductAttribute("Smoking.DAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Smoking.DAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

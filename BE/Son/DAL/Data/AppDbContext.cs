@@ -49,6 +49,35 @@ namespace Smoking.DAL.Data
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<SmokingStatus>()
+                .Property(s => s.MonthlyCost)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<SmokingStatus>()
+                .Property(s => s.PricePerPack)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<QuitPlan>()
+                .Property(q => q.PricePerPackAtStart)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<QuitProgress>()
+                .Property(qp => qp.MoneySaved)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<QuitProgress>()
+                .Property(qp => qp.TotalMoneySaved)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<MembershipPackage>()
+                .Property(mp => mp.Price)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.Amount)
+                .HasPrecision(18, 2);
         }
+
+
     }
 }

@@ -1240,6 +1240,22 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
+    "Method": "ReportBlog",
+    "RelativePath": "api/UserBlog/report/{blogId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
     "Method": "GetUserBlogStats",
     "RelativePath": "api/UserBlog/stats",
     "HttpMethod": "GET",

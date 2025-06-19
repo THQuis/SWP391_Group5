@@ -26,5 +26,6 @@ namespace Smoking.BLL.Interfaces
         Task<bool> UpdateAsync(Blog blog);
         Task<int> CountAllByUserAsync(int userId);
         Task<int> CountByUserAndStatusAsync(int userId, string status);
+        Task<bool> ReportBlogAsync(int blogId);
     }
 }

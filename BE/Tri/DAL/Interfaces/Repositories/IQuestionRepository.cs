@@ -10,6 +10,8 @@ namespace Smoking.DAL.Interfaces.Repositories
     public interface IQuestionRepository : IGenericRepository<Question>
     {
         Task<List<Question>> GetQuestionsWithAnswersAsync();
+        Task<Question?> GetQuestionsWithAnswersByIdAsync(int id);
+
     }
 
 }

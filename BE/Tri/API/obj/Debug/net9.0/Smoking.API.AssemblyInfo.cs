@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Smoking.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2bcb3e33eddcf8dc2486809cd4f40a5acf58b37")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+725543b6ea9a989157e8024b8809b6a6fdbc384d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Smoking.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Smoking.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

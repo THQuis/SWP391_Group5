@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Smoking.API.Dtos;
+using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
-using Smoking.DAL.Interfaces;
 using Smoking.DAL.Interfaces.Repositories;
 
 namespace Smoking.API.Controllers

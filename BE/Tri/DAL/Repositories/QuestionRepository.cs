@@ -22,6 +22,13 @@ namespace Smoking.DAL.Repositories
                 .OrderBy(q => q.DisplayOrder)
                 .ToListAsync();
         }
+
+        public async Task<Question?> GetQuestionsWithAnswersByIdAsync(int id)
+        {
+            return await _context.Questions
+                .Include(q => q.AnswerOptions)
+                .FirstOrDefaultAsync(q => q.QuestionID == id);
+        }
     }
 
 }

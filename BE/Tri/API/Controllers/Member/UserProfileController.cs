@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces; // Dùng interface chứ không phải BLL.Services trực tiếp
+using System.Security.Claims;
 
 namespace Smoking.API.Controllers.Member
 {
@@ -18,12 +19,33 @@ namespace Smoking.API.Controllers.Member
         }
 
         [HttpGet("profile")]
-        public IActionResult GetProfile()
+        public async Task<IActionResult> GetProfile()
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            return Ok(new { Message = "Thông tin profile cá nhân", UserID = userId });
-        }
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+                return Unauthorized(new { Message = "Không xác định được người dùng." });
 
+            var user = await _userService.GetByIdAsync(userId);
+            if (user == null)
+                return NotFound(new { Message = "Người dùng không tồn tại." });
+
+            return Ok(new
+            {
+                Message = "Thông tin cá nhân",
+                User = new
+                {
+                    user.UserID,
+                    user.FullName,
+                    user.Email,
+                    user.PhoneNumber,
+                    user.ProfilePicture,
+                    //user.Description,
+                    RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"),
+                    RoleName = user.Role?.RoleName ?? "Unknown",
+                    user.Status
+                }
+            });
+        }
         [HttpGet("notifications")]
         public IActionResult GetNotifications()
         {

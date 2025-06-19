@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\interfaces\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\auth\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\auth\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,37 +54,114 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUserRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IUserRepository.cs*",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUserRepository.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T13:48:43.736Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\UserRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAADwvykAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T13:47:54.832Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\UserService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\UserService.cs*",
+              "RelativeToolTip": "BLL\\Services\\UserService.cs*",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAADMAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T13:45:08.993Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Auth\\AuthController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Auth\\AuthController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Auth\\AuthController.cs",
+              "RelativeToolTip": "API\\Controllers\\Auth\\AuthController.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAA0wE4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T13:42:03.895Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserProfileController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\UserProfileController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserProfileController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\UserProfileController.cs*",
+              "RelativeToolTip": "API\\Controllers\\Member\\UserProfileController.cs*",
+              "ViewState": "AgIAABMAAAAAAAAAAAAswBsAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T13:38:40.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UpdateProfileRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\UpdateProfileRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\User\\UpdateProfileRequest.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\UpdateProfileRequest.cs",
+              "RelativeToolTip": "API\\Models\\User\\UpdateProfileRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T13:38:37.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "QuitPlanController.cs",
               "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\QuitPlanController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\QuitPlanController.cs",
               "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\QuitPlanController.cs",
               "RelativeToolTip": "API\\Controllers\\Member\\QuitPlanController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAQwCsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAYwCsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-19T13:24:38.808Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "AutoQuitPlanRequest.cs",
               "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\AutoQuitPlanRequest.cs",
               "RelativeDocumentMoniker": "API\\Models\\User\\AutoQuitPlanRequest.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\AutoQuitPlanRequest.cs*",
-              "RelativeToolTip": "API\\Models\\User\\AutoQuitPlanRequest.cs*",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\AutoQuitPlanRequest.cs",
+              "RelativeToolTip": "API\\Models\\User\\AutoQuitPlanRequest.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAcwAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T13:21:34.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-19T13:21:34.399Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "QuitPlan.cs",
               "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\QuitPlan.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\QuitPlan.cs",
@@ -68,12 +169,11 @@
               "RelativeToolTip": "DAL\\Entities\\QuitPlan.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAADwvxcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T13:02:54.719Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-19T13:02:54.719Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "IQuitPlanAutoService.cs",
               "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IQuitPlanAutoService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IQuitPlanAutoService.cs",
@@ -81,12 +181,11 @@
               "RelativeToolTip": "BLL\\Interfaces\\IQuitPlanAutoService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T12:59:31.62Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-19T12:59:31.62Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "QuitPlanAutoService.cs",
               "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\QuitPlanAutoService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\QuitPlanAutoService.cs",
@@ -94,8 +193,7 @@
               "RelativeToolTip": "BLL\\Services\\QuitPlanAutoService.cs",
               "ViewState": "AgIAAEYAAAAAAAAAAAAQwFcAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T12:55:21.41Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-19T12:55:21.41Z"
             }
           ]
         }

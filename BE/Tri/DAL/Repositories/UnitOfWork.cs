@@ -31,6 +31,8 @@ namespace Smoking.DAL.Repositories
             ConsultationBookings = new ConsultationBookingRepository(_context);
             Questions = new QuestionRepository(_context);
             QuitPlanSelectedAnswers = new QuitPlanSelectedAnswerRepository(_context);
+            AnswerOptions = new AnswerOptionRepository(_context);
+
         }
 
         public IRoleRepository Roles { get; private set; }
@@ -49,6 +51,8 @@ namespace Smoking.DAL.Repositories
         public IConsultationBookingRepository ConsultationBookings { get; private set; }
         public IQuestionRepository Questions { get; private set; }
         public IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswers { get; private set; }
+        public IAnswerOptionRepository AnswerOptions { get; private set; }
+
         public async Task<int> CompleteAsync()
         {
             return await _context.SaveChangesAsync();

@@ -1,4 +1,4 @@
-﻿namespace Smoking.API.Dtos
+﻿namespace Smoking.API.Models.User
 {
     public class QuitPlanSelectedAnswerDto
     {

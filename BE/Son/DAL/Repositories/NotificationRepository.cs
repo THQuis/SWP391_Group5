@@ -37,15 +37,23 @@ namespace Smoking.DAL.Repositories
         // Cập nhật thông tin Notification
         public async Task Update(Notification entity)
         {
-            _context.Notifications.Update(entity); // Cập nhật Notification
-            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+            _context.Notifications.Update(entity); // This ensures that your notification gets updated
+            await _context.SaveChangesAsync(); // Commit the changes to DB
         }
+
 
         // Xóa Notification
         public async Task Remove(Notification entity)
         {
             _context.Notifications.Remove(entity); // Xóa Notification
             await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+        }
+
+        // Cập nhật trạng thái thông báo đã đọc
+        public async Task UpdateAsync(Notification notification)
+        {
+            _context.Notifications.Update(notification);
+            await _context.SaveChangesAsync();
         }
     }
 }

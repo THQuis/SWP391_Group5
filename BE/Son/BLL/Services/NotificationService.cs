@@ -136,5 +136,21 @@ namespace Smoking.BLL.Services
             await _unitOfWork.CompleteAsync();
             return true;
         }
+
+        // Đánh dấu thông báo đã đọc
+        public async Task<bool> MarkAsReadAsync(int notificationId)
+        {
+            var notification = await _unitOfWork.DbContext.Notifications.FindAsync(notificationId);
+            if (notification == null)
+                return false;
+
+            notification.IsRead = true;
+            notification.ReadAt = DateTime.UtcNow;
+
+            await _unitOfWork.DbContext.SaveChangesAsync(); // Don't forget this to commit the changes to DB
+            return true;
+        }
+
+
     }
 }

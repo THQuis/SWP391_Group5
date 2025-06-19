@@ -19,8 +19,8 @@ namespace Smoking.API.Controllers.User
             _notificationService = notificationService;
         }
 
-        // [GET] Xem danh sách thông báo của chính người dùng
-        [HttpGet]
+        // ✅ Đổi route để tránh trùng
+        [HttpGet("my")]
         public async Task<IActionResult> GetMyNotifications()
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -36,7 +36,7 @@ namespace Smoking.API.Controllers.User
             }));
         }
 
-        // [DELETE] Xóa thông báo (nếu cho phép)
+        // [DELETE] Xóa thông báo của chính mình
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMyNotification(int id)
         {
@@ -51,5 +51,27 @@ namespace Smoking.API.Controllers.User
                 ? Ok(new { Message = "Đã xóa thông báo." })
                 : BadRequest(new { Message = "Lỗi khi xóa." });
         }
+        // [POST] Đánh dấu thông báo là đã đọc
+        [HttpPost("{id}/read")]
+        public async Task<IActionResult> MarkAsRead(int id)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var notifications = await _notificationService.GetByUserIdAsync(userId);
+            var notification = notifications.FirstOrDefault(n => n.NotificationID == id);
+
+            if (notification == null)
+                return NotFound(new { Message = "Không tìm thấy thông báo." });
+
+            if (!notification.IsRead)
+            {
+                notification.IsRead = true; // Đánh dấu là đã đọc
+                notification.ReadAt = DateTime.UtcNow; // Ghi lại thời gian đã đọc
+                await _notificationService.UpdateAsync(notification); // Call service to update
+            }
+
+            return Ok(new { Message = "Đã đánh dấu là đã đọc." });
+        }
+
+
     }
 }

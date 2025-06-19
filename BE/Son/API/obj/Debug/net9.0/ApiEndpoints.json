@@ -1013,6 +1013,48 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.User.UserNotificationController",
+    "Method": "DeleteMyNotification",
+    "RelativePath": "api/user/notifications/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.User.UserNotificationController",
+    "Method": "MarkAsRead",
+    "RelativePath": "api/user/notifications/{id}/read",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.User.UserNotificationController",
+    "Method": "GetMyNotifications",
+    "RelativePath": "api/user/notifications/my",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "GetProfile",
     "RelativePath": "api/user/profile",

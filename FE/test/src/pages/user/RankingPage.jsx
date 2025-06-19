@@ -113,7 +113,7 @@ function UserRanking() {
     };
 
     return (
-        <Container style={{ maxWidth: 900, marginTop: 40, marginBottom: 40 }}>
+        <Container style={{ maxWidth: 900 }}>
             <Row className="mb-3">
                 <Col>
                     <h2 className="text-center fw-bold" style={{ letterSpacing: 1 }}>

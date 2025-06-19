@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Container, Form, Button, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../../styles/QuitPlanPage.scss";
 
 // PHẦN 1: Sửa lại để dùng đúng tên thuộc tính từ API (vd: cigarettesPerDayAtStart)
@@ -31,7 +32,27 @@ const QuitPlanGoalSection = ({ formData, onChange, editable }) => (
     <Card className="mb-4 shadow-sm">
         <Card.Header as="h5" className="bg-light">2. Thiết lập mục tiêu</Card.Header>
         <Card.Body>
-            <Form.Group className="mb-3"><Form.Label className="fw-bold">Ngày bắt đầu cai thuốc (*)</Form.Label><Form.Control type="date" name="startDate" value={formData.startDate} onChange={onChange} required disabled={!editable} /></Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label className="fw-bold">Ngày bắt đầu cai thuốc (*)</Form.Label>
+                <Form.Control
+                    type="date"
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={onChange}
+                    required
+                    disabled={!editable}  // <-- Luôn disable
+                />
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label className="fw-bold">Ngày dự kiến kết thúc</Form.Label>
+                <Form.Control
+                    type="date"
+                    name="endDate"
+                    value={formData.endDate}
+                    onChange={onChange}
+                    disabled={!editable}  // <-- Luôn disable
+                />
+            </Form.Group>
         </Card.Body>
     </Card>
 );
@@ -76,7 +97,7 @@ const QuitPlanPage = () => {
     const [editMode, setEditMode] = useState(false);
     const [planCreated, setPlanCreated] = useState(false);
     const [habitData, setHabitData] = useState(null);
-    const [formData, setFormData] = useState({ startDate: '', dynamicAnswers: {}, otherTexts: {} });
+    const [formData, setFormData] = useState({ startDate: '', endDate: '', dynamicAnswers: {}, otherTexts: {} });
     const [surveyQuestions, setSurveyQuestions] = useState([]);
     const userId = localStorage.getItem("userId");
 
@@ -104,7 +125,11 @@ const QuitPlanPage = () => {
             // Bây giờ, việc kiểm tra và set dữ liệu sẽ chính xác
             if (planRes.ok && planData && planData.quitPlanID) {
                 setHabitData(planData);
-                setFormData(prev => ({ ...prev, startDate: planData.startDate?.slice(0, 10) || '' }));
+                setFormData(prev => ({
+                    ...prev,
+                    startDate: planData.startDate?.slice(0, 10) || '',
+                    endDate: planData.endDate?.slice(0, 10) || '',
+                }));
                 setPlanCreated(true);
                 setEditMode(false);
             } else {
@@ -210,11 +235,11 @@ const QuitPlanPage = () => {
                 // PAYLOAD CHO API 1: Phải khớp với API CreateQuitPlan
                 const quitPlanPayload = {
                     userId: parseInt(userId),
-                    // Ánh xạ từ tên state (`...AtStart`) sang tên API yêu cầu
                     cigarettesPerDay: habitData.cigarettesPerDayAtStart,
                     pricePerPack: habitData.pricePerPackAtStart,
                     cigarettesPerPack: habitData.cigarettesPerPack,
                     startDate: formData.startDate,
+                    endDate: formData.endDate, // thêm dòng này
                 };
                 const createPlanRes = await fetch('/api/QuitPlan/CreateQuitPlan', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': token }, body: JSON.stringify(quitPlanPayload) });
                 if (!createPlanRes.ok) throw new Error("Lỗi khi tạo kế hoạch cơ bản.");
@@ -240,7 +265,7 @@ const QuitPlanPage = () => {
                     cigarettesPerDayAtStart: habitData.cigarettesPerDayAtStart,
                     pricePerPackAtStart: habitData.pricePerPackAtStart,
                     cigarettesPerPack: habitData.cigarettesPerPack,
-                    startDate: formData.startDate,
+
                 };
 
                 // PAYLOAD 2: Dành cho API update-by-user (PUT)
@@ -299,9 +324,24 @@ const QuitPlanPage = () => {
                         </div>
 
                         <Form onSubmit={handleCreateOrUpdate}>
-                            <QuitPlanHabitSection habitData={habitData} onChange={handleHabitChange} editable={editMode || !planCreated} />
-                            <QuitPlanGoalSection formData={formData} onChange={handleStaticChange} editable={editMode || !planCreated} />
-                            <QuitPlanSurveySection surveyQuestions={surveyQuestions} dynamicAnswers={formData.dynamicAnswers} otherTexts={formData.otherTexts} onDynamicChange={handleDynamicChange} onOtherTextChange={handleOtherTextChange} editable={editMode || !planCreated} />
+                            <QuitPlanHabitSection
+                                habitData={habitData}
+                                onChange={handleHabitChange}
+                                editable={editMode || !planCreated}
+                            />
+                            <QuitPlanGoalSection
+                                formData={formData}
+                                onChange={handleStaticChange}
+                                editable={!planCreated}
+                            />
+                            <QuitPlanSurveySection
+                                surveyQuestions={surveyQuestions}
+                                dynamicAnswers={formData.dynamicAnswers}
+                                otherTexts={formData.otherTexts}
+                                onDynamicChange={handleDynamicChange}
+                                onOtherTextChange={handleOtherTextChange}
+                                editable={editMode || !planCreated}
+                            />
 
                             <div className="d-grid mb-3">
                                 <Button
@@ -320,6 +360,7 @@ const QuitPlanPage = () => {
                     </Col>
                 </Row>
             </Container>
+            <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 };

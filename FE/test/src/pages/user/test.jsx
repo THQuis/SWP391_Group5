@@ -1,337 +1,814 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Form, Button, Card, Row, Col, Alert, Spinner, Badge } from 'react-bootstrap';
-import "../../styles/QuitPlanPage.scss";
+import React, { useState, useEffect } from "react";
+import { Table, Tabs, Tab, Button, Modal, Form, Row, Col, InputGroup } from "react-bootstrap";
+import { FaPlus, FaEdit, FaTrash, FaMinus } from "react-icons/fa";
 
-// --- GIẢ LẬP API ---
+// ==== DỮ LIỆU MẪU ====
 
-// 1. API trả về các câu hỏi khảo sát động
-const mockApiQuestions = [
+// Milestone & trạng thái
+const sampleMilestones = [
     {
-        questionID: 1,
-        questionText: "Bạn đã hút thuốc trong bao lâu?",
-        questionType: "RADIO",
-        answerOptions: [
-            { answerOptionID: 101, answerText: "Dưới 1 năm" },
-            { answerOptionID: 102, answerText: "1-5 năm" },
-            { answerOptionID: 103, answerText: "6-10 năm" },
-            { answerOptionID: 104, answerText: "Trên 10 năm" },
+        id: 1,
+        label: "1 tiếng",
+        status: [
+            { type: "Thể trạng", content: "Nhịp tim ổn định, huyết áp bình thường.", percent: 100 },
+            { type: "Sức khỏe", content: "Phổi bắt đầu làm sạch khí CO.", percent: 100 }
         ]
     },
     {
-        questionID: 2,
-        questionText: "Lý do bạn muốn cai thuốc (chọn các lý do chính)?",
-        questionType: "CHECKBOX",
-        answerOptions: [
-            { answerOptionID: 201, answerText: "Cải thiện sức khỏe" },
-            { answerOptionID: 202, answerText: "Tiết kiệm chi phí" },
-            { answerOptionID: 203, answerText: "Bảo vệ gia đình khỏi khói thuốc" },
-            { answerOptionID: 204, answerText: "Mang thai hoặc dự định mang thai" },
-            { answerOptionID: 205, answerText: "Áp lực từ người thân/bác sĩ" },
-        ]
-    },
-    {
-        questionID: 3,
-        questionText: "Những tác nhân nào thường khiến bạn muốn hút thuốc?",
-        questionType: "CHECKBOX",
-        answerOptions: [
-            { answerOptionID: 301, answerText: 'Khi uống cà phê hoặc rượu bia' },
-            { answerOptionID: 302, answerText: 'Khi cảm thấy căng thẳng (stress)' },
-            { answerOptionID: 303, answerText: 'Sau bữa ăn' },
-            { answerOptionID: 304, answerText: 'Khi nói chuyện điện thoại' },
+        id: 2,
+        label: "6 tiếng",
+        status: [
+            { type: "Thể trạng", content: "CO trong máu giảm một nửa.", percent: 10 },
+            { type: "Sức khỏe", content: "Cơ thể bắt đầu hồi phục.", percent: 10 }
         ]
     }
 ];
 
-// 2. API trả về kế hoạch đã có của người dùng
-// Để kiểm tra chế độ "Tạo mới", hãy đặt biến này thành `null`
-const mockUserPlan = {
-    id: 123,
-    cigarettesPerDay: 15,
-    cigarettesPerPack: 20,
-    pricePerPack: 22000,
-    startDate: '2025-06-10',
-    endDate: '2025-09-10',
-    otherReason: 'Bị vợ cằn nhằn',
-    confidence: 7,
-    dynamicAnswers: {
-        "1": 103,
-        "2": [201, 202],
-        "3": [301]
+// User tiến trình mẫu
+const userProgressList = [
+    {
+        userId: 1,
+        name: "Nguyễn Văn A",
+        quitCount: 10,
+        savedMoney: 200000,
+        milestones: [
+            { milestoneId: 1, status: [{ type: "Thể trạng", done: true }, { type: "Sức khỏe", done: true }] },
+            { milestoneId: 2, status: [{ type: "Thể trạng", done: false }, { type: "Sức khỏe", done: false }] }
+        ]
+    },
+    {
+        userId: 2,
+        name: "Trần Thị B",
+        quitCount: 5,
+        savedMoney: 100000,
+        milestones: [
+            { milestoneId: 1, status: [{ type: "Thể trạng", done: true }, { type: "Sức khỏe", done: false }] },
+            { milestoneId: 2, status: [{ type: "Thể trạng", done: false }, { type: "Sức khỏe", done: false }] }
+        ]
     }
-};
-// const mockUserPlan = null; // Dùng dòng này để test chế độ TẠO MỚI
+];
 
+// Kế hoạch
+const fakePlans = [
+    {
+        id: 1,
+        question: "Bạn sẽ tập gì hôm nay?",
+        type: "Tự luận",
+        answer: null,
+    },
+];
 
-const QuitPlanPage = () => {
-    // --- STATE ---
-    const [existingPlan, setExistingPlan] = useState(null);
-    const [surveyQuestions, setSurveyQuestions] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+// Thử thách
+const fakeChallenges = [
+    {
+        id: 1,
+        name: "Chạy bộ 5km",
+        description: "Chạy liên tục 5km trong 1 tuần",
+        target: 5,
+        participants: 30,
+        completed: 15,
+        repeat: "Tuần",
+    },
+];
 
-    const [formData, setFormData] = useState({
-        cigarettesPerDay: 10,
-        cigarettesPerPack: 20,
-        pricePerPack: 20000,
-        startDate: '',
-        endDate: '',
-        otherReason: '',
-        confidence: 5,
-        dynamicAnswers: {},
+const answerTypeOptions = [
+    { value: "Tự luận", label: "Tự luận" },
+    { value: "Trắc nghiệm", label: "Trắc nghiệm" },
+    { value: "Ngày tháng năm", label: "Ngày tháng năm" },
+];
+
+// ==== COMPONENT CHÍNH ====
+
+function ManagementPlan() {
+    // Milestone (tiến trình) state
+    const [milestones, setMilestones] = useState([]);
+    const [milestoneModalShow, setMilestoneModalShow] = useState(false);
+    const [editMilestone, setEditMilestone] = useState(null);
+    const [milestoneForm, setMilestoneForm] = useState({ label: "", status: [{ type: "", content: "", percent: 0 }] });
+
+    // Kế hoạch
+    const [plans, setPlans] = useState([]);
+    const [planModalShow, setPlanModalShow] = useState(false);
+    const [editPlan, setEditPlan] = useState(null);
+    const [formPlan, setFormPlan] = useState({
+        question: "",
+        type: "",
+        answer: null,
+    });
+    const [mcAnswers, setMcAnswers] = useState([""]); // các lựa chọn trắc nghiệm
+
+    // Thử thách
+    const [challenges, setChallenges] = useState([]);
+    const [challengeModalShow, setChallengeModalShow] = useState(false);
+    const [editChallenge, setEditChallenge] = useState(null);
+    const [formChallenge, setFormChallenge] = useState({
+        name: "",
+        description: "",
+        target: "",
+        participants: "",
+        completed: "",
+        repeat: "",
     });
 
-    const [submitted, setSubmitted] = useState({ show: false, message: '', variant: 'success' });
+    // User tiến trình
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
 
-    const isEditMode = existingPlan !== null;
+    // Tab state
+    const [activeTab, setActiveTab] = useState("milestone");
 
-    // --- LOGIC ---
+    // Load dữ liệu mẫu
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [questionsResponse, planResponse] = await Promise.all([
-                    new Promise(resolve => setTimeout(() => resolve(mockApiQuestions), 500)),
-                    new Promise(resolve => setTimeout(() => resolve(mockUserPlan), 500))
-                ]);
-
-                setSurveyQuestions(questionsResponse || []);
-
-                if (planResponse) {
-                    setExistingPlan(planResponse);
-                    setFormData({
-                        cigarettesPerDay: planResponse.cigarettesPerDay,
-                        cigarettesPerPack: planResponse.cigarettesPerPack,
-                        pricePerPack: planResponse.pricePerPack,
-                        startDate: planResponse.startDate,
-                        endDate: planResponse.endDate || '',
-                        otherReason: planResponse.otherReason || '',
-                        confidence: planResponse.confidence,
-                        dynamicAnswers: planResponse.dynamicAnswers || {},
-                    });
-                }
-            } catch (error) {
-                console.error("Lỗi khi tải dữ liệu:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchData();
+        setMilestones([]); // Nếu có API thì load ở đây
+        setUsers([]);      // Nếu có API thì load ở đây
+        setPlans(fakePlans);
+        setChallenges(fakeChallenges);
     }, []);
 
-    const { dailyCost, weeklyCost, monthlyCost } = useMemo(() => {
-        const { cigarettesPerDay, cigarettesPerPack, pricePerPack } = formData;
-        if (!cigarettesPerDay || !cigarettesPerPack || !pricePerPack || cigarettesPerPack <= 0) {
-            return { dailyCost: 0, weeklyCost: 0, monthlyCost: 0 };
+    // ==== Milestone CRUD ====
+    const openAddMilestoneModal = () => {
+        setEditMilestone(null);
+        setMilestoneForm({ label: "", status: [{ type: "", content: "", percent: 0 }] });
+        setMilestoneModalShow(true);
+    };
+    const openEditMilestoneModal = (ms) => {
+        setEditMilestone(ms.id);
+        setMilestoneForm({
+            label: ms.label,
+            status: ms.status.map(s => ({ ...s }))
+        });
+        setMilestoneModalShow(true);
+    };
+    const handleMilestoneFormStatusChange = (idx, field, value) => {
+        const arr = [...milestoneForm.status];
+        arr[idx][field] = value;
+        setMilestoneForm({ ...milestoneForm, status: arr });
+    };
+    const handleAddMilestoneStatusRow = () => {
+        setMilestoneForm({ ...milestoneForm, status: [...milestoneForm.status, { type: "", content: "", percent: 0 }] });
+    };
+    const handleRemoveMilestoneStatusRow = (idx) => {
+        if (milestoneForm.status.length > 1) {
+            const arr = [...milestoneForm.status];
+            arr.splice(idx, 1);
+            setMilestoneForm({ ...milestoneForm, status: arr });
         }
-        const pricePerCigarette = pricePerPack / cigarettesPerPack;
-        const daily = pricePerCigarette * cigarettesPerDay;
-        return {
-            dailyCost: daily,
-            weeklyCost: daily * 7,
-            monthlyCost: daily * 30,
-        };
-    }, [formData.cigarettesPerDay, formData.cigarettesPerPack, formData.pricePerPack]);
-
-    const handleStaticChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+    const handleMilestoneModalSave = () => {
+        if (editMilestone) {
+            setMilestones(milestones.map(ms =>
+                ms.id === editMilestone ? { ...ms, label: milestoneForm.label, status: [...milestoneForm.status] } : ms
+            ));
+        } else {
+            setMilestones([
+                ...milestones,
+                { id: Date.now(), label: milestoneForm.label, status: [...milestoneForm.status] }
+            ]);
+        }
+        setMilestoneModalShow(false);
+    };
+    const handleDeleteMilestone = (id) => {
+        setMilestones(milestones.filter(ms => ms.id !== id));
     };
 
-    const handleDynamicChange = (e, questionID, questionType) => {
-        const { value, checked } = e.target;
-        const answerId = parseInt(value);
-
-        setFormData(prev => {
-            const newDynamicAnswers = { ...prev.dynamicAnswers };
-            if (questionType === 'RADIO') {
-                newDynamicAnswers[questionID] = answerId;
-            } else if (questionType === 'CHECKBOX') {
-                const currentAnswers = newDynamicAnswers[questionID] || [];
-                if (checked) {
-                    newDynamicAnswers[questionID] = [...currentAnswers, answerId];
-                } else {
-                    newDynamicAnswers[questionID] = currentAnswers.filter(id => id !== answerId);
+    // ==== Kế hoạch CRUD ====
+    const openAddPlanModal = () => {
+        setEditPlan(null);
+        setPlanModalShow(true);
+        setFormPlan({
+            question: "",
+            type: "",
+            answer: null,
+        });
+        setMcAnswers([""]);
+    };
+    const openEditPlanModal = (plan) => {
+        setEditPlan(plan.id);
+        setPlanModalShow(true);
+        setFormPlan({
+            question: plan.question,
+            type: plan.type,
+            answer: plan.answer,
+        });
+        setMcAnswers(Array.isArray(plan.answer) ? plan.answer : [""]);
+    };
+    const handlePlanTypeChange = (value) => {
+        setFormPlan({ ...formPlan, type: value, answer: null });
+        if (value === "Trắc nghiệm") {
+            setMcAnswers([""]);
+        }
+    };
+    const handleAddMcAnswer = () => setMcAnswers([...mcAnswers, ""]);
+    const handleRemoveMcAnswer = (idx) => {
+        if (mcAnswers.length > 1) {
+            const arr = [...mcAnswers];
+            arr.splice(idx, 1);
+            setMcAnswers(arr);
+        }
+    };
+    const handleMcAnswerChange = (idx, value) => {
+        const arr = [...mcAnswers];
+        arr[idx] = value;
+        setMcAnswers(arr);
+    };
+    const handlePlanModalSave = () => {
+        if (editPlan) {
+            setPlans(plans.map(p =>
+                p.id === editPlan
+                    ? { ...formPlan, id: editPlan, answer: formPlan.type === "Trắc nghiệm" ? mcAnswers.filter(a => a.trim() !== "") : formPlan.answer }
+                    : p
+            ));
+        } else {
+            setPlans([
+                ...plans,
+                {
+                    ...formPlan,
+                    answer: formPlan.type === "Trắc nghiệm" ? mcAnswers.filter(a => a.trim() !== "") : formPlan.answer,
+                    id: plans.length + 1,
                 }
-            }
-            return { ...prev, dynamicAnswers: newDynamicAnswers };
+            ]);
+        }
+        setPlanModalShow(false);
+    };
+    const handleDeletePlan = (id) => {
+        setPlans(plans.filter(p => p.id !== id));
+    };
+    const renderPlanAnswerCell = (plan) => {
+        if (plan.type === "Trắc nghiệm" && Array.isArray(plan.answer)) {
+            return plan.answer.join("; ");
+        }
+        return "";
+    };
+
+    // ==== Thử thách CRUD ====
+    const openAddChallengeModal = () => {
+        setEditChallenge(null);
+        setChallengeModalShow(true);
+        setFormChallenge({
+            name: "",
+            description: "",
+            target: "",
+            participants: "",
+            completed: "",
+            repeat: "",
         });
     };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!formData.startDate) {
-            alert('Vui lòng chọn ngày bắt đầu cai thuốc!');
-            return;
+    const openEditChallengeModal = (challenge) => {
+        setEditChallenge(challenge.id);
+        setChallengeModalShow(true);
+        setFormChallenge({ ...challenge });
+    };
+    const handleChallengeModalSave = () => {
+        if (editChallenge) {
+            setChallenges(challenges.map(c =>
+                c.id === editChallenge
+                    ? { ...formChallenge, id: editChallenge }
+                    : c
+            ));
+        } else {
+            setChallenges([
+                ...challenges,
+                {
+                    ...formChallenge,
+                    id: challenges.length + 1
+                }
+            ]);
         }
-
-        // Lấy userId từ localStorage
-        const userId = Number(localStorage.getItem('userId'));
-        if (!userId) {
-            setSubmitted({ show: true, message: 'Không tìm thấy userId trong localStorage. Vui lòng đăng nhập lại!', variant: 'danger' });
-            return;
-        }
-
-        // Dữ liệu gửi lên API (nếu backend yêu cầu bổ sung trường, hãy thêm vào đây)
-        const apiPayload = {
-            userId: userId,
-            cigarettesPerDay: formData.cigarettesPerDay,
-            cigarettesPerPack: formData.cigarettesPerPack,
-            pricePerPack: formData.pricePerPack,
-            startDate: formData.startDate,
-            endDate: formData.endDate,
-            reason: formData.otherReason,
-            confidence: formData.confidence,
-            selectedAnswerIds: Object.values(formData.dynamicAnswers).flat(),
-        };
-
-        try {
-            const res = await fetch('/api/QuitPlanAuto/auto-create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('userToken')
-                },
-                body: JSON.stringify(apiPayload)
-            });
-            if (res.ok) {
-                const data = await res.text();
-                setSubmitted({ show: true, message: data || 'Tạo kế hoạch thành công!', variant: 'success' });
-            } else {
-                const errMsg = await res.text();
-                setSubmitted({ show: true, message: "Lỗi: " + errMsg, variant: 'danger' });
-            }
-        } catch (error) {
-            setSubmitted({ show: true, message: "Lỗi kết nối: " + error.message, variant: 'danger' });
-        }
-        window.scrollTo(0, 0);
+        setChallengeModalShow(false);
+    };
+    const handleDeleteChallenge = (id) => {
+        setChallenges(challenges.filter(c => c.id !== id));
     };
 
-    // --- RENDER ---
-    if (isLoading) {
-        return (
-            <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-                <Spinner animation="border" variant="success" />
-                <h4 className="ms-3">Đang tải dữ liệu...</h4>
-            </Container>
-        );
-    }
+    // ===== Render milestone rows =====
+    const renderMilestoneRows = () => [
+        ...sampleMilestones.map((ms, idx) => (
+            <tr key={"sample-" + ms.id}>
+                <td>{idx + 1}</td>
+                <td>{ms.label}</td>
+                <td>
+                    {ms.status.map((s, i) => (
+                        <div key={i}>
+                            <b>{s.type}</b> ({s.percent}%): {s.content}
+                        </div>
+                    ))}
+                </td>
+                <td>
+                    {/* ---------------------Sửa, Xóa của cấu hình tiến trình ---------------- */}
+                    <Button
+                        variant="outline-success"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => openEditMilestoneModal(ms)}
+                        title="Sửa"
+                    >
+                        <FaEdit />
+                    </Button>
+                    <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={() => handleDeleteMilestone(ms.id)}
+                        title="Xóa"
+                    >
+                        <FaTrash />
+                    </Button>
+                </td>
+            </tr>
+        )),
+        ...milestones.map((ms, idx) => (
+            <tr key={ms.id}>
+                <td>{sampleMilestones.length + idx + 1}</td>
+                <td>{ms.label}</td>
+                <td>
+                    {ms.status.map((s, i) => (
+                        <div key={i}>
+                            <b>{s.type}</b> ({s.percent}%): {s.content}
+                        </div>
+                    ))}
+                </td>
+                <td>
+                    <Button variant="outline-success" size="sm" className="me-2" onClick={() => openEditMilestoneModal(ms)}><FaEdit /></Button>
+                    <Button variant="outline-danger" size="sm" onClick={() => handleDeleteMilestone(ms.id)}><FaTrash /></Button>
+                </td>
+            </tr>
+        ))
+    ];
+
+    // ===== Tiến trình người dùng  =====
+    const renderUserRows = () => [
+        ...userProgressList.map((u, idx) => (
+            <tr key={"sample-user-" + u.userId}>
+                <td>{idx + 1}</td>
+                <td>{u.name}</td>
+                <td>{u.quitCount}</td>
+                <td>{u.savedMoney.toLocaleString()} vnđ</td>
+                <td>
+                    <Button variant="outline-primary" size="sm" onClick={() => setSelectedUser(u)}>
+                        Xem chi tiết
+                    </Button>
+                </td>
+            </tr>
+        )),
+        ...users.map((u, idx) => (
+            <tr key={u.userId}>
+                <td>{userProgressList.length + idx + 1}</td>
+                <td>{u.name}</td>
+                <td>{u.quitCount}</td>
+                <td>{u.savedMoney.toLocaleString()} vnđ</td>
+                <td>
+                    <Button variant="outline-primary" size="sm" onClick={() => setSelectedUser(u)}>
+                        Xem chi tiết
+                    </Button>
+                </td>
+            </tr>
+        ))
+    ];
+
+    // ===== Render thử thách rows =====
+    const renderChallengeRows = () => [
+        ...challenges.map((c, idx) => (
+            <tr key={c.id} className="align-middle text-center">
+                <td>{c.name}</td>
+                <td>{c.description}</td>
+                <td>{c.target}</td>
+                <td>{c.participants}</td>
+                <td>{c.completed}</td>
+                <td>{c.repeat}</td>
+                <td>
+                    <Button variant="link" size="sm" onClick={() => openEditChallengeModal(c)}>
+                        <FaEdit />
+                    </Button>
+                    <Button variant="link" size="sm" onClick={() => handleDeleteChallenge(c.id)}>
+                        <FaTrash />
+                    </Button>
+                </td>
+            </tr>
+        )),
+        ...(challenges.length === 0
+            ? [<tr key="no-challenge"><td colSpan={7} className="text-center text-secondary">Chưa có dữ liệu</td></tr>]
+            : [])
+    ];
+
+    // ===== Render kế hoạch rows =====
+    const renderPlanRows = () => [
+        ...plans.map((p, idx) => (
+            <tr key={p.id} className="align-middle text-center">
+                <td>{idx + 1}</td>
+                <td>{p.question}</td>
+                <td>{p.type}</td>
+                <td>{renderPlanAnswerCell(p)}</td>
+                <td>
+                    <Button variant="link" size="sm" onClick={() => openEditPlanModal(p)}>
+                        <FaEdit />
+                    </Button>
+                    <Button variant="link" size="sm" onClick={() => handleDeletePlan(p.id)}>
+                        <FaTrash />
+                    </Button>
+                </td>
+            </tr>
+        )),
+        ...(plans.length === 0
+            ? [<tr key="no-plan"><td colSpan={5} className="text-center text-secondary">Chưa có dữ liệu</td></tr>]
+            : [])
+    ];
 
     return (
-        <Container className="my-5">
-            <Row className="justify-content-center">
-                <Col md={10} lg={8}>
-                    <div className="text-center mb-4">
-                        <h1>{isEditMode ? 'Chỉnh sửa Kế hoạch' : 'Lập kế hoạch cai thuốc'}</h1>
-                        <div className="motivation-section animated fadeIn">
-                            {/* Thay link ảnh bên dưới bằng hình động lực bạn muốn (ảnh minh họa, gif, v.v.) */}
-                            {/* <img
-                                src="https://github.com/THQuis/SWP391_Group5/blob/main/image/bannerpng.png?raw=true"
-                                alt="Motivation"
-                                style={{ maxWidth: 120, marginBottom: 10 }}
-                            /> */}
-                            <p className="motivation-text" style={{ color: '#28a745', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                                Hãy nhớ: Mỗi điều chỉnh hôm nay là một bước tiến tới sức khỏe và hạnh phúc của bạn!<br />
-                                Đừng bỏ cuộc – bạn hoàn toàn có thể làm được. Cộng đồng luôn đồng hành cùng bạn!
-                            </p>
-                        </div>
-                        <p className="text-muted">
-                            {isEditMode
-                                ? 'Bạn có thể điều chỉnh lại các thông tin và mục tiêu dưới đây.'
-                                : 'Trả lời các câu hỏi sau để nhận một lộ trình được cá nhân hóa.'}
-                        </p>
+        <div className="container py-4">
+            <h2 className="mb-4 text-success text-center">Quản lý tiến trình </h2>
+            <Tabs
+                activeKey={activeTab}
+                onSelect={setActiveTab}
+                className="mb-3"
+                justify
+            >
+                <Tab eventKey="milestone" title="Cấu hình tiến trình">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h5 className="mb-0">Các mốc tiến trình (Milestone)</h5>
+                        <Button variant="outline-primary" onClick={openAddMilestoneModal}><FaPlus /> Thêm mốc</Button>
                     </div>
+                    <Table bordered hover>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mốc</th>
+                                <th>Danh sách trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderMilestoneRows()}
+                        </tbody>
+                    </Table>
+                </Tab>
+                <Tab eventKey="progress" title="Tiến trình người dùng">
+                    <Table bordered hover>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên</th>
+                                <th>Số điều đã bỏ</th>
+                                <th>Số tiền tiết kiệm</th>
+                                <th>Xem tiến trình chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderUserRows()}
+                        </tbody>
+                    </Table>
+                </Tab>
+                <Tab eventKey="plan" title="Kế hoạch">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h5 className="mb-0">Kế hoạch khảo sát</h5>
+                        <Button
+                            variant="outline-primary"
+                            className="rounded-pill px-4"
+                            onClick={openAddPlanModal}
+                        >
+                            Thêm <FaPlus />
+                        </Button>
+                    </div>
+                    <Table bordered hover>
+                        <thead>
+                            <tr className="text-center">
+                                <th>STT</th>
+                                <th>Câu hỏi</th>
+                                <th>Loại đáp án</th>
+                                <th>Đáp án (nếu là trắc nghiệm)</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderPlanRows()}
+                        </tbody>
+                    </Table>
+                </Tab>
+                <Tab eventKey="challenge" title="Thử thách">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h5 className="mb-0">Danh sách thử thách</h5>
+                        <Button
+                            variant="outline-primary"
+                            className="rounded-pill px-4"
+                            onClick={openAddChallengeModal}
+                        >
+                            Thêm <FaPlus />
+                        </Button>
+                    </div>
+                    <Table bordered hover>
+                        <thead>
+                            <tr className="text-center">
+                                <th>Tên thử thách</th>
+                                <th>Mô tả</th>
+                                <th>Số điểm</th>
+                                <th>Số người được duyệt</th>
+                                <th>Số người đã thực hiện</th>
+                                <th>Lặp</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderChallengeRows()}
+                        </tbody>
+                    </Table>
+                </Tab>
+            </Tabs>
 
-                    {submitted.show && (
-                        <Alert variant={submitted.variant} onClose={() => setSubmitted({ ...submitted, show: false })} dismissible>
-                            {submitted.message}
-                        </Alert>
-                    )}
+            {/* ===== MODAL THÊM/SỬA MILESTONE ===== */}
+            <Modal show={milestoneModalShow} onHide={() => setMilestoneModalShow(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>{editMilestone ? "Sửa mốc tiến trình" : "Thêm mốc tiến trình"}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Tên mốc</Form.Label>
+                            <Form.Control
+                                value={milestoneForm.label}
+                                onChange={e => setMilestoneForm({ ...milestoneForm, label: e.target.value })}
+                                placeholder="VD: 1 tiếng, 6 tiếng, 24 tiếng..."
+                            />
+                        </Form.Group>
+                        <Form.Label>Danh sách trạng thái</Form.Label>
+                        {milestoneForm.status.map((s, idx) => (
+                            <InputGroup className="mb-2" key={idx}>
+                                <Form.Control
+                                    style={{ maxWidth: "120px" }}
+                                    value={s.type}
+                                    onChange={e => handleMilestoneFormStatusChange(idx, "type", e.target.value)}
+                                    placeholder="Loại trạng thái"
+                                />
+                                <Form.Control
+                                    style={{ maxWidth: "80px" }}
+                                    type="number"
+                                    value={s.percent}
+                                    onChange={e => handleMilestoneFormStatusChange(idx, "percent", e.target.value)}
+                                    placeholder="%"
+                                />
+                                <Form.Control
+                                    value={s.content}
+                                    onChange={e => handleMilestoneFormStatusChange(idx, "content", e.target.value)}
+                                    placeholder="Nội dung trạng thái"
+                                />
+                                <Button
+                                    variant="outline-danger"
+                                    onClick={() => handleRemoveMilestoneStatusRow(idx)}
+                                    disabled={milestoneForm.status.length === 1}
+                                    style={{ borderRadius: "50%" }}
+                                >
+                                    <FaMinus />
+                                </Button>
+                            </InputGroup>
+                        ))}
+                        <Button variant="outline-primary" size="sm" className="my-1" onClick={handleAddMilestoneStatusRow}>
+                            <FaPlus /> Thêm trạng thái
+                        </Button>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setMilestoneModalShow(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="primary" onClick={handleMilestoneModalSave}>
+                        Lưu
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
-                    <Form onSubmit={handleSubmit}>
-                        <Card className="mb-4">
-                            <Card.Header as="h5">1. Thói quen hiện tại</Card.Header>
-                            <Card.Body>
-                                <Form.Group as={Row} className="mb-3">
-                                    <Form.Label column sm={6}>Bạn hút bao nhiêu điếu mỗi ngày?</Form.Label>
-                                    <Col sm={6}><Form.Control type="number" name="cigarettesPerDay" value={formData.cigarettesPerDay} onChange={handleStaticChange} /></Col>
-                                </Form.Group>
-                                <Form.Group as={Row} className="mb-3">
-                                    <Form.Label column sm={6}>Một gói bạn hút có bao nhiêu điếu?</Form.Label>
-                                    <Col sm={6}><Form.Control type="number" name="cigarettesPerPack" value={formData.cigarettesPerPack} onChange={handleStaticChange} /></Col>
-                                </Form.Group>
-                                <Form.Group as={Row} className="mb-3">
-                                    <Form.Label column sm={6}>Giá tiền một gói (VND)?</Form.Label>
-                                    <Col sm={6}><Form.Control type="number" name="pricePerPack" value={formData.pricePerPack} onChange={handleStaticChange} /></Col>
-                                </Form.Group>
-                                {dailyCost > 0 && (
-                                    <Alert variant="info" className="mt-3">
-                                        <div className="d-flex justify-content-between"><span>Chi phí mỗi ngày:</span> <strong>{dailyCost.toLocaleString('vi-VN')} VND</strong></div>
-                                        <div className="d-flex justify-content-between"><span>Chi phí mỗi tuần:</span> <strong>{weeklyCost.toLocaleString('vi-VN')} VND</strong></div>
-                                        <div className="d-flex justify-content-between"><span>Chi phí mỗi tháng:</span> <strong>{monthlyCost.toLocaleString('vi-VN')} VND</strong></div>
-                                    </Alert>
-                                )}
-                            </Card.Body>
-                        </Card>
-
-                        <Card className="mb-4">
-                            <Card.Header as="h5">2. Tìm hiểu về bạn</Card.Header>
-                            <Card.Body>
-                                {surveyQuestions.map(q => (
-                                    <Form.Group key={q.questionID} className="mb-4">
-                                        <Form.Label className="fw-bold">{q.questionText}</Form.Label>
-                                        {q.answerOptions.map(opt => (
-                                            <Form.Check
-                                                key={opt.answerOptionID}
-                                                type={q.questionType.toLowerCase()}
-                                                id={`q-${q.questionID}-a-${opt.answerOptionID}`}
-                                                label={opt.answerText}
-                                                name={`question-${q.questionID}`}
-                                                value={opt.answerOptionID}
-                                                checked={
-                                                    q.questionType === 'RADIO'
-                                                        ? formData.dynamicAnswers[q.questionID] === opt.answerOptionID
-                                                        : (formData.dynamicAnswers[q.questionID] || []).includes(opt.answerOptionID)
-                                                }
-                                                onChange={(e) => handleDynamicChange(e, q.questionID, q.questionType)}
+            {/* ===== MODAL THÊM/SỬA KẾ HOẠCH ===== */}
+            <Modal
+                show={planModalShow}
+                onHide={() => setPlanModalShow(false)}
+                centered
+                backdrop="static"
+            >
+                <Modal.Header
+                    className="bg-info-subtle"
+                    style={{ borderBottom: 0, justifyContent: "center" }}
+                >
+                    <Modal.Title className="w-100 text-center fst-italic">
+                        {editPlan ? "Sửa kế hoạch" : "Thêm kế hoạch"}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group as={Row} className="mb-3 align-items-center">
+                            <Form.Label column sm={4} className="fst-italic">
+                                Câu hỏi
+                            </Form.Label>
+                            <Col sm={8}>
+                                <Form.Control
+                                    value={formPlan.question}
+                                    onChange={e =>
+                                        setFormPlan({ ...formPlan, question: e.target.value })
+                                    }
+                                    className="rounded-pill"
+                                    placeholder="Nhập câu hỏi"
+                                />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3 align-items-center">
+                            <Form.Label column sm={4} className="fst-italic">
+                                Loại đáp án
+                            </Form.Label>
+                            <Col sm={8}>
+                                <Form.Select
+                                    value={formPlan.type}
+                                    onChange={e => handlePlanTypeChange(e.target.value)}
+                                    className="rounded-pill"
+                                >
+                                    <option value="">Chọn loại đáp án</option>
+                                    {answerTypeOptions.map(opt => (
+                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                    ))}
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
+                        {formPlan.type === "Trắc nghiệm" && (
+                            <Form.Group as={Row} className="mb-3 align-items-center">
+                                <Form.Label column sm={4} className="fst-italic">
+                                    Lựa chọn
+                                </Form.Label>
+                                <Col sm={8}>
+                                    {mcAnswers.map((ans, idx) => (
+                                        <InputGroup className="mb-2" key={idx}>
+                                            <Form.Control
+                                                value={ans}
+                                                onChange={e => handleMcAnswerChange(idx, e.target.value)}
+                                                className="rounded-pill"
+                                                placeholder={`Lựa chọn ${idx + 1}`}
                                             />
-                                        ))}
-                                        {q.questionID === 2 && (
-                                            <Form.Control className="mt-2" type="text" name="otherReason" placeholder="Nhập lý do khác của bạn..." value={formData.otherReason} onChange={handleStaticChange} />
-                                        )}
-                                    </Form.Group>
-                                ))}
-                            </Card.Body>
-                        </Card>
-
-                        <Card className="mb-4">
-                            <Card.Header as="h5">3. Thiết lập mục tiêu</Card.Header>
-                            <Card.Body>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="fw-bold">Ngày bắt đầu cai thuốc (*)</Form.Label>
-                                    <Form.Control type="date" name="startDate" value={formData.startDate} onChange={handleStaticChange} required />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="fw-bold">Ngày mong muốn cai hoàn toàn (tùy chọn)</Form.Label>
-                                    <Form.Control type="date" name="endDate" value={formData.endDate} onChange={handleStaticChange} />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="fw-bold">Mức độ tự tin của bạn (1-10)</Form.Label>
-                                    <div className="d-flex align-items-center">
-                                        <Form.Range name="confidence" min="1" max="10" value={formData.confidence} onChange={handleStaticChange} className="me-3" />
-                                        <Badge pill bg="success" style={{ fontSize: '1rem' }}>{formData.confidence}</Badge>
-                                    </div>
-                                </Form.Group>
-                            </Card.Body>
-                        </Card>
-
-                        <div className="d-grid">
-                            <Button variant={isEditMode ? "primary" : "success"} size="lg" type="submit">
-                                {isEditMode ? 'Lưu thay đổi' : 'Hoàn thành và Tạo kế hoạch'}
+                                            <Button
+                                                variant="outline-danger"
+                                                onClick={() => handleRemoveMcAnswer(idx)}
+                                                disabled={mcAnswers.length === 1}
+                                                style={{ borderRadius: "50%", marginLeft: 8, padding: "0 10px" }}
+                                            >
+                                                <FaMinus />
+                                            </Button>
+                                        </InputGroup>
+                                    ))}
+                                    <Button
+                                        variant="success"
+                                        size="sm"
+                                        className="rounded-pill fw-semibold mt-1"
+                                        onClick={handleAddMcAnswer}
+                                    >
+                                        <FaPlus /> Thêm lựa chọn
+                                    </Button>
+                                </Col>
+                            </Form.Group>
+                        )}
+                        <div className="d-flex justify-content-end gap-2">
+                            <Button
+                                variant="secondary"
+                                className="rounded-pill px-4 fw-semibold"
+                                onClick={() => setPlanModalShow(false)}
+                            >
+                                Hủy
+                            </Button>
+                            <Button
+                                variant="primary"
+                                className="rounded-pill px-4 fw-semibold"
+                                onClick={handlePlanModalSave}
+                            >
+                                {editPlan ? "Lưu" : "Thêm"}
                             </Button>
                         </div>
                     </Form>
-                </Col>
-            </Row>
-        </Container>
-    );
-};
+                </Modal.Body>
+            </Modal>
 
-export default QuitPlanPage;
+            {/* ===== MODAL THÊM/SỬA THỬ THÁCH ===== */}
+            <Modal
+                show={challengeModalShow}
+                onHide={() => setChallengeModalShow(false)}
+                centered
+                backdrop="static"
+            >
+                <Modal.Header
+                    className="bg-info-subtle"
+                    style={{ borderBottom: 0, justifyContent: "center" }}
+                >
+                    <Modal.Title className="w-100 text-center fst-italic">
+                        {editChallenge ? "Sửa thử thách" : "Thêm thử thách"}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group as={Row} className="mb-3 align-items-center">
+                            <Form.Label column sm={4} className="fst-italic">
+                                Tên
+                            </Form.Label>
+                            <Col sm={8}>
+                                <Form.Control
+                                    value={formChallenge.name}
+                                    onChange={e =>
+                                        setFormChallenge({ ...formChallenge, name: e.target.value })
+                                    }
+                                    className="rounded-pill"
+                                    placeholder="Nhập tên thử thách"
+                                />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3 align-items-center">
+                            <Form.Label column sm={4} className="fst-italic">
+                                Điểm
+                            </Form.Label>
+                            <Col sm={8}>
+                                <Form.Control
+                                    type="number"
+                                    value={formChallenge.target}
+                                    onChange={e =>
+                                        setFormChallenge({ ...formChallenge, target: e.target.value })
+                                    }
+                                    className="rounded-pill"
+                                    placeholder="Nhập điểm"
+                                />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3 align-items-center">
+                            <Form.Label column sm={4} className="fst-italic">
+                                Mô tả
+                            </Form.Label>
+                            <Col sm={8}>
+                                <Form.Control
+                                    value={formChallenge.description}
+                                    onChange={e =>
+                                        setFormChallenge({
+                                            ...formChallenge,
+                                            description: e.target.value,
+                                        })
+                                    }
+                                    className="rounded-pill"
+                                    placeholder="Nhập mô tả"
+                                />
+                            </Col>
+                        </Form.Group>
+                        <div className="d-flex justify-content-end gap-2">
+                            <Button
+                                variant="secondary"
+                                className="rounded-pill px-4 fw-semibold"
+                                onClick={() => setChallengeModalShow(false)}
+                            >
+                                Hủy
+                            </Button>
+                            <Button
+                                variant="primary"
+                                className="rounded-pill px-4 fw-semibold"
+                                onClick={handleChallengeModalSave}
+                            >
+                                {editChallenge ? "Lưu" : "Thêm"}
+                            </Button>
+                        </div>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+            {/* ===== MODAL XEM TIẾN TRÌNH USER ===== */}
+            <Modal show={!!selectedUser} onHide={() => setSelectedUser(null)} centered size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>Tiến trình của: {selectedUser?.name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="mb-3">
+                        <b>Số điều đã bỏ:</b> {selectedUser?.quitCount} &nbsp;&nbsp;
+                        <b>Số tiền tiết kiệm:</b> {selectedUser?.savedMoney?.toLocaleString()} vnđ
+                    </div>
+                    <Table bordered>
+                        <thead>
+                            <tr>
+                                <th>Mốc</th>
+                                <th>Trạng thái</th>
+                                <th>Hoàn thành</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {[...sampleMilestones, ...milestones].map(ms => (
+                                ms.status.map((st, idx) => {
+                                    const userMs = selectedUser?.milestones.find(m => m.milestoneId === ms.id);
+                                    const userStatus = userMs ? userMs.status.find(s => s.type === st.type) : null;
+                                    return (
+                                        <tr key={ms.id + "-" + st.type}>
+                                            <td>{idx === 0 ? ms.label : ""}</td>
+                                            <td>
+                                                <b>{st.type}</b> ({st.percent}%): {st.content}
+                                            </td>
+                                            <td>
+                                                {userStatus?.done ? (
+                                                    <span className="badge bg-success">Đã hoàn thành</span>
+                                                ) : (
+                                                    <span className="badge bg-secondary">Chưa đạt</span>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            ))}
+                        </tbody>
+                    </Table>
+                </Modal.Body>
+            </Modal>
+        </div>
+    );
+}
+
+export default ManagementPlan;

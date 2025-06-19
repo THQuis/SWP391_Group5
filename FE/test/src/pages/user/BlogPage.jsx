@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import "../../styles/BlogPage.scss";
 import {
     Container,
     Row,
@@ -190,323 +191,325 @@ function UserBlog() {
     };
 
     return (
-        <Container style={{ background: "#f6fcfd", minHeight: 700 }} className="py-3">
-            {/* Thanh tìm kiếm */}
-            <Row className="mb-3">
-                <Col md={12} className="d-flex align-items-center">
-                    <InputGroup>
-                        <InputGroup.Text>
-                            <i className="bi bi-search"></i>
-                        </InputGroup.Text>
-                        <Form.Control
-                            placeholder="Tìm kiếm bài viết..."
-                            onChange={(e) => setSearch(e.target.value)}
-                            style={{ background: "#eef6f7" }}
-                        />
-                    </InputGroup>
-                </Col>
-            </Row>
+        <div className="user-blog-bg">
+            <Container style={{ background: "", minHeight: 700 }} className="py-3">
+                {/* Thanh tìm kiếm */}
+                <Row className="mb-3">
+                    <Col md={12} className="d-flex align-items-center">
+                        <InputGroup>
+                            <InputGroup.Text>
+                                <i className="bi bi-search"></i>
+                            </InputGroup.Text>
+                            <Form.Control
+                                placeholder="Tìm kiếm bài viết..."
+                                onChange={(e) => setSearch(e.target.value)}
+                                style={{ background: "#eef6f7" }}
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
 
-            {/* Button tạo bài viết mới */}
-            <Row className="mb-3">
-                <Col md={12} className="d-flex align-items-center gap-2">
-                    <FaUserCircle size={36} color="#8aa" />
-                    <Button
-                        variant="info"
-                        style={{
-                            background: "#c9e4ea",
-                            color: "#3a4e5c",
-                            border: "none",
-                            borderRadius: 15,
-                            fontWeight: 500,
-                            fontSize: 18,
-                        }}
-                        className="py-2 px-4"
-                        onClick={handleShowCreate}
-                    >
-                        Hãy cùng chia sẻ nào!! <FaPlus className="ms-2" />
-                    </Button>
-                </Col>
-            </Row>
-
-            {/* Danh sách bài viết */}
-            <Row>
-                <Col>
-                    {filteredBlogs.map((blog) => (
-                        <Card
-                            key={blog.BlogId}
-                            className="mb-4"
+                {/* Button tạo bài viết mới */}
+                <Row className="mb-3">
+                    <Col md={12} className="d-flex align-items-center gap-2">
+                        <FaUserCircle size={36} color="#8aa" />
+                        <Button
+                            variant="info"
                             style={{
-                                background: "#f5f2f2",
+                                background: "#c9e4ea",
+                                color: "#3a4e5c",
                                 border: "none",
                                 borderRadius: 15,
-                                boxShadow: "0 2px 8px #e3e3e3",
-                                maxWidth: 550,
-                                margin: "0 auto",
+                                fontWeight: 500,
+                                fontSize: 18,
                             }}
+                            className="py-2 px-4"
+                            onClick={handleShowCreate}
                         >
-                            <Card.Body style={{ paddingBottom: 10 }}>
-                                <div className="d-flex align-items-center mb-2">
-                                    <FaUserCircle size={30} color="#888" />
-                                    <span style={{ fontWeight: 700, marginLeft: 8 }}>
-                                        {blog.AuthorName}
-                                    </span>
-                                    <span style={{ color: "#888", marginLeft: 14, fontSize: 15 }}>
-                                        {blog.CreatedDate}
-                                    </span>
-                                    {/* Menu chỉnh sửa bên phải nếu là bài của mình */}
-                                    {blog.AuthorName === CURRENT_USER && (
-                                        <Dropdown align="end" className="ms-auto">
-                                            <Dropdown.Toggle
-                                                as="button"
-                                                style={{
-                                                    background: "transparent",
-                                                    border: "none",
-                                                    color: "#333",
-                                                    fontSize: 22,
-                                                    lineHeight: 1,
-                                                    padding: 0,
-                                                    marginLeft: 8,
-                                                }}
-                                                aria-label="Hành động"
-                                            >
-                                                <FaEllipsisV />
-                                            </Dropdown.Toggle>
-                                            <Dropdown.Menu>
-                                                <Dropdown.Item onClick={() => handleShowEdit(blog)}>
-                                                    <FaEdit className="me-2" />
-                                                    Chỉnh sửa
-                                                </Dropdown.Item>
-                                                <Dropdown.Item
-                                                    onClick={() => handleDeleteBlog(blog.BlogId)}
-                                                    className="text-danger"
-                                                >
-                                                    <FaTrash className="me-2" />
-                                                    Xóa
-                                                </Dropdown.Item>
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-                                    )}
-                                </div>
-                                <div style={{ color: "#444", marginBottom: 5, fontSize: 17 }}>
-                                    {blog.Content}
-                                </div>
-                                {blog.ImageUrl && (
-                                    <div className="mb-2 text-center">
-                                        <img
-                                            src={blog.ImageUrl}
-                                            alt="blog"
-                                            style={{
-                                                maxHeight: 230,
-                                                maxWidth: "100%",
-                                                borderRadius: 10,
-                                                margin: "0 auto",
-                                                display: "block",
-                                                background: "#fff",
-                                            }}
-                                        />
-                                    </div>
-                                )}
-                            </Card.Body>
-                            {/* Footer: Like và Báo cáo nằm cùng hàng */}
-                            <Card.Footer
+                            Hãy cùng chia sẻ nào!! <FaPlus className="ms-2" />
+                        </Button>
+                    </Col>
+                </Row>
+
+                {/* Danh sách bài viết */}
+                <Row>
+                    <Col>
+                        {filteredBlogs.map((blog) => (
+                            <Card
+                                key={blog.BlogId}
+                                className="mb-4"
                                 style={{
-                                    background: "transparent",
+                                    background: "#f5f2f2",
                                     border: "none",
-                                    paddingBottom: 12,
-                                    paddingTop: 2,
+                                    borderRadius: 15,
+                                    boxShadow: "0 2px 8px #e3e3e3",
+                                    maxWidth: 550,
+                                    margin: "0 auto",
                                 }}
                             >
-                                <div className="d-flex align-items-center gap-3 justify-content-between">
-                                    {/* Like/Unlike */}
-                                    <div className="d-flex align-items-center gap-2">
-                                        <Button
-                                            variant="link"
-                                            className="p-0 d-flex align-items-center"
-                                            style={{ color: blog.Liked ? "#e25565" : "#666" }}
-                                            onClick={() => handleToggleLike(blog.BlogId)}
-                                        >
-                                            {blog.Liked ? (
-                                                <FaHeart size={22} />
-                                            ) : (
-                                                <FaRegHeart size={22} />
-                                            )}
-                                        </Button>
-                                        <span style={{ fontSize: 16, color: "#666" }}>
-                                            {blog.Likes} lượt
-                                        </span></div>
-                                    {/* Báo cáo */}
-                                    {blog.AuthorName !== CURRENT_USER ? (
-                                        <span
-                                            style={{
-                                                color: blog.Reported ? "#e25565" : "#555",
-                                                fontStyle: "italic",
-                                                fontSize: 15,
-                                                cursor: blog.Reported ? "not-allowed" : "pointer",
-                                            }}
-                                            onClick={
-                                                blog.Reported
-                                                    ? undefined
-                                                    : () => handleReport(blog)
-                                            }
-                                        >
-                                            <FaFlag className="me-1" />
-                                            {blog.Reported ? "Đã báo cáo" : "Báo cáo"}
+                                <Card.Body style={{ paddingBottom: 10 }}>
+                                    <div className="d-flex align-items-center mb-2">
+                                        <FaUserCircle size={30} color="#888" />
+                                        <span style={{ fontWeight: 700, marginLeft: 8 }}>
+                                            {blog.AuthorName}
                                         </span>
-                                    ) : (
-                                        <span
-                                            style={{
-                                                color: "#999",
-                                                fontStyle: "italic",
-                                                fontSize: 15,
-                                                pointerEvents: "none",
-                                            }}
-                                        >
-                                            Báo cáo
+                                        <span style={{ color: "#888", marginLeft: 14, fontSize: 15 }}>
+                                            {blog.CreatedDate}
                                         </span>
+                                        {/* Menu chỉnh sửa bên phải nếu là bài của mình */}
+                                        {blog.AuthorName === CURRENT_USER && (
+                                            <Dropdown align="end" className="ms-auto">
+                                                <Dropdown.Toggle
+                                                    as="button"
+                                                    style={{
+                                                        background: "transparent",
+                                                        border: "none",
+                                                        color: "#333",
+                                                        fontSize: 22,
+                                                        lineHeight: 1,
+                                                        padding: 0,
+                                                        marginLeft: 8,
+                                                    }}
+                                                    aria-label="Hành động"
+                                                >
+                                                    <FaEllipsisV />
+                                                </Dropdown.Toggle>
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item onClick={() => handleShowEdit(blog)}>
+                                                        <FaEdit className="me-2" />
+                                                        Chỉnh sửa
+                                                    </Dropdown.Item>
+                                                    <Dropdown.Item
+                                                        onClick={() => handleDeleteBlog(blog.BlogId)}
+                                                        className="text-danger"
+                                                    >
+                                                        <FaTrash className="me-2" />
+                                                        Xóa
+                                                    </Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+                                        )}
+                                    </div>
+                                    <div style={{ color: "#444", marginBottom: 5, fontSize: 17 }}>
+                                        {blog.Content}
+                                    </div>
+                                    {blog.ImageUrl && (
+                                        <div className="mb-2 text-center">
+                                            <img
+                                                src={blog.ImageUrl}
+                                                alt="blog"
+                                                style={{
+                                                    maxHeight: 230,
+                                                    maxWidth: "100%",
+                                                    borderRadius: 10,
+                                                    margin: "0 auto",
+                                                    display: "block",
+                                                    background: "#fff",
+                                                }}
+                                            />
+                                        </div>
                                     )}
-                                </div>
-                            </Card.Footer>
-                        </Card>
-                    ))}
-                </Col>
-            </Row>
+                                </Card.Body>
+                                {/* Footer: Like và Báo cáo nằm cùng hàng */}
+                                <Card.Footer
+                                    style={{
+                                        background: "transparent",
+                                        border: "none",
+                                        paddingBottom: 12,
+                                        paddingTop: 2,
+                                    }}
+                                >
+                                    <div className="d-flex align-items-center gap-3 justify-content-between">
+                                        {/* Like/Unlike */}
+                                        <div className="d-flex align-items-center gap-2">
+                                            <Button
+                                                variant="link"
+                                                className="p-0 d-flex align-items-center"
+                                                style={{ color: blog.Liked ? "#e25565" : "#666" }}
+                                                onClick={() => handleToggleLike(blog.BlogId)}
+                                            >
+                                                {blog.Liked ? (
+                                                    <FaHeart size={22} />
+                                                ) : (
+                                                    <FaRegHeart size={22} />
+                                                )}
+                                            </Button>
+                                            <span style={{ fontSize: 16, color: "#666" }}>
+                                                {blog.Likes} lượt
+                                            </span></div>
+                                        {/* Báo cáo */}
+                                        {blog.AuthorName !== CURRENT_USER ? (
+                                            <span
+                                                style={{
+                                                    color: blog.Reported ? "#e25565" : "#555",
+                                                    fontStyle: "italic",
+                                                    fontSize: 15,
+                                                    cursor: blog.Reported ? "not-allowed" : "pointer",
+                                                }}
+                                                onClick={
+                                                    blog.Reported
+                                                        ? undefined
+                                                        : () => handleReport(blog)
+                                                }
+                                            >
+                                                <FaFlag className="me-1" />
+                                                {blog.Reported ? "Đã báo cáo" : "Báo cáo"}
+                                            </span>
+                                        ) : (
+                                            <span
+                                                style={{
+                                                    color: "#999",
+                                                    fontStyle: "italic",
+                                                    fontSize: 15,
+                                                    pointerEvents: "none",
+                                                }}
+                                            >
+                                                Báo cáo
+                                            </span>
+                                        )}
+                                    </div>
+                                </Card.Footer>
+                            </Card>
+                        ))}
+                    </Col>
+                </Row>
 
-            {/* Modal chỉnh sửa bài viết */}
-            <Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Chỉnh sửa bài viết</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group>
-                            <Form.Label>Nội dung</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows={4}
-                                value={editContent}
-                                onChange={(e) => setEditContent(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mt-2">
-                            <Form.Label>Hình ảnh</Form.Label>
-                            <Form.Control
-                                type="file"
-                                accept="image/*"
-                                ref={fileEditInputRef}
-                                onChange={(e) =>
-                                    handleFileChange(e, setEditImage, setEditImagePreview)
-                                }
-                            />
-                            {editImagePreview && (
-                                <img
-                                    src={editImagePreview}
-                                    alt="preview"
-                                    style={{ maxWidth: "100%", marginTop: 10, borderRadius: 8 }}
+                {/* Modal chỉnh sửa bài viết */}
+                <Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Chỉnh sửa bài viết</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group>
+                                <Form.Label>Nội dung</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={4}
+                                    value={editContent}
+                                    onChange={(e) => setEditContent(e.target.value)}
                                 />
-                            )}
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowEdit(false)}>
-                        Hủy
-                    </Button>
-                    <Button variant="primary" onClick={handleSaveEdit}>
-                        Lưu
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-
-            {/* Modal tạo bài viết mới */}
-            <Modal show={showCreate} onHide={() => setShowCreate(false)} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Chia sẻ bài viết mới</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group>
-                            <Form.Label>Nội dung</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows={3}
-                                value={newContent}
-                                onChange={(e) => setNewContent(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mt-2">
-                            <Form.Label>Hình ảnh</Form.Label>
-                            <Form.Control
-                                type="file"
-                                accept="image/*"
-                                ref={fileInputRef}
-                                onChange={(e) =>
-                                    handleFileChange(e, setNewImage, setNewImagePreview)
-                                }
-                            />
-                            {newImagePreview && (
-                                <img
-                                    src={newImagePreview}
-                                    alt="preview"
-                                    style={{ maxWidth: "100%", marginTop: 10, borderRadius: 8 }}
+                            </Form.Group>
+                            <Form.Group className="mt-2">
+                                <Form.Label>Hình ảnh</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    accept="image/*"
+                                    ref={fileEditInputRef}
+                                    onChange={(e) =>
+                                        handleFileChange(e, setEditImage, setEditImagePreview)
+                                    }
                                 />
-                            )}
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowCreate(false)}>
-                        Hủy
-                    </Button>
-                    <Button
-                        variant="success"
-                        onClick={handleSaveCreate}
-                        disabled={!newContent.trim()}
-                    >
-                        Đăng bài
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                                {editImagePreview && (
+                                    <img
+                                        src={editImagePreview}
+                                        alt="preview"
+                                        style={{ maxWidth: "100%", marginTop: 10, borderRadius: 8 }}
+                                    />
+                                )}
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowEdit(false)}>
+                            Hủy
+                        </Button>
+                        <Button variant="primary" onClick={handleSaveEdit}>
+                            Lưu
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
-            {/* Modal báo cáo */}
-            <Modal
-                show={showReportModal}
-                onHide={() => setShowReportModal(false)}
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Báo cáo bài viết</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group>
-                            <Form.Label>Lý do báo cáo</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows={3}
-                                value={reportReason}
-                                onChange={(e) => setReportReason(e.target.value)}
-                            />
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button
-                        variant="secondary"
-                        onClick={() => setShowReportModal(false)}
-                    >
-                        Hủy
-                    </Button>
-                    <Button
-                        variant="danger"
-                        onClick={handleSendReport}
-                        disabled={!reportReason.trim()}
-                    >
-                        Gửi báo cáo
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </Container>
+                {/* Modal tạo bài viết mới */}
+                <Modal show={showCreate} onHide={() => setShowCreate(false)} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Chia sẻ bài viết mới</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group>
+                                <Form.Label>Nội dung</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    value={newContent}
+                                    onChange={(e) => setNewContent(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mt-2">
+                                <Form.Label>Hình ảnh</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    accept="image/*"
+                                    ref={fileInputRef}
+                                    onChange={(e) =>
+                                        handleFileChange(e, setNewImage, setNewImagePreview)
+                                    }
+                                />
+                                {newImagePreview && (
+                                    <img
+                                        src={newImagePreview}
+                                        alt="preview"
+                                        style={{ maxWidth: "100%", marginTop: 10, borderRadius: 8 }}
+                                    />
+                                )}
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowCreate(false)}>
+                            Hủy
+                        </Button>
+                        <Button
+                            variant="success"
+                            onClick={handleSaveCreate}
+                            disabled={!newContent.trim()}
+                        >
+                            Đăng bài
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* Modal báo cáo */}
+                <Modal
+                    show={showReportModal}
+                    onHide={() => setShowReportModal(false)}
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Báo cáo bài viết</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group>
+                                <Form.Label>Lý do báo cáo</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    value={reportReason}
+                                    onChange={(e) => setReportReason(e.target.value)}
+                                />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            variant="secondary"
+                            onClick={() => setShowReportModal(false)}
+                        >
+                            Hủy
+                        </Button>
+                        <Button
+                            variant="danger"
+                            onClick={handleSendReport}
+                            disabled={!reportReason.trim()}
+                        >
+                            Gửi báo cáo
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </Container>
+        </div>
     );
 }
 

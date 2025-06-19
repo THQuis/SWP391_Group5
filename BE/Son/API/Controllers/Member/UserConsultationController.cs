@@ -25,7 +25,7 @@ namespace Smoking.API.Controllers.Member
         // 1️⃣ Đặt lịch tư vấn
         [HttpPost("book")]
         public async Task<IActionResult> BookConsultation([FromBody] ConsultationRequest request)
-        {
+        {   
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
@@ -59,7 +59,8 @@ namespace Smoking.API.Controllers.Member
                 BookingDate = request.ConsultationDate,
                 Duration = request.Duration,
                 Status = "Pending", // Trạng thái ban đầu là Pending (Chờ duyệt)
-                CreatedDate = System.DateTime.Now
+                CreatedDate = System.DateTime.Now,
+                Notes = request.Notes // Gán giá trị Notes từ request vào
             };
 
             await _unitOfWork.ConsultationBookings.AddAsync(consultation);  // Thêm lịch tư vấn vào cơ sở dữ liệu
@@ -101,7 +102,6 @@ namespace Smoking.API.Controllers.Member
             }));
         }
 
-        // 3️⃣ Hủy lịch tư vấn (Nếu lịch chưa được xác nhận)
         // 3️⃣ Hủy lịch tư vấn (Nếu lịch chưa được xác nhận)
         [HttpDelete("cancel/{bookingId}")]
         public async Task<IActionResult> CancelConsultation(int bookingId)

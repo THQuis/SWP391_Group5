@@ -1700,6 +1700,29 @@
         }
       }
     },
+    "/api/UserBlog/report/{blogId}": {
+      "post": {
+        "tags": [
+          "UserBlog"
+        ],
+        "parameters": [
+          {
+            "name": "blogId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/consultation/book": {
       "post": {
         "tags": [

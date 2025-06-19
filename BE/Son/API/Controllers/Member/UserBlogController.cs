@@ -170,5 +170,24 @@ namespace Smoking.API.Controllers.User
                 RejectedBlogs = rejected
             });
         }
+
+        // 7️⃣ Báo cáo blog (tăng số lần báo cáo lên 1)
+        [HttpPost("report/{blogId}")]
+        public async Task<IActionResult> ReportBlog(int blogId)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim == null)
+                return Unauthorized("Chưa đăng nhập");
+
+            var userId = int.Parse(userIdClaim);
+
+            // Thực hiện báo cáo blog
+            var result = await _blogService.ReportBlogAsync(blogId);
+            if (!result)
+                return BadRequest(new { Message = "Báo cáo blog không thành công." });
+
+            return Ok(new { Message = "Blog đã được báo cáo." });
+        }
+
     }
 }

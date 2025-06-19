@@ -128,5 +128,20 @@ namespace Smoking.BLL.Services
         // Thống kê blog theo trạng thái của user
         public async Task<int> CountByUserAndStatusAsync(int userId, string status)
             => await _repo.CountByUserAndStatusAsync(userId, status);
+
+        // Báo cáo blog (tăng số lần báo cáo)
+        public async Task<bool> ReportBlogAsync(int blogId)
+        {
+            var blog = await _repo.GetByIdAsync(blogId);
+            if (blog == null) return false;
+
+            blog.ReportCount++;  // Tăng số lượng báo cáo lên 1
+            _repo.Update(blog);
+            await _repo.SaveChangesAsync();
+
+            return true;
+        }
+
+
     }
 }

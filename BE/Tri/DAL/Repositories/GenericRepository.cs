@@ -80,5 +80,21 @@ namespace Smoking.DAL.Repositories
             return await query.Where(predicate).ToListAsync();
         }
 
+
+        public async Task<IEnumerable<TEntity>> GetAllWithIncludeAsync(string? includeProperties = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp.Trim());
+                }
+            }
+
+            return await query.ToListAsync();
+        }
+
     }
 }

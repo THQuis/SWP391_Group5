@@ -216,6 +216,42 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "AssignMembershipToUser",
+    "RelativePath": "api/admin/memberships/assign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Smoking.API.Models.Admin.AdminUpdateMembershipDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "GetAllPackages",
+    "RelativePath": "api/admin/memberships/packages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "GetAllUserMemberships",
+    "RelativePath": "api/admin/memberships/users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Admin.QuitPlanAdminController",
     "Method": "DeleteAllByUser",
     "RelativePath": "api/admin/quitplan/DeleteQuitPlanAndProgressUserID",

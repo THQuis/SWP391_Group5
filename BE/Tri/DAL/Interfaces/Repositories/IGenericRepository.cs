@@ -19,7 +19,7 @@ namespace Smoking.DAL.Interfaces.Repositories
 
         Task<IEnumerable<TEntity>> FindIncludingAsync(Expression<Func<TEntity, bool>> predicate,params Expression<Func<TEntity, object>>[] includes);
 
-
+        Task<IEnumerable<TEntity>> GetAllWithIncludeAsync(string? includeProperties = null);
     }
 
 }

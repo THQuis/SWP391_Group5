@@ -29,7 +29,7 @@ namespace Smoking.BLL.Services
                 return false;
 
             _unitOfWork.MembershipPackages.Remove(existing);
-            await _unitOfWork.CompleteAsync();
+           
             return true;
         }
 
@@ -56,7 +56,7 @@ namespace Smoking.BLL.Services
             existing.Duration = entity.Duration;
 
             _unitOfWork.MembershipPackages.Update(existing);
-            await _unitOfWork.CompleteAsync();
+          
             return true;
         }
     }

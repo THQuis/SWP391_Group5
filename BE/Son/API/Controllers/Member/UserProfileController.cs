@@ -50,7 +50,9 @@ namespace Smoking.API.Controllers.Member
                     user.ProfilePicture,
                     user.Description, // ✅ THÊM MÔ TẢ
                     RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"),
-                    RoleName = user.Role?.RoleName,
+                    RoleName = user.Role?.RoleName ?? "Unknown",
+                    DateOfBirth = user.DateOfBirth?.ToString("yyyy-MM-dd") ?? "Chưa cập nhật", // Ngày sinh
+                    user.Gender, // Giới tính
                     user.Status
                 }
             });

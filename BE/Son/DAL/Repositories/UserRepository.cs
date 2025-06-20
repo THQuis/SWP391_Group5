@@ -36,5 +36,13 @@
                     .Where(u => u.Role.RoleName == role) // Giả sử bạn có bảng Role với mối quan hệ với User
                     .ToListAsync();
             }
+        public async Task<User> GetByIdAsync(int id)
+        {
+            return await _context.Users
+                .Include(u => u.Role) // Load luôn thông tin Role
+                .FirstOrDefaultAsync(u => u.UserID == id);
         }
+
+
     }
+}

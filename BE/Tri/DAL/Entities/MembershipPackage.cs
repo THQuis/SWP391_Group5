@@ -25,6 +25,6 @@ namespace Smoking.DAL.Entities
         public int Duration { get; set; } // tháng
 
         // Navigation
-        public ICollection<UserMembership> UserMemberships { get; set; }
+        public virtual ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();
     }
 }

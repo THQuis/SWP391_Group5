@@ -96,7 +96,7 @@ namespace Smoking.BLL.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture)
+        public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture, string description)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
             if (user == null)
@@ -104,6 +104,7 @@ namespace Smoking.BLL.Services
 
             user.FullName = fullName;
             user.PhoneNumber = phoneNumber;
+            user.Description = description;
             user.ProfilePicture = profilePicture;
 
             _unitOfWork.Users.Update(user);
@@ -126,5 +127,9 @@ namespace Smoking.BLL.Services
             return await _unitOfWork.Users.GetByRoleAsync(role); // Lấy người dùng theo role
         }
 
+        public async Task<User> GetUserWithMembershipAsync(int userId)
+        {
+            return await _unitOfWork.Users.GetUserWithMembershipAsync(userId);
+        }
     }
 }

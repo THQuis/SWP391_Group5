@@ -12,7 +12,9 @@ namespace Smoking.DAL.Entities
 
         [Required]
         public int UserMembershipID { get; set; }
-        public UserMembership UserMembership { get; set; }
+
+        [ForeignKey(nameof(UserMembershipID))]
+        public virtual UserMembership UserMembership { get; set; } = null!;
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]

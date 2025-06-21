@@ -35,6 +35,8 @@ namespace Smoking.DAL.Entities
 
         public string? ProfilePicture { get; set; }  // nullable
 
+        public string? Description { get; set; }
+
         // Navigation collections initialized to avoid null reference
         public ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();
         public ICollection<SmokingStatus> SmokingStatuses { get; set; } = new List<SmokingStatus>();

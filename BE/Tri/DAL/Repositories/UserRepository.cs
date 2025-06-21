@@ -36,5 +36,22 @@ namespace Smoking.DAL.Repositories
                 .Where(u => u.Role.RoleName == role) // Giả sử bạn có bảng Role với mối quan hệ với User
                 .ToListAsync();
         }
+
+        public async Task<User> GetByIdAsync(int id)
+        {
+            return await _context.Users
+                .Include(u => u.Role) // Load luôn thông tin Role
+                .FirstOrDefaultAsync(u => u.UserID == id);
+        }
+
+        public async Task<User> GetUserWithMembershipAsync(int userId)
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.UserMemberships)
+                    .ThenInclude(um => um.Package)
+                .FirstOrDefaultAsync(u => u.UserID == userId);
+        }
+
     }
 }

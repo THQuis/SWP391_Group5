@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces; // Dùng interface chứ không phải BLL.Services trực tiếp
+using System.Security.Claims;
 
 namespace Smoking.API.Controllers.Member
 {
@@ -18,10 +19,46 @@ namespace Smoking.API.Controllers.Member
         }
 
         [HttpGet("profile")]
-        public IActionResult GetProfile()
+        public async Task<IActionResult> GetProfile()
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            return Ok(new { Message = "Thông tin profile cá nhân", UserID = userId });
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+                return Unauthorized(new { Message = "Không xác định được người dùng." });
+
+            var user = await _userService.GetUserWithMembershipAsync(userId);
+            if (user == null)
+                return NotFound(new { Message = "Người dùng không tồn tại." });
+
+            var activeMembership = user.UserMemberships?
+                .Where(um =>
+                    (um.PaymentStatus == "Completed" || um.PaymentStatus == "AdminAssigned") &&
+                    um.EndDate >= DateTime.Now)
+                .OrderByDescending(um => um.StartDate)
+                .FirstOrDefault();
+
+            return Ok(new
+            {
+                Message = "Thông tin cá nhân",
+                User = new
+                {
+                    user.UserID,
+                    user.FullName,
+                    user.Email,
+                    user.PhoneNumber,
+                    user.ProfilePicture,
+                    RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"),
+                    RoleName = user.Role?.RoleName ?? "Unknown",
+                    user.Status,
+                    user.Description,
+                    Membership = activeMembership == null ? null : new
+                    {
+                        PackageName = activeMembership.Package.PackageName,
+                        StartDate = activeMembership.StartDate.ToString("yyyy-MM-dd"),
+                        EndDate = activeMembership.EndDate.ToString("yyyy-MM-dd"),
+                        PaymentStatus = activeMembership.PaymentStatus
+                    }
+                }
+            });
         }
 
         [HttpGet("notifications")]
@@ -49,7 +86,14 @@ namespace Smoking.API.Controllers.Member
         {
             try
             {
-                await _userService.UpdateProfileAsync(request.Email, request.FullName, request.PhoneNumber, request.ProfilePicture);
+                await _userService.UpdateProfileAsync(
+                    request.Email,
+                    request.FullName,
+                    request.PhoneNumber,
+                    request.ProfilePicture,
+                    request.Description
+                );
+
                 return Ok(new { Message = "Cập nhật thông tin thành công." });
             }
             catch (Exception ex)
@@ -57,5 +101,6 @@ namespace Smoking.API.Controllers.Member
                 return BadRequest(new { Error = ex.Message });
             }
         }
+
     }
 }

@@ -1,6 +1,7 @@
 export const ROUTERS = {
     AUTH: {
-        LOGIN: "/auth",
+        LOGIN: "/login",
+        UNAUTHOR: "/unauthorized"
     },
     USER: {
         HOME: "/",
@@ -19,11 +20,11 @@ export const ROUTERS = {
 
     ADMIN: {
         DASHBOARD: "/admin",
-        USER: "admin/users",
-        BLOG: "admin/ManagementBlog",
-        PACKAGE: "admin/ManagementPackage",
-        ACHIVE: "admin/ManagementPerformance",
-        PLAN: "admin/ManagementPlan",
-        NOTIFICATION: "admin/ManagementNotification"
+        USER: "users",
+        BLOG: "ManagementBlog",
+        PACKAGE: "ManagementPackage",
+        ACHIVE: "ManagementPerformance",
+        PLAN: "ManagementPlan",
+        NOTIFICATION: "ManagementNotification"
     },
 };

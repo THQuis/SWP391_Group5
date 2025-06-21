@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../styles/Auth.scss"; // Đảm bảo bạn đã có file CSS này
+import { toast } from 'react-toastify';
 
-// Cấu hình URL cơ sở của API. Thay đổi nếu cần.
-
-//=================================================================
-// Component con cho Đồng hồ đếm ngược
-//=================================================================
 const CountdownTimer = ({ initialTime, onTimeout }) => {
     const [timeLeft, setTimeLeft] = useState(initialTime);
 
@@ -31,24 +27,17 @@ const CountdownTimer = ({ initialTime, onTimeout }) => {
     );
 };
 
-//=================================================================
-// Component chính: AuthPage
-//=================================================================
 const AuthPage = () => {
     const navigate = useNavigate();
-
     // --- STATES ---
     const [isLoading, setIsLoading] = useState(false);
-
     // State cho tab chính
     const [activeTab, setActiveTab] = useState('login');
     const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-
     // State cho luồng Đăng ký
     const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '', confirmPassword: '', phone: '', agree: false });
     const [showRegisterOTP, setShowRegisterOTP] = useState(false);
     const [registerOtp, setRegisterOtp] = useState('');
-
     // State cho luồng Quên Mật khẩu
     const [viewMode, setViewMode] = useState('auth'); // 'auth' hoặc 'forgotPassword'
     const [forgotPasswordStep, setForgotPasswordStep] = useState('enterEmail'); // 'enterEmail', 'enterOTP', 'resetPassword'
@@ -57,13 +46,10 @@ const AuthPage = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [isOtpExpired, setIsOtpExpired] = useState(false);
-
     // --- HÀM XỬ LÝ SỰ KIỆN ---
-
     const handleLoginChange = (e) => setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
     const handleRegisterChange = (e) => {
         const { name, value, type, checked } = e.target;
-
         // Nếu người dùng đang nhập vào ô "Số điện thoại"
         if (name === 'phone') {
             // Sử dụng regex để loại bỏ tất cả các ký tự không phải là số (0-9)
@@ -74,8 +60,6 @@ const AuthPage = () => {
             setRegisterForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
         }
     };
-    // --- API HANDLERS ---
-
     // 1. ĐĂNG NHẬP
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -91,16 +75,12 @@ const AuthPage = () => {
             if (!res.ok) {
                 throw new Error(data.message || 'Đăng nhập không thành công.');
             }
-
-            alert('✅ ' + data.message);
+            toast.success(data.message || "Đăng nhập thành công!");
             // Lấy thông tin trực tiếp từ cấu trúc mới, không cần diễn giải ID nữa
             const userRole = data.user.roleID; // <-- Đơn giản hơn rất nhiều!
             const userName = data.user.fullName;
             const userEmail = data.user.email;
             const userId = data.user.userID;
-
-
-
 
             // Lưu thông tin vào localStorage
             localStorage.setItem('userToken', data.token);
@@ -108,12 +88,7 @@ const AuthPage = () => {
             localStorage.setItem('userName', userName);
             localStorage.setItem('userEmail', userEmail);
             localStorage.setItem('userId', userId);
-
-
             console.log("role name", userRole);
-
-
-
             // Điều hướng dựa trên vai trò
             if (userRole === 1) {
                 navigate('/admin');
@@ -121,26 +96,21 @@ const AuthPage = () => {
                 navigate('/User/progress');
             }
         } catch (error) {
-            alert('❌ Lỗi: ' + error.message);
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
         }
     };
-
-
-
     // 2. ĐĂNG KÝ (BƯỚC 1 - GỬI THÔNG TIN) - PHIÊN BẢN CÓ GỠ LỖI
     const handleRegister = async (e) => {
         e.preventDefault();
         if (registerForm.password !== registerForm.confirmPassword) {
-            return alert('❗ Mật khẩu xác nhận không khớp!');
+            return toast.warn('Mật khẩu xác nhận không khớp!');
         }
         if (!registerForm.agree) {
-            return alert('❗ Bạn cần đồng ý với điều khoản sử dụng.');
+            return toast.warn('Bạn cần đồng ý với điều khoản sử dụng.');
         }
         setIsLoading(true);
-
-        // BƯỚC 1: In ra dữ liệu chuẩn bị gửi đi để kiểm tra
         console.log('--- Dữ liệu gửi đi để đăng ký ---');
         console.log({
             fullName: registerForm.name,
@@ -157,36 +127,27 @@ const AuthPage = () => {
                     fullName: registerForm.name,
                     email: registerForm.email,
                     password: registerForm.password,
-                    confirmPassword: registerForm.confirmPassword, // <-- THÊM TRƯỜNG NÀY
+                    confirmPassword: registerForm.confirmPassword,
                     phoneNumber: registerForm.phone
                 })
             });
-
-            // BƯỚC 2: Cố gắng đọc dữ liệu JSON từ phản hồi, dù thành công hay thất bại
-            // Điều này giúp chúng ta thấy được nội dung lỗi mà server trả về
             const data = await res.json();
-
-            // BƯỚC 3: In ra toàn bộ phản hồi và dữ liệu nhận được
             console.log('--- Phản hồi từ Server ---');
-            console.log('Response Status:', res.status); // Ví dụ: 200, 400, 500
+            console.log('Response Status:', res.status);
             console.log('Response OK?', res.ok);
             console.log('Dữ liệu JSON nhận được:', data);
-
-
             if (!res.ok) {
-                // Nếu server trả về lỗi, ném ra lỗi với thông điệp từ server nếu có
                 throw new Error(data.message || `Đăng ký thất bại với mã lỗi ${res.status}`);
             }
-
             // Nếu mọi thứ thành công
-            alert('✅ ' + data.message + ' Vui lòng kiểm tra email để nhận mã OTP.');
+            toast.success(data.message || 'Vui lòng kiểm tra email để nhận mã OTP.');
             setShowRegisterOTP(true);
 
         } catch (error) {
             // BƯỚC 4: In ra lỗi cuối cùng bị bắt
             console.error('--- LỖI CUỐI CÙNG BỊ BẮT ---');
             console.error(error); // In toàn bộ đối tượng lỗi
-            alert('❌ Lỗi: ' + error.message);
+            toast.error(error.message);
 
         } finally {
             setIsLoading(false);
@@ -206,20 +167,18 @@ const AuthPage = () => {
             if (!res.ok) {
                 throw new Error(data.message || 'Xác thực OTP không thành công.');
             }
-            alert('✅ ' + data.message + ' Tài khoản của bạn đã được kích hoạt. Vui lòng đăng nhập.');
+            toast.success(data.message || 'Tài khoản của bạn đã được kích hoạt. Vui lòng đăng nhập.');
             // Reset và chuyển về tab đăng nhập
             setShowRegisterOTP(false);
             setRegisterForm({ name: '', email: '', password: '', confirmPassword: '', agree: false });
             setRegisterOtp('');
             setActiveTab('login');
         } catch (error) {
-            alert('❌ Lỗi: ' + error.message);
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
         }
     };
-
-
     // 4. QUÊN MẬT KHẨU (BƯỚC 1 - YÊU CẦU OTP)
     const handleForgotPasswordRequest = async (e) => {
         e.preventDefault();
@@ -234,16 +193,15 @@ const AuthPage = () => {
             if (!res.ok) {
                 throw new Error(data.message || 'Email không tồn tại trong hệ thống.');
             }
-            alert('✅ ' + data.message);
+            toast.success(data.message);
             setIsOtpExpired(false);
             setForgotPasswordStep('enterOTP');
         } catch (error) {
-            alert('❌ Lỗi: ' + error.message);
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
         }
     };
-
     // 5. QUÊN MẬT KHẨU (BƯỚC 2 - XÁC THỰC OTP RESET)
     const handleVerifyResetOTP = async (e) => {
         e.preventDefault();
@@ -259,20 +217,19 @@ const AuthPage = () => {
             if (!res.ok) {
                 throw new Error(data.message || 'Mã OTP không chính xác.');
             }
-            alert('✅ ' + data.message);
+            toast.success(data.message);
             setForgotPasswordStep('resetPassword');
         } catch (error) {
-            alert('❌ Lỗi: ' + error.message);
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
         }
     };
-
     // 6. QUÊN MẬT KHẨU (BƯỚC 3 - ĐẶT LẠI MẬT KHẨU MỚI)
     const handleResetPassword = async (e) => {
         e.preventDefault();
-        if (newPassword.length < 6) return alert('Mật khẩu mới phải có ít nhất 6 ký tự.');
-        if (newPassword !== confirmNewPassword) return alert('Mật khẩu xác nhận không khớp!');
+        if (newPassword.length < 6) return toast.warn('Mật khẩu mới phải có ít nhất 6 ký tự.');
+        if (newPassword !== confirmNewPassword) return toast.warn('Mật khẩu xác nhận không khớp!');
         setIsLoading(true);
         try {
             const res = await fetch(`/api/Auth/reset-password`, {
@@ -284,10 +241,10 @@ const AuthPage = () => {
             if (!res.ok) {
                 throw new Error(data.message || 'Không thể đặt lại mật khẩu.');
             }
-            alert('✅ ' + data.message + ' Vui lòng đăng nhập lại.');
+            toast.success(data.message + ' Vui lòng đăng nhập lại.');
             goBackToLogin(true);
         } catch (error) {
-            alert('❌ Lỗi: ' + error.message);
+            toast.error(error.message);
         } finally {
             setIsLoading(false);
         }
@@ -302,9 +259,7 @@ const AuthPage = () => {
         setConfirmNewPassword('');
         if (switchToLoginTab) setActiveTab('login');
     };
-
     // --- RENDER FUNCTIONS ---
-
     const renderForgotPasswordFlow = () => (
         <div className="auth-forgot-password-flow">
             <a href="#" onClick={(e) => { e.preventDefault(); goBackToLogin() }} className="auth-back-link">Quay lại đăng nhập</a>
@@ -393,15 +348,8 @@ const AuthPage = () => {
                     <button type="submit" className="auth-btn" disabled={isLoading}>{isLoading ? 'Đang xác thực...' : 'Kích hoạt tài khoản'}</button>
                 </form>
             )}
-
-            {/* <div className="auth-divider"><span>Hoặc tiếp tục với</span></div>
-            <div className="auth-social-login">
-                <button className="auth-social-btn"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/search.png?raw=true" alt="Google" width="20" height="20" /> Google</button>
-                <button className="auth-social-btn"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/facebook.png?raw=true" alt="Facebook" width="20" height="20" /> Facebook</button>
-            </div> */}
         </>
     );
-
     // --- MAIN JSX STRUCTURE ---
     return (
         <div className="auth-page">

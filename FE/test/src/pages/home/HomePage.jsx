@@ -11,7 +11,7 @@ const HomePage = () => {
 
 
             <section className="hero-carousel" id="home">
-                <Carousel fade controls={false} indicators={false} interval={500}>
+                <Carousel fade controls={false} indicators={false} interval={1000}>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"

@@ -258,7 +258,7 @@ const ManagementNotificationTabs = () => {
                                 notifyToOptions={notifyToOptions}
                             />
                         </Tab>
-                        <Tab eventKey="personal" title="Thông báo cá nhân">
+                        {/* <Tab eventKey="personal" title="Thông báo cá nhân">
                             <NotificationPersonalSearch
                                 inputUserId={inputUserId}
                                 setInputUserId={setInputUserId}
@@ -269,7 +269,7 @@ const ManagementNotificationTabs = () => {
                                 notifications={personalNotifications}
                                 loading={loadingPersonal}
                             />
-                        </Tab>
+                        </Tab> */}
                         <Tab eventKey="send" title="Gửi thông báo">
                             <SendNotificationTab />
                         </Tab>

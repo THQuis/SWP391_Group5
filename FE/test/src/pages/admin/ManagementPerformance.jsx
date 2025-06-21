@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button, Table, Modal, Form, InputGroup } from 'react-bootstrap';
+// THÊM MỚI: Import thêm Pagination và Spinner
+import { Row, Col, Card, Button, Table, Modal, Form, InputGroup, Pagination, Spinner, Container } from 'react-bootstrap';
 import { FaPlus, FaEdit, FaTrash, FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import { FaHandsClapping } from 'react-icons/fa6';
+import { toast } from 'react-toastify'; // Thêm toast để có thông báo
 
 const ManagementPerformance = () => {
     const [badges, setBadges] = useState([]);
@@ -12,28 +14,40 @@ const ManagementPerformance = () => {
     const [editingBadge, setEditingBadge] = useState(null);
     const [search, setSearch] = useState('');
 
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10; // Hiển thị 10 huy hiệu mỗi trang
     // Lấy dữ liệu huy hiệu từ API mới (ListAchievement)
     useEffect(() => {
         fetchBadges();
     }, []);
 
+    useEffect(() => {
+        // Cuộn lên đầu trang một cách mượt mà
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentPage]);
+
     const fetchBadges = async () => {
+        setIsLoading(true); // Bật loading
         try {
             const token = localStorage.getItem('userToken');
             const res = await axios.get('/api/Admin/ListAchievement', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
+                headers: { Authorization: `Bearer ${token}` }
             });
             setBadges(res.data);
+            setCurrentPage(1); // Reset về trang 1 mỗi khi tải lại toàn bộ
         } catch (err) {
             console.error('Error fetching data', err);
+            toast.error("Không thể tải danh sách thành tích.");
+        } finally {
+            setIsLoading(false); // Tắt loading
         }
     };
 
     // Xử lý tìm kiếm
     const handleSearch = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const token = localStorage.getItem('userToken');
             if (!search.trim()) {
@@ -45,8 +59,12 @@ const ManagementPerformance = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBadges(res.data.data || []);
+            setCurrentPage(1); // Reset về trang 1 sau khi tìm kiếm
         } catch (err) {
             console.error('Lỗi khi tìm kiếm:', err);
+            toast.error("Tìm kiếm thất bại.");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -119,6 +137,20 @@ const ManagementPerformance = () => {
         }
     };
 
+    const indexOfLastBadge = currentPage * itemsPerPage;
+    const indexOfFirstBadge = indexOfLastBadge - itemsPerPage;
+    const currentBadges = badges.slice(indexOfFirstBadge, indexOfLastBadge);
+    const totalPages = Math.ceil(badges.length / itemsPerPage);
+
+    if (isLoading) {
+        return (
+            <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
+                <Spinner animation="border" variant="success" />
+                <h4 className="ms-3">Đang tải danh sách thành tích...</h4>
+            </Container>
+        );
+    }
+
     return (
         <div className="badge-management">
             <h2 className="text-center text-success">Quản lý Thành tích - Huy hiệu</h2>
@@ -168,28 +200,43 @@ const ManagementPerformance = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {badges.map((badge) => (
+                                    {/* SỬA ĐỔI: Dùng `currentBadges` thay vì `badges` */}
+                                    {currentBadges.map((badge) => (
                                         <tr key={badge.achievementID}>
                                             <td>{badge.achievementID}</td>
                                             <td>{badge.achievementName}</td>
                                             <td>{badge.description}</td>
                                             <td>
-                                                <FaHandsClapping color="#f7b801" size={22} title="Clap" />
+                                                {/* Giả sử badgeImage là URL */}
+                                                {badge.badgeImage ?
+                                                    <img src={badge.badgeImage} alt={badge.achievementName} width="30" /> :
+                                                    <FaHandsClapping color="#f7b801" size={22} />
+                                                }
                                             </td>
                                             <td>{badge.criteria}</td>
                                             <td>{badge.packageType}</td>
                                             <td>
-                                                <Button variant="link" size="sm" onClick={() => handleEdit(badge)}>
-                                                    <FaEdit />
-                                                </Button>
-                                                <Button variant="link" size="sm" onClick={() => handleDelete(badge.achievementID)}>
-                                                    <FaTrash />
-                                                </Button>
+                                                <Button variant="link" size="sm" onClick={() => handleEdit(badge)}><FaEdit /></Button>
+                                                <Button variant="link" size="sm" onClick={() => handleDelete(badge.achievementID)}><FaTrash /></Button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </Table>
+                            {/* THÊM MỚI: Component Pagination */}
+                            {totalPages > 1 && (
+                                <Pagination className="justify-content-center">
+                                    {Array.from({ length: totalPages }, (_, index) => (
+                                        <Pagination.Item
+                                            key={index + 1}
+                                            active={index + 1 === currentPage}
+                                            onClick={() => setCurrentPage(index + 1)}
+                                        >
+                                            {index + 1}
+                                        </Pagination.Item>
+                                    ))}
+                                </Pagination>
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

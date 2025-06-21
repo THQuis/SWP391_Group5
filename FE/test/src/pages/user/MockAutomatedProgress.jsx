@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col, Card, Spinner, Button, Modal, Form, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'; // THÊM MỚI: Import toast
 import '../../styles/ProgressDashboard.scss';
-
 const ProgressDashboardPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [showRelapseModal, setShowRelapseModal] = useState(false);
@@ -23,6 +23,11 @@ const ProgressDashboardPage = () => {
                     "accept": "*/*"
                 }
             });
+            if (!response.ok) {
+                // Nếu API trả về lỗi (ví dụ user chưa có plan), không cần báo lỗi mà chỉ cần set progress là null
+                setProgress(null);
+                return;
+            }
             const data = await response.json();
             setProgress({
                 achievementsUnlocked: data.totalAchievements,
@@ -61,8 +66,7 @@ const ProgressDashboardPage = () => {
     // useEffect chỉ gọi khi userId đổi
     useEffect(() => {
         setIsLoading(true);
-        fetchProgressData();
-        fetchProgressHistory();
+        Promise.all([fetchProgressData(), fetchProgressHistory()]);
         const interval = setInterval(fetchProgressData, 3600000); // Refresh every 1 hour
         return () => clearInterval(interval);
     }, [userId, fetchProgressData, fetchProgressHistory]);
@@ -88,18 +92,17 @@ const ProgressDashboardPage = () => {
             });
 
             if (response.ok) {
-                alert(`Cảm ơn bạn đã ghi nhận. Đừng nản lòng, hãy tiếp tục cố gắng nhé! Đã ghi nhận: ${relapseCount} điếu hôm nay.`);
-                // Reload lại dữ liệu progress và history sau khi ghi nhận relapse
-                setIsLoading(true);
-                await fetchProgressData();
-                await fetchProgressHistory();
+                toast.info(`Cảm ơn bạn đã ghi nhận. Đừng nản lòng, hãy tiếp tục cố gắng nhé! Đã ghi nhận: ${relapseCount} điếu hôm nay.`);
+
+                setIsLoading(true); // Hiển thị loading trong khi tải lại dữ liệu
+                await Promise.all([fetchProgressData(), fetchProgressHistory()]);
             } else {
                 const errorMessage = await response.text();
-                alert(`Không thể ghi nhận lỗi. Chi tiết: ${errorMessage}`);
+                toast.error(`Không thể ghi nhận: ${errorMessage}`);
             }
         } catch (error) {
             console.error("Failed to log relapse:", error);
-            alert("Đã xảy ra lỗi khi ghi nhận. Vui lòng thử lại sau.");
+            toast.error("Đã xảy ra lỗi khi ghi nhận. Vui lòng thử lại sau.");
         } finally {
             handleCloseRelapseModal();
         }
@@ -107,14 +110,10 @@ const ProgressDashboardPage = () => {
 
     if (isLoading) {
         return (
-            <div className="loading-container">
-                <div className="loading-content">
-                    <div className="custom-spinner">
-                        <Spinner animation="border" variant="success" />
-                    </div>
-                    <h4 className="loading-text">Đang tải tiến trình của bạn...</h4>
-                </div>
-            </div>
+            <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
+                <Spinner animation="border" variant="success" />
+                <h4 className="ms-3">Đang tải tiến trình của bạn...</h4>
+            </Container>
         );
     }
 
@@ -251,7 +250,7 @@ const ProgressDashboardPage = () => {
                 className="relapse-modal"
             >
                 <Modal.Header closeButton className="modal-header-custom">
-                    <Modal.Title>Ghi nhận sai sót</Modal.Title>
+                    <Modal.Title>Một chút chệch hướng?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal-body-custom">
                     <div className="modal-icon-container">

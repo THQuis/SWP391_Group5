@@ -425,7 +425,7 @@ const ManagementUser = () => {
                             </Form.Label>
                             <Col sm={8}>
                                 <Form.Control
-                                    type="password"
+                                    type="text"
                                     value={newUser.phoneNumber}
                                     onChange={e => setNewUser({ ...newUser, phoneNumber: e.target.value })}
                                 />

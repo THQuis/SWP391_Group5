@@ -136,7 +136,7 @@ const MilestonesPage = () => {
 
     if (isLoading) {
         return (
-            <Container className="text-center my-5 d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
+            <Container className="text-center  d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
                 <Spinner animation="border" variant="success" />
                 <h4 className="ms-3">Đang tải các cột mốc...</h4>
             </Container>
@@ -145,9 +145,9 @@ const MilestonesPage = () => {
 
     return (
         <>
-            <Container className="my-5">
+            <Container>
                 {/* --- Phần Nút Lọc --- */}
-                <div className="text-center mb-4 d-flex flex-wrap justify-content-center">
+                <div className="text-center mb-4 pt-4 d-flex flex-wrap justify-content-center">
                     {data.milestoneGroups.map(group => (
                         <Button
                             key={group.groupId}

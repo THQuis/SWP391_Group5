@@ -25,9 +25,16 @@ namespace Smoking.API.Controllers.Member
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
                 return Unauthorized(new { Message = "Không xác định được người dùng." });
 
-            var user = await _userService.GetByIdAsync(userId);
+            var user = await _userService.GetUserWithMembershipAsync(userId);
             if (user == null)
                 return NotFound(new { Message = "Người dùng không tồn tại." });
+
+            var activeMembership = user.UserMemberships?
+                .Where(um =>
+                    (um.PaymentStatus == "Completed" || um.PaymentStatus == "AdminAssigned") &&
+                    um.EndDate >= DateTime.Now)
+                .OrderByDescending(um => um.StartDate)
+                .FirstOrDefault();
 
             return Ok(new
             {
@@ -39,13 +46,21 @@ namespace Smoking.API.Controllers.Member
                     user.Email,
                     user.PhoneNumber,
                     user.ProfilePicture,
-                    //user.Description,
                     RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"),
                     RoleName = user.Role?.RoleName ?? "Unknown",
-                    user.Status
+                    user.Status,
+                    user.Description,
+                    Membership = activeMembership == null ? null : new
+                    {
+                        PackageName = activeMembership.Package.PackageName,
+                        StartDate = activeMembership.StartDate.ToString("yyyy-MM-dd"),
+                        EndDate = activeMembership.EndDate.ToString("yyyy-MM-dd"),
+                        PaymentStatus = activeMembership.PaymentStatus
+                    }
                 }
             });
         }
+
         [HttpGet("notifications")]
         public IActionResult GetNotifications()
         {
@@ -71,7 +86,14 @@ namespace Smoking.API.Controllers.Member
         {
             try
             {
-                await _userService.UpdateProfileAsync(request.Email, request.FullName, request.PhoneNumber, request.ProfilePicture);
+                await _userService.UpdateProfileAsync(
+                    request.Email,
+                    request.FullName,
+                    request.PhoneNumber,
+                    request.ProfilePicture,
+                    request.Description
+                );
+
                 return Ok(new { Message = "Cập nhật thông tin thành công." });
             }
             catch (Exception ex)
@@ -79,5 +101,6 @@ namespace Smoking.API.Controllers.Member
                 return BadRequest(new { Error = ex.Message });
             }
         }
+
     }
 }

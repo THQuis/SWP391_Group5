@@ -90,6 +90,18 @@ namespace Smoking.DAL.Data
                 .Property(p => p.Amount)
                 .HasPrecision(18, 2);
 
+            modelBuilder.Entity<UserMembership>()
+               .HasOne(um => um.Package)
+               .WithMany(mp => mp.UserMemberships)
+               .HasForeignKey(um => um.PackageID)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            // UserMembership - Payment
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.UserMembership)
+                .WithMany(um => um.Payments)
+                .HasForeignKey(p => p.UserMembershipID)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

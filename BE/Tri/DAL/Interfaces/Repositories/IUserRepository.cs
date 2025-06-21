@@ -11,6 +11,6 @@ namespace Smoking.DAL.Interfaces.Repositories
         // Thêm phương thức GetByRoleAsync để lấy người dùng theo role
         Task<IEnumerable<User>> GetByRoleAsync(string role); // Lấy người dùng theo role
         Task<User> GetByIdAsync(int id);
-
+        Task<User> GetUserWithMembershipAsync(int userId);
     }
 }

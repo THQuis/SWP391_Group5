@@ -44,5 +44,14 @@ namespace Smoking.DAL.Repositories
                 .FirstOrDefaultAsync(u => u.UserID == id);
         }
 
+        public async Task<User> GetUserWithMembershipAsync(int userId)
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.UserMemberships)
+                    .ThenInclude(um => um.Package)
+                .FirstOrDefaultAsync(u => u.UserID == userId);
+        }
+
     }
 }

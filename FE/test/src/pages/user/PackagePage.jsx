@@ -146,12 +146,7 @@ export default function UserPackage({ onSelect }) {
     const [currentPackageId, setCurrentPackageId] = useState(null);
     const [currentPackagePrice, setCurrentPackagePrice] = useState(null);
     const navigate = useNavigate();
-    // Đặt lại state khi đóng modal
-    // const handleCloseModal = () => {
-    //     setShowModal(false);
-    //     setSelectedPackage(null);
-    //     // reset thêm các state khác nếu cần
-    // };
+
 
     useEffect(() => {
         setLoading(true);
@@ -209,8 +204,8 @@ export default function UserPackage({ onSelect }) {
 
     return (
         <Container>
-            <h2 className="fw-bold mb-4" style={{ fontSize: 22 }}>
-                Chọn gói phí
+            <h2 className="fw-bold mb-4 pt-4" style={{ fontSize: 22 }}>
+                Chọn gói
             </h2>
             {loading ? (
                 <div className="d-flex justify-content-center my-5">

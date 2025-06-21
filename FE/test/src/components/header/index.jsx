@@ -3,6 +3,7 @@ import { Navbar, Nav, Container, Dropdown, Image, Button } from 'react-bootstrap
 import { Link } from 'react-router-dom';
 import { ROUTERS } from '../../utils/router';
 import "../header/header.scss";
+import { toast } from 'react-toastify';
 
 const handleLogout = async () => {
   try {
@@ -16,19 +17,22 @@ const handleLogout = async () => {
     });
 
     if (response.ok) {
-      // Xóa thông tin người dùng khỏi localStorage
       localStorage.removeItem('userToken');
       localStorage.removeItem('userRole');
       localStorage.removeItem('userName');
-
-      alert('🚪 Đăng xuất thành công!');
-      window.location.href = '/'; // Chuyển hướng về trang chủ
+      toast.success('Đăng xuất thành công! Hẹn gặp lại bạn.', {
+        autoClose: 500, // Thông báo tự đóng sau 2 giây
+        onClose: () => {
+          window.location.href = '/'; // Chuyển hướng về trang chủ
+        }
+      });
     } else {
-      alert('Có lỗi xảy ra khi đăng xuất. Vui lòng thử lại!');
+      const errorData = await response.json().catch(() => null);
+      toast.error(errorData?.message || 'Có lỗi xảy ra khi đăng xuất.');
     }
   } catch (error) {
     console.error('Lỗi khi đăng xuất:', error);
-    alert('Không thể kết nối với máy chủ. Vui lòng thử lại sau!');
+    toast.error('Không thể kết nối với máy chủ. Vui lòng thử lại!');
   }
 };
 

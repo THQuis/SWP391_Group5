@@ -21,6 +21,8 @@ const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
                 <Form.Group as={Row} className="mb-3"><Form.Label column sm={6}>Bạn hút bao nhiêu điếu mỗi ngày?</Form.Label><Col sm={6}><Form.Control type="number" name="cigarettesPerDayAtStart" value={data.cigarettesPerDayAtStart} onChange={onChange} disabled={!editable} min="0" /></Col></Form.Group>
                 <Form.Group as={Row} className="mb-3"><Form.Label column sm={6}>Một gói bạn hút có bao nhiêu điếu?</Form.Label><Col sm={6}><Form.Control type="number" name="cigarettesPerPack" value={data.cigarettesPerPack} onChange={onChange} disabled={!editable} min="0" /></Col></Form.Group>
                 <Form.Group as={Row} className="mb-3"><Form.Label column sm={6}>Giá tiền một gói (VND)?</Form.Label><Col sm={6}><Form.Control type="number" name="pricePerPackAtStart" value={data.pricePerPackAtStart} onChange={onChange} disabled={!editable} min="0" /></Col></Form.Group>
+                {dailyCost > 0 && <Alert variant="info" className="mt-3"><p className="mb-0 d-flex justify-content-between"><span>Chi phí mỗi ngày (ước tính):</span> <strong>{(dailyCost).toLocaleString("vi-VN")} VND</strong></p></Alert>}
+                {dailyCost > 0 && <Alert variant="info" className="mt-3"><p className="mb-0 d-flex justify-content-between"><span>Chi phí mỗi Tuần (ước tính):</span> <strong>{(dailyCost * 7).toLocaleString("vi-VN")} VND</strong></p></Alert>}
                 {dailyCost > 0 && <Alert variant="info" className="mt-3"><p className="mb-0 d-flex justify-content-between"><span>Chi phí mỗi tháng (ước tính):</span> <strong>{(dailyCost * 30).toLocaleString("vi-VN")} VND</strong></p></Alert>}
             </Card.Body>
         </Card>
@@ -318,7 +320,7 @@ const QuitPlanPage = () => {
             <Container className="">
                 <Row className="justify-content-center">
                     <Col md={10} lg={8}>
-                        <div className="text-center mb-4">
+                        <div className="text-center mb-4 pt-4">
                             <h1>Lập kế hoạch cai thuốc</h1>
                             <p className="text-muted">Trả lời các câu hỏi sau để nhận một lộ trình được cá nhân hóa.</p>
                         </div>

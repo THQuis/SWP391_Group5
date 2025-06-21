@@ -205,7 +205,7 @@ const AuthPage = () => {
     // 5. QUÊN MẬT KHẨU (BƯỚC 2 - XÁC THỰC OTP RESET)
     const handleVerifyResetOTP = async (e) => {
         e.preventDefault();
-        if (isOtpExpired) return alert('Mã OTP đã hết hạn. Vui lòng yêu cầu mã mới.');
+        if (isOtpExpired) { toast.error('Mã OTP đã hết hạn. Vui lòng yêu cầu mã mới.'); return; }
         setIsLoading(true);
         try {
             const res = await fetch(`/api/Auth/verify-reset-otp`, {

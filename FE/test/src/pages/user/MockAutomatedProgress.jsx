@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Container, Row, Col, Card, Spinner, Button, Modal, Form, Table } from 'react-bootstrap';
+import { FaFire, FaSmoking, FaLeaf, FaPiggyBank } from "react-icons/fa";
+import { Container, Row, Col, Card, Spinner, Button, Modal, Form, Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'; // THÊM MỚI: Import toast
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import '../../styles/ProgressDashboard.scss';
 const ProgressDashboardPage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -10,6 +13,9 @@ const ProgressDashboardPage = () => {
     const [progress, setProgress] = useState(null);
     const [progressHistory, setProgressHistory] = useState([]);
     const [showHistory, setShowHistory] = useState(false);
+
+    const [showCalendarModal, setShowCalendarModal] = useState(false);
+    const [expandedDate, setExpandedDate] = useState(null);
 
     const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
@@ -108,6 +114,78 @@ const ProgressDashboardPage = () => {
         }
     };
 
+
+    // THÊM MỚI: Hàm để đánh dấu các ngày có sai sót trên lịch
+    const handleDayClick = (date) => {
+        const dateString = date.toISOString();
+        // Nếu nhấn vào ô đang mở, thì đóng lại. Ngược lại, mở ô mới.
+        if (expandedDate === dateString) {
+            setExpandedDate(null);
+        } else {
+            setExpandedDate(dateString);
+        }
+    };
+
+    const tileContent = ({ date, view }) => {
+        if (view === 'month') {
+            const dateString = date.toISOString().slice(0, 10);
+            const historyEntry = progressHistory.find(entry => entry.progressDate.slice(0, 10) === dateString);
+
+            // Kiểm tra xem ô này có đang được mở rộng không
+            const isExpanded = expandedDate === date.toISOString();
+
+            // Nếu đang mở rộng và có dữ liệu, hiển thị chi tiết
+            if (isExpanded && historyEntry) {
+                return (
+                    <div className="expanded-content">
+                        <div className="expanded-item">
+                            <FaSmoking color="#e53e3e" />
+                            <span>Đã hút: <strong>{historyEntry.cigarettesSmokedToday || 0} điếu</strong></span>
+                        </div>
+                        <div className="expanded-item">
+                            <FaLeaf color="#28a745" />
+                            <span>Bỏ được: <strong>{historyEntry.cigarettesDropped || 0} điếu</strong></span>
+                        </div>
+                        <div className="expanded-item">
+                            <FaPiggyBank color="#f7b801" />
+                            <span>Tiết kiệm: <strong>{historyEntry.moneySaved ? historyEntry.moneySaved.toLocaleString('vi-VN') : 0} đ</strong></span>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Nếu không mở rộng, chỉ hiển thị icon nếu có sai sót
+            if (historyEntry && historyEntry.cigarettesSmokedToday > 0) {
+                const renderTooltip = (props) => (
+                    <Tooltip id={`tooltip-${dateString}`} {...props} className="calendar-tooltip">
+                        Đã hút: {historyEntry.cigarettesSmokedToday} điếu
+                    </Tooltip>
+                );
+
+                return (
+                    <OverlayTrigger placement="top" overlay={renderTooltip}>
+                        <div className="relapse-indicator">
+                            <FaFire color="#e53e3e" />
+                        </div>
+                    </OverlayTrigger>
+                );
+            }
+        }
+        return <div style={{ height: '24px' }}></div>; // Giữ chỗ để các ô không bị nhảy layout
+    };
+    const tileClassName = ({ date, view }) => {
+        if (view === 'month') {
+            const classNames = [];
+            // Thêm class nếu là ô đang mở rộng
+            if (expandedDate === date.toISOString()) {
+                classNames.push('expanded-tile');
+            }
+            return classNames.join(' ');
+        }
+        return null;
+    }
+
+
     if (isLoading) {
         return (
             <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
@@ -191,55 +269,12 @@ const ProgressDashboardPage = () => {
                 {/* History Section */}
                 <div className="history-table-section" style={{ marginTop: 32, textAlign: 'center' }}>
                     <Button
-                        variant={showHistory ? "outline-primary" : "primary"}
-                        onClick={() => setShowHistory(!showHistory)}
+                        variant="primary"
+                        onClick={() => setShowCalendarModal(true)} // Mở modal lịch
                         style={{ marginBottom: 12 }}
                     >
-                        {showHistory ? "Ẩn lịch sử từng ngày" : "Xem chi tiết từng ngày"}
+                        Xem nhật ký trên lịch
                     </Button>
-                    {showHistory && (
-                        <Card className="history-table-card" style={{ marginTop: 10 }}>
-                            <Card.Body>
-                                <h5>Lịch sử từng ngày</h5>
-                                <div className="table-responsive">
-                                    <Table bordered hover className="mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Ngày</th>
-                                                <th>Điếu thường ngày</th>
-                                                <th>Điếu đã hút</th>
-                                                <th>Điếu bỏ được</th>
-                                                <th>Tiết kiệm hôm đó</th>
-                                                <th>Điếu bỏ tích lũy</th>
-                                                <th>Tiền tích lũy</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {progressHistory && progressHistory.length > 0 ? (
-                                                progressHistory.map((item, idx) => (
-                                                    <tr key={idx}>
-                                                        <td>{item.progressDate ? item.progressDate.slice(0, 10) : ""}</td>
-                                                        <td>{item.cigarettesPerDayBaseline || 0}</td>
-                                                        <td>{item.cigarettesSmokedToday || 0}</td>
-                                                        <td>{item.cigarettesDropped || 0}</td>
-                                                        <td>{item.moneySaved ? item.moneySaved.toLocaleString('vi-VN') + " đ" : ""}</td>
-                                                        <td>{item.totalCigarettesDropped || 0}</td>
-                                                        <td>{item.totalMoneySaved ? item.totalMoneySaved.toLocaleString('vi-VN') + " đ" : ""}</td>
-                                                    </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan={7} className="text-center text-muted">
-                                                        Không có dữ liệu lịch sử.
-                                                    </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </Table>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    )}
                 </div>
             </Container>
             {/* Relapse Modal */}
@@ -276,6 +311,32 @@ const ProgressDashboardPage = () => {
                     </Button>
                     <Button variant="success" onClick={handleLogRelapse} className="modal-btn-confirm">
                         Xác nhận
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* THÊM MỚI: Modal hiển thị lịch */}
+            <Modal show={showCalendarModal} onHide={() => setShowCalendarModal(false)} centered size="xl">
+                <Modal.Header closeButton>
+                    <Modal.Title>Nhật ký Tiến trình</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="d-flex justify-content-center calendar-modal-body">
+                    <Calendar
+                        tileContent={tileContent}
+                        tileClassName={tileClassName}
+                        onClickDay={handleDayClick}
+                        locale="vi-VN"
+                        selectRange={false}
+                        value={null}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <div className="d-flex align-items-center">
+                        <FaFire color="#e53e3e" className="me-2" />
+                        <span>= Ngày có ghi nhận hút thuốc</span>
+                    </div>
+                    <Button variant="secondary" onClick={() => setShowCalendarModal(false)}>
+                        Đóng
                     </Button>
                 </Modal.Footer>
             </Modal>

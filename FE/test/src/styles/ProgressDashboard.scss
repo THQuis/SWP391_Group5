@@ -387,6 +387,159 @@ $card-gradient: linear-gradient(135deg, #2d3436 0%, #636e72 50%, #2d3436 100%);
     }
 }
 
+/* === NÂNG CẤP GIAO DIỆN CHO REACT-CALENDAR === */
+
+// Container chính của lịch
+.calendar-modal-body .react-calendar {
+    width: 100%;
+    border: none; // Bỏ viền mặc định
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    padding: 20px;
+}
+
+// Thanh điều hướng (Tháng/Năm và các nút tới/lui)
+.react-calendar__navigation {
+    display: flex;
+    margin-bottom: 1em;
+
+    button {
+        font-size: 1.1em;
+        font-weight: 600;
+        color: #28a745; // Màu xanh lá cây chủ đạo
+        background: none;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+
+        &:hover,
+        &:focus {
+            background-color: #e9f5ec; // Màu nền khi hover
+        }
+    }
+}
+
+// Tên các ngày trong tuần (Mon, Tue, Wed...)
+.react-calendar__month-view__weekdays__weekday {
+    text-align: center;
+    font-weight: 600;
+    color: #6c757d;
+    padding: 0.5em;
+
+    abbr {
+        /* Bỏ gạch chân */
+        text-decoration: none;
+    }
+}
+
+// Các ô ngày trong tháng
+.react-calendar__tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 95px; // SỬA ĐỔI: Tăng chiều cao ô từ 80px lên 95px
+    padding: 10px; // Tăng chiều cao ô
+    background: none;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #f8f9fa; // Màu nền khi hover
+    }
+}
+
+// Ngày hiện tại
+.react-calendar__tile--now {
+    background-color: #e9f5ec; // Nền xanh lá cây nhạt
+    font-weight: 700;
+}
+
+// Ngày được chọn
+.react-calendar__tile--active {
+    background-color: #28a745 !important;
+    color: white !important;
+
+    .relapse-indicator {
+        background-color: white; // Đổi màu chấm đỏ thành trắng trên nền xanh
+    }
+}
+
+// Chỉ báo cho ngày có sai sót (thay cho chấm đỏ cũ)
+.relapse-indicator {
+    margin-top: 8px;
+    font-size: 1.2rem; // Kích thước emoji
+}
+
+// Tooltip chú thích
+.calendar-tooltip {
+    .tooltip-inner {
+        background-color: #343a40;
+        color: white;
+        border-radius: 6px;
+        padding: 5px 10px;
+        font-size: 0.9em;
+    }
+
+    .tooltip-arrow::before {
+        border-top-color: #343a40;
+    }
+}
+
+.react-calendar__tile {
+    transition: height 0.35s ease-in-out, background-color 0.2s ease;
+    align-items: flex-start; // Căn nội dung lên trên
+    text-align: left;
+    padding: 8px;
+}
+
+// Style cho ô lịch khi được mở rộng
+.expanded-tile {
+    height: 180px !important; // Chiều cao khi mở rộng
+    background-color: #f8f9fa;
+    align-items: flex-start;
+}
+
+// Container cho nội dung chi tiết bên trong ô
+.expanded-content {
+    width: 100%;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+// Từng dòng thông tin chi tiết
+.expanded-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    color: #333;
+
+    svg {
+        // Style cho icon
+        margin-right: 8px;
+        color: #555;
+    }
+}
+
+// Hiệu ứng xuất hiện mờ
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 // Responsive breakpoints
 @media (max-width: 576px) {
     .dashboard-content {
@@ -404,4 +557,6 @@ $card-gradient: linear-gradient(135deg, #2d3436 0%, #636e72 50%, #2d3436 100%);
         padding-left: 1rem;
         padding-right: 1rem;
     }
+
+
 }

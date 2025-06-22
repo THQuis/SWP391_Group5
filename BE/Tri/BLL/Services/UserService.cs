@@ -96,20 +96,35 @@ namespace Smoking.BLL.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture, string description)
+        public async Task UpdateProfileAsync(string email,string? fullName,string? phoneNumber,string? profilePicture,string? description,string? gender,
+                    DateTime? dateOfBirth)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
             if (user == null)
-                throw new System.Exception("Không tìm thấy user với email này.");
+                throw new Exception("Không tìm thấy user với email này.");
 
-            user.FullName = fullName;
-            user.PhoneNumber = phoneNumber;
-            user.Description = description;
-            user.ProfilePicture = profilePicture;
+            if (!string.IsNullOrWhiteSpace(fullName))
+                user.FullName = fullName;
+
+            if (!string.IsNullOrWhiteSpace(phoneNumber))
+                user.PhoneNumber = phoneNumber;
+
+            if (!string.IsNullOrWhiteSpace(profilePicture))
+                user.ProfilePicture = profilePicture;
+
+            if (!string.IsNullOrWhiteSpace(description))
+                user.Description = description;
+
+            if (!string.IsNullOrWhiteSpace(gender))
+                user.Gender = gender;
+
+            if (dateOfBirth.HasValue)
+                user.DateOfBirth = dateOfBirth.Value.Date; 
 
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
         }
+
 
         // Các phương thức mới
         public async Task<User> GetUserByEmailAsync(string email)

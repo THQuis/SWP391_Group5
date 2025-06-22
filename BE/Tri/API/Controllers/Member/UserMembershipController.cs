@@ -11,14 +11,14 @@ namespace Smoking.API.Controllers.Member
     [ApiController]
     [Route("api/membership")]
     [Authorize(Roles = "2")]
-    public class MembershipController : ControllerBase
+    public class UserMembershipController : ControllerBase
     {
         private readonly IMembershipPackageService _packageService;
         private readonly IPaymentService _paymentService;
         private readonly IUserMembershipService _userMembershipService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public MembershipController(
+        public UserMembershipController(
             IMembershipPackageService packageService,
             IPaymentService paymentService,
             IUserMembershipService userMembershipService,

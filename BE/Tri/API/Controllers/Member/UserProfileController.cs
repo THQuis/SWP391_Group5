@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
-using Smoking.BLL.Interfaces; // Dùng interface chứ không phải BLL.Services trực tiếp
+using Smoking.BLL.Interfaces;
 using System.Security.Claims;
 
 namespace Smoking.API.Controllers.Member
@@ -46,6 +46,8 @@ namespace Smoking.API.Controllers.Member
                     user.Email,
                     user.PhoneNumber,
                     user.ProfilePicture,
+                    user.Gender,
+                    DateOfBirth = user.DateOfBirth?.ToString("yyyy-MM-dd"),
                     RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"),
                     RoleName = user.Role?.RoleName ?? "Unknown",
                     user.Status,
@@ -53,6 +55,7 @@ namespace Smoking.API.Controllers.Member
                     Membership = activeMembership == null ? null : new
                     {
                         PackageName = activeMembership.Package.PackageName,
+                        PackageType = activeMembership.Package.PackageType,
                         StartDate = activeMembership.StartDate.ToString("yyyy-MM-dd"),
                         EndDate = activeMembership.EndDate.ToString("yyyy-MM-dd"),
                         PaymentStatus = activeMembership.PaymentStatus
@@ -60,6 +63,7 @@ namespace Smoking.API.Controllers.Member
                 }
             });
         }
+
 
         [HttpGet("notifications")]
         public IActionResult GetNotifications()
@@ -91,7 +95,9 @@ namespace Smoking.API.Controllers.Member
                     request.FullName,
                     request.PhoneNumber,
                     request.ProfilePicture,
-                    request.Description
+                    request.Description,
+                    request.Gender,
+                    request.DateOfBirth
                 );
 
                 return Ok(new { Message = "Cập nhật thông tin thành công." });

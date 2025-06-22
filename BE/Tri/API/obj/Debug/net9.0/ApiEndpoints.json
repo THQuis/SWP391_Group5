@@ -243,6 +243,59 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "CreatePackage",
+    "RelativePath": "api/admin/memberships/packages",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "package",
+        "Type": "Smoking.DAL.Entities.MembershipPackage",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "UpdatePackage",
+    "RelativePath": "api/admin/memberships/packages/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatedPackage",
+        "Type": "Smoking.DAL.Entities.MembershipPackage",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "DeletePackage",
+    "RelativePath": "api/admin/memberships/packages/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
     "Method": "GetAllUserMemberships",
     "RelativePath": "api/admin/memberships/users",
     "HttpMethod": "GET",
@@ -661,7 +714,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Member.MembershipController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
     "Method": "CreatePayment",
     "RelativePath": "api/membership/create-payment",
     "HttpMethod": "POST",
@@ -677,7 +730,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Member.MembershipController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
     "Method": "GetPackages",
     "RelativePath": "api/membership/packages",
     "HttpMethod": "GET",
@@ -687,7 +740,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Member.MembershipController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
     "Method": "PaymentCallback",
     "RelativePath": "api/membership/payment-callback",
     "HttpMethod": "POST",
@@ -703,7 +756,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Member.MembershipController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
     "Method": "GetPaymentHistory",
     "RelativePath": "api/membership/payment-history",
     "HttpMethod": "GET",

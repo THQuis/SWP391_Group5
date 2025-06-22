@@ -101,5 +101,53 @@ namespace Smoking.API.Controllers.Admin
             return Ok(result);
         }
 
+        [HttpPost("packages")]
+        public async Task<IActionResult> CreatePackage([FromBody] MembershipPackage package)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await _unitOfWork.MembershipPackages.AddAsync(package);
+            await _unitOfWork.CompleteAsync();
+            return Ok(new { message = "Tạo gói thành công", package });
+        }
+
+        [HttpPut("packages/{id}")]
+        public async Task<IActionResult> UpdatePackage(int id, [FromBody] MembershipPackage updatedPackage)
+        {
+            var package = await _unitOfWork.MembershipPackages.GetByIdAsync(id);
+            if (package == null)
+                return NotFound("Không tìm thấy gói");
+
+            package.PackageName = updatedPackage.PackageName;
+            package.PackageType = updatedPackage.PackageType;
+            package.Description = updatedPackage.Description;
+            package.Price = updatedPackage.Price;
+            package.Duration = updatedPackage.Duration;
+
+            _unitOfWork.MembershipPackages.Update(package);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new { message = "Cập nhật gói thành công", package });
+        }
+
+        [HttpDelete("packages/{id}")]
+        public async Task<IActionResult> DeletePackage(int id)
+        {
+            var package = await _unitOfWork.MembershipPackages.GetByIdAsync(id);
+            if (package == null)
+                return NotFound("Không tìm thấy gói");
+
+            // Kiểm tra xem gói có đang được dùng không
+            var inUse = await _unitOfWork.UserMemberships.AnyAsync(m => m.PackageID == id);
+            if (inUse)
+                return BadRequest("Không thể xoá vì có người dùng đang sử dụng gói này.");
+
+            _unitOfWork.MembershipPackages.Remove(package);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new { message = "Xoá gói thành công" });
+        }
+
     }
 }

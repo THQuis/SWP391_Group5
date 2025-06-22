@@ -16,7 +16,8 @@ namespace Smoking.BLL.Interfaces
 
         // MỚI THÊM:
         Task DeleteUserByEmailAsync(string email);
-        Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture, string description);
+        Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture, string description, string gender, DateTime? dateOfBirth);
+
 
         // Các phương thức mới
         Task<User> GetUserByEmailAsync(string email); // Lấy user theo email

@@ -36,6 +36,10 @@ namespace Smoking.DAL.Entities
         public string? ProfilePicture { get; set; }  // nullable
 
         public string? Description { get; set; }
+        [MaxLength(10)]
+        public string? Gender { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
 
         // Navigation collections initialized to avoid null reference
         public ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();

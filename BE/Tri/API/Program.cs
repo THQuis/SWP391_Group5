@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Smoking.API.Models;
 using Smoking.BLL.Interfaces;
-using Smoking.BLL.Models; // Đảm bảo namespace này tồn tại và chứa EmailSettings nếu bạn dùng
+using Smoking.BLL.Models;
 using Smoking.BLL.Services;
 using Smoking.DAL.Data;
 using Smoking.DAL.Interfaces.Repositories;
@@ -13,49 +13,58 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Cấu hình JwtSettings
+// --- CẤU HÌNH CÁC SETTINGS ---
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
-// Cấu hình EmailSettings
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-
-// Đăng ký DbContext với SQL Server
+// --- CẤU HÌNH DATABASE ---
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Đăng ký các service, repository
+// --- ĐĂNG KÝ CÁC SERVICE VÀ REPOSITORIES ---
+
+// Authentication & Authorization
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IAchievementEvaluatorService, AchievementEvaluatorService>();
 
-// Đăng ký MailService
-builder.Services.AddScoped<IMailService, MailService>();
+// User Membership & Payment
+builder.Services.AddScoped<IMembershipPackageService, MembershipPackageService>();
+builder.Services.AddScoped<IUserMembershipService, UserMembershipService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IMembershipPackageRepository, MembershipPackageRepository>();
+builder.Services.AddScoped<IUserMembershipRepository, UserMembershipRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-// ... các service khác
+// Blog & Notification
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
-// --- ĐĂNG KÝ USER SERVICE ---
-builder.Services.AddScoped<IUserService, UserService>();
+// Progress & Plan
+builder.Services.AddScoped<IQuitPlanService, QuitPlanService>();
+builder.Services.AddScoped<IQuitPlanAutoService, QuitPlanAutoService>();
+builder.Services.AddScoped<IQuitProgressService, QuitProgressService>();
+builder.Services.AddScoped<IQuitProgressRepository, QuitProgressRepository>();
 
-// Thêm các dòng sau trong ConfigureServices
+// Questionnaire & Email
+builder.Services.AddScoped<IQuestionnaireService, QuestionnaireService>();
+builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.Configure<MomoConfig>(builder.Configuration.GetSection("Momo"));
 
-builder.Services.AddScoped<INotificationService, NotificationService>();  // Đăng ký NotificationService
-builder.Services.AddScoped<INotificationRepository, NotificationRepository>();  // Đăng ký NotificationRepository
+
+// --- CẤU HÌNH CÁC DỊCH VỤ KHÁC ---
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Đảm bảo bạn đăng ký UnitOfWork nếu chưa có
-builder.Services.AddScoped<IAchievementService, AchievementService>();
-builder.Services.AddScoped<IAchievementRepository, AchievementRepository>();
-builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
+builder.Services.AddMemoryCache(); // MemoryCache cho OTP tạm
 
-// --- HẾT ĐĂNG KÝ USER SERVICE ---
-
-// Thêm MemoryCache (bắt buộc nếu dùng để lưu OTP tạm)
-builder.Services.AddMemoryCache();
-
-// Thêm Controller
+// --- CẤU HÌNH CONTROLLER ---
 builder.Services.AddControllers();
 
-// Cấu hình Authentication dùng JWT Bearer
+// --- CẤU HÌNH JWT BEARER AUTHENTICATION ---
 var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
 builder.Services.AddAuthentication(options =>
 {
@@ -77,10 +86,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Thêm Authorization
+// --- CẤU HÌNH AUTHORIZE ---
 builder.Services.AddAuthorization();
 
-// Cấu hình Swagger để hỗ trợ JWT Bearer token
+// --- CẤU HÌNH SWAGGER ---
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -110,6 +119,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// --- CẤU HÌNH SWAGGER TRONG MÔI TRƯỜNG DEVELOPMENT ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -121,10 +131,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
+// --- ĐĂNG KÝ CÁC ROUTE ---
 app.MapControllers();
 
 app.Run();

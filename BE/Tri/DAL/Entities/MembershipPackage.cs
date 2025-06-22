@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
+    [Table("MembershipPackage")]
     public class MembershipPackage
     {
         [Key]
@@ -20,11 +21,10 @@ namespace Smoking.DAL.Entities
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
-
         [Required]
         public int Duration { get; set; } // tháng
 
         // Navigation
-        public ICollection<UserMembership> UserMemberships { get; set; }
+        public virtual ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();
     }
 }

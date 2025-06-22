@@ -8,7 +8,7 @@ const Sidebar = () => {
     return (
 
         <div className="sidebar d-flex flex-column p-3">
-            <img src="https://github.com/THQuis/SWP391_Group5/blob/main/Frontend/image/Logo.png?raw=true"
+            <img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true"
                 alt="Logo" className="logoSibar mb-4" />
             <Nav className="flex-column  w-100">
                 <Nav.Link as={Link} to="/admin">Dashboard</Nav.Link> {/* Chỉnh sửa từ href thành Link */}

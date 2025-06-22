@@ -4,26 +4,37 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
+    [Table("QuitProgress")]
     public class QuitProgress
     {
         [Key]
         public int ProgressID { get; set; }
 
         [Required]
-        public int QuitPlanID { get; set; }
+        public int QuitPlanID { get; set; }  // Khóa ngoại liên kết với QuitPlan
         public QuitPlan QuitPlan { get; set; }
 
-        [Required]
-        public DateTime Date { get; set; }
+        public DateTime ProgressDate { get; set; }
 
-        public int CigarettesSmoked { get; set; }
-        public int PacksUsed { get; set; }
+        // ✅ Số điếu người dùng khai báo ban đầu mỗi ngày
+        public int CigarettesPerDayBaseline { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        // ✅ Tiền tiết kiệm hôm đó
         public decimal MoneySaved { get; set; }
 
         public string Notes { get; set; }
-        public int DaysSmokeFree { get; set; }
-        public string HealthImprovement { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        public DateTime? LastSmokeDate { get; set; }
+
+        // ✅ Số thuốc đã hút trong ngày
+        public int? CigarettesSmokedToday { get; set; }
+
+        // ✅ Số thuốc đã bỏ hôm đó = baseline - đã hút
+        public int? CigarettesDropped { get; set; }
+        public int? TotalCigarettesDropped { get; set; }
+        public decimal? TotalMoneySaved { get; set; }
+
     }
 }

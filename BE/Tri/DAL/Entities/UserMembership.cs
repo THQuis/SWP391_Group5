@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
+    [Table("UserMembership")]
     public class UserMembership
     {
         [Key]
@@ -11,11 +13,15 @@ namespace Smoking.DAL.Entities
 
         [Required]
         public int UserID { get; set; }
-        public User User { get; set; }
+
+        [ForeignKey("UserID")]
+        public User User { get; set; } = null!;
 
         [Required]
         public int PackageID { get; set; }
-        public MembershipPackage Package { get; set; }
+
+        [ForeignKey("PackageID")]
+        public MembershipPackage Package { get; set; } = null!;
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -24,9 +30,9 @@ namespace Smoking.DAL.Entities
         public DateTime EndDate { get; set; }
 
         [Required, MaxLength(50)]
-        public string PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; } = "Pending";
 
-        // Navigation
-        public ICollection<Payment> Payments { get; set; }
+        // Navigation to payments
+        public ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

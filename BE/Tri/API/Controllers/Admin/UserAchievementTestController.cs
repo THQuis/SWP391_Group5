@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smoking.BLL.Interfaces;
 using System.Threading.Tasks;
 
@@ -6,6 +7,7 @@ namespace Smoking.API.Controllers.Test
 {
     [Route("api/test/userachievement")]
     [ApiController]
+    [Authorize(Roles = "1")]
     public class UserAchievementTestController : ControllerBase
     {
         private readonly IUserAchievementService _userAchievementService;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
 
@@ -6,6 +7,7 @@ namespace Smoking.API.Controllers.Member
 {
     [ApiController]
     [Route("api/membership")]
+    [Authorize(Roles = "2")]
     public class MembershipController : ControllerBase
     {
         private readonly IMembershipPackageService _packageService;

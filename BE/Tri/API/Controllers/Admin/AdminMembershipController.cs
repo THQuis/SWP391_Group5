@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smoking.API.Models.Admin;
 using Smoking.DAL.Entities;
@@ -9,6 +10,7 @@ namespace Smoking.API.Controllers.Admin
 {
     [Route("api/admin/memberships")]
     [ApiController]
+    [Authorize(Roles = "1")]
     public class AdminMembershipController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -85,7 +87,19 @@ namespace Smoking.API.Controllers.Admin
         public async Task<IActionResult> GetAllPackages()
         {
             var packages = await _unitOfWork.MembershipPackages.GetAllAsync();
-            return Ok(packages);
+            var userMemberships = await _unitOfWork.UserMemberships.GetAllAsync();
+
+            var result = packages.Select(p => new AdminPackageWithCountDto
+            {
+                PackageId = p.PackageID,
+                PackageName = p.PackageName,
+                Duration = p.Duration,
+                Price = p.Price,
+                PurchasedCount = userMemberships.Count(m => m.PackageID == p.PackageID)
+            }).ToList();
+
+            return Ok(result);
         }
+
     }
 }

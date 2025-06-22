@@ -3,24 +3,84 @@
   "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\userachievementtestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\userachievementtestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\achievementandprogresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\achievementandprogresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\questionnairecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\questionnairecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\updateprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\member\\membershipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\membershipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\quitplanadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\quitplanadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\notificationadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\notificationadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\blogadmincontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\blogadmincontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\adminquestionnairecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\adminquestionnairecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\adminmembershipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\adminmembershipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\interfaces\\ipaymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\ipaymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\bll\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\api\\models\\user\\createpaymentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\createpaymentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project\\swp391_group5\\be\\tri\\dal\\repositories\\paymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\paymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +90,266 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UpdateProfileRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\UpdateProfileRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\User\\UpdateProfileRequest.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\UpdateProfileRequest.cs",
-              "RelativeToolTip": "API\\Models\\User\\UpdateProfileRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T04:36:26.819Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\User.cs",
-              "RelativeDocumentMoniker": "DAL\\Entities\\User.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\User.cs",
-              "RelativeToolTip": "DAL\\Entities\\User.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAswDQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T04:35:33.066Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\UserService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\UserService.cs",
-              "RelativeToolTip": "BLL\\Services\\UserService.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAiwIcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T04:06:04.85Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "UserProfileController.cs",
               "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\UserProfileController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserProfileController.cs",
               "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\UserProfileController.cs",
               "RelativeToolTip": "API\\Controllers\\Member\\UserProfileController.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAuwF0AAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T04:06:56.238Z",
+              "WhenOpened": "2025-06-22T04:55:03.043Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IUserService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IUserService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IUserService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IUserService.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAwwBsAAAAAAAAAAAAAAA==",
+              "Title": "QuitPlanController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\QuitPlanController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\QuitPlanController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\QuitPlanController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\QuitPlanController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T04:05:26.014Z",
+              "WhenOpened": "2025-06-22T04:54:59.33Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "QuestionnaireController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\QuestionnaireController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\QuestionnaireController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\QuestionnaireController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\QuestionnaireController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:54.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AchievementAndProgressController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\AchievementAndProgressController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\AchievementAndProgressController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\AchievementAndProgressController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\AchievementAndProgressController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:45.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserAchievementTestController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\UserAchievementTestController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\UserAchievementTestController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\UserAchievementTestController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\UserAchievementTestController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:38.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "QuitPlanAdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\QuitPlanAdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\QuitPlanAdminController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\QuitPlanAdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\QuitPlanAdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:36.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NotificationAdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\NotificationAdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:33.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MembershipController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\MembershipController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\MembershipController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\MembershipController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\MembershipController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:04:15.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BlogAdminController .cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\BlogAdminController .cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\BlogAdminController .cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\BlogAdminController .cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\BlogAdminController .cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:31.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AdminQuestionnaireController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminQuestionnaireController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminQuestionnaireController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminQuestionnaireController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\AdminQuestionnaireController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:27.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AdminMembershipController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminMembershipController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminMembershipController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminMembershipController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\AdminMembershipController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:17.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:16.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AchievementAdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:54:09.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CreatePaymentRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\CreatePaymentRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\User\\CreatePaymentRequest.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Models\\User\\CreatePaymentRequest.cs",
+              "RelativeToolTip": "API\\Models\\User\\CreatePaymentRequest.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAYwBcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:17:12.967Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PaymentService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\PaymentService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\PaymentService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\PaymentService.cs",
+              "RelativeToolTip": "BLL\\Services\\PaymentService.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAADwv3EAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:15:09.752Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IPaymentService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IPaymentService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IPaymentService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IPaymentService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IPaymentService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAkAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:14:52.228Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAkwBUAAABcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:10:00.974Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\GenericRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAywGAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:08:56.745Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAIwIIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:48:50.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "PaymentRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\PaymentRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\PaymentRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\PaymentRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\PaymentRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAiwB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T04:08:31.352Z",
               "EditorCaption": ""
             }
           ]

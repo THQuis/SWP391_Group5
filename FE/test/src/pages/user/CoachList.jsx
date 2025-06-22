@@ -1,276 +1,161 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Container,
     Row,
     Col,
-    Card,
-    Button,
-    Badge,
-    Spinner,
     Image,
-    Modal,
-    Form,
+    Badge,
+    Button,
+    Spinner,
+    ListGroup,
     Alert,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-// Dữ liệu mẫu coach, có thể thay bằng API backend
-const DUMMY_COACHES = [
+// Giả lập data từ database (bảng User), chỉ lấy những user có RoleID = 3 (Coach)
+const COACHES = [
     {
-        id: 1,
-        name: "Nguyễn Minh Long",
-        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-        specialty: "Cai thuốc lá",
-        experience: 5,
-        rating: 4.8,
-        bio: "Chuyên gia đồng hành hỗ trợ bạn xây dựng và duy trì lối sống lành mạnh. Đã giúp hơn 200 thành viên vượt qua thói quen hút thuốc.",
-        tags: ["Cai thuốc", "Sức khỏe", "Động lực"],
+        UserID: 1,
+        FullName: "Nguyễn văn A",
+        Email: "nvA@gmail.com",
+        PhoneNumber: "0905556666",
+        ProfilePicture: null,
+        Status: "Active",
     },
     {
-        id: 2,
-        name: "Lê Thị Thu Hằng",
-        avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-        specialty: "Dinh dưỡng & Động lực",
-        experience: 7,
-        rating: 4.9,
-        bio: "Luôn tận tâm hỗ trợ từng học viên, giúp bạn lên kế hoạch ăn uống và sống tích cực hơn mỗi ngày.",
-        tags: ["Dinh dưỡng", "Động lực", "Tư vấn cá nhân"],
+        UserID: 2,
+        FullName: "Trần Thị Bình",
+        Email: "member.binh@example.com",
+        PhoneNumber: "0907778888",
+        ProfilePicture: null,
+        Status: "Active",
     },
     {
-        id: 3,
-        name: "Hoàng Tuấn Anh",
-        avatar: "https://randomuser.me/api/portraits/men/11.jpg",
-        specialty: "Huấn luyện tâm lý",
-        experience: 4,
-        rating: 4.7,
-        bio: "Giúp khách hàng vượt qua căng thẳng, lo âu trong quá trình cai nghiện và thay đổi thói quen xấu.",
-        tags: ["Tâm lý", "Cố vấn", "Thói quen tốt"],
+        UserID: 3,
+        FullName: "Lê Thị B",
+        Email: "ltb@gmail.com",
+        PhoneNumber: "0905556666",
+        ProfilePicture: null,
+        Status: "Active",
     },
     {
-        id: 4,
-        name: "Trần Mỹ Duyên",
-        avatar: "https://randomuser.me/api/portraits/women/65.jpg",
-        specialty: "Chăm sóc sức khỏe tổng quát",
-        experience: 6,
-        rating: 4.85,
-        bio: "Chia sẻ kiến thức khoa học và động viên học viên tiến bộ từng ngày.",
-        tags: ["Sức khỏe", "Chăm sóc", "Đồng hành"],
+        UserID: 4,
+        FullName: "Trần Trung k",
+        Email: "ttk@gmail.com",
+        PhoneNumber: "0907778888",
+        ProfilePicture: null,
+        Status: "Active",
     },
+    // Có thể thêm các coach khác ở đây
 ];
-
-// Modal đăng ký lịch tư vấn coach
-function BookCoachModal({ show, onHide, coach }) {
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
-    const [note, setNote] = useState("");
-    const [submitting, setSubmitting] = useState(false);
-    const [success, setSuccess] = useState(false);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSubmitting(true);
-        // TODO: Gắn API gửi đơn đăng ký lịch ở đây
-        setTimeout(() => {
-            setSuccess(true);
-            setSubmitting(false);
-        }, 800);
-    };
-
-    useEffect(() => {
-        setDate("");
-        setTime("");
-        setNote("");
-        setSuccess(false);
-        setSubmitting(false);
-    }, [show, coach]);
-
-    return (
-        <Modal show={show} onHide={onHide} centered>
-            <Modal.Header closeButton>
-                <Modal.Title>Đăng ký lịch tư vấn với Coach</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {coach && (
-                    <div className="mb-3 d-flex align-items-center">
-                        <Image
-                            src={coach.avatar}
-                            roundedCircle
-                            width={50}
-                            height={50}
-                            className="me-3"
-                            style={{ border: "2px solid #2EA3A3", objectFit: "cover" }}
-                            alt={coach.name}
-                        />
-                        <div>
-                            <div className="fw-bold">{coach.name}</div>
-                            <div className="text-muted" style={{ fontSize: 14 }}>
-                                {coach.specialty}
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {success ? (
-                    <Alert variant="success">
-                        Đã gửi đơn đăng ký lịch tư vấn thành công! Hãy chờ thông báo của hệ thống nhé.
-                    </Alert>
-                ) : (
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Chọn ngày</Form.Label>
-                            <Form.Control
-                                type="date"
-                                required
-                                value={date}
-                                min={new Date().toISOString().slice(0, 10)}
-                                onChange={(e) => setDate(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Chọn giờ</Form.Label>
-                            <Form.Control
-                                type="time"
-                                required
-                                value={time}
-                                onChange={(e) => setTime(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Ghi chú (tuỳ chọn)</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows={2}
-                                placeholder="Nhập thêm thông tin mong muốn..."
-                                value={note}
-                                onChange={(e) => setNote(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Button
-                            variant="success"
-                            type="submit"
-                            disabled={submitting || !date || !time}
-                            className="w-100"
-                        >
-                            {submitting ? "Đang gửi..." : "Gửi đơn đăng ký"}
-                        </Button>
-                    </Form>
-                )}
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>
-                    Đóng
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    );
-}
 
 const UserButtonCoach = () => {
     const [coaches, setCoaches] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Modal
-    const [showModal, setShowModal] = useState(false);
-    const [selectedCoach, setSelectedCoach] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
+        // Giả lập fetch API
         setTimeout(() => {
-            setCoaches(DUMMY_COACHES);
+            setCoaches(COACHES);
             setLoading(false);
-        }, 500);
-        // Nếu dùng API:
-        // fetch('/api/coaches')
-        //   .then(res => res.json())
-        //   .then(data => { setCoaches(data); setLoading(false); });
+        }, 400);
     }, []);
 
-    const handleBook = (coach) => {
-        setSelectedCoach(coach);
-        setShowModal(true);
-    };
-
     return (
-        <Container style={{ marginTop: 40, marginBottom: 40 }}>
+        <Container className="pt-4">
             <h2 className="fw-bold mb-4" style={{ fontSize: 24 }}>
-                Danh sách Coach đồng hành
+                Danh sách các Chuyên gia tư vấn (Coach)
             </h2>
-            <div className="mb-3 text-secondary" style={{ fontSize: 16 }}>
-                Hãy chọn một coach phù hợp để đồng hành cùng bạn trên hành trình thay đổi!
-            </div>
             {loading ? (
                 <div className="d-flex justify-content-center my-5">
                     <Spinner animation="border" />
                 </div>
             ) : (
                 <Row xs={1} sm={2} md={2} lg={3} className="g-4">
+                    {coaches.length === 0 && (
+                        <Col>
+                            <Alert variant="info">Chưa có Chuyên gia tư vấn nào.</Alert>
+                        </Col>
+                    )}
                     {coaches.map((coach) => (
-                        <Col key={coach.id} className="d-flex align-items-stretch">
-                            <Card className="shadow-sm w-100" style={{ borderRadius: 20 }}>
-                                <Card.Body>
-                                    <div className="d-flex align-items-center mb-3">
-                                        <Image
-                                            src={coach.avatar}
-                                            roundedCircle
-                                            width={70}
-                                            height={70}
+                        <Col key={coach.UserID} className="d-flex align-items-stretch">
+                            <div
+                                className="shadow-sm w-100"
+                                style={{
+                                    borderRadius: 22,
+                                    border: "1.5px solid #e8e8e8",
+                                    background: "#fff",
+                                    padding: 24,
+                                    marginBottom: 10,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
+                                }}
+                            >
+                                <div className="d-flex align-items-center mb-3">
+                                    <Image
+                                        src={
+                                            coach.ProfilePicture ||
+                                            "https://randomuser.me/api/portraits/lego/6.jpg"
+                                        }
+                                        roundedCircle
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                            objectFit: "cover",
+                                            border: "3px solid #2EA3A3",
+                                            marginRight: 18,
+                                        }}
+                                        alt={coach.FullName}
+                                    />
+                                    <div>
+                                        <div
+                                            className="fw-bold"
                                             style={{
-                                                objectFit: "cover",
-                                                border: "3px solid #2EA3A3",
-                                                marginRight: 18,
+                                                fontSize: 20,
+                                                color: "#183153",
+                                                cursor: "pointer",
+                                                textDecoration: "underline",
                                             }}
-                                            alt={coach.name}
-                                        />
+                                            onClick={() =>
+                                                navigate(`/User/coach/profile/${coach.UserID}`)
+                                            }
+                                        >
+                                            {coach.FullName}
+                                        </div>
+                                        <div className="text-muted" style={{ fontSize: 15 }}>
+                                            Email: {coach.Email}
+                                        </div>
                                         <div>
-                                            <div className="fw-bold" style={{ fontSize: 20 }}>
-                                                {coach.name}
-                                            </div>
-                                            <div className="text-muted" style={{ fontSize: 15 }}>
-                                                {coach.specialty}
-                                            </div>
-                                            <div>
-                                                <Badge bg="success" style={{ fontSize: 13, marginRight: 4 }}>
-                                                    {coach.experience} năm kinh nghiệm
-                                                </Badge>
-                                                <Badge bg="warning" text="dark" style={{ fontSize: 13 }}>
-                                                    ★ {coach.rating}
-                                                </Badge>
-                                            </div>
+                                            <Badge bg="info" style={{ fontSize: 12, marginRight: 4 }}>
+                                                SĐT: {coach.PhoneNumber}
+                                            </Badge>
+                                            <Badge
+                                                bg={coach.Status === "Active" ? "success" : "secondary"}
+                                                style={{ fontSize: 12 }}
+                                            >
+                                                {coach.Status === "Active" ? "Đang hoạt động" : "Không hoạt động"}
+                                            </Badge>
                                         </div>
                                     </div>
-                                    <div className="mb-2" style={{ minHeight: 56, fontSize: 15 }}>
-                                        {coach.bio}
-                                    </div>
-                                    <div className="mb-3">
-                                        {coach.tags.map((tag, idx) => (
-                                            <Badge
-                                                key={idx}
-                                                bg="info"
-                                                text="dark"
-                                                style={{ fontSize: 12, marginRight: 5 }}
-                                            >
-                                                {tag}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                    <div className="d-flex justify-content-end">
-                                        <Button
-                                            variant="primary"
-                                            size="sm"
-                                            onClick={() => handleBook(coach)}
-                                        >
-                                            Đăng ký lịch tư vấn
-                                        </Button>
-                                    </div>
-                                </Card.Body>
-                            </Card>
+                                </div>
+                                <div className="d-flex justify-content-end">
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
+                                        onClick={() => navigate(`/User/coach/profile/${coach.UserID}`)} // Chuyển đến trang chi tiết coach
+                                    >
+                                        Xem chi tiết
+                                    </Button>
+                                </div>
+                            </div>
                         </Col>
                     ))}
                 </Row>
             )}
-            <BookCoachModal
-                show={showModal}
-                onHide={() => setShowModal(false)}
-                coach={selectedCoach}
-            />
         </Container>
     );
 };

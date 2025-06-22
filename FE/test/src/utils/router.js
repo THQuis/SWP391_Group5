@@ -12,7 +12,8 @@ export const ROUTERS = {
         PACKAGE: "/User/package",
         BLOG: "/User/blog",
         RANKING: "/User/ranking",
-        PROGRESS: "/User/progress"
+        PROGRESS: "/User/progress",
+        PROFILECOACH: "/User/coach/profile/:id"
     },
     COACH: {
 

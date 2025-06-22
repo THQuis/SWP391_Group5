@@ -31,6 +31,7 @@ import ManagementPackage from "../pages/admin/ManagementPackage";
 import ManagementPerformance from "../pages/admin/ManagementPerformance";
 import ManagementPlan from "../pages/admin/ManagementPlan";
 import ManagementNotification from "../pages/admin/ManagementNotification";
+import ProfileOfCoach from "../pages/user/ProfileOfCoach";
 
 
 const RouterCustom = () => {
@@ -52,6 +53,8 @@ const RouterCustom = () => {
                 <Route path={ROUTERS.USER.PACKAGE} element={<PackagePage />} />
                 <Route path={ROUTERS.USER.COACH} element={<CoachList />} />
                 <Route path={ROUTERS.USER.RANKING} element={<RankingPage />} />
+                <Route path={ROUTERS.USER.PROFILECOACH} element={<ProfileOfCoach />} />
+
             </Route>
 
             {/* === LAYOUT CHO ADMIN VÀ CÁC TRANG CON (Được bảo vệ) === */}

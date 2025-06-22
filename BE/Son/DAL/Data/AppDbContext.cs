@@ -1,11 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Reflection.Emit;
+using Microsoft.EntityFrameworkCore;
 using Smoking.DAL.Entities;
 
 namespace Smoking.DAL.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {
+        }
 
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
@@ -21,14 +26,16 @@ namespace Smoking.DAL.Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ConsultationBooking> ConsultationBookings { get; set; }
-        public DbSet<Question> Questions { get; set; }
-        public DbSet<AnswerOption> AnswerOptions { get; set; }
         public DbSet<QuitPlanSelectedAnswers> QuitPlanSelectedAnswers { get; set; }
+        public DbSet<AnswerOption> AnswerOptions { get; set; }
+        public DbSet<Question> Questions { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // Ví dụ: nếu cần cấu hình thêm relationships, indexes, v.v.
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
@@ -48,10 +55,12 @@ namespace Smoking.DAL.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Notification>()
-                .HasOne(n => n.User)
-                .WithMany(u => u.Notifications)
-                .HasForeignKey(n => n.UserID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(n => n.User)    // Mỗi thông báo sẽ có một User
+                .WithMany(u => u.Notifications)  // Người dùng có thể có nhiều thông báo
+                .HasForeignKey(n => n.UserID)  // Sử dụng UserID làm khóa ngoại
+                .OnDelete(DeleteBehavior.Restrict);  // Ngừng xóa thông báo khi xóa người dùng (hoặc có thể thay đổi hành vi xóa)
+
+
 
             modelBuilder.Entity<SmokingStatus>()
                 .Property(s => s.MonthlyCost)
@@ -80,6 +89,20 @@ namespace Smoking.DAL.Data
             modelBuilder.Entity<Payment>()
                 .Property(p => p.Amount)
                 .HasPrecision(18, 2);
+
+            modelBuilder.Entity<UserMembership>()
+               .HasOne(um => um.Package)
+               .WithMany(mp => mp.UserMemberships)
+               .HasForeignKey(um => um.PackageID)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            // UserMembership - Payment
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.UserMembership)
+                .WithMany(um => um.Payments)
+                .HasForeignKey(p => p.UserMembershipID)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

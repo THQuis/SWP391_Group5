@@ -1,12 +1,15 @@
 ﻿using Smoking.DAL.Entities;
-using Smoking.DAL.Interfaces.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public interface IConsultationBookingRepository : IGenericRepository<ConsultationBooking>
+namespace Smoking.DAL.Interfaces.Repositories
 {
-    Task<IEnumerable<ConsultationBooking>> GetByUserIdAsync(int userId);
-    Task<IEnumerable<ConsultationBooking>> GetByCoachIdAsync(int coachId);
-    Task<ConsultationBooking> GetByIdAsync(int bookingId);
-    Task DeleteAsync(int bookingId);  // OK để giữ
-    // ❌ Xoá dòng này ↓
-    // Task UpdateAsync(ConsultationBooking booking);
+    /// <summary>
+    /// Interface cho ConsultationBooking, bổ sung GetByUserIdAsync và GetByCoachIdAsync
+    /// </summary>
+    public interface IConsultationBookingRepository : IGenericRepository<ConsultationBooking>
+    {
+        Task<IEnumerable<ConsultationBooking>> GetByUserIdAsync(int userId);
+        Task<IEnumerable<ConsultationBooking>> GetByCoachIdAsync(int coachId);
+    }
 }

@@ -10,31 +10,23 @@ namespace Smoking.DAL.Repositories
 {
     public class UserMembershipRepository : GenericRepository<UserMembership>, IUserMembershipRepository
     {
+        private readonly AppDbContext _context;
         public UserMembershipRepository(AppDbContext context) : base(context)
         {
-        }
-        // Phương thức GetByUserIdAsync (lấy danh sách thành viên theo UserID)
-        public async Task<IEnumerable<UserMembership>> GetByUserIdAsync(int userId)
-        {
-            return await _context.UserMemberships
-                .Include(um => um.Package)
-                .Where(um => um.UserID == userId)
-                .AsNoTracking()
-                .ToListAsync();
+            _context = context;
         }
 
-        // Phương thức Update (cập nhật thông tin thành viên)
-        public new Task Update(UserMembership entity)
+        public async Task<UserMembership?> GetActiveByUserIdAsync(int userId)
         {
-            _context.UserMemberships.Update(entity);
-            return Task.CompletedTask;
+            return await _context.Set<UserMembership>()
+                .FirstOrDefaultAsync(x => x.UserID == userId && x.PaymentStatus == "Completed" && x.EndDate > DateTime.UtcNow);
         }
-        
-        // Phương thức Remove (xóa thành viên)
-        public new Task Remove(UserMembership entity)
+
+        public async Task UpdateAsync(UserMembership entity)
         {
-            _context.UserMemberships.Remove(entity);
-            return Task.CompletedTask;
+            _context.Set<UserMembership>().Update(entity);
+            await Task.CompletedTask;
         }
+
     }
 }

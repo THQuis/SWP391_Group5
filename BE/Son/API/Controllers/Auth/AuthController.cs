@@ -11,24 +11,26 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smoking.API.Controllers
-
-{
-    [ApiController]
+namespace Smoking.API.Controllers.Auth
+    {
+        [ApiController]
         [Route("api/Auth")]
         public class AuthController : ControllerBase
         {
             private readonly IAuthService _authService;
             private readonly JwtSettings _jwtSettings;
+            private readonly IUserService _userService;
 
-            public AuthController(IAuthService authService, IOptions<JwtSettings> jwtOptions)
-            {
-                _authService = authService;
-                _jwtSettings = jwtOptions.Value;
-            }
+        public AuthController(IAuthService authService, IOptions<JwtSettings> jwtOptions, IUserService userService)
+        {
+            _authService = authService;
+            _jwtSettings = jwtOptions.Value;
+            _userService = userService;
+        }
 
-            // Bước 1: Đăng ký - gửi OTP qua Email
-            [HttpPost("register")]
+
+        // Bước 1: Đăng ký - gửi OTP qua Email
+        [HttpPost("register")]
             public async Task<IActionResult> Register([FromBody] RegisterRequest request)
             {
                 try
@@ -60,31 +62,53 @@ namespace Smoking.API.Controllers
             var user = await _authService.AuthenticateAsync(request.Email, request.Password);
             if (user == null)
                 return Unauthorized(new { Error = "Email hoặc mật khẩu không đúng." });
+
             if (!string.Equals(user.Status, "Active", StringComparison.OrdinalIgnoreCase))
                 return Unauthorized(new { Error = "Tài khoản của bạn không được phép đăng nhập." });
-            var token = GenerateJwtToken(user);
+
+            // Gọi userService để lấy đầy đủ thông tin user
+            var fullUser = await _userService.GetUserWithMembershipAsync(user.UserID);
+
+            var token = GenerateJwtToken(fullUser);
+
+            var activeMembership = fullUser.UserMemberships?
+                .Where(um =>
+                    (um.PaymentStatus == "Completed" || um.PaymentStatus == "AdminAssigned") &&
+                    um.EndDate >= DateTime.Now)
+                .OrderByDescending(um => um.StartDate)
+                .FirstOrDefault();
+
             return Ok(new
             {
                 Token = token,
                 User = new
                 {
-                    user.UserID,
-                    user.FullName,
-                    user.Email,
-                    user.PhoneNumber,
-                    user.Status,
-                    user.RoleID,
-                    RoleName = user.Role?.RoleName ?? "Unknown"
+                    fullUser.UserID,
+                    fullUser.FullName,
+                    fullUser.Email,
+                    fullUser.PhoneNumber,
+                    fullUser.Status,
+                    fullUser.RoleID,
+                    RoleName = fullUser.Role?.RoleName ?? "Unknown",
+                    fullUser.Gender,
+                    DateOfBirth = fullUser.DateOfBirth?.ToString("yyyy-MM-dd"),
+                    Membership = activeMembership == null ? null : new
+                    {
+                        PackageName = activeMembership.Package.PackageName,
+                        PackageType = activeMembership.Package.PackageType,
+                        StartDate = activeMembership.StartDate.ToString("yyyy-MM-dd"),
+                        EndDate = activeMembership.EndDate.ToString("yyyy-MM-dd"),
+                        PaymentStatus = activeMembership.PaymentStatus
+                    }
                 }
             });
         }
 
 
         // Tạo JWT Token
-        private string GenerateJwtToken(Smoking.DAL.Entities.User user)
-
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
+        private string GenerateJwtToken(User user)
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.UTF8.GetBytes(_jwtSettings.SecretKey);
 
                 var tokenDescriptor = new SecurityTokenDescriptor

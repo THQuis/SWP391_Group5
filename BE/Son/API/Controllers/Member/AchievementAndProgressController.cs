@@ -26,7 +26,6 @@ public class AchievementAndProgressController : ControllerBase
         _unitOfWork = unitOfWork;
     }
 
-    // ✅ API lấy thông tin tổng hợp tiến trình và thành tựu của người dùng
     [HttpGet("user/ProgressInformation")]
     public async Task<IActionResult> GetAchievementAndProgressStats(int userId)
     {
@@ -66,14 +65,39 @@ public class AchievementAndProgressController : ControllerBase
     [HttpPost("user/UpdateProgress")]
     public async Task<IActionResult> UpdateQuitProgress(int userId, [FromBody] UpdateQuitProgressRequest request)
     {
-        var quitPlans = await _unitOfWork.QuitPlans.FindAsync(x => x.UserID == userId && x.Status == "Active");
+        // Kiểm tra gói thành viên còn hiệu lực
+        var validMembership = await _unitOfWork.UserMemberships
+            .FindFirstOrDefaultAsync(m =>
+                m.UserID == userId &&
+                m.EndDate >= DateTime.Today &&
+                (m.PaymentStatus == "Completed" || m.PaymentStatus == "AdminAssigned")
+            );
+
+        if (validMembership == null)
+        {
+            return StatusCode(403, "Chỉ người dùng có gói Premium mới được cập nhật tiến trình hằng ngày.");
+        }
+
+        // Kiểm tra loại gói là Premium
+        var package = await _unitOfWork.MembershipPackages.GetByIdAsync(validMembership.PackageID);
+        if (package == null || !string.Equals(package.PackageType, "Premium", StringComparison.OrdinalIgnoreCase))
+        {
+            return StatusCode(403, "Chỉ người dùng có gói Premium mới được cập nhật tiến trình hằng ngày.");
+        }
+
+        // Tìm kế hoạch cai thuốc đang hoạt động
+        var quitPlans = await _unitOfWork.QuitPlans
+            .FindAsync(x => x.UserID == userId && x.Status == "Active");
 
         if (quitPlans == null || !quitPlans.Any())
+        {
             return NotFound("Không tìm thấy kế hoạch cai thuốc.");
+        }
 
         var quitPlan = quitPlans.First();
         var progressDate = DateTime.Today;
 
+        // Cập nhật tiến trình
         var updateResult = await _quitProgressService.UpdateQuitProgressAsync(
             quitPlan.QuitPlanID,
             progressDate,
@@ -83,8 +107,11 @@ public class AchievementAndProgressController : ControllerBase
         );
 
         if (!updateResult)
+        {
             return BadRequest("Cập nhật tiến trình thất bại.");
+        }
 
+        // Trả về tiến trình mới nhất sau cập nhật
         var updatedProgressList = await _quitProgressService.GetByPlanIdAsync(quitPlan.QuitPlanID);
 
         return Ok(new
@@ -93,6 +120,7 @@ public class AchievementAndProgressController : ControllerBase
             QuitProgress = updatedProgressList
         });
     }
+
 
     [HttpGet("user/showAllProgress")]
     public async Task<IActionResult> GetAllQuitProgress(int userId)

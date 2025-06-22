@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Smoking.API.Controllers
+namespace Smoking.API.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -63,14 +63,13 @@ namespace Smoking.API.Controllers
             }));
         }
 
-        // Tạo và gửi thông báo
         [HttpPost("send")]
         public async Task<IActionResult> SendNotification([FromBody] SendNotificationRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Message))
                 return BadRequest(new { Message = "Vui lòng nhập nội dung thông báo." });
 
-            var users = new List<Smoking.DAL.Entities.User>();
+            var users = new List<User>();
 
             if (request.ToAllUsers)
             {
@@ -134,6 +133,7 @@ namespace Smoking.API.Controllers
 
             return Ok(new { Message = "Đã gửi thông báo.", Results = sentResults });
         }
+
 
 
         // Xóa thông báo

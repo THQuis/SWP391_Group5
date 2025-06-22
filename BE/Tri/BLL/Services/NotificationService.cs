@@ -121,6 +121,10 @@ namespace Smoking.BLL.Services
             existing.NotificationDate = entity.NotificationDate;
             existing.NotificationType = entity.NotificationType;
 
+            existing.IsRead = entity.IsRead;  // Đánh dấu đã đọc
+            existing.ReadAt = entity.ReadAt;  // Cập nhật thời gian đã đọc
+
+
             _unitOfWork.DbContext.Notifications.Update(existing);
             await _unitOfWork.CompleteAsync();
             return true;
@@ -136,5 +140,22 @@ namespace Smoking.BLL.Services
             await _unitOfWork.CompleteAsync();
             return true;
         }
+
+        // Đánh dấu thông báo đã đọc
+        public async Task<bool> MarkAsReadAsync(int notificationId)
+        {
+            var notification = await _unitOfWork.DbContext.Notifications.FindAsync(notificationId);
+            if (notification == null)
+                return false;
+
+            // Đánh dấu là đã đọc
+            notification.IsRead = true;
+            notification.ReadAt = DateTime.UtcNow;  // Ghi lại thời gian đã đọc
+
+            await _unitOfWork.DbContext.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+            return true;
+        }
+
+
     }
 }

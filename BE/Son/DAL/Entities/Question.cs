@@ -10,7 +10,7 @@ namespace Smoking.DAL.Entities
     {
         public int QuestionID { get; set; }
         public string QuestionText { get; set; } = null!;
-        public string QuestionType { get; set; } = null!;
+        public string QuestionType { get; set; } = null!; 
         public int DisplayOrder { get; set; }
         public bool IsActive { get; set; }
         public ICollection<AnswerOption> AnswerOptions { get; set; } = new List<AnswerOption>();

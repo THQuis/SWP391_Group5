@@ -23,7 +23,12 @@ public class QuitPlanController : ControllerBase
     public async Task<IActionResult> AutoCreateQuitPlan([FromBody] AutoQuitPlanRequest request)
     {
         var plan = await _quitPlanAutoService.CreateAutoQuitPlanAsync(
-            request.UserId, request.CigarettesPerDay, request.PricePerPack, request.CigarettesPerPack
+            request.UserId,
+            request.CigarettesPerDay,
+            request.PricePerPack,
+            request.CigarettesPerPack,
+            request.StartDate, 
+            request.EndDate  
         );
 
         if (plan == null)
@@ -33,9 +38,12 @@ public class QuitPlanController : ControllerBase
         {
             message = "Tạo kế hoạch cai thuốc thành công.",
             startDate = plan.StartDate.ToString("dd/MM/yyyy"),
+            endDate = plan.EndDate?.ToString("dd/MM/yyyy") ?? "Chưa có ngày kết thúc",
             planDetails = plan.PlanDetails.Split(Environment.NewLine)
         });
+
     }
+
 
 
     [HttpPatch("UpdateQuitPlan")]

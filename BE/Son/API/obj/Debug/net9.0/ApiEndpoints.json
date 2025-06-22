@@ -69,7 +69,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "CreateUser",
     "RelativePath": "api/Admin/AddUser",
     "HttpMethod": "POST",
@@ -220,7 +220,7 @@
       },
       {
         "Name": "request",
-        "Type": "Smoking.API.Models.Admin.AdminUpdateRequest",
+        "Type": "Smoking.API.Models.Admin.ConsultationUpdate",
         "IsRequired": true
       }
     ],
@@ -243,7 +243,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "DeleteUser",
     "RelativePath": "api/Admin/DeleteUser",
     "HttpMethod": "DELETE",
@@ -285,7 +285,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Admin/ListUsers",
     "HttpMethod": "GET",
@@ -296,31 +296,15 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
-    "Method": "GetById",
-    "RelativePath": "api/admin/membership-packages/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
-    "Method": "Create",
-    "RelativePath": "api/admin/membership-packages/create",
+    "Method": "AssignMembershipToUser",
+    "RelativePath": "api/admin/memberships/assign",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "Smoking.API.Models.Admin.MembershipPackageCreateRequest",
+        "Name": "dto",
+        "Type": "Smoking.API.Models.Admin.AdminUpdateMembershipDto",
         "IsRequired": true
       }
     ],
@@ -328,24 +312,8 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
-    "Method": "Delete",
-    "RelativePath": "api/admin/membership-packages/delete",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
-    "Method": "GetAll",
-    "RelativePath": "api/admin/membership-packages/list",
+    "Method": "GetAllPackages",
+    "RelativePath": "api/admin/memberships/packages",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -354,8 +322,24 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
-    "Method": "Update",
-    "RelativePath": "api/admin/membership-packages/update",
+    "Method": "CreatePackage",
+    "RelativePath": "api/admin/memberships/packages",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "package",
+        "Type": "Smoking.DAL.Entities.MembershipPackage",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "UpdatePackage",
+    "RelativePath": "api/admin/memberships/packages/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -363,14 +347,40 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
-        "Name": "request",
-        "Type": "Smoking.API.Models.Admin.MembershipPackageUpdateRequest",
+        "Name": "updatedPackage",
+        "Type": "Smoking.DAL.Entities.MembershipPackage",
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "DeletePackage",
+    "RelativePath": "api/admin/memberships/packages/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "GetAllUserMemberships",
+    "RelativePath": "api/admin/memberships/users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -489,7 +499,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "UpdateUserRole",
     "RelativePath": "api/Admin/UpdateRole",
     "HttpMethod": "PUT",
@@ -510,7 +520,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "UpdateUserStatus",
     "RelativePath": "api/Admin/UpdateStatus",
     "HttpMethod": "PUT",
@@ -531,7 +541,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
     "Method": "GetUserById",
     "RelativePath": "api/Admin/User",
     "HttpMethod": "GET",
@@ -547,7 +557,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "ForgotPassword",
     "RelativePath": "api/Auth/forgot-password",
     "HttpMethod": "POST",
@@ -563,7 +573,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
     "HttpMethod": "POST",
@@ -579,7 +589,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "Logout",
     "RelativePath": "api/Auth/logout",
     "HttpMethod": "POST",
@@ -589,7 +599,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "Register",
     "RelativePath": "api/Auth/register",
     "HttpMethod": "POST",
@@ -605,7 +615,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "ResetPassword",
     "RelativePath": "api/Auth/reset-password",
     "HttpMethod": "POST",
@@ -621,7 +631,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "VerifyOtp",
     "RelativePath": "api/Auth/verify-otp",
     "HttpMethod": "POST",
@@ -637,7 +647,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.AuthController",
+    "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "VerifyResetOtp",
     "RelativePath": "api/Auth/verify-reset-otp",
     "HttpMethod": "POST",
@@ -783,41 +793,25 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
-    "Method": "ApproveBooking",
-    "RelativePath": "api/coach/consultation/approve/{bookingId}",
-    "HttpMethod": "PUT",
+    "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
+    "Method": "CreatePayment",
+    "RelativePath": "api/membership/create-payment",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "bookingId",
-        "Type": "System.Int32",
+        "Name": "dto",
+        "Type": "Smoking.API.Models.User.CreatePaymentRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
-    "Method": "CompleteConsultation",
-    "RelativePath": "api/coach/consultation/complete/{bookingId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "bookingId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
-    "Method": "GetAppointments",
-    "RelativePath": "api/coach/consultation/my-appointments",
+    "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
+    "Method": "GetPackages",
+    "RelativePath": "api/membership/packages",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -825,44 +819,33 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
-    "Method": "RejectBooking",
-    "RelativePath": "api/coach/consultation/reject/{bookingId}",
-    "HttpMethod": "PUT",
+    "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
+    "Method": "PaymentCallback",
+    "RelativePath": "api/membership/payment-callback",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "bookingId",
-        "Type": "System.Int32",
+        "Name": "dto",
+        "Type": "Smoking.API.Models.User.PaymentCallbackDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.Coach.CoachConsultationController",
-    "Method": "UpdateConsultation",
-    "RelativePath": "api/coach/consultation/update/{bookingId}",
-    "HttpMethod": "PUT",
+    "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
+    "Method": "GetPaymentHistory",
+    "RelativePath": "api/membership/payment-history",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "bookingId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "request",
-        "Type": "Smoking.API.Models.Coach.CoachUpdateRequest",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.NotificationAdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.NotificationAdminController",
     "Method": "DeleteNotification",
     "RelativePath": "api/NotificationAdmin/deleteNotification",
     "HttpMethod": "DELETE",
@@ -878,7 +861,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.NotificationAdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.NotificationAdminController",
     "Method": "GetUserNotifications",
     "RelativePath": "api/NotificationAdmin/getNotificationUserID",
     "HttpMethod": "GET",
@@ -894,7 +877,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.NotificationAdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.NotificationAdminController",
     "Method": "GetAllNotifications",
     "RelativePath": "api/NotificationAdmin/list",
     "HttpMethod": "GET",
@@ -904,7 +887,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.NotificationAdminController",
+    "ContainingType": "Smoking.API.Controllers.Admin.NotificationAdminController",
     "Method": "SendNotification",
     "RelativePath": "api/NotificationAdmin/send",
     "HttpMethod": "POST",
@@ -914,6 +897,74 @@
       {
         "Name": "request",
         "Type": "Smoking.API.Models.Admin.SendNotificationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.QuestionnaireController",
+    "Method": "GetAnswersByUser",
+    "RelativePath": "api/Questionnaire/answers-by-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.QuestionnaireController",
+    "Method": "GetQuestionsWithAnswers",
+    "RelativePath": "api/Questionnaire/ListQuestion",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.QuestionnaireController",
+    "Method": "SubmitAnswersByUser",
+    "RelativePath": "api/Questionnaire/SubmitAnwser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dtoAnswers",
+        "Type": "System.Collections.Generic.List\u00601[[Smoking.API.Models.User.QuitPlanSelectedAnswerDto, Smoking.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.QuestionnaireController",
+    "Method": "UpdateAnswersByUser",
+    "RelativePath": "api/Questionnaire/update-by-user",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dtoAnswers",
+        "Type": "System.Collections.Generic.List\u00601[[Smoking.API.Models.User.QuitPlanSelectedAnswerDto, Smoking.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -1047,52 +1098,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserMembershipController",
-    "Method": "RegisterPackage",
-    "RelativePath": "api/user-memberships/create",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "Smoking.API.Models.User.RegisterMembershipRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.User.UserMembershipController",
-    "Method": "GetAllPackages",
-    "RelativePath": "api/user-memberships/list",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.User.UserMembershipController",
-    "Method": "GetCurrentPackage",
-    "RelativePath": "api/user-memberships/use",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.User.UserMembershipController",
-    "Method": "MyPackages",
-    "RelativePath": "api/user-memberships/used",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "Smoking.API.Controllers.Member.UserConsultationController",
     "Method": "BookConsultation",
     "RelativePath": "api/user/consultation/book",
@@ -1136,12 +1141,18 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
-    "Method": "DeleteProfile",
-    "RelativePath": "api/user/delete-profile",
+    "Method": "DeleteUser",
+    "RelativePath": "api/user/delete-user",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.User.DeleteUserRequest",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -1155,7 +1166,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserNotificationController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserNotificationController",
     "Method": "DeleteMyNotification",
     "RelativePath": "api/user/notifications/{id}",
     "HttpMethod": "DELETE",
@@ -1171,7 +1182,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserNotificationController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserNotificationController",
     "Method": "MarkAsRead",
     "RelativePath": "api/user/notifications/{id}/read",
     "HttpMethod": "POST",
@@ -1187,7 +1198,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserNotificationController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserNotificationController",
     "Method": "GetMyNotifications",
     "RelativePath": "api/user/notifications/my",
     "HttpMethod": "GET",
@@ -1223,7 +1234,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "CreateBlog",
     "RelativePath": "api/UserBlog/create",
     "HttpMethod": "POST",
@@ -1239,7 +1250,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "DeleteBlog",
     "RelativePath": "api/UserBlog/delete/{blogId}",
     "HttpMethod": "DELETE",
@@ -1255,7 +1266,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "EditBlog",
     "RelativePath": "api/UserBlog/edit/{blogId}",
     "HttpMethod": "PUT",
@@ -1276,7 +1287,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "GetBlogDetail",
     "RelativePath": "api/UserBlog/my-blog-detail/{blogId}",
     "HttpMethod": "GET",
@@ -1292,7 +1303,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "GetMyBlogs",
     "RelativePath": "api/UserBlog/my-blogs",
     "HttpMethod": "GET",
@@ -1302,7 +1313,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "ReportBlog",
     "RelativePath": "api/UserBlog/report/{blogId}",
     "HttpMethod": "POST",
@@ -1318,7 +1329,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Smoking.API.Controllers.User.UserBlogController",
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "GetUserBlogStats",
     "RelativePath": "api/UserBlog/stats",
     "HttpMethod": "GET",

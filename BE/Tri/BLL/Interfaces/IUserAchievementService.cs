@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Smoking.DAL.Entities;
 
 namespace Smoking.BLL.Interfaces
 {
@@ -10,6 +6,9 @@ namespace Smoking.BLL.Interfaces
     {
         Task<bool> GrantAchievementAsync(int userId, int achievementId, bool sendEmail = true);
         Task<IEnumerable<UserAchievement>> GetAchievementsByUserIdAsync(int userId);
-    }
 
+        // ✅ Thêm mới
+        Task<User> GetUserByIdAsync(int userId);
+        Task<Achievement> GetAchievementByIdAsync(int achievementId);
+    }
 }

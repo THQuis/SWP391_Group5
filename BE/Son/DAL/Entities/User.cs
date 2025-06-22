@@ -28,17 +28,18 @@ namespace Smoking.DAL.Entities
 
         public Role? Role { get; set; }             // nullable
 
-        // Thêm các thuộc tính mới
-        public string Gender { get; set; } // Giới tính
-        public DateTime? DateOfBirth { get; set; } // Ngày sinh
-
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
 
         [Required, MaxLength(50)]
         public string Status { get; set; } = null!;
 
         public string? ProfilePicture { get; set; }  // nullable
-        public string? Description { get; set; } // 👈 THÊM VÀO ĐÂY
+
+        public string? Description { get; set; }
+        [MaxLength(10)]
+        public string? Gender { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
 
         // Navigation collections initialized to avoid null reference
         public ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();
@@ -50,6 +51,6 @@ namespace Smoking.DAL.Entities
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
         public ICollection<ConsultationBooking> ConsultationBookingsAsUser { get; set; } = new List<ConsultationBooking>();
         public ICollection<ConsultationBooking> ConsultationBookingsAsCoach { get; set; } = new List<ConsultationBooking>();
-    }
 
+    }
 }

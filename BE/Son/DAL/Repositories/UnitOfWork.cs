@@ -14,6 +14,7 @@ namespace Smoking.DAL.Repositories
         {
             _context = context;
 
+            // Khởi tạo từng repository
             Roles = new RoleRepository(_context);
             Users = new UserRepository(_context);
             MembershipPackages = new MembershipPackageRepository(_context);
@@ -31,6 +32,7 @@ namespace Smoking.DAL.Repositories
             Questions = new QuestionRepository(_context);
             QuitPlanSelectedAnswers = new QuitPlanSelectedAnswerRepository(_context);
             AnswerOptions = new AnswerOptionRepository(_context);
+
         }
 
         public IRoleRepository Roles { get; private set; }
@@ -50,13 +52,12 @@ namespace Smoking.DAL.Repositories
         public IQuestionRepository Questions { get; private set; }
         public IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswers { get; private set; }
         public IAnswerOptionRepository AnswerOptions { get; private set; }
+
         public async Task<int> CompleteAsync()
         {
             return await _context.SaveChangesAsync();
         }
-
         public AppDbContext DbContext => _context;
-
         public void Dispose()
         {
             _context.Dispose();

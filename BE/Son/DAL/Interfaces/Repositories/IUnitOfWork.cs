@@ -18,11 +18,11 @@ namespace Smoking.DAL.Interfaces.Repositories
         IUserAchievementRepository UserAchievements { get; }
         INotificationRepository Notifications { get; }
         IBlogRepository Blogs { get; }
-        IQuestionRepository Questions { get; }
         IFeedbackRepository Feedbacks { get; }
+        IConsultationBookingRepository ConsultationBookings { get; }
+        IQuestionRepository Questions { get; }
         IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswers { get; }
         IAnswerOptionRepository AnswerOptions { get; }
-        IConsultationBookingRepository ConsultationBookings { get; }
 
         Task<int> CompleteAsync();
         AppDbContext DbContext { get; }

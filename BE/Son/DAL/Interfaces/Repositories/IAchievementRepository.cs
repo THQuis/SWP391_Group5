@@ -1,11 +1,12 @@
 ﻿using Smoking.DAL.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Smoking.DAL.Interfaces.Repositories
 {
+    /// <summary>
+    /// Interface cho Achievement (không có phương thức đặc biệt)
+    /// </summary>
     public interface IAchievementRepository : IGenericRepository<Achievement>
     {
-        Task<IEnumerable<Achievement>> SearchAsync(string keyword);
+        // Nếu cần thêm truy vấn, khai báo ở đây
     }
 }

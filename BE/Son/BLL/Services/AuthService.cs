@@ -96,7 +96,7 @@ namespace Smoking.BLL.Services
             string htmlBody = $@"
             <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; padding: 20px;'>
                 <div style='text-align: center;'>
-                    <img src='https://raw.githubusercontent.com/THQuis/SWP391_Group5/main/Frontend/image/logo.png' alt='Breath Again Logo' style='width: 100px; margin-bottom: 20px;'/>
+                    <img src='https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true' alt='Breath Again Logo' style='width: 100px; margin-bottom: 20px;'/>
                     <h2>Đặt lại mật khẩu</h2>
                 </div>
                 <p>Xin chào,</p>

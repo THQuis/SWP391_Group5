@@ -19,7 +19,9 @@ namespace Smoking.BLL.Services
         {
             var existing = await _unitOfWork.Users.GetByEmailAsync(entity.Email);
             if (existing != null)
+            {
                 throw new System.Exception("Email đã tồn tại.");
+            }
 
             await _unitOfWork.Users.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
@@ -28,38 +30,44 @@ namespace Smoking.BLL.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(id);
-            if (user == null)
+            var existing = await _unitOfWork.Users.GetByIdAsync(id);
+            if (existing == null)
                 return false;
 
-            _unitOfWork.Users.Remove(user);
+            _unitOfWork.Users.Remove(existing);
             await _unitOfWork.CompleteAsync();
             return true;
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
-            => await _unitOfWork.Users.GetAllAsync();
+        {
+            return await _unitOfWork.Users.GetAllAsync();
+        }
 
         public async Task<User> GetByEmailAsync(string email)
-            => await _unitOfWork.Users.GetByEmailAsync(email);
+        {
+            return await _unitOfWork.Users.GetByEmailAsync(email);
+        }
 
         public async Task<User> GetByIdAsync(int id)
-            => await _unitOfWork.Users.GetByIdAsync(id);
+        {
+            return await _unitOfWork.Users.GetByIdAsync(id);
+        }
 
         public async Task<bool> UpdateAsync(User entity)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(entity.UserID);
-            if (user == null)
+            var existing = await _unitOfWork.Users.GetByIdAsync(entity.UserID);
+            if (existing == null)
                 return false;
 
-            user.FullName = entity.FullName;
-            user.Email = entity.Email;
-            user.PhoneNumber = entity.PhoneNumber;
-            user.RoleID = entity.RoleID;
-            user.Status = entity.Status;
-            user.ProfilePicture = entity.ProfilePicture;
+            existing.FullName = entity.FullName;
+            existing.Email = entity.Email;
+            existing.PhoneNumber = entity.PhoneNumber;
+            existing.RoleID = entity.RoleID;
+            existing.Status = entity.Status;
+            existing.ProfilePicture = entity.ProfilePicture;
 
-            _unitOfWork.Users.Update(user);
+            _unitOfWork.Users.Update(existing);
             await _unitOfWork.CompleteAsync();
             return true;
         }
@@ -67,9 +75,17 @@ namespace Smoking.BLL.Services
         public async Task<User> AuthenticateAsync(string email, string password)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
-            return user?.Password == password ? user : null;
+            if (user == null)
+                return null;
+
+            // Nếu lưu password dạng mã hóa (hash), bạn cần kiểm tra hash ở đây
+            if (user.Password == password)
+                return user;
+
+            return null;
         }
 
+        // MỚI THÊM:
         public async Task DeleteUserByEmailAsync(string email)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
@@ -80,31 +96,55 @@ namespace Smoking.BLL.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture, string? description)
+        public async Task UpdateProfileAsync(string email,string? fullName,string? phoneNumber,string? profilePicture,string? description,string? gender,
+                    DateTime? dateOfBirth)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
             if (user == null)
-                throw new System.Exception("Không tìm thấy user với email này.");
+                throw new Exception("Không tìm thấy user với email này.");
 
-            user.FullName = fullName;
-            user.PhoneNumber = phoneNumber;
-            user.ProfilePicture = profilePicture;
-            user.Description = description; // Update description
+            if (!string.IsNullOrWhiteSpace(fullName))
+                user.FullName = fullName;
+
+            if (!string.IsNullOrWhiteSpace(phoneNumber))
+                user.PhoneNumber = phoneNumber;
+
+            if (!string.IsNullOrWhiteSpace(profilePicture))
+                user.ProfilePicture = profilePicture;
+
+            if (!string.IsNullOrWhiteSpace(description))
+                user.Description = description;
+
+            if (!string.IsNullOrWhiteSpace(gender))
+                user.Gender = gender;
+
+            if (dateOfBirth.HasValue)
+                user.DateOfBirth = dateOfBirth.Value.Date; 
 
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
         }
 
-        // Method to fetch user by email, redundant but needed for certain functionality
+
+        // Các phương thức mới
         public async Task<User> GetUserByEmailAsync(string email)
-            => await _unitOfWork.Users.GetByEmailAsync(email);
+        {
+            return await _unitOfWork.Users.GetByEmailAsync(email); // Lấy user theo email
+        }
 
-        // Method to fetch all users, might be needed for certain admin functionalities
         public async Task<IEnumerable<User>> GetAllUsersAsync()
-            => await _unitOfWork.Users.GetAllAsync();
+        {
+            return await _unitOfWork.Users.GetAllAsync(); // Lấy tất cả người dùng
+        }
 
-        // Fetch all users by role, useful for admin or role-specific functionality
         public async Task<IEnumerable<User>> GetUsersByRoleAsync(string role)
-            => await _unitOfWork.Users.GetByRoleAsync(role);
+        {
+            return await _unitOfWork.Users.GetByRoleAsync(role); // Lấy người dùng theo role
+        }
+
+        public async Task<User> GetUserWithMembershipAsync(int userId)
+        {
+            return await _unitOfWork.Users.GetUserWithMembershipAsync(userId);
+        }
     }
 }

@@ -10,31 +10,22 @@ namespace Smoking.DAL.Repositories
 {
     public class PaymentRepository : GenericRepository<Payment>, IPaymentRepository
     {
+        private readonly AppDbContext _context;
         public PaymentRepository(AppDbContext context) : base(context)
         {
+            _context = context;
         }
 
-        // Lấy tất cả các payment theo UserMembershipID
-        public async Task<IEnumerable<Payment>> GetByUserMembershipIdAsync(int userMembershipId)
+        public async Task<Payment?> GetByTransactionReferenceAsync(string reference)
         {
-            return await _context.Payments
-                                 .Where(p => p.UserMembershipID == userMembershipId)
-                                 .AsNoTracking()
-                                 .ToListAsync();
+            return await _context.Set<Payment>().FirstOrDefaultAsync(p => p.TransactionReference == reference);
         }
 
-        // Cập nhật thông tin Payment
-        public async Task Update(Payment entity)
+        public async Task UpdateAsync(Payment entity)
         {
-            _context.Payments.Update(entity); // Cập nhật Payment
-            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
+            _context.Set<Payment>().Update(entity);
+            await Task.CompletedTask; // hoặc bỏ nếu không cần async
         }
 
-        // Xóa Payment
-        public async Task Remove(Payment entity)
-        {
-            _context.Payments.Remove(entity); // Xóa Payment
-            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
-        }
     }
 }

@@ -6,7 +6,7 @@ namespace Smoking.DAL.Entities
     [Table("QuitPlanSelectedAnswers")]
     public class QuitPlanSelectedAnswers
     {
-        [Key]
+        [Key] 
         public int SelectedAnswerID { get; set; }
 
         public int QuitPlanID { get; set; }

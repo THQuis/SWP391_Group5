@@ -14,27 +14,12 @@ namespace Smoking.DAL.Repositories
         {
         }
 
-        // Lấy tất cả feedback của người dùng
         public async Task<IEnumerable<Feedback>> GetByUserIdAsync(int userId)
         {
             return await _context.Feedbacks
                                  .Where(f => f.UserID == userId)
                                  .AsNoTracking()
                                  .ToListAsync();
-        }
-
-        // Cập nhật thông tin Feedback
-        public async Task Update(Feedback entity)
-        {
-            _context.Feedbacks.Update(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        // Xóa Feedback
-        public async Task Remove(Feedback entity)
-        {
-            _context.Feedbacks.Remove(entity);
-            await _context.SaveChangesAsync();
         }
     }
 }

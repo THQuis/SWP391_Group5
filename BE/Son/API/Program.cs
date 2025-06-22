@@ -13,52 +13,58 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ======== CẤU HÌNH JWT & EMAIL =========
+// --- CẤU HÌNH CÁC SETTINGS ---
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
-var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
-// ======== ĐĂNG KÝ DB CONTEXT =========
+// --- CẤU HÌNH DATABASE ---
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ======== ĐĂNG KÝ CÁC REPOSITORY & SERVICE =========
-// UnitOfWork
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+// --- ĐĂNG KÝ CÁC SERVICE VÀ REPOSITORIES ---
 
-// Auth, Mail, User
+// Authentication & Authorization
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserService, UserService>();
-
-// Blog
-builder.Services.AddScoped<IBlogRepository, BlogRepository>();
-builder.Services.AddScoped<IBlogService, BlogService>();
-
-// Notification, Achievement
-builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<IAchievementRepository, AchievementRepository>();
-builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IAchievementEvaluatorService, AchievementEvaluatorService>();
 
-// ======== THÊM CHO GÓI THÀNH VIÊN (QUAN TRỌNG) =========
+// User Membership & Payment
 builder.Services.AddScoped<IMembershipPackageService, MembershipPackageService>();
 builder.Services.AddScoped<IUserMembershipService, UserMembershipService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IMembershipPackageRepository, MembershipPackageRepository>();
 builder.Services.AddScoped<IUserMembershipRepository, UserMembershipRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-// ======== CACHE & JSON OPTIONS =========
-builder.Services.AddMemoryCache();
+// Blog & Notification
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-        options.JsonSerializerOptions.MaxDepth = 64;
-    });
+// Progress & Plan
+builder.Services.AddScoped<IQuitPlanService, QuitPlanService>();
+builder.Services.AddScoped<IQuitPlanAutoService, QuitPlanAutoService>();
+builder.Services.AddScoped<IQuitProgressService, QuitProgressService>();
+builder.Services.AddScoped<IQuitProgressRepository, QuitProgressRepository>();
 
-// ======== AUTHENTICATION - JWT =========
+// Questionnaire & Email
+builder.Services.AddScoped<IQuestionnaireService, QuestionnaireService>();
+builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.Configure<MomoConfig>(builder.Configuration.GetSection("Momo"));
+
+
+// --- CẤU HÌNH CÁC DỊCH VỤ KHÁC ---
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Đảm bảo bạn đăng ký UnitOfWork nếu chưa có
+builder.Services.AddMemoryCache(); // MemoryCache cho OTP tạm
+
+// --- CẤU HÌNH CONTROLLER ---
+builder.Services.AddControllers();
+
+// --- CẤU HÌNH JWT BEARER AUTHENTICATION ---
 var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
 builder.Services.AddAuthentication(options =>
 {
@@ -80,9 +86,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// --- CẤU HÌNH AUTHORIZE ---
 builder.Services.AddAuthorization();
 
-// ======== SWAGGER =========
+// --- CẤU HÌNH SWAGGER ---
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -112,6 +119,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// --- CẤU HÌNH SWAGGER TRONG MÔI TRƯỜNG DEVELOPMENT ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -125,5 +133,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+// --- ĐĂNG KÝ CÁC ROUTE ---
 app.MapControllers();
+
 app.Run();

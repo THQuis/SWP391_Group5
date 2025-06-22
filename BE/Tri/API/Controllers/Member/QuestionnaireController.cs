@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
@@ -9,6 +10,7 @@ namespace Smoking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "2")]
     public class QuestionnaireController : ControllerBase
     {
         private readonly IQuestionnaireService _questionnaireService;

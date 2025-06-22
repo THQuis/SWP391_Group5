@@ -8,4 +8,9 @@
         public string ProfilePicture { get; set; }
         public string Description { get; set; }
     }
+
+    public class DeleteUserRequest
+    {
+        public string Email { get; set; }
+    }
 }

@@ -8,7 +8,7 @@ namespace Smoking.API.Controllers.Member
 {
     [ApiController]
     [Route("api/user")]
-    [Authorize(Roles = "2")] // Chỉ User (RoleID=2) được vào
+    [Authorize(Roles = "2")]
     public class UserProfileController : ControllerBase
     {
         private readonly IUserService _userService;

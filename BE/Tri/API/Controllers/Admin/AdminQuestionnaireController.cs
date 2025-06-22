@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smoking.API.Models.Admin;
 using Smoking.DAL.Entities;
@@ -9,6 +10,7 @@ namespace Smoking.API.Controllers.Admin
 {
     [Route("api/admin/[controller]")]
     [ApiController]
+    [Authorize(Roles = "1")]
     public class AdminQuestionnaireController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

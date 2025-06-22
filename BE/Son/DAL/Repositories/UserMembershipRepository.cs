@@ -13,7 +13,7 @@ namespace Smoking.DAL.Repositories
         public UserMembershipRepository(AppDbContext context) : base(context)
         {
         }
-
+        // Phương thức GetByUserIdAsync (lấy danh sách thành viên theo UserID)
         public async Task<IEnumerable<UserMembership>> GetByUserIdAsync(int userId)
         {
             return await _context.UserMemberships
@@ -29,7 +29,7 @@ namespace Smoking.DAL.Repositories
             _context.UserMemberships.Update(entity);
             return Task.CompletedTask;
         }
-
+        
         // Phương thức Remove (xóa thành viên)
         public new Task Remove(UserMembership entity)
         {

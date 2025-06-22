@@ -11,8 +11,8 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task<T> GetByIdAsync(object id);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
         Task AddAsync(T entity);
-        Task Update(T entity);  // Phải có kiểu trả về là Task
-        Task Remove(T entity);  // Phải có kiểu trả về là Task
+        Task Update(T entity);
+        Task Remove(T entity);
         Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
     }
 }

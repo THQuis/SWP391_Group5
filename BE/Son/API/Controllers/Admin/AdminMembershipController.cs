@@ -10,11 +10,11 @@ namespace Smoking.API.Controllers.Admin
     [ApiController]
     [Route("api/admin/membership-packages")]
     [Authorize(Roles = "1")] // Chỉ Admin (RoleID = 1) được phép
-    public class MembershipPackageAdminController : ControllerBase
+    public class AdminMembershipController : ControllerBase
     {
         private readonly IMembershipPackageService _membershipService;
 
-        public MembershipPackageAdminController(IMembershipPackageService membershipService)
+        public AdminMembershipController(IMembershipPackageService membershipService)
         {
             _membershipService = membershipService;
         }

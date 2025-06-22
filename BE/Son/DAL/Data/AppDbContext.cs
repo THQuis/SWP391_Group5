@@ -21,6 +21,9 @@ namespace Smoking.DAL.Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ConsultationBooking> ConsultationBookings { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<AnswerOption> AnswerOptions { get; set; }
+        public DbSet<QuitPlanSelectedAnswers> QuitPlanSelectedAnswers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +52,7 @@ namespace Smoking.DAL.Data
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<SmokingStatus>()
                 .Property(s => s.MonthlyCost)
                 .HasPrecision(18, 2);
@@ -77,7 +81,5 @@ namespace Smoking.DAL.Data
                 .Property(p => p.Amount)
                 .HasPrecision(18, 2);
         }
-
-
     }
 }

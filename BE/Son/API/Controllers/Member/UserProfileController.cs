@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
+using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 using System;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace Smoking.API.Controllers.Member
         }
 
         // 1️⃣ Lấy thông tin hồ sơ cá nhân
+ 
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
@@ -48,15 +50,16 @@ namespace Smoking.API.Controllers.Member
                     user.Email,
                     user.PhoneNumber,
                     user.ProfilePicture,
-                    user.Description, // ✅ THÊM MÔ TẢ
+                    user.Description,
                     RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"),
                     RoleName = user.Role?.RoleName ?? "Unknown",
-                    DateOfBirth = user.DateOfBirth?.ToString("yyyy-MM-dd") ?? "Chưa cập nhật", // Ngày sinh
-                    user.Gender, // Giới tính
+                    DateOfBirth = user.DateOfBirth.HasValue ? user.DateOfBirth.Value.ToString("yyyy-MM-dd") : null,
+                    user.Gender,
                     user.Status
                 }
             });
         }
+
 
 
         // 2️⃣ Cập nhật hồ sơ cá nhân

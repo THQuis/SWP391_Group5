@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Interfaces.Repositories;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Smoking.API.Controllers.Admin
 {

@@ -13,11 +13,8 @@ namespace Smoking.BLL.Interfaces
         Task<bool> UpdateAsync(User entity);
         Task<bool> DeleteAsync(int id);
         Task<User> AuthenticateAsync(string email, string password);
-
         Task DeleteUserByEmailAsync(string email);
         Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture, string? description);
-
-
         Task<User> GetUserByEmailAsync(string email);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<IEnumerable<User>> GetUsersByRoleAsync(string role);

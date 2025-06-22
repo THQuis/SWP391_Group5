@@ -18,7 +18,8 @@ namespace Smoking.BLL.Services
         public async Task<User> CreateAsync(User entity)
         {
             var existing = await _unitOfWork.Users.GetByEmailAsync(entity.Email);
-            if (existing != null) throw new System.Exception("Email đã tồn tại.");
+            if (existing != null)
+                throw new System.Exception("Email đã tồn tại.");
 
             await _unitOfWork.Users.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
@@ -28,7 +29,8 @@ namespace Smoking.BLL.Services
         public async Task<bool> DeleteAsync(int id)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(id);
-            if (user == null) return false;
+            if (user == null)
+                return false;
 
             _unitOfWork.Users.Remove(user);
             await _unitOfWork.CompleteAsync();
@@ -47,7 +49,8 @@ namespace Smoking.BLL.Services
         public async Task<bool> UpdateAsync(User entity)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(entity.UserID);
-            if (user == null) return false;
+            if (user == null)
+                return false;
 
             user.FullName = entity.FullName;
             user.Email = entity.Email;
@@ -70,7 +73,8 @@ namespace Smoking.BLL.Services
         public async Task DeleteUserByEmailAsync(string email)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
-            if (user == null) throw new System.Exception("Không tìm thấy user với email này.");
+            if (user == null)
+                throw new System.Exception("Không tìm thấy user với email này.");
 
             _unitOfWork.Users.Remove(user);
             await _unitOfWork.CompleteAsync();
@@ -80,24 +84,26 @@ namespace Smoking.BLL.Services
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
             if (user == null)
-                throw new Exception("Không tìm thấy user với email này.");
+                throw new System.Exception("Không tìm thấy user với email này.");
 
             user.FullName = fullName;
             user.PhoneNumber = phoneNumber;
             user.ProfilePicture = profilePicture;
-            user.Description = description; // 👈 Thêm dòng này
+            user.Description = description; // Update description
 
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
         }
 
-
+        // Method to fetch user by email, redundant but needed for certain functionality
         public async Task<User> GetUserByEmailAsync(string email)
             => await _unitOfWork.Users.GetByEmailAsync(email);
 
+        // Method to fetch all users, might be needed for certain admin functionalities
         public async Task<IEnumerable<User>> GetAllUsersAsync()
             => await _unitOfWork.Users.GetAllAsync();
 
+        // Fetch all users by role, useful for admin or role-specific functionality
         public async Task<IEnumerable<User>> GetUsersByRoleAsync(string role)
             => await _unitOfWork.Users.GetByRoleAsync(role);
     }

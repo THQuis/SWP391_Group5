@@ -1,4 +1,6 @@
 ﻿using Smoking.DAL.Data;
+using Smoking.DAL.Entities;
+using Smoking.DAL.Repositories;
 using Smoking.DAL.Interfaces.Repositories;
 using System.Threading.Tasks;
 
@@ -26,6 +28,9 @@ namespace Smoking.DAL.Repositories
             Blogs = new BlogRepository(_context);
             Feedbacks = new FeedbackRepository(_context);
             ConsultationBookings = new ConsultationBookingRepository(_context);
+            Questions = new QuestionRepository(_context);
+            QuitPlanSelectedAnswers = new QuitPlanSelectedAnswerRepository(_context);
+            AnswerOptions = new AnswerOptionRepository(_context);
         }
 
         public IRoleRepository Roles { get; private set; }
@@ -42,7 +47,9 @@ namespace Smoking.DAL.Repositories
         public IBlogRepository Blogs { get; private set; }
         public IFeedbackRepository Feedbacks { get; private set; }
         public IConsultationBookingRepository ConsultationBookings { get; private set; }
-
+        public IQuestionRepository Questions { get; private set; }
+        public IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswers { get; private set; }
+        public IAnswerOptionRepository AnswerOptions { get; private set; }
         public async Task<int> CompleteAsync()
         {
             return await _context.SaveChangesAsync();

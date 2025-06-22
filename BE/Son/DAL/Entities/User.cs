@@ -28,6 +28,10 @@ namespace Smoking.DAL.Entities
 
         public Role? Role { get; set; }             // nullable
 
+        // Thêm các thuộc tính mới
+        public string Gender { get; set; } // Giới tính
+        public DateTime? DateOfBirth { get; set; } // Ngày sinh
+
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
 
         [Required, MaxLength(50)]

@@ -703,6 +703,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Member.MembershipController",
+    "Method": "GetPaymentHistory",
+    "RelativePath": "api/membership/payment-history",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Admin.NotificationAdminController",
     "Method": "DeleteNotification",
     "RelativePath": "api/NotificationAdmin/deleteNotification",

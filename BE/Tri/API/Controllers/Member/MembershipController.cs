@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
+using Smoking.DAL.Entities;
+using Smoking.DAL.Interfaces.Repositories;
+using System.Security.Claims;
 
 namespace Smoking.API.Controllers.Member
 {
@@ -13,18 +16,20 @@ namespace Smoking.API.Controllers.Member
         private readonly IMembershipPackageService _packageService;
         private readonly IPaymentService _paymentService;
         private readonly IUserMembershipService _userMembershipService;
+        private readonly IUnitOfWork _unitOfWork;
 
         public MembershipController(
             IMembershipPackageService packageService,
             IPaymentService paymentService,
-            IUserMembershipService userMembershipService)
+            IUserMembershipService userMembershipService,
+            IUnitOfWork unitOfWork)
         {
             _packageService = packageService;
             _paymentService = paymentService;
             _userMembershipService = userMembershipService;
+            _unitOfWork = unitOfWork; 
         }
 
-        // Lấy danh sách gói + gói hiện tại nếu có token
         [HttpGet("packages")]
         public async Task<IActionResult> GetPackages()
         {
@@ -44,7 +49,6 @@ namespace Smoking.API.Controllers.Member
             });
         }
 
-        // Tạo thanh toán (ưu tiên lấy userId từ DTO, fallback về token)
         [HttpPost("create-payment")]
         public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest dto)
         {
@@ -63,7 +67,6 @@ namespace Smoking.API.Controllers.Member
             }
         }
 
-        // Nhận callback từ Momo/VNPay
         [HttpPost("payment-callback")]
         public async Task<IActionResult> PaymentCallback([FromBody] PaymentCallbackDto dto)
         {
@@ -71,11 +74,39 @@ namespace Smoking.API.Controllers.Member
             return Ok();
         }
 
-        // Đọc UserId từ token nếu có
         private int GetUserId()
         {
-            var idStr = User.FindFirst("id")?.Value;
+            var idStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             return int.TryParse(idStr, out var id) ? id : 0;
         }
+
+
+        [HttpGet("payment-history")]
+        public async Task<IActionResult> GetPaymentHistory()
+        {
+            var userId = GetUserId();
+            if (userId == 0)
+                return Unauthorized(new { Message = "Không xác định được người dùng." });
+            var payments = await _unitOfWork.Payments
+                .FindIncludingAsync(
+                    p => p.UserMembership.UserID == userId && p.Status == "Success",
+                    p => p.UserMembership,
+                    p => p.UserMembership.Package
+                );
+
+            var result = payments.Select(p => new UserPaymentHistoryDto
+            {
+                PaymentId = p.PaymentID,
+                PackageName = p.UserMembership.Package.PackageName,
+                Amount = p.Amount,
+                Method = p.PaymentMethod,
+                Status = p.Status,
+                CreatedAt = p.PaymentDate,
+                EndDate = p.UserMembership.EndDate
+            });
+
+            return Ok(result);
+        }
+
     }
 }

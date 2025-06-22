@@ -1030,6 +1030,18 @@
         }
       }
     },
+    "/api/membership/payment-history": {
+      "get": {
+        "tags": [
+          "Membership"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/NotificationAdmin/list": {
       "get": {
         "tags": [

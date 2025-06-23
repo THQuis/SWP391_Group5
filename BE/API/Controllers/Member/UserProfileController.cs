@@ -90,6 +90,19 @@ namespace Smoking.API.Controllers.Member
         {
             try
             {
+                // Kiểm tra ngày sinh hợp lệ (>= 12 tuổi)
+                if (request.DateOfBirth != null)
+                {
+                    var today = DateTime.Today;
+                    var age = today.Year - request.DateOfBirth.Value.Year;
+                    if (request.DateOfBirth.Value.Date > today.AddYears(-age)) age--;
+
+                    if (age < 12)
+                    {
+                        return BadRequest(new { Error = "Người dùng phải từ 12 tuổi trở lên." });
+                    }
+                }
+
                 await _userService.UpdateProfileAsync(
                     request.Email,
                     request.FullName,
@@ -107,6 +120,7 @@ namespace Smoking.API.Controllers.Member
                 return BadRequest(new { Error = ex.Message });
             }
         }
+
 
     }
 }

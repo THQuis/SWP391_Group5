@@ -46,7 +46,7 @@ public class AchievementAndProgressController : ControllerBase
             {
                 totalMoneySaved += progresses.Sum(p => p.MoneySaved);
                 totalCigarettesDropped += progresses.Sum(p => p.CigarettesDropped ?? 0);
-                totalProgressDays += progresses.Count(); // Mỗi bản ghi là 1 ngày
+                totalProgressDays += (DateTime.Today - plan.StartDate.Date).Days + 1;
             }
         }
 

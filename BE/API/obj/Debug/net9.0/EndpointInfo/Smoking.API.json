@@ -2914,9 +2914,10 @@
       "Payment": {
         "required": [
           "amount",
+          "packageID",
           "paymentMethod",
           "status",
-          "userMembershipID"
+          "userID"
         ],
         "type": "object",
         "properties": {
@@ -2924,9 +2925,24 @@
             "type": "integer",
             "format": "int32"
           },
-          "userMembershipID": {
+          "userID": {
             "type": "integer",
             "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "packageID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "package": {
+            "$ref": "#/components/schemas/MembershipPackage"
+          },
+          "userMembershipID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "userMembership": {
             "$ref": "#/components/schemas/UserMembership"

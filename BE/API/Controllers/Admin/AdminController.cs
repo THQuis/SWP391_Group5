@@ -106,13 +106,17 @@ namespace Smoking.API.Controllers.Admin
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
 
-            _unitOfWork.Users.Remove(user);
+            // Không xoá thật, chỉ cập nhật Status = "InActive"
+            user.Status = "InActive";
+
+            _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
 
-            return Ok(new { Message = "Xóa User thành công." });
+            return Ok(new { Message = "Người dùng đã được vô hiệu hóa (InActive)." });
         }
 
- 
+
+
         // 7️ (Optional) Cập nhật Role cho User
         [HttpPut("UpdateRole")]
         public async Task<IActionResult> UpdateUserRole(int id, [FromBody] int newRoleId)

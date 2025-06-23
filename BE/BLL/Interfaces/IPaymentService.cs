@@ -1,6 +1,4 @@
-﻿using Smoking.DAL.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Smoking.BLL.Interfaces
 {

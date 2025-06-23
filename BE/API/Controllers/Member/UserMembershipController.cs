@@ -89,7 +89,9 @@ namespace Smoking.API.Controllers.Member
                 return Unauthorized(new { Message = "Không xác định được người dùng." });
             var payments = await _unitOfWork.Payments
                 .FindIncludingAsync(
-                    p => p.UserMembership.UserID == userId && p.Status == "Success",
+                    p => p.UserMembership != null &&
+                         p.UserMembership.UserID == userId &&
+                         p.Status == "Success",
                     p => p.UserMembership,
                     p => p.UserMembership.Package
                 );

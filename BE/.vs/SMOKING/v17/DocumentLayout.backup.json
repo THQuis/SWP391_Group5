@@ -1,46 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\",
+  "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\dal\\entities\\answeroption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\answeroption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\entities\\membershippackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\membershippackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\dal\\entities\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\entities\\usermembership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\usermembership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\dal\\interfaces\\repositories\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\dal\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\bll\\interfaces\\iblogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iblogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\bll\\services\\blogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\blogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\dal\\interfaces\\repositories\\iblogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iblogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\dal\\repositories\\blogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\blogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|c:\\users\\truon\\downloads\\new folder (3)\\swp391_group5\\be\\tri\\api\\controllers\\member\\userblogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userblogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\entities\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,135 +30,72 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\API\\appsettings.json",
-              "RelativeDocumentMoniker": "API\\appsettings.json",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\API\\appsettings.json",
-              "RelativeToolTip": "API\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAACQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-23T13:34:52.365Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AnswerOption.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\AnswerOption.cs",
-              "RelativeDocumentMoniker": "DAL\\Entities\\AnswerOption.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\AnswerOption.cs",
-              "RelativeToolTip": "DAL\\Entities\\AnswerOption.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAZAAAAAAAAAA==",
+              "Title": "MembershipPackage.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\MembershipPackage.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\MembershipPackage.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\MembershipPackage.cs",
+              "RelativeToolTip": "DAL\\Entities\\MembershipPackage.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwB4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T13:34:29.831Z",
+              "WhenOpened": "2025-06-23T14:47:21.452Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Question.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\Question.cs",
-              "RelativeDocumentMoniker": "DAL\\Entities\\Question.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Entities\\Question.cs",
-              "RelativeToolTip": "DAL\\Entities\\Question.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAVAAAAAAAAAA==",
+              "Title": "UserMembership.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\UserMembership.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\UserMembership.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\UserMembership.cs",
+              "RelativeToolTip": "DAL\\Entities\\UserMembership.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAA5wCYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T13:34:20.253Z",
+              "WhenOpened": "2025-06-23T14:47:15.882Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IUnitOfWork.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
-              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
-              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABAAAAAAAAAAA==",
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\User.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\User.cs",
+              "RelativeToolTip": "DAL\\Entities\\User.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAwDgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T10:44:02.882Z",
+              "WhenOpened": "2025-06-23T14:47:11.021Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "UnitOfWork.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\UnitOfWork.cs",
-              "RelativeDocumentMoniker": "DAL\\Repositories\\UnitOfWork.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\UnitOfWork.cs",
-              "RelativeToolTip": "DAL\\Repositories\\UnitOfWork.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAvAAAAAAAAAA==",
+              "Title": "Payment.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\Payment.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\Payment.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\Payment.cs",
+              "RelativeToolTip": "DAL\\Entities\\Payment.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAmwDAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T10:43:56.967Z"
+              "WhenOpened": "2025-06-23T14:46:54.202Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "BlogRepository.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\BlogRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Repositories\\BlogRepository.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Repositories\\BlogRepository.cs",
-              "RelativeToolTip": "DAL\\Repositories\\BlogRepository.cs",
-              "ViewState": "AgIAAH8AAAAAAAAAAAAcwIsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "PaymentService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\PaymentService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\PaymentService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\PaymentService.cs",
+              "RelativeToolTip": "BLL\\Services\\PaymentService.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAUwHEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T10:24:33.778Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IBlogRepository.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IBlogRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IBlogRepository.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\DAL\\Interfaces\\Repositories\\IBlogRepository.cs",
-              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IBlogRepository.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAowB8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T10:24:28.729Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BlogService.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\BlogService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\BlogService.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\BLL\\Services\\BlogService.cs",
-              "RelativeToolTip": "BLL\\Services\\BlogService.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAIA2wGsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T10:23:33.381Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IBlogService.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IBlogService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IBlogService.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\BLL\\Interfaces\\IBlogService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IBlogService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAA7wBUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T10:23:23.673Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "UserBlogController.cs",
-              "DocumentMoniker": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\UserBlogController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserBlogController.cs",
-              "ToolTip": "C:\\Users\\truon\\Downloads\\New folder (3)\\SWP391_Group5\\BE\\Tri\\API\\Controllers\\Member\\UserBlogController.cs",
-              "RelativeToolTip": "API\\Controllers\\Member\\UserBlogController.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAA7wEUAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T09:41:24.638Z"
+              "WhenOpened": "2025-06-23T14:45:05.232Z",
+              "EditorCaption": ""
             }
           ]
         }

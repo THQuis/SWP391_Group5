@@ -148,6 +148,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AdminConsultationController",
+    "Method": "GetAllAppointments",
+    "RelativePath": "api/admin/consultation/all-appointments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AdminConsultationController",
+    "Method": "ApproveBooking",
+    "RelativePath": "api/admin/consultation/approve/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AdminConsultationController",
+    "Method": "CancelBooking",
+    "RelativePath": "api/admin/consultation/cancel/{bookingId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AdminConsultationController",
+    "Method": "RejectBooking",
+    "RelativePath": "api/admin/consultation/reject/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AdminConsultationController",
+    "Method": "UpdateConsultation",
+    "RelativePath": "api/admin/consultation/update/{bookingId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Admin.ConsultationUpdate",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
     "Method": "Delete",
     "RelativePath": "api/Admin/DeleteAchivement",
@@ -982,6 +1061,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.UserAchievementController",
+    "Method": "GrantAchievement",
+    "RelativePath": "api/user-achievement/grant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "achievementId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.UserAchievementController",
+    "Method": "GetUserAchievements",
+    "RelativePath": "api/user-achievement/my-achievements/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserConsultationController",
+    "Method": "BookConsultation",
+    "RelativePath": "api/user/consultation/book",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.User.ConsultationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserConsultationController",
+    "Method": "CancelConsultation",
+    "RelativePath": "api/user/consultation/cancel/{bookingId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserConsultationController",
+    "Method": "GetMyConsultations",
+    "RelativePath": "api/user/consultation/my-bookings",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "DeleteUser",
     "RelativePath": "api/user/delete-user",
@@ -1001,6 +1159,48 @@
     "ContainingType": "Smoking.API.Controllers.Member.UserProfileController",
     "Method": "GetNotifications",
     "RelativePath": "api/user/notifications",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserNotificationController",
+    "Method": "DeleteMyNotification",
+    "RelativePath": "api/user/notifications/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserNotificationController",
+    "Method": "MarkAsRead",
+    "RelativePath": "api/user/notifications/{id}/read",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserNotificationController",
+    "Method": "GetMyNotifications",
+    "RelativePath": "api/user/notifications/my",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1031,6 +1231,111 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "CreateBlog",
+    "RelativePath": "api/UserBlog/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Smoking.API.Models.Admin.BlogCreateModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "DeleteBlog",
+    "RelativePath": "api/UserBlog/delete/{blogId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "EditBlog",
+    "RelativePath": "api/UserBlog/edit/{blogId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "Smoking.API.Models.Admin.BlogCreateModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "GetBlogDetail",
+    "RelativePath": "api/UserBlog/my-blog-detail/{blogId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "GetMyBlogs",
+    "RelativePath": "api/UserBlog/my-blogs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "ReportBlog",
+    "RelativePath": "api/UserBlog/report/{blogId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "GetUserBlogStats",
+    "RelativePath": "api/UserBlog/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

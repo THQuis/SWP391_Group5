@@ -18,6 +18,9 @@ namespace Smoking.DAL.Entities
         public string Message { get; set; }  // Mô tả thông báo
 
         public DateTime NotificationDate { get; set; } = DateTime.Now;
+        public bool IsRead { get; set; } = false;
+        public DateTime? ReadAt { get; set; }
+
 
         [Required, MaxLength(50)]
         public string NotificationType { get; set; }  // Loại thông báo (ví dụ: thông báo hệ thống, nhắc nhở)

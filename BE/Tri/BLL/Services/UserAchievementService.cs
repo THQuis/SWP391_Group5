@@ -75,5 +75,16 @@ namespace Smoking.BLL.Services
             // Lấy danh sách thành tựu của người dùng từ cơ sở dữ liệu
             return await _unitOfWork.UserAchievements.FindAsync(x => x.UserID == userId);
         }
+
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await _unitOfWork.Users.GetByIdAsync(userId);
+        }
+
+        public async Task<Achievement> GetAchievementByIdAsync(int achievementId)
+        {
+            return await _unitOfWork.Achievements.GetByIdAsync(achievementId);
+        }
+
     }
 }

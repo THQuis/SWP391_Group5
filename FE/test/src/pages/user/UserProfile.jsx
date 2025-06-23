@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Modal, Form, OverlayTrigger, Tooltip, Spinner } from 'react-bootstrap';
-import { FaUserEdit, FaUser, FaTransgender, FaCalendarAlt, FaGem, FaPhoneAlt, FaEnvelope, FaTrashAlt } from "react-icons/fa";
+import { FaUserEdit, FaUser, FaTransgender, FaCalendarAlt, FaGem, FaPhoneAlt, FaEnvelope, FaTrashAlt, FaBirthdayCake, FaHeart, FaCommentAlt, FaEye } from "react-icons/fa"; // THÊM FaHeart, FaCommentAlt, FaEye
+import { data } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const UserProfile = () => {
     const [user, setUser] = useState(null);
@@ -12,9 +13,71 @@ const UserProfile = () => {
         phoneNumber: '',
         profilePicture: '',
         description: '',
+        gender: '',  //them gender, dateofbirth
+        dateOfBirth: '',
     });
     const [showDeleteModal, setShowDeleteModal] = useState(false); // Thêm state cho modal xác nhận xóa
+    const [userBlogs, setUserBlogs] = useState([]);
+    const [isBlogsLoading, setIsBlogsLoading] = useState(true);
 
+    const [showDeleteBlogModal, setShowDeleteBlogModal] = useState(false);
+    const [blogToDelete, setBlogToDelete] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    // --- BẮT ĐẦU THÊM HÀM MỚI TẠI ĐÂY ---
+    const handleConfirmDeleteBlog = async () => {
+        console.log("ĐANG CHẠY HÀM XÓA BÀI VIẾT");
+        if (!blogToDelete) return;
+
+        setIsDeleting(true);
+        try {
+            const token = localStorage.getItem('userToken');
+
+            // SỬA DUY NHẤT VÀ QUAN TRỌNG NHẤT LÀ Ở ĐÂY:
+            // Thay thế bằng đường dẫn đầy đủ đến API của bạn.
+            // Hãy chắc chắn địa chỉ và cổng (7049) là chính xác.
+            const res = await fetch(`/api/UserBlog/delete/${blogToDelete}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': '*/*'
+                }
+            });
+
+            if (res.ok) {
+                // Nếu API trả về mã 204 (No Content), không cần phân tích JSON
+                if (res.status === 204) {
+                    toast.success('Đã xóa bài viết thành công!');
+                } else {
+                    // Nếu API trả về nội dung (ví dụ mã 200) thì mới phân tích JSON
+                    const data = await res.json();
+                    toast.success(data.message || 'Đã xóa bài viết thành công!');
+                }
+
+                // Cập nhật lại giao diện
+                setUserBlogs(currentBlogs => currentBlogs.filter(blog => blog.blogID !== blogToDelete));
+            } else {
+                const errorText = await res.text();
+                let errorMessage = 'Xóa bài viết thất bại!';
+                try {
+                    // Thử phân tích lỗi JSON từ backend nếu có
+                    const errorJson = JSON.parse(errorText);
+                    errorMessage = errorJson.message || errorJson.title || errorText;
+                } catch (jsonError) {
+                    // Nếu không phải JSON, dùng text
+                    errorMessage = errorText;
+                }
+                throw new Error(errorMessage);
+            }
+        } catch (e) {
+            // Lỗi này sẽ hiển thị khi không kết nối được tới server (sai URL, mất mạng, CORS)
+            toast.error(`Lỗi: ${e.message}`);
+        } finally {
+            // Khối này LUÔN LUÔN chạy sau khi try...catch kết thúc
+            setIsDeleting(false);
+            setShowDeleteBlogModal(false);
+            setBlogToDelete(null);
+        }
+    };
     // Đổi ảnh đại diện
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
@@ -35,12 +98,19 @@ const UserProfile = () => {
     const handleSaveProfile = async () => {
         try {
             const token = localStorage.getItem('userToken');
+            let isoDateOfBirth = ''; // Biến để lưu ngày sinh ở định
+            if (editInfo.dateOfBirth) {
+                // Nếu user nhập 'YYYY-MM-DD', chuyển sang ISO string ở đầu ngày (UTC)
+                isoDateOfBirth = new Date(editInfo.dateOfBirth).toISOString();
+            }
             const body = {
                 email: user.email,
                 fullName: editInfo.fullName,
                 phoneNumber: editInfo.phoneNumber,
                 profilePicture: editInfo.profilePicture,
-                description: editInfo.description
+                description: editInfo.description,
+                gender: editInfo.gender,  // them gen, birth
+                dateOfBirth: isoDateOfBirth || '', // Chuyển đổi sang định dạng ISO nếu có
             };
             const res = await fetch('/api/user/update-profile', {
                 method: 'PUT',
@@ -60,7 +130,27 @@ const UserProfile = () => {
             toast.error('Có lỗi xảy ra khi kết nối tới máy chủ!');
         }
     };
-
+    // THÊM MỚI: Hàm lấy danh sách bài viết của người dùng
+    const fetchUserBlogs = async () => {
+        setIsBlogsLoading(true); // Bắt đầu tải, hiển thị spinner
+        try {
+            const token = localStorage.getItem('userToken');
+            const res = await fetch('/api/UserBlog/my-blogs', { // SỬA: Đảm bảo URL đầy đủ nếu đang dùng localhost:3000
+                headers: { 'Authorization': `Bearer ${token}`, 'Accept': '*/*' }
+            });
+            if (!res.ok) {
+                const errorText = await res.text(); // Lấy nội dung lỗi nếu có
+                throw new Error(errorText || 'Không lấy được danh sách bài viết');
+            }
+            const data = await res.json();
+            setUserBlogs(data); // Cập nhật state với dữ liệu bài viết
+        } catch (e) {
+            toast.error("Lỗi khi tải bài viết: " + e.message);
+            setUserBlogs([]); // Đảm bảo userBlogs là một mảng rỗng nếu có lỗi
+        } finally {
+            setIsBlogsLoading(false); // Kết thúc tải, ẩn spinner
+        }
+    };
     // Lấy profile
     const fetchUserProfile = async (showPageLoading = true) => {
         if (showPageLoading) {
@@ -82,7 +172,8 @@ const UserProfile = () => {
                 avatar: data.user.profilePicture || 'https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true',
                 fullName: data.user.fullName,
                 email: data.user.email,
-                gender: data.user.gender || '',
+                gender: data.user.gender,
+                dateOfBirth: data.user.dateOfBirth ? data.user.dateOfBirth.slice(0, 10) : '', // Chỉ lấy phần ngày
                 memberSince: data.user.registrationDate,
                 memberPackage: memberPackage,
                 phoneNumber: data.user.phoneNumber,
@@ -106,6 +197,8 @@ const UserProfile = () => {
             phoneNumber: user.phoneNumber || '',
             profilePicture: user.avatar || '',
             description: user.description || '',
+            gender: user.gender || '',  //thêm sau 
+            dateOfBirth: user.dateOfBirth ? user.dateOfBirth.slice(0, 10) : '', // Chỉ lấy phần ngày
         });
         setAvatarPreview(null);
         setShowEditModal(true);
@@ -113,6 +206,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         fetchUserProfile();
+        fetchUserBlogs();
     }, []);
 
     // Xử lý khi nhấn nút xóa (chỉ mở modal xác nhận)
@@ -122,6 +216,7 @@ const UserProfile = () => {
 
     // Thực sự xóa tài khoản khi xác nhận trong modal
     const handleConfirmDeleteAccount = async () => {
+        console.log("!!! CẢNH BÁO: ĐANG CHẠY HÀM XÓA TÀI KHOẢN !!!");
         try {
             const token = localStorage.getItem('userToken');
             const email = user.email;
@@ -224,7 +319,12 @@ const UserProfile = () => {
                             </div>
                             <div className="d-flex align-items-center mb-2">
                                 <FaTransgender className="me-2" /><strong>Giới tính:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{user.gender === 'male' ? 'Nam' : user.gender === 'female' ? 'Nữ' : ''}</span>
+                                <span className="ms-2" style={{ color: "#222" }}>{user.gender === 'Male' ? 'Nam' : user.gender === 'Female' ? 'Nữ' : ''}</span>
+                            </div>
+
+                            <div className="d-flex align-items-center mb-2">
+                                <FaBirthdayCake className="me-2" /><strong>Ngày sinh:</strong>
+                                <span className="ms-2" style={{ color: "#222" }}>{user.dateOfBirth ? user.dateOfBirth.slice(0, 10) : ''}</span>
                             </div>
                         </Col>
                         <Col md={6} xs={12}>
@@ -255,7 +355,79 @@ const UserProfile = () => {
                     </Row>
                 </Card.Body>
             </Card>
+            {/* THÊM MỚI: Phần hiển thị bài viết đã đăng */}
+            <Card className="mb-4 mx-auto shadow-sm border-0" style={{ borderRadius: 22, maxWidth: 900 }}>
+                <Card.Body style={{ background: "#fff", borderRadius: 22, padding: "2rem" }}>
+                    <h5 className="mb-4" style={{ color: "#3d1877", fontWeight: 700, letterSpacing: 1 }}>
+                        <FaEye className="me-2" /> Bài viết đã đăng
+                    </h5>
+                    {isBlogsLoading ? (
+                        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100px' }}>
+                            <Spinner animation="border" variant="success" />
+                            <p className="ms-3">Đang tải bài viết...</p>
+                        </div>
+                    ) : (
+                        // Dòng "const approvedBlogs" PHẢI NẰM TRONG KHỐI JAVASCRIPT {}
+                        // BẮT ĐẦU PHẦN SỬA ĐỔI CHÍNH Ở ĐÂY
+                        (() => { // Sử dụng IIFE (Immediately Invoked Function Expression) hoặc đơn giản là dùng một biến tạm
+                            const approvedBlogs = userBlogs.filter(blog => blog.status === 'Approved');
 
+                            return approvedBlogs.length > 0 ? (
+                                <Row xs={1} md={1} lg={1} className="g-4">
+                                    {approvedBlogs.map(blog => ( // Sử dụng mảng đã lọc
+                                        <Col key={blog.blogID}>
+                                            <Card className="shadow-sm h-100" style={{ borderRadius: '15px', border: '1px solid #e0e0e0' }}>
+                                                <Card.Body>
+                                                    <Card.Title className="mb-2 fw-bold" style={{ color: '#0a6435' }}>
+                                                        {blog.title}
+                                                    </Card.Title>
+                                                    <Card.Text className="text-muted small mb-2">
+                                                        Ngày đăng: {new Date(blog.createdDate).toLocaleDateString('vi-VN', { year: 'numeric', month: 'numeric', day: 'numeric' })}
+                                                    </Card.Text>
+                                                    <Card.Text>
+                                                        {blog.content.length > 150 ? blog.content.substring(0, 150) + '...' : blog.content}
+                                                    </Card.Text>
+                                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                                        <div>
+                                                            <span className="me-3">
+                                                                <FaHeart className="text-danger me-1" /> {blog.likes} lượt thích
+                                                            </span>
+                                                            <span className="me-3">
+                                                                <FaCommentAlt className="text-info me-1" /> {/* Nếu có trường comments, bạn có thể thay thế */}
+                                                                0 bình luận
+                                                            </span>
+                                                        </div>
+                                                        <Badge
+                                                            bg={'success'} // Luôn là màu xanh cho bài đã duyệt
+                                                            className="p-2 rounded-pill"
+                                                        >
+                                                            Đã duyệt
+                                                        </Badge>
+                                                    </div>
+                                                </Card.Body>
+                                                <Card.Footer className="text-end bg-white border-top-0" style={{ borderRadius: '0 0 15px 15px' }}>
+                                                    <Button
+                                                        variant="outline-danger"
+                                                        size="sm"
+                                                        onClick={() => {
+                                                            setBlogToDelete(blog.blogID);      // Lưu ID của blog cần xóa
+                                                            setShowDeleteBlogModal(true); // Mở modal xác nhận
+                                                        }}
+                                                    >
+                                                        <FaTrashAlt className="me-1" /> Xóa
+                                                    </Button>
+                                                </Card.Footer>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            ) : (
+                                <p className="text-center text-muted fst-italic">Bạn chưa có bài viết nào được duyệt.</p>
+                            );
+                        })()
+                    )}
+                </Card.Body>
+            </Card>
             {/* Nút xóa tài khoản căn giữa */}
             <div className="my-4 d-flex justify-content-center">
                 <Button
@@ -275,7 +447,27 @@ const UserProfile = () => {
                     <FaTrashAlt className="me-2 mb-1" /> Xóa tài khoản
                 </Button>
             </div>
-
+            {/* --- BẮT ĐẦU THÊM MODAL MỚI TẠI ĐÂY --- */}
+            <Modal show={showDeleteBlogModal} onHide={() => setShowDeleteBlogModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa bài viết</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Bạn có chắc chắn muốn xóa bài viết này không? Hành động này <b>không thể hoàn tác</b>.</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteBlogModal(false)} disabled={isDeleting}>
+                        Hủy
+                    </Button>
+                    <Button
+                        variant="danger"
+                        onClick={handleConfirmDeleteBlog}  // <<<--- KIỂM TRA KỸ DÒNG NÀY
+                        disabled={isDeleting}
+                    >
+                        {isDeleting ? 'Đang xóa...' : 'Xác nhận xóa'}
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             {/* Modal xác nhận xóa tài khoản */}
             <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
                 <Modal.Header closeButton>
@@ -329,6 +521,25 @@ const UserProfile = () => {
                             value={editInfo.description}
                             onChange={e => setEditInfo({ ...editInfo, description: e.target.value })}
                         />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Ngày sinh</Form.Label>
+                        <Form.Control
+                            type="date"
+                            value={editInfo.dateOfBirth}// chỉnh sửa date of birth
+                            onChange={(e) => setEditInfo({ ...editInfo, dateOfBirth: e.target.value })}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Giới tính</Form.Label>
+                        <Form.Select
+                            value={editInfo.gender}
+                            onChange={(e) => setEditInfo({ ...editInfo, gender: e.target.value })}
+                        >
+                            <option value="">Chọn giới tính</option>
+                            <option value="Male">Nam</option>
+                            <option value="Female">Nữ</option>
+                        </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Số điện thoại</Form.Label>

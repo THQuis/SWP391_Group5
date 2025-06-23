@@ -18,6 +18,10 @@ namespace Smoking.BLL.Interfaces
         Task<bool> MarkBlogAsReviewedAsync(int blogId);
         Task<bool> DeleteAsync(int blogId);
         Task<Blog> CreateByAdminAsync(Blog blog);
+        Task<IEnumerable<Blog>> GetAllPublishedAsync();
+
+
+
 
         // --- USER FUNCTIONALITY ---
         Task<IEnumerable<Blog>> GetAllByUserIdAsync(int userId);

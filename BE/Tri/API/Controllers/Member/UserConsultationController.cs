@@ -22,28 +22,55 @@ namespace Smoking.API.Controllers.Member
             _mailService = mailService;
         }
 
-        // 1️⃣ Đặt lịch tư vấn
         [HttpPost("book")]
         public async Task<IActionResult> BookConsultation([FromBody] ConsultationRequest request)
-        {   
+        {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
                 return Unauthorized(new { Message = "Người dùng không hợp lệ." });
             }
 
-            // Kiểm tra xem Coach có tồn tại không
+            // ✅ Nếu không gửi ngày => lấy ngày hôm nay
+            var consultationDate = string.IsNullOrWhiteSpace(request.ConsultationDate)
+                ? DateTime.Today.ToString("yyyy-MM-dd")
+                : request.ConsultationDate;
+
+            // ✅ Nếu không gửi giờ => mặc định 00:00:00
+            var consultationTime = string.IsNullOrWhiteSpace(request.ConsultationTime)
+                ? "00:00:00"
+                : request.ConsultationTime;
+
+            // ✅ Ghép thành DateTime chuẩn
+            string combinedDateTime = $"{consultationDate}T{consultationTime}";
+
+            // ✅ Kiểm tra định dạng
+            if (!DateTime.TryParseExact(
+                    combinedDateTime,
+                    new[] { "yyyy-MM-ddTHH:mm", "yyyy-MM-ddTHH:mm:ss" },
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.None,
+                    out var consultationDateTime))
+            {
+                return BadRequest(new
+                {
+                    Message = "Thời gian tư vấn không hợp lệ. Định dạng yêu cầu: ngày 'yyyy-MM-dd', giờ 'HH:mm' hoặc 'HH:mm:ss'.",
+                    Received = combinedDateTime
+                });
+            }
+
+            // ✅ Kiểm tra Coach
             var coach = await _unitOfWork.Users.GetByIdAsync(request.CoachId);
-            if (coach == null || coach.RoleID != 3)  // Kiểm tra xem có phải là Coach không
+            if (coach == null || coach.RoleID != 3)
             {
                 return BadRequest(new { Message = "Coach không tồn tại hoặc không hợp lệ." });
             }
 
-            // Kiểm tra thời gian tư vấn có hợp lệ không (ví dụ không trùng lịch)
-            var existingBooking = await _unitOfWork.ConsultationBookings.GetAllAsync();  // Lấy tất cả các lịch tư vấn
+            // ✅ Kiểm tra trùng lịch
+            var existingBooking = await _unitOfWork.ConsultationBookings.GetAllAsync();
             var conflictingBooking = existingBooking.FirstOrDefault(booking =>
                 booking.CoachID == request.CoachId &&
-                booking.BookingDate == request.ConsultationDate &&
+                booking.BookingDate == consultationDateTime &&
                 booking.Status != "Cancelled");
 
             if (conflictingBooking != null)
@@ -51,31 +78,32 @@ namespace Smoking.API.Controllers.Member
                 return BadRequest(new { Message = "Thời gian này đã có lịch tư vấn. Vui lòng chọn thời gian khác." });
             }
 
-            // Tạo mới lịch tư vấn
+            // ✅ Tạo mới lịch tư vấn
             var consultation = new ConsultationBooking
             {
                 UserID = userId,
                 CoachID = request.CoachId,
-                BookingDate = request.ConsultationDate,
+                BookingDate = consultationDateTime,
                 Duration = request.Duration,
-                Status = "Pending", // Trạng thái ban đầu là Pending (Chờ duyệt)
-                CreatedDate = System.DateTime.Now,
-                Notes = request.Notes // Gán giá trị Notes từ request vào
+                Status = "Pending",
+                CreatedDate = DateTime.Now,
+                Notes = request.Notes
             };
 
-            await _unitOfWork.ConsultationBookings.AddAsync(consultation);  // Thêm lịch tư vấn vào cơ sở dữ liệu
+            await _unitOfWork.ConsultationBookings.AddAsync(consultation);
             await _unitOfWork.CompleteAsync();
 
-            // Gửi thông báo qua email cho User và Coach
+            // ✅ Gửi email
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
-            var emailBodyForUser = $"Bạn đã đặt lịch tư vấn với Coach {coach.FullName} vào {request.ConsultationDate}.";
+            var emailBodyForUser = $"Bạn đã đặt lịch tư vấn với Coach {coach.FullName} vào {consultationDateTime:yyyy-MM-dd HH:mm}.";
             await _mailService.SendEmailAsync(user.Email, "Đặt lịch tư vấn thành công", emailBodyForUser);
 
-            var emailBodyForCoach = $"Bạn có một lịch tư vấn mới từ người dùng {user.FullName} vào {request.ConsultationDate}.";
+            var emailBodyForCoach = $"Bạn có một lịch tư vấn mới từ người dùng {user.FullName} vào {consultationDateTime:yyyy-MM-dd HH:mm}.";
             await _mailService.SendEmailAsync(coach.Email, "Lịch tư vấn mới", emailBodyForCoach);
 
             return Ok(new { Message = "Đặt lịch tư vấn thành công. Chờ Coach duyệt." });
         }
+
 
         // 2️⃣ Xem lịch tư vấn của người dùng
         [HttpGet("my-bookings")]

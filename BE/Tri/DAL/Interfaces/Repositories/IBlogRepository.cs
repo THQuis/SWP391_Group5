@@ -27,6 +27,9 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task<int> CountByUserAndStatusAsync(int userId, string status);
         // Get blogs by AuthorId, including User and Role
         Task<IEnumerable<Blog>> GetByAuthorIdWithUserAndRoleAsync(int authorId);
+        Task<IEnumerable<Blog>> GetAllPublishedWithUserAndRoleAsync();
+
+
 
         // ================= COMMON =================
 

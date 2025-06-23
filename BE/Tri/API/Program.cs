@@ -12,7 +12,21 @@ using Smoking.DAL.Repositories;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+// =================================================================
+// ⭐ BƯỚC 1: THÊM DỊCH VỤ CORS
+// =================================================================
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            // Thay thế "http://localhost:3000" bằng địa chỉ của frontend React của bạn
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 // Cấu hình JwtSettings
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
@@ -127,7 +141,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+// =================================================================
+// ⭐ BƯỚC 2: KÍCH HOẠT MIDDLEWARE CORS (ĐẶT TRƯỚC UseAuthentication)
+// =================================================================
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 

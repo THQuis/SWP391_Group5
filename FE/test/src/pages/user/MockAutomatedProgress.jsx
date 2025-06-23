@@ -19,6 +19,7 @@ const ProgressDashboardPage = () => {
 
     const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
+    const memberPackage = localStorage.getItem('memberPackage'); // Sẽ là "Premium" hoặc "Basic"
 
     // Đưa fetch logic ra ngoài useEffect để tái sử dụng sau khi cập nhật relapse
     const fetchProgressData = useCallback(async () => {
@@ -260,7 +261,13 @@ const ProgressDashboardPage = () => {
                     <Button
                         variant="outline-secondary"
                         className="relapse-button"
-                        onClick={handleShowRelapseModal}
+                        onClick={() => {
+                            if (memberPackage === 'Basic') {
+                                navigate('/User/package'); // Trang mua gói của bạn 
+                            } else {
+                                setShowRelapseModal(true);
+                            }
+                        }}
                     >
                         <span className="button-icon">😔</span>
                         Tôi đã lỡ hút thuốc hôm nay...
@@ -270,7 +277,13 @@ const ProgressDashboardPage = () => {
                 <div className="history-table-section" style={{ marginTop: 32, textAlign: 'center' }}>
                     <Button
                         variant="primary"
-                        onClick={() => setShowCalendarModal(true)} // Mở modal lịch
+                        onClick={() => {
+                            if (memberPackage === 'Basic') {
+                                navigate('/User/package'); // Trang mua gói của bạn (
+                            } else {
+                                setShowCalendarModal(true);
+                            }
+                        }}
                         style={{ marginBottom: 12 }}
                     >
                         Xem nhật ký trên lịch

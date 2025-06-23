@@ -54,6 +54,7 @@ const RouterCustom = () => {
                 <Route path={ROUTERS.USER.COACH} element={<CoachList />} />
                 <Route path={ROUTERS.USER.RANKING} element={<RankingPage />} />
                 <Route path={ROUTERS.USER.PROFILECOACH} element={<ProfileOfCoach />} />
+                {/* CoachDashboard */}
 
             </Route>
 

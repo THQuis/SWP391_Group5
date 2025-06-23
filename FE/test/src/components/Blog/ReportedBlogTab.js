@@ -76,7 +76,7 @@ function ReportedBlogTab({ reloadBlogList }) {
             <Table bordered hover>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>BlogID</th>
                         <th>Tiêu đề</th>
                         {/* <th>Nội dung</th> */}
                         <th>Bị báo cáo</th>
@@ -96,7 +96,7 @@ function ReportedBlogTab({ reloadBlogList }) {
                     ) : (
                         blogs.map((blog, idx) => (
                             <tr key={blog.blogId}>
-                                <td>{idx + 1}</td>
+                                <td>{blog.blogId}</td>
                                 <td>{blog.title}</td>
                                 {/* <td style={{ maxWidth: 200, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                                     {blog.content}

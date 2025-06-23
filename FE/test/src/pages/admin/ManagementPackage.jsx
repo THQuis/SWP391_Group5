@@ -228,7 +228,7 @@ const ManagementPackage = () => {
                                     <td>{pkg.price.toLocaleString('vi-VN')}</td>
                                     <td>{pkg.duration}</td>
                                     <td>{pkg.description}</td>
-                                    <td>{pkg.userMemberships.length}</td> {/* SỬA ĐỔI */}
+                                    <td>{pkg.userMemberships ? pkg.userMemberships.length : 0}</td> {/* SỬA ĐỔI */}
                                     <td>
                                         <Button variant="warning" size="sm" className="me-2" onClick={() => handleEditPkg(pkg)}>Sửa</Button>
                                     </td>

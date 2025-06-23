@@ -9,5 +9,6 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<IQueryable<Notification>> GetAllWithUserAndRoleAsync();  // Trả về IQueryable để có thể sử dụng Include
         Task<Notification> GetByIdWithUserAndRoleAsync(int id);  // Trả về Notification với User và Role
+        Task CreateNotificationAsync(Notification notification);
     }
 }

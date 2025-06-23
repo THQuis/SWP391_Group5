@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Smoking.API.Models.Admin
+﻿namespace Smoking.API.Models.Admin
 {
     public class BlogViewModel
     {
@@ -19,12 +17,21 @@ namespace Smoking.API.Models.Admin
         public DateTime? LastModifiedDate { get; set; }
     }
 
-    // Model dùng khi admin tạo blog mới
+    // ✅ Model dành cho Admin tạo blog
     public class BlogCreateModel
     {
         public string Title { get; set; }
         public string? Content { get; set; }
-        public int AuthorId { get; set; }
+        public int AuthorId { get; set; } // ✅ Admin cung cấp
+        public string? CategoryName { get; set; }
+        public string? BlogType { get; set; }
+    }
+
+    // ✅ Model dành cho Member tạo blog (không có AuthorId)
+    public class BlogCreateByUserModel
+    {
+        public string Title { get; set; }
+        public string? Content { get; set; }
         public string? CategoryName { get; set; }
         public string? BlogType { get; set; }
     }

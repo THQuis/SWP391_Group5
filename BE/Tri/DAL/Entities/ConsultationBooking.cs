@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
+    [Table("ConsultationBooking")]
     public class ConsultationBooking
     {
         [Key]
@@ -20,18 +22,18 @@ namespace Smoking.DAL.Entities
         public DateTime BookingDate { get; set; }
 
         [Required]
-        public int Duration { get; set; } // phút
+        public int Duration { get; set; }
 
         [Required]
         [RegularExpression("Pending|Confirmed|Cancelled|Completed")]
         public string Status { get; set; }
 
-        public string MeetingLink { get; set; }
-        public string Notes { get; set; }
-        public string CoachNotes { get; set; }
+        public string? MeetingLink { get; set; }  // Nullable string
+        public string? Notes { get; set; }  // Nullable string
+        public string? CoachNotes { get; set; }  // Nullable string
 
         [MaxLength(50)]
-        public string PreferredLanguage { get; set; }
+        public string? PreferredLanguage { get; set; }  // Nullable string
 
         public bool ReminderSent { get; set; } = false;
         public DateTime CreatedDate { get; set; } = DateTime.Now;

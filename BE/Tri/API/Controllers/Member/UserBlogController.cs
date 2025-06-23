@@ -2,16 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
+using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Smoking.API.Models.Admin;
-using System.Security.Claims;
 
 namespace Smoking.API.Controllers.Member
 {
     [Route("api/UserBlog")]
     [ApiController]
-    [Authorize]  // Chỉ người dùng đã đăng nhập mới có thể sử dụng
+    [Authorize]
     public class UserBlogController : ControllerBase
     {
         private readonly IBlogService _blogService;
@@ -23,30 +24,52 @@ namespace Smoking.API.Controllers.Member
             _userService = userService;
         }
 
-        // 1️⃣ Tạo blog mới (trạng thái sẽ là Published ngay lập tức)
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllBlogs()
+        {
+            var blogs = await _blogService.GetAllWithUserAndRoleAsync();
+            return Ok(blogs.Select(b => new BlogViewModel
+            {
+                BlogId = b.BlogId,
+                Title = b.Title,
+                Content = b.Content,
+                CategoryName = b.CategoryName,
+                BlogType = b.BlogType,
+                Status = b.Status,
+                Likes = b.Likes,
+                Dislikes = b.Dislikes,
+                ReportCount = b.ReportCount,
+                AuthorName = b.User?.FullName ?? "Unknown",
+                RoleName = b.User?.Role?.RoleName ?? "Unknown",
+                CreatedDate = b.CreatedDate,
+                LastModifiedDate = b.LastModifiedDate
+            }));
+        }
+
+
+
+
         [HttpPost("create")]
-        public async Task<IActionResult> CreateBlog([FromBody] BlogCreateModel model)
+        [Authorize(Roles = "2")]
+        public async Task<IActionResult> CreateBlog([FromBody] BlogCreateByUserModel model)
         {
             var authorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (authorIdClaim == null)
                 return Unauthorized("Chưa đăng nhập");
 
-            var authorId = int.Parse(authorIdClaim); // Chuyển claim thành kiểu int
-
-            var user = await _userService.GetByIdAsync(authorId);
-            if (user == null)
-                return BadRequest("User không tồn tại");
+            var authorId = int.Parse(authorIdClaim);
 
             var blog = new Blog
             {
                 Title = model.Title,
                 Content = model.Content,
-                AuthorId = authorId, // Sử dụng authorId từ JWT Token
+                AuthorId = authorId,
                 CategoryName = model.CategoryName,
                 BlogType = model.BlogType,
-                Status = "Published", // Trạng thái là Published ngay lập tức
-                CreatedDate = System.DateTime.Now,
-                LastModifiedDate = System.DateTime.Now,
+                Status = "Published",
+                CreatedDate = DateTime.Now,
+                LastModifiedDate = DateTime.Now,
                 Likes = 0,
                 Dislikes = 0,
                 ReportCount = 0
@@ -56,7 +79,6 @@ namespace Smoking.API.Controllers.Member
             return Ok(created);
         }
 
-        // 2️⃣ Xem danh sách blog cá nhân
         [HttpGet("my-blogs")]
         public async Task<IActionResult> GetMyBlogs()
         {
@@ -65,7 +87,6 @@ namespace Smoking.API.Controllers.Member
                 return Unauthorized("Chưa đăng nhập");
 
             var userId = int.Parse(authorIdClaim);
-
             var blogs = await _blogService.GetAllByUserIdAsync(userId);
 
             return Ok(blogs.Select(b => new BlogViewModel
@@ -86,7 +107,6 @@ namespace Smoking.API.Controllers.Member
             }));
         }
 
-        // 3️⃣ Xem chi tiết blog cá nhân
         [HttpGet("my-blog-detail/{blogId}")]
         public async Task<IActionResult> GetBlogDetail(int blogId)
         {
@@ -111,9 +131,8 @@ namespace Smoking.API.Controllers.Member
             });
         }
 
-        // 4️⃣ Sửa blog (có thể sửa bất cứ khi nào, không cần chờ duyệt)
         [HttpPut("edit/{blogId}")]
-        public async Task<IActionResult> EditBlog(int blogId, [FromBody] BlogCreateModel model)
+        public async Task<IActionResult> EditBlog(int blogId, [FromBody] BlogCreateByUserModel model)
         {
             var blog = await _blogService.GetByIdAsync(blogId);
             if (blog == null) return NotFound();
@@ -126,13 +145,12 @@ namespace Smoking.API.Controllers.Member
             blog.Content = model.Content;
             blog.CategoryName = model.CategoryName;
             blog.BlogType = model.BlogType;
-            blog.LastModifiedDate = System.DateTime.Now;
+            blog.LastModifiedDate = DateTime.Now;
 
             var updated = await _blogService.UpdateAsync(blog);
             return Ok(updated);
         }
 
-        // 5️⃣ Xoá blog (chỉ khi bài viết của chính người dùng)
         [HttpDelete("delete/{blogId}")]
         public async Task<IActionResult> DeleteBlog(int blogId)
         {
@@ -147,7 +165,6 @@ namespace Smoking.API.Controllers.Member
             return Ok(new { Message = "Đã xoá blog thành công" });
         }
 
-        // 6️⃣ Thống kê cá nhân (Số lượng blog tổng, số đã duyệt, số bị từ chối)
         [HttpGet("stats")]
         public async Task<IActionResult> GetUserBlogStats()
         {
@@ -158,20 +175,17 @@ namespace Smoking.API.Controllers.Member
             var userId = int.Parse(authorIdClaim);
 
             var total = await _blogService.CountAllByUserAsync(userId);
-            var pending = await _blogService.CountByUserAndStatusAsync(userId, "Pending");
-            var approved = await _blogService.CountByUserAndStatusAsync(userId, "Approved");
+            var published = await _blogService.CountByUserAndStatusAsync(userId, "Published");
             var rejected = await _blogService.CountByUserAndStatusAsync(userId, "Rejected");
 
             return Ok(new
             {
                 TotalBlogs = total,
-                PendingBlogs = pending,
-                ApprovedBlogs = approved,
+                PublishedBlogs = published,
                 RejectedBlogs = rejected
             });
         }
 
-        // 7️⃣ Báo cáo blog (tăng số lần báo cáo lên 1)
         [HttpPost("report/{blogId}")]
         public async Task<IActionResult> ReportBlog(int blogId)
         {
@@ -179,15 +193,11 @@ namespace Smoking.API.Controllers.Member
             if (userIdClaim == null)
                 return Unauthorized("Chưa đăng nhập");
 
-            var userId = int.Parse(userIdClaim);
-
-            // Thực hiện báo cáo blog
             var result = await _blogService.ReportBlogAsync(blogId);
             if (!result)
                 return BadRequest(new { Message = "Báo cáo blog không thành công." });
 
             return Ok(new { Message = "Blog đã được báo cáo." });
         }
-
     }
 }

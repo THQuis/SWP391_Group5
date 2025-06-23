@@ -106,7 +106,7 @@ namespace Smoking.BLL.Services
         // User tạo blog mới (mặc định chờ duyệt)
         public async Task<Blog> CreateByUserAsync(Blog blog)
         {
-            blog.Status = "Pending";
+            //blog.Status = "Pending";
             blog.CreatedDate = System.DateTime.Now;
             await _repo.AddAsync(blog);
             await _repo.SaveChangesAsync();
@@ -140,6 +140,10 @@ namespace Smoking.BLL.Services
             await _repo.SaveChangesAsync();
 
             return true;
+        }
+        public async Task<IEnumerable<Blog>> GetAllPublishedAsync()
+        {
+            return await _repo.GetAllPublishedWithUserAndRoleAsync();
         }
 
 

@@ -127,5 +127,16 @@ namespace Smoking.DAL.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<Blog>> GetAllPublishedWithUserAndRoleAsync()
+        {
+            return await _context.Blogs
+                .Include(b => b.User)
+                .ThenInclude(u => u.Role)
+                .Where(b => b.Status == "Published")
+                .ToListAsync();
+        }
+
+
     }
 }

@@ -95,7 +95,7 @@ public class AchievementAndProgressController : ControllerBase
         }
 
         var quitPlan = quitPlans.First();
-        var progressDate = DateTime.Today;
+        var progressDate = DateTime.UtcNow.AddHours(7).Date;
 
         // Cập nhật tiến trình
         var updateResult = await _quitProgressService.UpdateQuitProgressAsync(

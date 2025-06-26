@@ -15,7 +15,7 @@ import UnauthorizedPage from "../pages/UnauthorizedPage";
 // User Pages
 import HomePage from "../pages/home/HomePage";
 import UserProfile from "../pages/user/UserProfile";
-import QuitPlanPage from "../pages/user/QuitPlanPage";
+// import QuitPlanPage from "../pages/user/QuitPlanPage";
 import MilestonesPage from "../pages/user/MilestonesPage";
 import MockAutomatedProgress from "../pages/user/MockAutomatedProgress";
 import BlogPage from "../pages/user/BlogPage";
@@ -32,6 +32,9 @@ import ManagementPerformance from "../pages/admin/ManagementPerformance";
 import ManagementPlan from "../pages/admin/ManagementPlan";
 import ManagementNotification from "../pages/admin/ManagementNotification";
 import ProfileOfCoach from "../pages/user/ProfileOfCoach";
+
+import QuitPlanPage from "../pages/user/test";
+
 
 
 const RouterCustom = () => {

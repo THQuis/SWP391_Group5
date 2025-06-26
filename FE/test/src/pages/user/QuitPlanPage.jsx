@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/QuitPlanPage.scss";
 
-// PHẦN 1: Sửa lại để dùng đúng tên thuộc tính từ API (vd: cigarettesPerDayAtStart)
+// PHẦN 1: Thói quen hiện tại
 const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
     const dailyCost = useMemo(() => {
         if (!habitData || !habitData.cigarettesPerDayAtStart || !habitData.pricePerPackAtStart || !habitData.cigarettesPerPack || habitData.cigarettesPerPack <= 0)
@@ -15,72 +15,158 @@ const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
     const data = habitData || { cigarettesPerDayAtStart: '', pricePerPackAtStart: '', cigarettesPerPack: '' };
 
     return (
-        <Card className="mb-4 shadow-sm">
-            <Card.Header as="h5" className="bg-light">1. Thói quen hiện tại</Card.Header>
-            <Card.Body>
-                <Form.Group as={Row} className="mb-3"><Form.Label column sm={6}>Bạn hút bao nhiêu điếu mỗi ngày?</Form.Label><Col sm={6}><Form.Control type="number" name="cigarettesPerDayAtStart" value={data.cigarettesPerDayAtStart} onChange={onChange} disabled={!editable} min="0" /></Col></Form.Group>
-                <Form.Group as={Row} className="mb-3"><Form.Label column sm={6}>Một gói bạn hút có bao nhiêu điếu?</Form.Label><Col sm={6}><Form.Control type="number" name="cigarettesPerPack" value={data.cigarettesPerPack} onChange={onChange} disabled={!editable} min="0" /></Col></Form.Group>
-                <Form.Group as={Row} className="mb-3"><Form.Label column sm={6}>Giá tiền một gói (VND)?</Form.Label><Col sm={6}><Form.Control type="number" name="pricePerPackAtStart" value={data.pricePerPackAtStart} onChange={onChange} disabled={!editable} min="0" /></Col></Form.Group>
-                {dailyCost > 0 && <Alert variant="info" className="mt-3"><p className="mb-0 d-flex justify-content-between"><span>Chi phí mỗi ngày (ước tính):</span> <strong>{(dailyCost).toLocaleString("vi-VN")} VND</strong></p></Alert>}
-                {dailyCost > 0 && <Alert variant="info" className="mt-3"><p className="mb-0 d-flex justify-content-between"><span>Chi phí mỗi Tuần (ước tính):</span> <strong>{(dailyCost * 7).toLocaleString("vi-VN")} VND</strong></p></Alert>}
-                {dailyCost > 0 && <Alert variant="info" className="mt-3"><p className="mb-0 d-flex justify-content-between"><span>Chi phí mỗi tháng (ước tính):</span> <strong>{(dailyCost * 30).toLocaleString("vi-VN")} VND</strong></p></Alert>}
+        <Card className="thq-card mb-4">
+            <Card.Header as="h5" className="thq-card__header">1. Thói quen hiện tại</Card.Header>
+            <Card.Body className="thq-card__body">
+                <Form.Group as={Row} className="thq-form__group mb-3">
+                    <Form.Label column sm={6} className="thq-form__label">Bạn hút bao nhiêu điếu mỗi ngày?</Form.Label>
+                    <Col sm={6}>
+                        <Form.Control
+                            className="thq-form__control"
+                            type="number"
+                            name="cigarettesPerDayAtStart"
+                            value={data.cigarettesPerDayAtStart}
+                            onChange={onChange}
+                            disabled={!editable}
+                            min="0"
+                        />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="thq-form__group mb-3">
+                    <Form.Label column sm={6} className="thq-form__label">Một gói bạn hút có bao nhiêu điếu?</Form.Label>
+                    <Col sm={6}>
+                        <Form.Control
+                            className="thq-form__control"
+                            type="number"
+                            name="cigarettesPerPack"
+                            value={data.cigarettesPerPack}
+                            onChange={onChange}
+                            disabled={!editable}
+                            min="0"
+                        />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="thq-form__group mb-3">
+                    <Form.Label column sm={6} className="thq-form__label">Giá tiền một gói (VND)?</Form.Label>
+                    <Col sm={6}>
+                        <Form.Control
+                            className="thq-form__control"
+                            type="number"
+                            name="pricePerPackAtStart"
+                            value={data.pricePerPackAtStart}
+                            onChange={onChange}
+                            disabled={!editable}
+                            min="0"
+                        />
+                    </Col>
+                </Form.Group>
+                {dailyCost > 0 && (
+                    <Alert variant="info" className="thq-alert mt-3">
+                        <p className="thq-alert__content mb-0 d-flex justify-content-between">
+                            <span>Chi phí mỗi ngày (ước tính):</span>
+                            <strong>{(dailyCost).toLocaleString("vi-VN")} VND</strong>
+                        </p>
+                    </Alert>
+                )}
+                {dailyCost > 0 && (
+                    <Alert variant="info" className="thq-alert mt-3">
+                        <p className="thq-alert__content mb-0 d-flex justify-content-between">
+                            <span>Chi phí mỗi Tuần (ước tính):</span>
+                            <strong>{(dailyCost * 7).toLocaleString("vi-VN")} VND</strong>
+                        </p>
+                    </Alert>
+                )}
+                {dailyCost > 0 && (
+                    <Alert variant="info" className="thq-alert mt-3">
+                        <p className="thq-alert__content mb-0 d-flex justify-content-between">
+                            <span>Chi phí mỗi tháng (ước tính):</span>
+                            <strong>{(dailyCost * 30).toLocaleString("vi-VN")} VND</strong>
+                        </p>
+                    </Alert>
+                )}
             </Card.Body>
         </Card>
     );
 };
 
-// PHẦN 2: COMPONENT CON CHO MỤC TIÊU
+// PHẦN 2: Thiết lập mục tiêu
 const QuitPlanGoalSection = ({ formData, onChange, editable }) => (
-    <Card className="mb-4 shadow-sm">
-        <Card.Header as="h5" className="bg-light">2. Thiết lập mục tiêu</Card.Header>
-        <Card.Body>
-            <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">Ngày bắt đầu cai thuốc (*)</Form.Label>
+    <Card className="thq-card mb-4">
+        <Card.Header as="h5" className="thq-card__header">2. Thiết lập mục tiêu</Card.Header>
+        <Card.Body className="thq-card__body">
+            <Form.Group className="thq-form__group mb-3">
+                <Form.Label className="thq-form__label">Ngày bắt đầu cai thuốc (*)</Form.Label>
                 <Form.Control
+                    className="thq-form__control"
                     type="date"
                     name="startDate"
                     value={formData.startDate}
                     onChange={onChange}
                     required
-                    disabled={!editable}  // <-- Luôn disable
+                    disabled={!editable}
                 />
             </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">Ngày dự kiến kết thúc</Form.Label>
+            <Form.Group className="thq-form__group mb-3">
+                <Form.Label className="thq-form__label">Ngày dự kiến kết thúc</Form.Label>
                 <Form.Control
+                    className="thq-form__control"
                     type="date"
                     name="endDate"
                     value={formData.endDate}
                     onChange={onChange}
-                    disabled={!editable}  // <-- Luôn disable
+                    disabled={!editable}
                 />
             </Form.Group>
         </Card.Body>
     </Card>
 );
-// ===================================================================================
-// PHẦN 3: COMPONENT CON CHO KHẢO SÁT
-// ===================================================================================
-const QuitPlanSurveySection = ({ surveyQuestions, dynamicAnswers, otherTexts, onDynamicChange, onOtherTextChange, editable }) => {
-    const mapQuestionTypeToInputType = (type) => type === 'SingleChoice' ? 'radio' : 'checkbox';
+
+// PHẦN 3: Khảo sát
+const QuitPlanSurveySection = ({
+    surveyQuestions,
+    dynamicAnswers,
+    otherTexts,
+    onDynamicChange,
+    onOtherTextChange,
+    editable,
+}) => {
+    const mapQuestionTypeToInputType = (type) => type === "SingleChoice" ? "radio" : "checkbox";
 
     return (
-        <Card className="mb-4 shadow-sm">
-            <Card.Header as="h5" className="bg-light">3. Tìm hiểu về bạn</Card.Header>
-            <Card.Body>
+        <Card className="thq-card mb-4">
+            <Card.Header as="h5" className="thq-card__header">3. Tìm hiểu về bạn</Card.Header>
+            <Card.Body className="thq-card__body">
                 <fieldset disabled={!editable}>
                     {surveyQuestions.length > 0 ? surveyQuestions.map(q => {
                         const otherOption = q.answerOptions.find(opt => opt.answerText.toLowerCase().includes('khác'));
                         const isOtherSelected = otherOption && (dynamicAnswers[q.questionID] || []).includes(otherOption.answerOptionID);
                         return (
-                            <Form.Group key={q.questionID} className="mb-4">
-                                <Form.Label as="legend" column className="fw-bold">{q.questionText}</Form.Label>
+                            <Form.Group key={q.questionID} className="thq-form__group mb-4">
+                                <Form.Label as="legend" className="fw-bold thq-form__label">{q.questionText}</Form.Label>
                                 {q.answerOptions.map(opt => {
                                     const isThisTheOtherOption = opt.answerText.toLowerCase().includes('khác');
                                     return (
                                         <div key={opt.answerOptionID}>
-                                            <Form.Check type={mapQuestionTypeToInputType(q.questionType)} id={`q-${q.questionID}-a-${opt.answerOptionID}`} label={opt.answerText} name={`question-${q.questionID}`} value={opt.answerOptionID} checked={(dynamicAnswers[q.questionID] || []).includes(opt.answerOptionID)} onChange={(e) => onDynamicChange(e, q.questionID, q.questionType, opt.answerText)} />
-                                            {isThisTheOtherOption && isOtherSelected && (<Form.Control type="text" placeholder="Vui lòng ghi rõ..." className="mt-2 ms-4" style={{ maxWidth: '90%' }} value={otherTexts[q.questionID] || ''} onChange={(e) => onOtherTextChange(q.questionID, e.target.value)} />)}
+                                            <Form.Check
+                                                className="thq-form__check"
+                                                type={mapQuestionTypeToInputType(q.questionType)}
+                                                id={`q-${q.questionID}-a-${opt.answerOptionID}`}
+                                                label={opt.answerText}
+                                                name={`question-${q.questionID}`}
+                                                value={opt.answerOptionID}
+                                                checked={(dynamicAnswers[q.questionID] || []).includes(opt.answerOptionID)}
+                                                onChange={(e) => onDynamicChange(e, q.questionID, q.questionType, opt.answerText)}
+                                            />
+                                            {isThisTheOtherOption && isOtherSelected && (
+                                                <Form.Control
+                                                    className="thq-form__control mt-2 ms-4"
+                                                    type="text"
+                                                    placeholder="Vui lòng ghi rõ..."
+                                                    style={{ maxWidth: "90%" }}
+                                                    value={otherTexts[q.questionID] || ""}
+                                                    onChange={(e) => onOtherTextChange(q.questionID, e.target.value)}
+                                                />
+                                            )}
                                         </div>
                                     );
                                 })}
@@ -92,6 +178,7 @@ const QuitPlanSurveySection = ({ surveyQuestions, dynamicAnswers, otherTexts, on
         </Card>
     );
 };
+
 // COMPONENT CHA: QUẢN LÝ TOÀN BỘ TRANG
 const QuitPlanPage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -106,25 +193,19 @@ const QuitPlanPage = () => {
     const loadInitialData = async () => {
         setIsLoading(true);
         const token = "Bearer " + localStorage.getItem("userToken");
-        // Dùng tên thuộc tính có `...AtStart` để khớp với API get
         const defaultHabitData = { cigarettesPerDayAtStart: '', pricePerPackAtStart: '', cigarettesPerPack: '' };
 
         try {
             const [planRes, questionsRes, userAnswersRes] = await Promise.all([
                 fetch(`/api/QuitPlan/user/${userId}`, { headers: { "Authorization": token } }),
                 fetch('/api/Questionnaire/ListQuestion', { headers: { "Authorization": token } }),
-                // SỬA LẠI ĐÚNG URL API
                 fetch(`/api/Questionnaire/answers-by-user?userId=${userId}`, { headers: { "Authorization": token } })
             ]);
 
             if (questionsRes.ok) setSurveyQuestions(await questionsRes.json());
-
             const planDataArray = await planRes.json().catch(() => null);
-
-            // FIX: Lấy phần tử ĐẦU TIÊN của mảng mà API trả về
             const planData = (planDataArray && planDataArray.length > 0) ? planDataArray[0] : null;
 
-            // Bây giờ, việc kiểm tra và set dữ liệu sẽ chính xác
             if (planRes.ok && planData && planData.quitPlanID) {
                 setHabitData(planData);
                 setFormData(prev => ({
@@ -216,12 +297,12 @@ const QuitPlanPage = () => {
         setFormData(prev => ({ ...prev, otherTexts: { ...prev.otherTexts, [questionID]: value } }));
     };
 
+    // SỬA ĐÚNG Ý MUỐN: scroll lên đầu trang ngay khi LƯU thành công (ngay sau toast.success)
     const handleCreateOrUpdate = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         const token = "Bearer " + localStorage.getItem('userToken');
 
-        // VALIDATION
         if (!habitData || !habitData.cigarettesPerDayAtStart || habitData.cigarettesPerDayAtStart <= 0 || !habitData.cigarettesPerPack || habitData.cigarettesPerPack <= 0 || !habitData.pricePerPackAtStart || habitData.pricePerPackAtStart <= 0) {
             toast.error("Vui lòng điền đầy đủ thông tin hợp lệ ở Phần 1.");
             setIsSubmitting(false); return;
@@ -231,22 +312,19 @@ const QuitPlanPage = () => {
             setIsSubmitting(false); return;
         }
 
-        // TẠO MỚI
         if (!planCreated) {
             try {
-                // PAYLOAD CHO API 1: Phải khớp với API CreateQuitPlan
                 const quitPlanPayload = {
                     userId: parseInt(userId),
                     cigarettesPerDay: habitData.cigarettesPerDayAtStart,
                     pricePerPack: habitData.pricePerPackAtStart,
                     cigarettesPerPack: habitData.cigarettesPerPack,
                     startDate: formData.startDate,
-                    endDate: formData.endDate, // thêm dòng này
+                    endDate: formData.endDate,
                 };
                 const createPlanRes = await fetch('/api/QuitPlan/CreateQuitPlan', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': token }, body: JSON.stringify(quitPlanPayload) });
                 if (!createPlanRes.ok) throw new Error("Lỗi khi tạo kế hoạch cơ bản.");
 
-                // PAYLOAD CHO API 2 (giữ nguyên)
                 const surveyPayload = [];
                 Object.entries(formData.dynamicAnswers).forEach(([qId, aIds]) => aIds.forEach(aId => { /* ... */ }));
                 if (surveyPayload.length > 0) {
@@ -255,22 +333,19 @@ const QuitPlanPage = () => {
                 }
 
                 toast.success("Tạo kế hoạch thành công!");
+                window.scrollTo({ top: 0, behavior: "smooth" }); // <-- scroll lên đầu trang ngay khi lưu thành công
                 await loadInitialData();
             } catch (error) { toast.error(error.message); }
             finally { setIsSubmitting(false); }
         }
-        // CẬP NHẬT
         else {
             try {
-                // DÒNG NÀY ĐÃ ĐƯỢC THÊM LẠI - SỬA LỖI
                 const updatePlanPayload = {
                     cigarettesPerDayAtStart: habitData.cigarettesPerDayAtStart,
                     pricePerPackAtStart: habitData.pricePerPackAtStart,
                     cigarettesPerPack: habitData.cigarettesPerPack,
-
                 };
 
-                // PAYLOAD 2: Dành cho API update-by-user (PUT)
                 const updateSurveyPayload = [];
                 Object.entries(formData.dynamicAnswers).forEach(([qId, aIds]) => aIds.forEach(aId => {
                     const q = surveyQuestions.find(i => i.questionID == qId);
@@ -282,7 +357,6 @@ const QuitPlanPage = () => {
                     });
                 }));
 
-                // GỌI CẢ 2 API CẬP NHẬT CÙNG LÚC
                 const [planUpdateRes, surveyUpdateRes] = await Promise.all([
                     fetch(`/api/QuitPlan/UpdateQuitPlan?userId=${userId}`, {
                         method: "PATCH",
@@ -296,36 +370,39 @@ const QuitPlanPage = () => {
                     })
                 ]);
 
-                // KIỂM TRA KẾT QUẢ CỦA CẢ 2 API
                 if (!planUpdateRes.ok || !surveyUpdateRes.ok) {
                     throw new Error("Có lỗi xảy ra trong quá trình cập nhật. Vui lòng thử lại.");
                 }
 
                 toast.success("Cập nhật thành công!");
-                await loadInitialData(); // Tải lại toàn bộ dữ liệu để đảm bảo nhất quán
-
+                window.scrollTo({ top: 0, behavior: "smooth" }); // <-- scroll lên đầu trang ngay khi lưu thành công
+                await loadInitialData();
             } catch (error) {
                 toast.error(error.message || "Đã có lỗi xảy ra khi cập nhật.");
             } finally {
-                setIsSubmitting(false); // Bật lại nút bấm dù thành công hay thất bại
+                setIsSubmitting(false);
             }
         }
     };
 
-
-    if (isLoading) return <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}><Spinner animation="border" variant="success" /><h4 className="ms-3">Đang tải dữ liệu...</h4></Container>;
+    if (isLoading) return (
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
+            <Spinner animation="border" variant="success" />
+            <h4 className="ms-3">Đang tải dữ liệu...</h4>
+        </Container>
+    );
 
     return (
-        <div className="quit-plan-bg">
-            <Container className="">
+        <div className="thq-quit-plan">
+            <Container>
                 <Row className="justify-content-center">
                     <Col md={10} lg={8}>
-                        <div className="text-center mb-4 pt-4">
-                            <h1>Lập kế hoạch cai thuốc</h1>
-                            <p className="text-muted">Trả lời các câu hỏi sau để nhận một lộ trình được cá nhân hóa.</p>
+                        <div className="thq-header text-center mb-4 pt-4">
+                            <h1 className="thq-header__title">Lập kế hoạch cai thuốc</h1>
+                            <p className="thq-header__subtitle">Trả lời các câu hỏi sau để nhận một lộ trình được cá nhân hóa.</p>
                         </div>
 
-                        <Form onSubmit={handleCreateOrUpdate}>
+                        <Form onSubmit={handleCreateOrUpdate} className="thq-form">
                             <QuitPlanHabitSection
                                 habitData={habitData}
                                 onChange={handleHabitChange}
@@ -345,15 +422,18 @@ const QuitPlanPage = () => {
                                 editable={editMode || !planCreated}
                             />
 
-                            <div className="d-grid mb-3">
+                            <div className="thq-form__button-wrapper d-grid mb-3">
                                 <Button
-                                    variant={planCreated ? (editMode ? "success" : "primary") : "success"}
+                                    className={`thq-button ${planCreated
+                                        ? (editMode ? "thq-button--success" : "thq-button--primary")
+                                        : "thq-button--success"
+                                        }`}
                                     size="lg"
                                     type={planCreated && !editMode ? "button" : "submit"}
                                     onClick={planCreated && !editMode ? (e) => { e.preventDefault(); setEditMode(true); } : undefined}
                                     disabled={isSubmitting || isLoading}
                                 >
-                                    {isSubmitting ? <Spinner as="span" animation="border" size="sm" /> :
+                                    {isSubmitting ? <Spinner as="span" animation="border" size="sm" className="thq-spinner" /> :
                                         (planCreated ? (editMode ? "Lưu thay đổi" : "Chỉnh sửa kế hoạch") : "Hoàn thành và Tạo kế hoạch")
                                     }
                                 </Button>

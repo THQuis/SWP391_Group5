@@ -19,6 +19,7 @@ const ProgressDashboardPage = () => {
 
     const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
+    const memberPackage = localStorage.getItem('memberPackage'); // Sẽ là "Premium" hoặc "Basic"
 
     // Đưa fetch logic ra ngoài useEffect để tái sử dụng sau khi cập nhật relapse
     const fetchProgressData = useCallback(async () => {
@@ -128,7 +129,13 @@ const ProgressDashboardPage = () => {
 
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
-            const dateString = date.toISOString().slice(0, 10);
+            // --- SỬA LỖI TẠI ĐÂY ---
+            // Tạo ngày mới đã được điều chỉnh theo múi giờ địa phương để tránh lỗi `toISOString`
+            const userTimezoneOffset = date.getTimezoneOffset() * 60000; // Chuyển phút sang mili giây
+            const correctedDate = new Date(date.getTime() - userTimezoneOffset);
+            const dateString = correctedDate.toISOString().slice(0, 10);
+            // --- KẾT THÚC SỬA LỖI ---
+
             const historyEntry = progressHistory.find(entry => entry.progressDate.slice(0, 10) === dateString);
 
             // Kiểm tra xem ô này có đang được mở rộng không
@@ -260,7 +267,13 @@ const ProgressDashboardPage = () => {
                     <Button
                         variant="outline-secondary"
                         className="relapse-button"
-                        onClick={handleShowRelapseModal}
+                        onClick={() => {
+                            if (memberPackage === 'Basic') {
+                                navigate('/User/package'); // Trang mua gói của bạn 
+                            } else {
+                                setShowRelapseModal(true);
+                            }
+                        }}
                     >
                         <span className="button-icon">😔</span>
                         Tôi đã lỡ hút thuốc hôm nay...
@@ -270,7 +283,13 @@ const ProgressDashboardPage = () => {
                 <div className="history-table-section" style={{ marginTop: 32, textAlign: 'center' }}>
                     <Button
                         variant="primary"
-                        onClick={() => setShowCalendarModal(true)} // Mở modal lịch
+                        onClick={() => {
+                            if (memberPackage === 'Basic') {
+                                navigate('/User/package'); // Trang mua gói của bạn (
+                            } else {
+                                setShowCalendarModal(true);
+                            }
+                        }}
                         style={{ marginBottom: 12 }}
                     >
                         Xem nhật ký trên lịch

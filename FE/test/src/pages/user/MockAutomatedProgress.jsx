@@ -129,7 +129,13 @@ const ProgressDashboardPage = () => {
 
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
-            const dateString = date.toISOString().slice(0, 10);
+            // --- SỬA LỖI TẠI ĐÂY ---
+            // Tạo ngày mới đã được điều chỉnh theo múi giờ địa phương để tránh lỗi `toISOString`
+            const userTimezoneOffset = date.getTimezoneOffset() * 60000; // Chuyển phút sang mili giây
+            const correctedDate = new Date(date.getTime() - userTimezoneOffset);
+            const dateString = correctedDate.toISOString().slice(0, 10);
+            // --- KẾT THÚC SỬA LỖI ---
+
             const historyEntry = progressHistory.find(entry => entry.progressDate.slice(0, 10) === dateString);
 
             // Kiểm tra xem ô này có đang được mở rộng không

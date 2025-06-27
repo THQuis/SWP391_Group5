@@ -32,7 +32,8 @@ namespace Smoking.DAL.Repositories
             Questions = new QuestionRepository(_context);
             QuitPlanSelectedAnswers = new QuitPlanSelectedAnswerRepository(_context);
             AnswerOptions = new AnswerOptionRepository(_context);
-
+            QuitChallengeTemplates = new QuitChallengeTemplateRepository(_context);
+            UserQuitChallenges = new UserQuitChallengeRepository(_context);
         }
 
         public IRoleRepository Roles { get; private set; }
@@ -52,7 +53,8 @@ namespace Smoking.DAL.Repositories
         public IQuestionRepository Questions { get; private set; }
         public IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswers { get; private set; }
         public IAnswerOptionRepository AnswerOptions { get; private set; }
-
+        public IQuitChallengeTemplateRepository QuitChallengeTemplates { get; private set; }
+        public IUserQuitChallengeRepository UserQuitChallenges { get; private set; }
         public async Task<int> CompleteAsync()
         {
             return await _context.SaveChangesAsync();

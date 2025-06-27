@@ -27,7 +27,7 @@ namespace Smoking.API.Controllers.Member
             _packageService = packageService;
             _paymentService = paymentService;
             _userMembershipService = userMembershipService;
-            _unitOfWork = unitOfWork; 
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet("packages")]

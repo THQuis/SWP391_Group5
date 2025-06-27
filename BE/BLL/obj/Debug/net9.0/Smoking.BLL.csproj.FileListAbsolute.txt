@@ -1429,3 +1429,4 @@ D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\BLL\obj\Debug\net9.0\refint\Smoking.BLL.d
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\BLL\obj\Debug\net9.0\Smoking.BLL.pdb
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\BLL\obj\Debug\net9.0\Smoking.BLL.genruntimeconfig.cache
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\BLL\obj\Debug\net9.0\ref\Smoking.BLL.dll
+D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\BLL\bin\Debug\net9.0\BCrypt.Net-Next.dll

@@ -1515,6 +1515,18 @@
         }
       }
     },
+    "/api/admin/challenge-templates": {
+      "get": {
+        "tags": [
+          "QuitChallengeTemplate"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/QuitPlan/CreateQuitPlan": {
       "post": {
         "tags": [
@@ -2290,6 +2302,108 @@
           }
         }
       }
+    },
+    "/api/user-challenges/{userId}/assign-stage": {
+      "post": {
+        "tags": [
+          "UserQuitChallenge"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user-challenges/{userId}/week": {
+      "get": {
+        "tags": [
+          "UserQuitChallenge"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "weekStart",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "stage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user-challenges/complete": {
+      "post": {
+        "tags": [
+          "UserQuitChallenge"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteChallengeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteChallengeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteChallengeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2572,6 +2686,20 @@
             "nullable": true
           },
           "preferredLanguage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompleteChallengeRequest": {
+        "type": "object",
+        "properties": {
+          "challengeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notes": {
             "type": "string",
             "nullable": true
           }

@@ -1345,7 +1345,6 @@
     "ReturnTypes": []
   },
   {
-<<<<<<< HEAD
     "ContainingType": "UserQuitChallengeController",
     "Method": "UncompleteChallenge",
     "RelativePath": "api/user-challenges/uncomplete",
@@ -1362,8 +1361,6 @@
     "ReturnTypes": []
   },
   {
-=======
->>>>>>> 62835aac32de96cae5f8a35b27c802a850b40fef
     "ContainingType": "Smoking.API.Controllers.Member.UserConsultationController",
     "Method": "BookConsultation",
     "RelativePath": "api/user/consultation/book",

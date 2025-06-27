@@ -2556,7 +2556,6 @@
           }
         }
       }
-<<<<<<< HEAD
     },
     "/api/user-challenges/uncomplete": {
       "post": {
@@ -2588,8 +2587,6 @@
           }
         }
       }
-=======
->>>>>>> 62835aac32de96cae5f8a35b27c802a850b40fef
     }
   },
   "components": {

@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Spinner, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import '../../styles/UserPackage.scss'; // Thêm file CSS riêng
 
-// Giao diện MakePaymentModal đơn giản
+// Component Modal Thanh toán được làm đẹp
 function MakePaymentModal({ show, handleClose, selectedPackage }) {
     const [loading, setLoading] = useState(false);
+    const [payUrl, setPayUrl] = useState(null);
+    const [transactionReference, setTransactionReference] = useState(null);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [confirming, setConfirming] = useState(false);
+    const [showIframe, setShowIframe] = useState(false);
+
+
     useEffect(() => {
-        if (show) setLoading(false); // Reset loading mỗi lần mở modal/gói mới
+        if (show) {
+            setLoading(false);
+            setPayUrl(null);
+            setTransactionReference(null);
+            setShowConfirm(false);
+            setConfirming(false);
+        }
     }, [show, selectedPackage]);
 
     const handlePaymentClick = async () => {
@@ -14,13 +29,6 @@ function MakePaymentModal({ show, handleClose, selectedPackage }) {
         try {
             const token = localStorage.getItem("userToken");
             const userId = localStorage.getItem("userId");
-            // Đặt console.log ở đây để xem giá trị gửi đi
-            console.log({
-                token,
-                userId,
-                packageId: selectedPackage.id,
-                method: "momo"
-            });
             const body = {
                 userId: parseInt(userId),
                 packageId: selectedPackage.id,
@@ -36,285 +44,283 @@ function MakePaymentModal({ show, handleClose, selectedPackage }) {
             });
             if (!res.ok) {
                 const errData = await res.json().catch(() => ({}));
-                console.error("API error:", errData);
-                throw new Error((errData && errData.message) || "Tạo thanh toán thất bại");
+                throw new Error(errData.message || "Tạo thanh toán thất bại");
             }
             const data = await res.json();
-            window.location.href = data.payUrl;
+            setPayUrl(data.payUrl);
+            setTransactionReference(data.reference);
+            setShowIframe(true); // show iframe ngay
+            setTimeout(() => {
+                setShowIframe(false); // ẩn iframe sau 4s
+                setShowConfirm(true); // show nút xác nhận
+            }, 10000);
+
         } catch (err) {
-            alert(err.message || "Có lỗi khi tạo thanh toán");
+            toast.error(err.message || "Có lỗi khi tạo thanh toán");
             setLoading(false);
         }
     };
+    const handleConfirmPayment = async () => {
+        if (!transactionReference) return;
+        setConfirming(true);
+        try {
+            const token = localStorage.getItem("userToken");
+            const res = await fetch("/api/membership/payment-callback", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token,
+                },
+                body: JSON.stringify({
+                    transactionReference,
+                    status: "Success",
+                }),
+            });
+
+            if (!res.ok) throw new Error("Xác nhận thanh toán thất bại");
+            toast.success("Thanh toán thành công!");
+            handleClose();
+            window.location.reload();
+        } catch (err) {
+            toast.error(err.message || "Lỗi khi xác nhận thanh toán");
+            setConfirming(false);
+        }
+    };
+
     return (
-        <Modal show={show} onHide={handleClose} centered>
+        <Modal show={show} onHide={handleClose} centered className="payment-modal">
             <Modal.Header closeButton>
-                <Modal.Title>Thanh toán</Modal.Title>
+                <Modal.Title className="gradient-text">Xác nhận thanh toán</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <div className="mb-3">
-                    <b>Bạn đang chọn:</b> {selectedPackage?.name}
-                </div>
-                {selectedPackage?.price === 0 ? (
-                    <div>Bạn đã chọn gói miễn phí, không cần thanh toán.</div>
-                ) : (
-                    <>
-                        <div>
-                            <b>Số tiền:</b>{" "}
-                            <span style={{ color: "#1a7f37", fontWeight: 600 }}>
-                                {selectedPackage?.price?.toLocaleString()}<sup>đ</sup>{" "}
-                                {selectedPackage?.durationLabel}
-                            </span>
+            <Modal.Body className="payment-modal-body">
+                <div className="selected-package">
+                    <div className="package-name">
+                        <i className="fas fa-check-circle"></i>
+                        <span>{selectedPackage?.name}</span>
+                    </div>
+                    {selectedPackage?.price === 0 ? (
+                        <div className="free-package-notice">
+                            Bạn đã chọn gói miễn phí, không cần thanh toán.
                         </div>
-                        <div className="mt-3">
+                    ) : !payUrl ? (
+                        <div className="payment-button-container">
                             <Button
-                                variant="success"
-                                className="w-100"
+                                className="payment-button"
                                 onClick={handlePaymentClick}
                                 disabled={loading}
                             >
-                                {loading ? "Đang chuyển hướng..." : "Thanh toán"}
+                                {loading ? (
+                                    <>
+                                        <Spinner size="sm" className="mr-2" />
+                                        Đang xử lý...
+                                    </>
+                                ) : (
+                                    <>
+                                        <i className="fas fa-lock mr-2"></i>
+                                        Thanh toán an toàn
+                                    </>
+                                )}
                             </Button>
                         </div>
-                    </>
-                )}
+                    ) : (
+                        <>
+                            {showIframe && payUrl && (
+                                <div className="momo-iframe-container mt-3 text-center">
+                                    <iframe
+                                        src={payUrl}
+                                        title="Thanh toán MoMo"
+                                        width="100%"
+                                        height="600px"         // 👉 tăng chiều cao để hiển thị đủ nội dung ngang
+                                        style={{
+                                            border: "1px solid #ccc",
+                                            borderRadius: "12px",
+                                            minWidth: "100%",
+                                            aspectRatio: "16/9", // 👉 giữ tỷ lệ ngang như video hoặc web landscape
+                                            overflow: "hidden"
+                                        }}
+                                    />
+                                    <p className="text-muted mt-2">Đây là giao diện thanh toán MoMo giả lập</p>
+                                </div>
+                            )}
+
+
+                            {showConfirm && (
+                                <div className="payment-button-container mt-3">
+                                    <Button
+                                        className="payment-button"
+                                        onClick={handleConfirmPayment}
+                                        disabled={confirming}
+                                    >
+                                        {confirming ? (
+                                            <>
+                                                <Spinner size="sm" className="mr-2" />
+                                                Đang xác nhận...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <i className="fas fa-check-circle mr-2"></i>
+                                                Xác nhận đã thanh toán
+                                            </>
+                                        )}
+                                    </Button>
+                                </div>
+                            )}
+                        </>
+                    )}
+                </div>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Đóng
-                </Button>
-            </Modal.Footer>
         </Modal>
     );
 }
 
-
 function getDurationLabel(pkg) {
-    // Xây dựng label cho thời lượng
-    if (pkg.price === 0) return "Miễn phí";
+    // if (pkg.price === 0) return "Miễn phí";
     if (pkg.duration === 1) return "/tháng";
     if (pkg.duration === 3) return "/3 tháng";
-    if (pkg.duration === 12) return "/12 tháng";
+    if (pkg.duration === 12) return "/năm";
     return `/${pkg.duration} tháng`;
 }
 
-function getBadge(pkg) {
-    if (pkg.price === 0) {
-        return (
-            <span
-                style={{
-                    display: "inline-block",
-                    background: "#fff",
-                    color: "#222",
-                    border: "1.5px solid #222",
-                    borderRadius: 4,
-                    fontWeight: 700,
-                    fontSize: 14,
-                    padding: "1px 8px",
-                    marginRight: 10,
-                }}
-            >
-                FREE
-            </span>
-        );
-    }
+function PackageCard({ pkg, onSelect, isSelected, isCurrentPackage }) {
     return (
-        <span
-            style={{
-                fontWeight: 700,
-                color: "#FFD700",
-                fontSize: 22,
-                marginRight: 10,
-            }}
-        >
-            &#x1F451;
-        </span>
+        <Card className={`package-card ${pkg.highlight ? 'highlighted' : ''} ${isSelected ? 'selected' : ''}`}>
+            <div className="package-badge">
+                {pkg.price === 0 ? (
+                    <span className="free-badge">MIỄN PHÍ</span>
+                ) : (
+                    <span className="premium-badge">
+                        <i className="fas fa-crown"></i>
+                        PREMIUM
+                    </span>
+                )}
+            </div>
+            <Card.Body>
+                <div className="package-header">
+                    <h3 className="package-name">{pkg.name}</h3>
+                    <div className="package-price">
+                        {pkg.price === 0 ? (
+                            <span className="free">Miễn phí</span>
+                        ) : (
+                            <>
+                                <span className="amount">{pkg.price.toLocaleString()}</span>
+                                <sup>đ</sup>
+                                <span className="duration">{pkg.durationLabel}</span>
+                            </>
+                        )}
+                    </div>
+                </div>
+                <div className="features-list">
+                    {pkg.features.map((feature, index) => (
+                        <div key={index} className="feature-item">
+                            <i className="fas fa-check"></i>
+                            <span>{feature}</span>
+                        </div>
+                    ))}
+                </div>
+                <Button
+                    className={`select-button ${pkg.price === 0 ? 'free-button' : 'premium-button'}`}
+                    onClick={() => onSelect(pkg)}
+                >
+                    {pkg.price === 0 ? 'Bắt đầu miễn phí' : 'Nâng cấp ngay'}
+                </Button>
+            </Card.Body>
+        </Card>
     );
 }
 
-export default function UserPackage({ onSelect }) {
+export default function UserPackage() {
     const [listPackages, setListPackages] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selecting, setSelecting] = useState(false);
-    const [selectedId, setSelectedId] = useState(null);
-
-    // Modal thanh toán
     const [showModal, setShowModal] = useState(false);
     const [selectedPackage, setSelectedPackage] = useState(null);
-
-    // Thêm các state dưới đây
     const [currentPackageId, setCurrentPackageId] = useState(null);
     const [currentPackagePrice, setCurrentPackagePrice] = useState(null);
     const navigate = useNavigate();
 
-
     useEffect(() => {
-        setLoading(true);
-        const token = localStorage.getItem("userToken");
-        fetch("/api/membership/packages", {
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "*/*",
-            },
-        })
-            .then(res => res.json())
-            .then(data => {
-                const arr = (data.packages || []).map(pkg => ({
+        const fetchPackages = async () => {
+            try {
+                setLoading(true);
+                const token = localStorage.getItem("userToken");
+                const res = await fetch("/api/membership/packages", {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "*/*",
+                    },
+                });
+                const data = await res.json();
+
+                const packages = (data.packages || []).map(pkg => ({
                     id: pkg.packageID,
                     name: pkg.packageName,
                     description: pkg.description,
                     price: pkg.price,
                     duration: pkg.duration,
                     durationLabel: getDurationLabel(pkg),
-                    badge: getBadge(pkg),
-                    features: pkg.description
-                        ? pkg.description.split(",").map(s => s.trim())
-                        : [],
+                    features: pkg.description ? pkg.description.split(",").map(s => s.trim()) : [],
                     highlight: pkg.price === 0,
                 }));
-                setListPackages(arr);
 
-                // Cập nhật currentPackageId và currentPackagePrice
+                setListPackages(packages);
                 setCurrentPackageId(data.currentPackageId);
-                if (data.currentPackagePrice !== undefined) {
-                    setCurrentPackagePrice(data.currentPackagePrice);
-                } else {
-                    const current = (data.packages || []).find(
-                        p => p.packageID === data.currentPackageId
-                    );
-                    setCurrentPackagePrice(current ? current.price : 0);
-                }
-            })
-            .catch(() => setListPackages([]))
-            .finally(() => setLoading(false));
+                setCurrentPackagePrice(data.currentPackagePrice ?? 0);
+            } catch (error) {
+                toast.error("Không thể tải thông tin gói dịch vụ");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPackages();
     }, []);
 
-    const handleSelect = async (pkg) => {
-        setSelecting(true);
-        setSelectedId(pkg.id);
-        setSelectedPackage(pkg);
-        setShowModal(true);
-        setSelecting(false);
-        setSelectedId(null);
-
-        // Nếu muốn gọi API thực tế khi chọn gói, gắn vào đây
-        // if (onSelect) onSelect(pkg);
+    const handleSelect = (pkg) => {
+        if (pkg.price === 0) {
+            if (currentPackageId && currentPackageId !== pkg.id && currentPackagePrice > 0) {
+                toast.warning("Bạn đã đăng ký gói trả phí, không thể chuyển về gói miễn phí.");
+                return;
+            }
+            navigate('/User/progress');
+        } else {
+            setSelectedPackage(pkg);
+            setShowModal(true);
+        }
     };
 
-
     return (
-        <Container>
-            <h2 className="fw-bold mb-4 pt-4" style={{ fontSize: 22 }}>
-                Chọn gói
-            </h2>
-            {loading ? (
-                <div className="d-flex justify-content-center my-5">
-                    <Spinner animation="border" />
+        <div className="user-package-container">
+            <Container>
+                <div className="page-header">
+                    <h1 className="main-title">Chọn gói phù hợp với bạn</h1>
+                    <p className="subtitle">Nâng cấp tài khoản để mở khóa thêm nhiều tính năng hấp dẫn</p>
                 </div>
-            ) : (
-                <Row className="justify-content-center" xs={1} sm={2} md={4} lg={4}>
-                    {listPackages.map((pkg) => (
-                        <Col
-                            key={pkg.id}
-                            className="mb-4 d-flex justify-content-center"
-                            style={{ minWidth: 290, maxWidth: 340 }}
-                        >
-                            <Card
-                                className="w-100"
-                                style={{
-                                    borderRadius: 28,
-                                    border: pkg.highlight ? "3px solid #2EA3A3" : "none",
-                                    boxShadow: "0 4px 24px #0002",
-                                    background:
-                                        "linear-gradient(90deg, #f8fafc 70%, #d1e7e5 100%)",
-                                    minHeight: 270,
-                                    maxWidth: 340,
-                                }}
-                            >
-                                <Card.Body className="py-3 d-flex flex-column justify-content-between">
-                                    <div className="d-flex align-items-center mb-1" style={{ minHeight: 34 }}>
-                                        {pkg.badge}
-                                        <span
-                                            className="fw-bold"
-                                            style={{
-                                                color: pkg.price === 0 ? "#222" : "#B8860B",
-                                                fontSize: 19,
-                                                marginRight: 8,
-                                            }}
-                                        >
-                                            {pkg.name}
-                                        </span>
-                                    </div>
-                                    <div className="mb-1" style={{ fontSize: 16, fontWeight: 700 }}>
-                                        {pkg.price === 0 ? (
-                                            <span>Miễn phí</span>
-                                        ) : (
-                                            <>
-                                                <span>{pkg.price.toLocaleString()}<sup>đ</sup></span>
-                                                <span style={{ fontSize: 14, color: "#444", marginLeft: 6 }}>
-                                                    {pkg.durationLabel}
-                                                </span>
-                                            </>
-                                        )}
-                                    </div>
-                                    <ul className="mb-3" style={{ fontSize: 15, paddingLeft: 18 }}>
-                                        {pkg.features.map((f, fidx) => (
-                                            <li key={fidx} style={{ marginBottom: 2 }}>{f}</li>
-                                        ))}
-                                    </ul>
-                                    {/* Xử lý logic nút chọn gói ở đây */}
-                                    {pkg.price === 0 ? (
-                                        <Button
-                                            variant="success"
-                                            className="px-4"
-                                            size="md"
-                                            style={{
-                                                borderRadius: 20,
-                                                fontWeight: 500,
-                                                minWidth: 110,
-                                            }}
-                                            onClick={() => {
-                                                // Nếu user đã có gói trả phí thì cảnh báo, ngược lại thì điều hướng
-                                                if (
-                                                    currentPackageId &&
-                                                    currentPackageId !== pkg.id &&
-                                                    currentPackagePrice > 0
-                                                ) {
-                                                    alert("Bạn đã đăng ký gói trả phí, không thể chuyển về gói miễn phí.");
-                                                } else {
-                                                    navigate('/User/progress'); // hoặc trang bạn muốn
-                                                }
-                                            }}
-                                        >
-                                            Tiếp tục sử dụng miễn phí
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            variant="success"
-                                            className="px-4"
-                                            size="md"
-                                            style={{
-                                                borderRadius: 20,
-                                                fontWeight: 500,
-                                                minWidth: 110,
-                                            }}
-                                            onClick={() => handleSelect(pkg)}
-                                            disabled={selecting && selectedId === pkg.id}
-                                        >
-                                            {selecting && selectedId === pkg.id ? "Đang chọn..." : "Chọn gói"}
-                                        </Button>
-                                    )}
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            )}
-            <MakePaymentModal
-                show={showModal}
-                handleClose={() => setShowModal(false)}
-                selectedPackage={selectedPackage}
-            />
-        </Container>
+
+                {loading ? (
+                    <div className="loading-container">
+                        <Spinner animation="border" variant="primary" />
+                        <p>Đang tải thông tin...</p>
+                    </div>
+                ) : (
+                    <Row className="package-grid">
+                        {listPackages.map((pkg) => (
+                            <Col key={pkg.id} xs={12} md={6} lg={3}>
+                                <PackageCard
+                                    pkg={pkg}
+                                    onSelect={handleSelect}
+                                    isSelected={selectedPackage?.id === pkg.id}
+                                    isCurrentPackage={currentPackageId === pkg.id}
+                                />
+                            </Col>
+                        ))}
+                    </Row>
+                )}
+
+                <MakePaymentModal
+                    show={showModal}
+                    handleClose={() => setShowModal(false)}
+                    selectedPackage={selectedPackage}
+                />
+            </Container>
+        </div>
     );
 }

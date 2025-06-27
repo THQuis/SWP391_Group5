@@ -1,62 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../styles/BlogPage.scss";
+import { Container, Row, Col, Form, Button, Card, Modal, InputGroup, Dropdown, Spinner } from "react-bootstrap";
 import {
-    Container,
-    Row,
-    Col,
-    Form,
-    Button,
-    Card,
-    Modal,
-    InputGroup,
-    Dropdown,
-} from "react-bootstrap";
-import {
-    FaUserCircle,
-    FaPlus,
-    FaHeart,
-    FaRegHeart,
-    FaEllipsisV,
-    FaEdit,
-    FaTrash,
-    FaFlag,
+    FaUserCircle, FaPlus, FaHeart, FaRegHeart, FaEllipsisV,
+    FaEdit, FaTrash, FaFlag,
 } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 
-// User giả lập (để xác định quyền xóa/sửa, báo cáo)
-const CURRENT_USER = "Tài khoản của bạn";
-
-// ======= FAKE DATA =======
-const FAKE_BLOGS = [
-    {
-        BlogId: 1,
-        AuthorName: "Nguyễn Văn A",
-        CreatedDate: "2024-06-12",
-        Content: "Mình đã bỏ thuốc được 1 tháng! Mọi người cùng cố gắng nhé!",
-        ImageUrl:
-            "https://img.freepik.com/free-vector/april-fools-day-background-with-jester-hat_1017-32324.jpg",
-        Likes: 30,
-        Liked: false,
-        Self: true,
-        Reported: false,
-        Reports: [],
-    },
-    {
-        BlogId: 2,
-        AuthorName: "Lê Thị B",
-        CreatedDate: "2024-06-10",
-        Content: "Bí quyết vượt qua cơn thèm thuốc của mình là uống thật nhiều nước.",
-        ImageUrl: "",
-        Likes: 10,
-        Liked: true,
-        Self: false,
-        Reported: false,
-        Reports: [],
-    },
-];
-// ======= END FAKE DATA =======
+// Lấy user từ localStorage hoặc bạn tuỳ chỉnh lại tuỳ hệ thống login
+const CURRENT_USER = localStorage.getItem("displayName") || "Tài khoản của bạn";
 
 function UserBlog() {
-    const [blogs, setBlogs] = useState(FAKE_BLOGS);
+    const [blogs, setBlogs] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [showEdit, setShowEdit] = useState(false);
     const [editingBlog, setEditingBlog] = useState(null);
     const [editContent, setEditContent] = useState("");
@@ -73,22 +29,44 @@ function UserBlog() {
     const fileInputRef = useRef();
     const fileEditInputRef = useRef();
 
+    // Gọi API lấy danh sách blog (sử dụng Bearer token nếu cần)
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            setIsLoading(true);
+            try {
+                const token = localStorage.getItem("userToken");
+                const res = await fetch("   /api/UserBlog/all", {
+                    headers: token ? { "Authorization": `Bearer ${token}` } : {},
+                });
+                if (!res.ok) throw new Error("Lỗi tải blog");
+                const data = await res.json();
+                setBlogs(data);
+            } catch (err) {
+                toast.error("Không thể tải dữ liệu blog");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchBlogs();
+    }, []);
+
     // Tìm kiếm đơn giản
     const filteredBlogs = blogs.filter(
         (b) =>
-            b.Content.toLowerCase().includes(search.toLowerCase()) ||
-            b.AuthorName.toLowerCase().includes(search.toLowerCase())
+        (b.content?.toLowerCase().includes(search.toLowerCase()) ||
+            b.authorName?.toLowerCase().includes(search.toLowerCase()) ||
+            b.title?.toLowerCase().includes(search.toLowerCase()))
     );
 
-    // Like/Unlike bài viết
+    // Like/Unlike bài viết (chỉ làm ở UI, muốn sync backend thì gọi API)
     const handleToggleLike = (blogId) => {
         setBlogs((prev) =>
             prev.map((b) =>
-                b.BlogId === blogId
+                b.blogId === blogId
                     ? {
                         ...b,
-                        Liked: !b.Liked,
-                        Likes: b.Liked ? b.Likes - 1 : b.Likes + 1,
+                        liked: !b.liked,
+                        likes: b.liked ? (b.likes || 0) - 1 : (b.likes || 0) + 1,
                     }
                     : b
             )
@@ -98,22 +76,23 @@ function UserBlog() {
     // Mở modal chỉnh sửa
     const handleShowEdit = (blog) => {
         setEditingBlog(blog);
-        setEditContent(blog.Content);
-        setEditImage(blog.ImageUrl || "");
-        setEditImagePreview(blog.ImageUrl || "");
+        setEditContent(blog.content || "");
+        setEditImage(blog.imageUrl || "");
+        setEditImagePreview(blog.imageUrl || "");
         setShowEdit(true);
     };
 
-    // Lưu chỉnh sửa
+    // Lưu chỉnh sửa (chỉ làm ở UI, muốn gọi API thì thêm call PATCH/PUT)
     const handleSaveEdit = () => {
         setBlogs((prev) =>
             prev.map((b) =>
-                b.BlogId === editingBlog.BlogId
-                    ? { ...b, Content: editContent, ImageUrl: editImagePreview }
+                b.blogId === editingBlog.blogId
+                    ? { ...b, content: editContent, imageUrl: editImagePreview }
                     : b
             )
         );
         setShowEdit(false);
+        toast.success("Đã lưu chỉnh sửa (chưa sync API).");
     };
 
     // Mở modal tạo bài viết mới
@@ -124,32 +103,36 @@ function UserBlog() {
         setNewImagePreview("");
     };
 
-    // Lưu bài viết mới
+    // Lưu bài viết mới (chỉ ở UI demo, muốn gọi API thì dùng POST)
     const handleSaveCreate = () => {
         setBlogs([
             {
-                BlogId: Date.now(),
-                AuthorName: CURRENT_USER,
-                CreatedDate: new Date().toISOString().slice(0, 10),
-                Content: newContent,
-                ImageUrl: newImagePreview,
-                Likes: 0,
-                Liked: false,
-                Self: true,
-                Reported: false,
-                Reports: [],
+                blogId: Date.now(),
+                title: newContent.slice(0, 25) + "...",
+                content: newContent,
+                categoryName: "Tự tạo",
+                blogType: "Chia sẻ",
+                status: "Published",
+                likes: 0,
+                dislikes: 0,
+                reportCount: 0,
+                authorName: CURRENT_USER,
+                createdDate: new Date().toISOString(),
+                imageUrl: newImagePreview,
             },
             ...blogs,
         ]);
         setShowCreate(false);
+        toast.success("Đã đăng bài (chưa sync API).");
     };
 
-    // Xoá bài viết của mình
+    // Xoá bài viết của mình (chỉ xóa ở UI demo)
     const handleDeleteBlog = (blogId) => {
-        setBlogs((prev) => prev.filter((b) => b.BlogId !== blogId));
+        setBlogs((prev) => prev.filter((b) => b.blogId !== blogId));
+        toast.success("Đã xóa bài viết (chưa sync API).");
     };
 
-    // Xử lý upload ảnh (biến File thành base64 để preview + lưu)
+    // Upload ảnh (base64 preview)
     const handleFileChange = (e, setImage, setPreview) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -168,31 +151,42 @@ function UserBlog() {
         setReportReason("");
     };
 
-    const handleSendReport = () => {
-        setBlogs((prev) =>
-            prev.map((b) =>
-                b.BlogId === reportingBlog.BlogId
-                    ? {
-                        ...b,
-                        Reports: [
-                            ...b.Reports,
-                            {
-                                user: CURRENT_USER,
-                                reason: reportReason,
-                                date: new Date().toISOString(),
-                            },
-                        ],
-                        Reported: true,
+    const handleSendReport = async () => {
+        if (!reportingBlog || !reportingBlog.blogId) {
+            toast.error("Không xác định được bài viết để báo cáo!");
+            setShowReportModal(false);
+            return;
+        }
+        try {
+            const token = localStorage.getItem("userToken");
+            const res = await fetch(
+                `/api/UserBlog/report/${reportingBlog.blogId}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "accept": "application/json",
+                        ...(token ? { Authorization: `Bearer ${token}` } : {}),
                     }
-                    : b
-            )
-        );
-        setShowReportModal(false);
+                }
+            );
+            if (!res.ok) throw new Error("Báo cáo thất bại!");
+            setBlogs((prev) =>
+                prev.map((b) =>
+                    b.blogId === reportingBlog.blogId
+                        ? { ...b, reportCount: (b.reportCount || 0) + 1, reported: true }
+                        : b
+                )
+            );
+            setShowReportModal(false);
+            toast.success("Đã gửi báo cáo bài viết!");
+        } catch (err) {
+            toast.error("Gửi báo cáo thất bại!");
+        }
     };
-
     return (
         <div className="user-blog-bg">
-            <Container style={{ background: "", minHeight: 700 }} className="py-3">
+            <Container style={{ minHeight: 700 }} className="py-3">
+                <ToastContainer position="top-right" />
                 {/* Thanh tìm kiếm */}
                 <Row className="mb-3">
                     <Col md={12} className="d-flex align-items-center">
@@ -208,7 +202,6 @@ function UserBlog() {
                         </InputGroup>
                     </Col>
                 </Row>
-
                 {/* Button tạo bài viết mới */}
                 <Row className="mb-3">
                     <Col md={12} className="d-flex align-items-center gap-2">
@@ -230,147 +223,164 @@ function UserBlog() {
                         </Button>
                     </Col>
                 </Row>
-
                 {/* Danh sách bài viết */}
                 <Row>
                     <Col>
-                        {filteredBlogs.map((blog) => (
-                            <Card
-                                key={blog.BlogId}
-                                className="mb-4"
-                                style={{
-                                    background: "#f5f2f2",
-                                    border: "none",
-                                    borderRadius: 15,
-                                    boxShadow: "0 2px 8px #e3e3e3",
-                                    maxWidth: 550,
-                                    margin: "0 auto",
-                                }}
-                            >
-                                <Card.Body style={{ paddingBottom: 10 }}>
-                                    <div className="d-flex align-items-center mb-2">
-                                        <FaUserCircle size={30} color="#888" />
-                                        <span style={{ fontWeight: 700, marginLeft: 8 }}>
-                                            {blog.AuthorName}
-                                        </span>
-                                        <span style={{ color: "#888", marginLeft: 14, fontSize: 15 }}>
-                                            {blog.CreatedDate}
-                                        </span>
-                                        {/* Menu chỉnh sửa bên phải nếu là bài của mình */}
-                                        {blog.AuthorName === CURRENT_USER && (
-                                            <Dropdown align="end" className="ms-auto">
-                                                <Dropdown.Toggle
-                                                    as="button"
-                                                    style={{
-                                                        background: "transparent",
-                                                        border: "none",
-                                                        color: "#333",
-                                                        fontSize: 22,
-                                                        lineHeight: 1,
-                                                        padding: 0,
-                                                        marginLeft: 8,
-                                                    }}
-                                                    aria-label="Hành động"
-                                                >
-                                                    <FaEllipsisV />
-                                                </Dropdown.Toggle>
-                                                <Dropdown.Menu>
-                                                    <Dropdown.Item onClick={() => handleShowEdit(blog)}>
-                                                        <FaEdit className="me-2" />
-                                                        Chỉnh sửa
-                                                    </Dropdown.Item>
-                                                    <Dropdown.Item
-                                                        onClick={() => handleDeleteBlog(blog.BlogId)}
-                                                        className="text-danger"
-                                                    >
-                                                        <FaTrash className="me-2" />
-                                                        Xóa
-                                                    </Dropdown.Item>
-                                                </Dropdown.Menu>
-                                            </Dropdown>
-                                        )}
-                                    </div>
-                                    <div style={{ color: "#444", marginBottom: 5, fontSize: 17 }}>
-                                        {blog.Content}
-                                    </div>
-                                    {blog.ImageUrl && (
-                                        <div className="mb-2 text-center">
-                                            <img
-                                                src={blog.ImageUrl}
-                                                alt="blog"
-                                                style={{
-                                                    maxHeight: 230,
-                                                    maxWidth: "100%",
-                                                    borderRadius: 10,
-                                                    margin: "0 auto",
-                                                    display: "block",
-                                                    background: "#fff",
-                                                }}
-                                            />
-                                        </div>
-                                    )}
-                                </Card.Body>
-                                {/* Footer: Like và Báo cáo nằm cùng hàng */}
-                                <Card.Footer
+                        {isLoading ? (
+                            <div className="text-center py-5">
+                                <Spinner animation="border" />
+                            </div>
+                        ) : filteredBlogs.length === 0 ? (
+                            <div className="text-center py-5 text-muted">
+                                Không tìm thấy bài viết nào.
+                            </div>
+                        ) : (
+                            filteredBlogs.map((blog) => (
+                                <Card
+                                    key={blog.blogId}
+                                    className="mb-4"
                                     style={{
-                                        background: "transparent",
+                                        background: "#f5f2f2",
                                         border: "none",
-                                        paddingBottom: 12,
-                                        paddingTop: 2,
+                                        borderRadius: 15,
+                                        boxShadow: "0 2px 8px #e3e3e3",
+                                        maxWidth: 550,
+                                        margin: "0 auto",
                                     }}
                                 >
-                                    <div className="d-flex align-items-center gap-3 justify-content-between">
-                                        {/* Like/Unlike */}
-                                        <div className="d-flex align-items-center gap-2">
-                                            <Button
-                                                variant="link"
-                                                className="p-0 d-flex align-items-center"
-                                                style={{ color: blog.Liked ? "#e25565" : "#666" }}
-                                                onClick={() => handleToggleLike(blog.BlogId)}
-                                            >
-                                                {blog.Liked ? (
-                                                    <FaHeart size={22} />
-                                                ) : (
-                                                    <FaRegHeart size={22} />
-                                                )}
-                                            </Button>
-                                            <span style={{ fontSize: 16, color: "#666" }}>
-                                                {blog.Likes} lượt
-                                            </span></div>
-                                        {/* Báo cáo */}
-                                        {blog.AuthorName !== CURRENT_USER ? (
-                                            <span
-                                                style={{
-                                                    color: blog.Reported ? "#e25565" : "#555",
-                                                    fontStyle: "italic",
-                                                    fontSize: 15,
-                                                    cursor: blog.Reported ? "not-allowed" : "pointer",
-                                                }}
-                                                onClick={
-                                                    blog.Reported
-                                                        ? undefined
-                                                        : () => handleReport(blog)
-                                                }
-                                            >
-                                                <FaFlag className="me-1" />
-                                                {blog.Reported ? "Đã báo cáo" : "Báo cáo"}
+                                    <Card.Body style={{ paddingBottom: 10 }}>
+                                        <div className="d-flex align-items-center mb-2">
+                                            <FaUserCircle size={30} color="#888" />
+                                            <span style={{ fontWeight: 700, marginLeft: 8 }}>
+                                                {blog.authorName}
                                             </span>
-                                        ) : (
-                                            <span
-                                                style={{
-                                                    color: "#999",
-                                                    fontStyle: "italic",
-                                                    fontSize: 15,
-                                                    pointerEvents: "none",
-                                                }}
-                                            >
-                                                Báo cáo
+                                            <span style={{ color: "#888", marginLeft: 14, fontSize: 15 }}>
+                                                {blog.createdDate?.slice(0, 10)}
                                             </span>
+                                            {/* Menu chỉnh sửa bên phải nếu là bài của mình */}
+                                            {blog.authorName === CURRENT_USER && (
+                                                <Dropdown align="end" className="ms-auto">
+                                                    <Dropdown.Toggle
+                                                        as="button"
+                                                        style={{
+                                                            background: "transparent",
+                                                            border: "none",
+                                                            color: "#333",
+                                                            fontSize: 22,
+                                                            lineHeight: 1,
+                                                            padding: 0,
+                                                            marginLeft: 8,
+                                                        }}
+                                                        aria-label="Hành động"
+                                                    >
+                                                        <FaEllipsisV />
+                                                    </Dropdown.Toggle>
+                                                    <Dropdown.Menu>
+                                                        <Dropdown.Item onClick={() => handleShowEdit(blog)}>
+                                                            <FaEdit className="me-2" />
+                                                            Chỉnh sửa
+                                                        </Dropdown.Item>
+                                                        <Dropdown.Item
+                                                            onClick={() => handleDeleteBlog(blog.blogId)}
+                                                            className="text-danger"
+                                                        >
+                                                            <FaTrash className="me-2" />
+                                                            Xóa
+                                                        </Dropdown.Item>
+                                                    </Dropdown.Menu>
+                                                </Dropdown>
+                                            )}
+                                        </div>
+                                        <div style={{ color: "#444", marginBottom: 5, fontSize: 17 }}>
+                                            <strong>{blog.title}</strong>
+                                        </div>
+                                        <div style={{ color: "#444", marginBottom: 5, fontSize: 17 }}>
+                                            {blog.content}
+                                        </div>
+                                        {blog.imageUrl && (
+                                            <div className="mb-2 text-center">
+                                                <img
+                                                    src={blog.imageUrl}
+                                                    alt="blog"
+                                                    style={{
+                                                        maxHeight: 230,
+                                                        maxWidth: "100%",
+                                                        borderRadius: 10,
+                                                        margin: "0 auto",
+                                                        display: "block",
+                                                        background: "#fff",
+                                                    }}
+                                                />
+                                            </div>
                                         )}
-                                    </div>
-                                </Card.Footer>
-                            </Card>
-                        ))}
+                                        <div className="small text-muted mb-2">
+                                            {/* {blog.categoryName && <>Chuyên mục: <b>{blog.categoryName}</b> | </>}
+                                            {blog.blogType && <>{blog.blogType}</>} */}
+                                        </div>
+                                    </Card.Body>
+                                    {/* Footer: Like và Báo cáo nằm cùng hàng */}
+                                    <Card.Footer
+                                        style={{
+                                            background: "transparent",
+                                            border: "none",
+                                            paddingBottom: 12,
+                                            paddingTop: 2,
+                                        }}
+                                    >
+                                        <div className="d-flex align-items-center gap-3 justify-content-between">
+                                            {/* Like/Unlike */}
+                                            <div className="d-flex align-items-center gap-2">
+                                                <Button
+                                                    variant="link"
+                                                    className="p-0 d-flex align-items-center"
+                                                    style={{ color: blog.liked ? "#e25565" : "#666" }}
+                                                    onClick={() => handleToggleLike(blog.blogId)}
+                                                >
+                                                    {blog.liked ? (
+                                                        <FaHeart size={22} />
+                                                    ) : (
+                                                        <FaRegHeart size={22} />
+                                                    )}
+                                                </Button>
+                                                <span style={{ fontSize: 16, color: "#666" }}>
+                                                    {(blog.likes || 0)} lượt
+                                                </span>
+                                            </div>
+                                            {/* Báo cáo */}
+                                            {blog.authorName !== CURRENT_USER ? (
+                                                <span
+                                                    style={{
+                                                        color: blog.reported ? "#e25565" : "#555",
+                                                        fontStyle: "italic",
+                                                        fontSize: 15,
+                                                        cursor: blog.reported ? "not-allowed" : "pointer",
+                                                    }}
+                                                    onClick={
+                                                        blog.reported
+                                                            ? undefined
+                                                            : () => handleReport(blog)
+                                                    }
+                                                >
+                                                    <FaFlag className="me-1" />
+                                                    {blog.reported ? "Đã báo cáo" : "Báo cáo"}
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    style={{
+                                                        color: "#999",
+                                                        fontStyle: "italic",
+                                                        fontSize: 15,
+                                                        pointerEvents: "none",
+                                                    }}
+                                                >
+                                                    Báo cáo
+                                                </span>
+                                            )}
+                                        </div>
+                                    </Card.Footer>
+                                </Card>
+                            ))
+                        )}
                     </Col>
                 </Row>
 
@@ -499,10 +509,17 @@ function UserBlog() {
                         >
                             Hủy
                         </Button>
-                        <Button
+                        {/* <Button
                             variant="danger"
                             onClick={handleSendReport}
                             disabled={!reportReason.trim()}
+                        >
+                            Gửi báo cáo
+                        </Button> */}
+                        <Button
+                            variant="danger"
+                            onClick={handleSendReport}
+                            disabled={!reportingBlog || !reportingBlog.blogId}
                         >
                             Gửi báo cáo
                         </Button>

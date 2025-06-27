@@ -1294,6 +1294,158 @@
         }
       }
     },
+    "/api/admin/milestones/list": {
+      "get": {
+        "tags": [
+          "MilestoneAdmin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/milestones/list/{groupId}": {
+      "get": {
+        "tags": [
+          "MilestoneAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/milestones/{id}": {
+      "get": {
+        "tags": [
+          "MilestoneAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/milestones/create": {
+      "post": {
+        "tags": [
+          "MilestoneAdmin"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MilestoneRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MilestoneRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MilestoneRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/milestones/delete": {
+      "delete": {
+        "tags": [
+          "MilestoneAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/milestones/update": {
+      "put": {
+        "tags": [
+          "MilestoneAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MilestoneRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MilestoneRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MilestoneRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/NotificationAdmin/list": {
       "get": {
         "tags": [
@@ -2972,6 +3124,36 @@
               "$ref": "#/components/schemas/UserMembership"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MilestoneRequest": {
+        "type": "object",
+        "properties": {
+          "milestoneGroupID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "milestoneTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timeUnit": {
+            "type": "string",
+            "nullable": true
+          },
+          "percent": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

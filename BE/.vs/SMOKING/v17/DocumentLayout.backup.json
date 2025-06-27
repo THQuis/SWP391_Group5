@@ -3,7 +3,53 @@
   "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\",
   "Documents": [
     {
-<<<<<<< HEAD
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\interfaces\\repositories\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\repositories\\blogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\blogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\bll\\services\\userquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\controllers\\admin\\quitchallengetemplatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\quitchallengetemplatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\bll\\interfaces\\iuserquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iuserquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\bll\\services\\quitchallengetemplateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\quitchallengetemplateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\bll\\interfaces\\iquitchallengetemplateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iquitchallengetemplateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\controllers\\member\\userquitchallengecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userquitchallengecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\controllers\\admin\\packagemilestonecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\packagemilestonecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -36,52 +82,8 @@
       "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\membershippackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\models\\admin\\packagemilestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\packagemilestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-=======
-<<<<<<< HEAD
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\userquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\member\\userquitchallengecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userquitchallengecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\interfaces\\iuserquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iuserquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\entities\\userquitchallenge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\userquitchallenge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\interfaces\\repositories\\iuserquitchallengerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iuserquitchallengerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\repositories\\userquitchallengerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\userquitchallengerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-=======
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\models\\admin\\milestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\milestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
->>>>>>> c9326c244ed333570d1cc7e76701c6bcbcdbc2b1
     },
     {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\controllers\\admin\\milestoneadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -106,7 +108,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\repositories\\milestonerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\milestonerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
->>>>>>> 79202d34570aa3dd12fec53e26797522de2d4c2c
     }
   ],
   "DocumentGroupContainers": [
@@ -116,104 +117,13 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-<<<<<<< HEAD
           "SelectedChildIndex": 9,
           "Children": [
             {
-=======
-          "SelectedChildIndex": 3,
-          "Children": [
-            {
-              "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 5,
-              "Title": "IUserQuitChallengeService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Interfaces\\IUserQuitChallengeService.cs",
-              "RelativeDocumentMoniker": "BLL\\Interfaces\\IUserQuitChallengeService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Interfaces\\IUserQuitChallengeService.cs",
-              "RelativeToolTip": "BLL\\Interfaces\\IUserQuitChallengeService.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAcwBAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:40:57.118Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IUserQuitChallengeRepository.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
-              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAABoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:39:58.676Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserQuitChallenge.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\UserQuitChallenge.cs",
-              "RelativeDocumentMoniker": "DAL\\Entities\\UserQuitChallenge.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\UserQuitChallenge.cs",
-              "RelativeToolTip": "DAL\\Entities\\UserQuitChallenge.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:37:43.458Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserQuitChallengeService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserQuitChallengeService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\UserQuitChallengeService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserQuitChallengeService.cs",
-              "RelativeToolTip": "BLL\\Services\\UserQuitChallengeService.cs",
-              "ViewState": "AgIAAIUAAAAAAAAAAAAmwGsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:25:48.685Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserQuitChallengeController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
-              "RelativeToolTip": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAAAFkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:25:00.715Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\appsettings.json",
-              "RelativeDocumentMoniker": "API\\appsettings.json",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\appsettings.json",
-              "RelativeToolTip": "API\\appsettings.json",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-27T10:52:48.48Z",
-=======
-              "DocumentIndex": 0,
-              "Title": "MilestoneRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\MilestoneRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\Admin\\MilestoneRequest.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\MilestoneRequest.cs",
-              "RelativeToolTip": "API\\Models\\Admin\\MilestoneRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:50:11.303Z",
-              "EditorCaption": ""
-            },
-            {
->>>>>>> c9326c244ed333570d1cc7e76701c6bcbcdbc2b1
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
@@ -243,7 +153,150 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BlogRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\BlogRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\BlogRepository.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\BlogRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\BlogRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAnwBEAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T13:06:26.797Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Microsoft.Common.CurrentVersion.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ViewState": "AgIAAEEWAAAAAAAAAADgv0wWAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-06-27T12:59:26.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUnitOfWork.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAIA8wBwAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:58:04.989Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\UnitOfWork.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\UnitOfWork.cs",
+              "RelativeToolTip": "DAL\\Repositories\\UnitOfWork.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAIA7wEQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:57:56.004Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserQuitChallengeService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Services\\UserQuitChallengeService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\UserQuitChallengeService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Services\\UserQuitChallengeService.cs",
+              "RelativeToolTip": "BLL\\Services\\UserQuitChallengeService.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAIwDAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:58:00.145Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAawCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:16:33.041Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "QuitChallengeTemplateController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\QuitChallengeTemplateController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\QuitChallengeTemplateController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\QuitChallengeTemplateController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\QuitChallengeTemplateController.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAIwAsAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:57:55.278Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IUserQuitChallengeService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Interfaces\\IUserQuitChallengeService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IUserQuitChallengeService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Interfaces\\IUserQuitChallengeService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IUserQuitChallengeService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAIwAwAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:57:54.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "QuitChallengeTemplateService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Services\\QuitChallengeTemplateService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\QuitChallengeTemplateService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Services\\QuitChallengeTemplateService.cs",
+              "RelativeToolTip": "BLL\\Services\\QuitChallengeTemplateService.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAywBAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:57:52.488Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IQuitChallengeTemplateService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Interfaces\\IQuitChallengeTemplateService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IQuitChallengeTemplateService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Interfaces\\IQuitChallengeTemplateService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IQuitChallengeTemplateService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAIwAwAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:57:50.396Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserQuitChallengeController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAcAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:55:48.678Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAswA8AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-27T12:52:58.269Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "PackageMilestoneService.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Services\\PackageMilestoneService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\PackageMilestoneService.cs",
@@ -251,12 +304,11 @@
               "RelativeToolTip": "BLL\\Services\\PackageMilestoneService.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAqwAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:12:02.485Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:12:02.485Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 14,
               "Title": "IPackageMilestoneService.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Interfaces\\IPackageMilestoneService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IPackageMilestoneService.cs",
@@ -264,12 +316,11 @@
               "RelativeToolTip": "BLL\\Interfaces\\IPackageMilestoneService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:11:46.053Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:11:46.053Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 12,
               "Title": "PackageMilestoneController.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\PackageMilestoneController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\PackageMilestoneController.cs",
@@ -277,12 +328,11 @@
               "RelativeToolTip": "API\\Controllers\\Admin\\PackageMilestoneController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:03:23.223Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:03:23.223Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 15,
               "Title": "PackageMilestoneRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\PackageMilestoneRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\PackageMilestoneRepository.cs",
@@ -290,12 +340,11 @@
               "RelativeToolTip": "DAL\\Repositories\\PackageMilestoneRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:10:08.847Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:10:08.847Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 16,
               "Title": "IPackageMilestoneRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IPackageMilestoneRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IPackageMilestoneRepository.cs",
@@ -303,12 +352,11 @@
               "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IPackageMilestoneRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:09:36.739Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:09:36.739Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 17,
               "Title": "PackageMilestones.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\PackageMilestones.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\PackageMilestones.cs",
@@ -316,12 +364,11 @@
               "RelativeToolTip": "DAL\\Entities\\PackageMilestones.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAswA4AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:15:23.357Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:15:23.357Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 18,
               "Title": "Milestone.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\Milestone.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Milestone.cs",
@@ -329,12 +376,11 @@
               "RelativeToolTip": "DAL\\Entities\\Milestone.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAA4wBUAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:19:59.868Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:19:59.868Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 19,
               "Title": "MembershipPackage.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\MembershipPackage.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\MembershipPackage.cs",
@@ -342,25 +388,11 @@
               "RelativeToolTip": "DAL\\Entities\\MembershipPackage.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAqwBsAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:18:55.341Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:18:55.341Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAA+wCIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:16:33.041Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 20,
               "Title": "PackageMilestoneRequest.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\PackageMilestoneRequest.cs",
               "RelativeDocumentMoniker": "API\\Models\\Admin\\PackageMilestoneRequest.cs",
@@ -368,12 +400,11 @@
               "RelativeToolTip": "API\\Models\\Admin\\PackageMilestoneRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T12:01:40.382Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T12:01:40.382Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 22,
               "Title": "MilestoneRequest.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\MilestoneRequest.cs",
               "RelativeDocumentMoniker": "API\\Models\\Admin\\MilestoneRequest.cs",
@@ -381,12 +412,11 @@
               "RelativeToolTip": "API\\Models\\Admin\\MilestoneRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:50:11.303Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T10:50:11.303Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 24,
               "Title": "MilestoneDTO.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Models\\MilestoneDTO.cs",
               "RelativeDocumentMoniker": "BLL\\Models\\MilestoneDTO.cs",
@@ -394,31 +424,11 @@
               "RelativeToolTip": "BLL\\Models\\MilestoneDTO.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAwAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-<<<<<<< HEAD
               "WhenOpened": "2025-06-27T10:16:29.162Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-=======
-              "WhenOpened": "2025-06-27T10:16:29.162Z",
->>>>>>> 79202d34570aa3dd12fec53e26797522de2d4c2c
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-<<<<<<< HEAD
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Program.cs",
-              "RelativeDocumentMoniker": "API\\Program.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Program.cs",
-              "RelativeToolTip": "API\\Program.cs",
-              "ViewState": "AgIAAHYAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:53:06.065Z",
-=======
->>>>>>> c9326c244ed333570d1cc7e76701c6bcbcdbc2b1
+              "DocumentIndex": 23,
               "Title": "IMilestoneGroupRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IMilestoneGroupRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IMilestoneGroupRepository.cs",
@@ -426,32 +436,11 @@
               "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IMilestoneGroupRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-<<<<<<< HEAD
               "WhenOpened": "2025-06-27T10:45:58.035Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-=======
-              "WhenOpened": "2025-06-27T10:45:58.035Z",
->>>>>>> 79202d34570aa3dd12fec53e26797522de2d4c2c
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 3,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAkwEQAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:52:56.495Z",
-=======
-              "DocumentIndex": 1,
->>>>>>> c9326c244ed333570d1cc7e76701c6bcbcdbc2b1
+              "DocumentIndex": 21,
               "Title": "MilestoneAdminController.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\MilestoneAdminController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\MilestoneAdminController.cs",
@@ -459,28 +448,11 @@
               "RelativeToolTip": "API\\Controllers\\Admin\\MilestoneAdminController.cs",
               "ViewState": "AgIAAI8AAAAAAAAAAADwv6IAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T09:21:31.839Z",
->>>>>>> 79202d34570aa3dd12fec53e26797522de2d4c2c
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T09:21:31.839Z"
             },
             {
               "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 14,
-=======
-<<<<<<< HEAD
-              "DocumentIndex": 8,
-              "Title": "UserQuitChallengeRepository.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Repositories\\UserQuitChallengeRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Repositories\\UserQuitChallengeRepository.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Repositories\\UserQuitChallengeRepository.cs",
-              "RelativeToolTip": "DAL\\Repositories\\UserQuitChallengeRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:40:42.795Z",
-=======
-              "DocumentIndex": 4,
->>>>>>> c9326c244ed333570d1cc7e76701c6bcbcdbc2b1
+              "DocumentIndex": 25,
               "Title": "MilestoneGroup.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\MilestoneGroup.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\MilestoneGroup.cs",
@@ -492,7 +464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 26,
               "Title": "MilestoneRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\MilestoneRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\MilestoneRepository.cs",
@@ -500,13 +472,7 @@
               "RelativeToolTip": "DAL\\Repositories\\MilestoneRepository.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAAADQAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-<<<<<<< HEAD
               "WhenOpened": "2025-06-27T10:08:59.138Z"
-=======
-              "WhenOpened": "2025-06-27T10:08:59.138Z",
->>>>>>> 79202d34570aa3dd12fec53e26797522de2d4c2c
-              "EditorCaption": ""
->>>>>>> c9326c244ed333570d1cc7e76701c6bcbcdbc2b1
             }
           ]
         }

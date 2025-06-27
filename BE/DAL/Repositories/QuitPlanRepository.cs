@@ -21,5 +21,16 @@ namespace Smoking.DAL.Repositories
                                  .AsNoTracking()
                                  .ToListAsync();
         }
+
+        public async Task<QuitPlan?> GetLatestByUserIdAsync(int userId)
+        {
+            return await _context.QuitPlans
+                                 .Where(q => q.UserID == userId)
+                                 .OrderByDescending(q => q.StartDate) // hoặc CreatedDate nếu có
+                                 .FirstOrDefaultAsync();
+        }
+
     }
+
+
 }

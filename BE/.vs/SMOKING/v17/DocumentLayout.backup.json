@@ -3,8 +3,56 @@
   "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\member\\userquitchallengecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userquitchallengecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\userquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\quitplanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\quitplanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\admin\\quitplanadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\quitplanadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\interfaces\\iuserquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iuserquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\entities\\userquitchallenge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\userquitchallenge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\interfaces\\repositories\\iuserquitchallengerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iuserquitchallengerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\repositories\\userquitchallengerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\userquitchallengerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,20 +62,169 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminController.cs",
-              "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAIwG8AAAArAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\GenericRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAswIAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T14:58:00.166Z",
+              "WhenOpened": "2025-06-27T13:30:53.103Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IGenericRepository.cs*",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs*",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwBAAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T13:30:38.943Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "QuitPlanService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\QuitPlanService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\QuitPlanService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\QuitPlanService.cs*",
+              "RelativeToolTip": "BLL\\Services\\QuitPlanService.cs*",
+              "ViewState": "AgIAADIAAAAAAAAAAAAuwDwAAABfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T13:29:03.011Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "QuitPlanAdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\QuitPlanAdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\QuitPlanAdminController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\QuitPlanAdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\QuitPlanAdminController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAowDcAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T13:28:29.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserQuitChallengeService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserQuitChallengeService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\UserQuitChallengeService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserQuitChallengeService.cs",
+              "RelativeToolTip": "BLL\\Services\\UserQuitChallengeService.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAmwJ8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:25:48.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserQuitChallengeController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAuwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:25:00.715Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IUserQuitChallengeRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAABoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:39:58.676Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IUserQuitChallengeService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Interfaces\\IUserQuitChallengeService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IUserQuitChallengeService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Interfaces\\IUserQuitChallengeService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IUserQuitChallengeService.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAcwBEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:40:57.118Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserQuitChallenge.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\UserQuitChallenge.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\UserQuitChallenge.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\UserQuitChallenge.cs",
+              "RelativeToolTip": "DAL\\Entities\\UserQuitChallenge.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:37:43.458Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-27T10:52:48.48Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:53:06.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAkwEQAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:52:56.495Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "UserQuitChallengeRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Repositories\\UserQuitChallengeRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\UserQuitChallengeRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Repositories\\UserQuitChallengeRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\UserQuitChallengeRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:40:42.795Z"
             }
           ]
         }

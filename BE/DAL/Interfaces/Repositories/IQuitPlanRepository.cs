@@ -10,5 +10,7 @@ namespace Smoking.DAL.Interfaces.Repositories
     public interface IQuitPlanRepository : IGenericRepository<QuitPlan>
     {
         Task<IEnumerable<QuitPlan>> GetByUserIdAsync(int userId);
+        Task<QuitPlan?> GetLatestByUserIdAsync(int userId);
+
     }
 }

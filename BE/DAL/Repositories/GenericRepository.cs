@@ -23,52 +23,62 @@ namespace Smoking.DAL.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        //Lấy toàn bộ dữ liệu
+        // Lấy toàn bộ dữ liệu
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _dbSet.AsNoTracking().ToListAsync();
         }
 
-        //Lấy 1 entity theo ID
+        // Lấy 1 entity theo ID
         public async Task<TEntity> GetByIdAsync(object id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        //Lấy các entity theo điều kiện LINQ 
+        // Lấy các entity theo điều kiện LINQ 
         public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
-        //Thêm mới 1 entity
+        // Thêm mới 1 entity
         public async Task AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
         }
 
-        //Cập nhật 1 entity
+        // Thêm nhiều entity cùng lúc
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+        }
+
+        // Cập nhật 1 entity
         public void Update(TEntity entity)
         {
             _dbSet.Update(entity);
         }
 
-        //Xoá 1 entity
+        // Xoá 1 entity
         public void Remove(TEntity entity)
         {
             _dbSet.Remove(entity);
         }
 
+        // Kiểm tra tồn tại theo điều kiện
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.AnyAsync(predicate);
         }
+
+        // Lấy 1 entity đầu tiên theo điều kiện
         public async Task<TEntity?> FindFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<IEnumerable<TEntity>> FindIncludingAsync(Expression<Func<TEntity, bool>> predicate,params Expression<Func<TEntity, object>>[] includes)
+        // Lấy theo điều kiện + include navigation properties (cách 1)
+        public async Task<IEnumerable<TEntity>> FindIncludingAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = _context.Set<TEntity>();
 
@@ -80,7 +90,7 @@ namespace Smoking.DAL.Repositories
             return await query.Where(predicate).ToListAsync();
         }
 
-
+        // Lấy toàn bộ có include (theo tên chuỗi)
         public async Task<IEnumerable<TEntity>> GetAllWithIncludeAsync(string? includeProperties = null)
         {
             IQueryable<TEntity> query = _dbSet;
@@ -96,8 +106,7 @@ namespace Smoking.DAL.Repositories
             return await query.ToListAsync();
         }
 
-        // DAL/Repositories/GenericRepository.cs
-
+        // Lấy theo điều kiện + include navigation properties (cách 2)
         public async Task<IEnumerable<TEntity>> FindIncludingAsync2(
             Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<TEntity, object>>[] includes)
@@ -112,6 +121,11 @@ namespace Smoking.DAL.Repositories
             return await query.Where(predicate).ToListAsync();
         }
 
+        // Xoá nhiều entity cùng lúc
+        public void RemoveRange(IEnumerable<TEntity> entities)
+        {
+            _dbSet.RemoveRange(entities);
+        }
 
     }
 }

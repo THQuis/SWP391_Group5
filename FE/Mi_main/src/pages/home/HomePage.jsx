@@ -1,6 +1,8 @@
 import { memo } from "react";
 import { Carousel } from 'react-bootstrap';
 import "../../styles/home.scss";
+import { Link } from 'react-router-dom';
+import { ROUTERS } from "../../utils/router";
 
 
 
@@ -15,7 +17,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.3.jpg?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/Qui2/image/banner_Ko_nicotin.png?raw=true"
                             alt="First slide"
                         />
 
@@ -63,7 +65,11 @@ const HomePage = () => {
 
                             </p>
                         </div>
-                        <div className="about-image">🫁</div>
+                        <img
+                            className="d-block w-100"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.3.jpg?raw=true"
+                        // alt="First slide"
+                        />
                         {/* <div className="about-image"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Phoi4.png?raw=true" alt=""/></div> */}
 
                     </div>
@@ -101,18 +107,19 @@ const HomePage = () => {
                 <div className="container">
                     <h2>Ở đây chúng tôi sẽ giúp bạn:</h2>
                     <div className="support-cards">
-                        <div className="support-card">
+                        <Link to={ROUTERS.USER.QUITPLAN} className="support-card">
                             <div className="icon">📋</div>
                             <h3>Kế hoạch cai nghiện</h3>
-                        </div>
-                        <div className="support-card">
+                        </Link>
+                        <Link to={ROUTERS.USER.BLOG} className="support-card">
                             <div className="icon">📊</div>
                             <h3>Xem các blogger chia sẻ kinh nghiệm</h3>
-                        </div>
-                        <div className="support-card">
+                        </Link>
+
+                        <Link to={ROUTERS.USER.COACH} className="support-card">
                             <div className="icon">👥</div>
                             <h3>Giao lưu với chuyên môn</h3>
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </section>

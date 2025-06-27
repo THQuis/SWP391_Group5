@@ -31,6 +31,8 @@ namespace Smoking.DAL.Data
         public DbSet<Question> Questions { get; set; }
         public DbSet<Milestone> Milestones { get; set; }
         public DbSet<MilestoneGroup> MilestoneGroups { get; set; }
+        public DbSet<PackageMilestone> PackageMilestones { get; set; }
+
 
 
 

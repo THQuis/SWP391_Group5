@@ -2996,6 +2996,78 @@
               "$ref": "#/components/schemas/UserMembership"
             },
             "nullable": true
+          },
+          "packageMilestones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PackageMilestone"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Milestone": {
+        "type": "object",
+        "properties": {
+          "milestoneID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "milestoneGroupID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "milestoneTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timeUnit": {
+            "type": "string",
+            "nullable": true
+          },
+          "percent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "milestoneGroup": {
+            "$ref": "#/components/schemas/MilestoneGroup"
+          },
+          "packageMilestones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PackageMilestone"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MilestoneGroup": {
+        "type": "object",
+        "properties": {
+          "milestoneGroupID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "milestones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Milestone"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3089,6 +3161,34 @@
           "createdBy": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PackageMilestone": {
+        "type": "object",
+        "properties": {
+          "packageMilestoneID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "packageID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "milestoneID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detailDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "package": {
+            "$ref": "#/components/schemas/MembershipPackage"
+          },
+          "milestone": {
+            "$ref": "#/components/schemas/Milestone"
           }
         },
         "additionalProperties": false

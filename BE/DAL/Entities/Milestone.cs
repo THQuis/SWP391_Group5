@@ -20,6 +20,8 @@ namespace Smoking.DAL.Entities
         public int Percent { get; set; }
 
         public MilestoneGroup MilestoneGroup { get; set; }
+
+        public virtual ICollection<PackageMilestone> PackageMilestones { get; set; } = new List<PackageMilestone>();
     }
 
 }

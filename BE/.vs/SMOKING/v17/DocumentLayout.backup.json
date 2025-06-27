@@ -3,12 +3,52 @@
   "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\models\\admin\\milestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\milestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\controllers\\admin\\packagemilestonecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\packagemilestonecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\bll\\services\\packagemilestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\packagemilestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\bll\\interfaces\\ipackagemilestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\ipackagemilestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\repositories\\packagemilestonerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\packagemilestonerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\interfaces\\repositories\\ipackagemilestonerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\ipackagemilestonerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\entities\\packagemilestones.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\packagemilestones.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\entities\\milestone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\milestone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\entities\\membershippackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\membershippackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\models\\admin\\packagemilestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\packagemilestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\controllers\\admin\\milestoneadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\milestoneadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\api\\models\\admin\\milestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\milestonerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc\\swp391_group5\\be\\dal\\interfaces\\repositories\\imilestonegrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,21 +74,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 9,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MilestoneRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\MilestoneRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\Admin\\MilestoneRequest.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\MilestoneRequest.cs",
-              "RelativeToolTip": "API\\Models\\Admin\\MilestoneRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:50:11.303Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -79,7 +106,150 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PackageMilestoneService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Services\\PackageMilestoneService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\PackageMilestoneService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Services\\PackageMilestoneService.cs",
+              "RelativeToolTip": "BLL\\Services\\PackageMilestoneService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:12:02.485Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IPackageMilestoneService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Interfaces\\IPackageMilestoneService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IPackageMilestoneService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Interfaces\\IPackageMilestoneService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IPackageMilestoneService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:11:46.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PackageMilestoneController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\PackageMilestoneController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\PackageMilestoneController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\PackageMilestoneController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\PackageMilestoneController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:03:23.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "PackageMilestoneRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\PackageMilestoneRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\PackageMilestoneRepository.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\PackageMilestoneRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\PackageMilestoneRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:10:08.847Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IPackageMilestoneRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IPackageMilestoneRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IPackageMilestoneRepository.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IPackageMilestoneRepository.cs",
+              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IPackageMilestoneRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:09:36.739Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PackageMilestones.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\PackageMilestones.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\PackageMilestones.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\PackageMilestones.cs",
+              "RelativeToolTip": "DAL\\Entities\\PackageMilestones.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAswA4AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:15:23.357Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Milestone.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\Milestone.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\Milestone.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\Milestone.cs",
+              "RelativeToolTip": "DAL\\Entities\\Milestone.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA4wBUAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:19:59.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MembershipPackage.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\MembershipPackage.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\MembershipPackage.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\MembershipPackage.cs",
+              "RelativeToolTip": "DAL\\Entities\\MembershipPackage.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAqwBsAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:18:55.341Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "DAL\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "DAL\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAA+wCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:16:33.041Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PackageMilestoneRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\PackageMilestoneRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\PackageMilestoneRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\PackageMilestoneRequest.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\PackageMilestoneRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T12:01:40.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MilestoneRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\MilestoneRequest.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\MilestoneRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Models\\Admin\\MilestoneRequest.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\MilestoneRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T10:50:11.303Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "MilestoneDTO.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Models\\MilestoneDTO.cs",
               "RelativeDocumentMoniker": "BLL\\Models\\MilestoneDTO.cs",
@@ -87,12 +257,11 @@
               "RelativeToolTip": "BLL\\Models\\MilestoneDTO.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAwAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:16:29.162Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T10:16:29.162Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 12,
               "Title": "IMilestoneGroupRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IMilestoneGroupRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IMilestoneGroupRepository.cs",
@@ -100,25 +269,24 @@
               "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IMilestoneGroupRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:45:58.035Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T10:45:58.035Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 10,
               "Title": "MilestoneAdminController.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\MilestoneAdminController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\MilestoneAdminController.cs",
               "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\MilestoneAdminController.cs",
               "RelativeToolTip": "API\\Controllers\\Admin\\MilestoneAdminController.cs",
-              "ViewState": "AgIAAIIAAAAAAAAAAAD4v4kAAABTAAAAAAAAAA==",
+              "ViewState": "AgIAAI8AAAAAAAAAAADwv6IAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-27T09:21:31.839Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 14,
               "Title": "MilestoneGroup.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Entities\\MilestoneGroup.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\MilestoneGroup.cs",
@@ -126,12 +294,11 @@
               "RelativeToolTip": "DAL\\Entities\\MilestoneGroup.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAkwAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T09:46:18.934Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T09:46:18.934Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 15,
               "Title": "MilestoneRepository.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Repositories\\MilestoneRepository.cs",
               "RelativeDocumentMoniker": "DAL\\Repositories\\MilestoneRepository.cs",
@@ -139,8 +306,7 @@
               "RelativeToolTip": "DAL\\Repositories\\MilestoneRepository.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAAADQAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T10:08:59.138Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T10:08:59.138Z"
             }
           ]
         }

@@ -1,347 +1,367 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { FaFire, FaSmoking, FaLeaf, FaPiggyBank } from "react-icons/fa";
-import { Container, Row, Col, Card, Spinner, Button, Modal, Form, Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify'; // THÊM MỚI: Import toast
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import '../../styles/ProgressDashboard.scss';
-const ProgressDashboardPage = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [showRelapseModal, setShowRelapseModal] = useState(false);
-    const [relapseCount, setRelapseCount] = useState(1);
-    const [progress, setProgress] = useState(null);
-    const [progressHistory, setProgressHistory] = useState([]);
-    const [showHistory, setShowHistory] = useState(false);
+import React, { useState, useEffect } from 'react';
+import {
+  LeftOutlined, RightOutlined, MoreOutlined,
+  CheckOutlined, EditOutlined, PlusOutlined,
+  SaveOutlined, ShareAltOutlined, CheckCircleFilled
+} from '@ant-design/icons';
+import { Dropdown, Menu, Button, Modal, message, Card, Tag, Input } from 'antd';
+import '../../styles/QuitPlan.css';
 
-    const [showCalendarModal, setShowCalendarModal] = useState(false);
-    const [expandedDate, setExpandedDate] = useState(null);
+const { TextArea } = Input;
 
-    const userId = localStorage.getItem("userId");
-    const navigate = useNavigate();
-
-    // Đưa fetch logic ra ngoài useEffect để tái sử dụng sau khi cập nhật relapse
-    const fetchProgressData = useCallback(async () => {
-        try {
-            const response = await fetch(`/api/AchievementAndProgress/user/ProgressInformation?userId=${userId}`, {
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("userToken"),
-                    "accept": "*/*"
-                }
-            });
-            if (!response.ok) {
-                // Nếu API trả về lỗi (ví dụ user chưa có plan), không cần báo lỗi mà chỉ cần set progress là null
-                setProgress(null);
-                return;
-            }
-            const data = await response.json();
-            setProgress({
-                achievementsUnlocked: data.totalAchievements,
-                cigarettesAvoided: data.totalCigarettesDropped,
-                moneySaved: data.totalMoneySaved,
-                daysSinceStart: data.totalProgressDays
-            });
-        } catch (error) {
-            console.error("Failed to fetch progress data:", error);
-            setProgress(null);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [userId]);
-
-    const fetchProgressHistory = useCallback(async () => {
-        try {
-            const response = await fetch(`/api/AchievementAndProgress/user/showAllProgress?userId=${userId}`, {
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("userToken"),
-                    "accept": "*/*"
-                }
-            });
-            const data = await response.json();
-            // Flatten all progressList from all plans and sort by date descending
-            const allProgress = data
-                .flatMap(plan => plan.progressList || [])
-                .sort((a, b) => new Date(b.progressDate) - new Date(a.progressDate));
-            setProgressHistory(allProgress);
-        } catch (error) {
-            console.error("Failed to fetch progress history:", error);
-            setProgressHistory([]);
-        }
-    }, [userId]);
-
-    // useEffect chỉ gọi khi userId đổi
-    useEffect(() => {
-        setIsLoading(true);
-        Promise.all([fetchProgressData(), fetchProgressHistory()]);
-        const interval = setInterval(fetchProgressData, 3600000); // Refresh every 1 hour
-        return () => clearInterval(interval);
-    }, [userId, fetchProgressData, fetchProgressHistory]);
-
-    const navigateToCreatePlan = () => {
-        navigate('/User/quitplan');
-    };
-
-    const handleShowRelapseModal = () => setShowRelapseModal(true);
-    const handleCloseRelapseModal = () => setShowRelapseModal(false);
-
-    const handleLogRelapse = async () => {
-        try {
-            const response = await fetch(`/api/AchievementAndProgress/user/UpdateProgress?userId=${userId}`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("userToken")
-                },
-                body: JSON.stringify({
-                    cigarettesSmokedToday: relapseCount
-                })
-            });
-
-            if (response.ok) {
-                toast.info(`Cảm ơn bạn đã ghi nhận. Đừng nản lòng, hãy tiếp tục cố gắng nhé! Đã ghi nhận: ${relapseCount} điếu hôm nay.`);
-
-                setIsLoading(true); // Hiển thị loading trong khi tải lại dữ liệu
-                await Promise.all([fetchProgressData(), fetchProgressHistory()]);
-            } else {
-                const errorMessage = await response.text();
-                toast.error(`Không thể ghi nhận: ${errorMessage}`);
-            }
-        } catch (error) {
-            console.error("Failed to log relapse:", error);
-            toast.error("Đã xảy ra lỗi khi ghi nhận. Vui lòng thử lại sau.");
-        } finally {
-            handleCloseRelapseModal();
-        }
-    };
-
-
-    // THÊM MỚI: Hàm để đánh dấu các ngày có sai sót trên lịch
-    const handleDayClick = (date) => {
-        const dateString = date.toISOString();
-        // Nếu nhấn vào ô đang mở, thì đóng lại. Ngược lại, mở ô mới.
-        if (expandedDate === dateString) {
-            setExpandedDate(null);
-        } else {
-            setExpandedDate(dateString);
-        }
-    };
-
-    const tileContent = ({ date, view }) => {
-        if (view === 'month') {
-            const dateString = date.toISOString().slice(0, 10);
-            const historyEntry = progressHistory.find(entry => entry.progressDate.slice(0, 10) === dateString);
-
-            // Kiểm tra xem ô này có đang được mở rộng không
-            const isExpanded = expandedDate === date.toISOString();
-
-            // Nếu đang mở rộng và có dữ liệu, hiển thị chi tiết
-            if (isExpanded && historyEntry) {
-                return (
-                    <div className="expanded-content">
-                        <div className="expanded-item">
-                            <FaSmoking color="#e53e3e" />
-                            <span>Đã hút: <strong>{historyEntry.cigarettesSmokedToday || 0} điếu</strong></span>
-                        </div>
-                        <div className="expanded-item">
-                            <FaLeaf color="#28a745" />
-                            <span>Bỏ được: <strong>{historyEntry.cigarettesDropped || 0} điếu</strong></span>
-                        </div>
-                        <div className="expanded-item">
-                            <FaPiggyBank color="#f7b801" />
-                            <span>Tiết kiệm: <strong>{historyEntry.moneySaved ? historyEntry.moneySaved.toLocaleString('vi-VN') : 0} đ</strong></span>
-                        </div>
-                    </div>
-                );
-            }
-
-            // Nếu không mở rộng, chỉ hiển thị icon nếu có sai sót
-            if (historyEntry && historyEntry.cigarettesSmokedToday > 0) {
-                const renderTooltip = (props) => (
-                    <Tooltip id={`tooltip-${dateString}`} {...props} className="calendar-tooltip">
-                        Đã hút: {historyEntry.cigarettesSmokedToday} điếu
-                    </Tooltip>
-                );
-
-                return (
-                    <OverlayTrigger placement="top" overlay={renderTooltip}>
-                        <div className="relapse-indicator">
-                            <FaFire color="#e53e3e" />
-                        </div>
-                    </OverlayTrigger>
-                );
-            }
-        }
-        return <div style={{ height: '24px' }}></div>; // Giữ chỗ để các ô không bị nhảy layout
-    };
-    const tileClassName = ({ date, view }) => {
-        if (view === 'month') {
-            const classNames = [];
-            // Thêm class nếu là ô đang mở rộng
-            if (expandedDate === date.toISOString()) {
-                classNames.push('expanded-tile');
-            }
-            return classNames.join(' ');
-        }
-        return null;
+// Sample data for all days
+const generateSampleData = () => {
+  const samplePlans = [
+    {
+      day: "Monday",
+      plan: "Drink herbal tea instead of smoking",
+      comment: "Felt much better after replacing cigarettes with tea",
+      done: true
+    },
+    {
+      day: "Tuesday",
+      plan: "Go for a 30-minute walk when craving hits",
+      comment: "Walking helped reduce cravings significantly",
+      done: true
+    },
+    {
+      day: "Wednesday",
+      plan: "Use nicotine gum when needed",
+      comment: "Used gum twice today",
+      done: false
+    },
+    {
+      day: "Thursday",
+      plan: "Practice deep breathing exercises",
+      comment: "",
+      done: false
+    },
+    {
+      day: "Friday",
+      plan: "Call a friend when feeling urge",
+      comment: "",
+      done: false
+    },
+    {
+      day: "Saturday",
+      plan: "Keep hands busy with stress ball",
+      comment: "",
+      done: false
+    },
+    {
+      day: "Sunday",
+      plan: "Reward yourself with a healthy treat",
+      comment: "",
+      done: false
     }
+  ];
 
-
-    if (isLoading) {
-        return (
-            <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-                <Spinner animation="border" variant="success" />
-                <h4 className="ms-3">Đang tải tiến trình của bạn...</h4>
-            </Container>
-        );
-    }
-
-    if (!progress) {
-        return (
-            <div className="no-plan-container">
-                <Card className="no-plan-card">
-                    <Card.Body className="text-center">
-                        <div className="no-plan-icon">📋</div>
-                        <h4 className="no-plan-title">Bạn chưa có kế hoạch nào</h4>
-                        <p className="no-plan-text">Hãy tạo một kế hoạch để bắt đầu hành trình của bạn!</p>
-                        <Button className="create-plan-btn" onClick={navigateToCreatePlan}>Tạo kế hoạch mới</Button>
-                    </Card.Body>
-                </Card>
-            </div>
-        );
-    }
-
-    return (
-        <div className="dashboard-wrapper">
-            <Container className="dashboard-content">
-                {/* Main Progress Card */}
-                <Card className="main-progress-card">
-                    <Card.Body>
-                        <div className="progress-card-content">
-                            <h2 className="progress-subtitle">Ngừng hút thuốc được</h2>
-                            {/* Main Circle */}
-                            <div className="main-circle-container">
-                                <div className="main-circle">
-                                    <div className="circle-inner">
-                                        <div className="days-number">{progress.daysSinceStart}</div>
-                                        <div className="days-label">NGÀY</div>
-                                    </div>
-                                    <div className="circle-glow"></div>
-                                </div>
-                            </div>
-                            {/* Achievement Stats */}
-                            <Row className="achievement-stats">
-                                <Col xs={4}>
-                                    <div className="stat-card">
-                                        <div className="stat-icon">🏆</div>
-                                        <div className="stat-value">{progress.achievementsUnlocked}</div>
-                                        <div className="stat-label">Thành tích</div>
-                                    </div>
-                                </Col>
-                                <Col xs={4}>
-                                    <div className="stat-card">
-                                        <div className="stat-icon">🚭</div>
-                                        <div className="stat-value">{progress.cigarettesAvoided}</div>
-                                        <div className="stat-label">Điếu đã bỏ</div>
-                                    </div>
-                                </Col>
-                                <Col xs={4}>
-                                    <div className="stat-card">
-                                        <div className="stat-icon">💰</div>
-                                        <div className="stat-value">{progress.moneySaved.toLocaleString('vi-VN')} đ</div>
-                                        <div className="stat-label">Tiền tiết kiệm</div>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Card.Body>
-                </Card>
-                {/* Action Button */}
-                <div className="action-button-container">
-                    <Button
-                        variant="outline-secondary"
-                        className="relapse-button"
-                        onClick={handleShowRelapseModal}
-                    >
-                        <span className="button-icon">😔</span>
-                        Tôi đã lỡ hút thuốc hôm nay...
-                    </Button>
-                </div>
-                {/* History Section */}
-                <div className="history-table-section" style={{ marginTop: 32, textAlign: 'center' }}>
-                    <Button
-                        variant="primary"
-                        onClick={() => setShowCalendarModal(true)} // Mở modal lịch
-                        style={{ marginBottom: 12 }}
-                    >
-                        Xem nhật ký trên lịch
-                    </Button>
-                </div>
-            </Container>
-            {/* Relapse Modal */}
-            <Modal
-                show={showRelapseModal}
-                onHide={handleCloseRelapseModal}
-                centered
-                className="relapse-modal"
-            >
-                <Modal.Header closeButton className="modal-header-custom">
-                    <Modal.Title>Một chút chệch hướng?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="modal-body-custom">
-                    <div className="modal-icon-container">
-                        <div className="modal-icon">🤗</div>
-                    </div>
-                    <p className="modal-description">
-                        Không sao cả, đây là một phần của quá trình. Việc ghi nhận lại sẽ giúp hệ thống tính toán chính xác hơn.
-                    </p>
-                    <Form.Group>
-                        <Form.Label className="modal-form-label">Hôm nay bạn đã hút bao nhiêu điếu?</Form.Label>
-                        <Form.Control
-                            type="number"
-                            value={relapseCount}
-                            onChange={(e) => setRelapseCount(parseInt(e.target.value) || 1)}
-                            min="1"
-                            className="modal-form-input"
-                        />
-                    </Form.Group>
-                </Modal.Body>
-                <Modal.Footer className="modal-footer-custom">
-                    <Button variant="outline-secondary" onClick={handleCloseRelapseModal} className="modal-btn-cancel">
-                        Hủy
-                    </Button>
-                    <Button variant="success" onClick={handleLogRelapse} className="modal-btn-confirm">
-                        Xác nhận
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-
-            {/* THÊM MỚI: Modal hiển thị lịch */}
-            <Modal show={showCalendarModal} onHide={() => setShowCalendarModal(false)} centered size="xl">
-                <Modal.Header closeButton>
-                    <Modal.Title>Nhật ký Tiến trình</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="d-flex justify-content-center calendar-modal-body">
-                    <Calendar
-                        tileContent={tileContent}
-                        tileClassName={tileClassName}
-                        onClickDay={handleDayClick}
-                        locale="vi-VN"
-                        selectRange={false}
-                        value={null}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <div className="d-flex align-items-center">
-                        <FaFire color="#e53e3e" className="me-2" />
-                        <span>= Ngày có ghi nhận hút thuốc</span>
-                    </div>
-                    <Button variant="secondary" onClick={() => setShowCalendarModal(false)}>
-                        Đóng
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
-    );
+  return samplePlans;
 };
 
-export default ProgressDashboardPage;
+const generateMonthWeeks = (year, month) => {
+  const weeks = [];
+  const date = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0).getDate();
+  const samplePlans = generateSampleData();
+
+  let week = [];
+  for (let day = 1; day <= lastDay; day++) {
+    const current = new Date(year, month, day);
+    const weekday = current.toLocaleDateString('en-US', { weekday: 'long' });
+
+    // Find matching sample plan
+    const samplePlan = samplePlans.find(p => p.day === weekday) || {};
+
+    week.push({
+      day: weekday,
+      date: current.toLocaleDateString('en-GB'),
+      plan: samplePlan.plan || '',
+      hasPlan: !!samplePlan.plan,
+      comment: samplePlan.comment || '',
+      done: samplePlan.done || false,
+    });
+
+    if (current.getDay() === 0 || day === lastDay) {
+      weeks.push(week);
+      week = [];
+    }
+  }
+  return weeks;
+};
+
+const QuitPlan = () => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [weeks, setWeeks] = useState([]);
+  const [selectedWeek, setSelectedWeek] = useState(0);
+  const [modalData, setModalData] = useState(null);
+  const [editPlanMode, setEditPlanMode] = useState(false);
+  const [tempPlan, setTempPlan] = useState('');
+  const [tempComment, setTempComment] = useState('');
+
+  useEffect(() => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    setWeeks(generateMonthWeeks(year, month));
+    setSelectedWeek(0);
+  }, [currentDate]);
+
+  const handleMonthChange = (dir) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(newDate.getMonth() + dir);
+    setCurrentDate(newDate);
+  };
+
+  const handleOpenDayPlan = (day, weekIndex, dayIndex) => {
+    setModalData({ ...day, weekIndex, dayIndex });
+    setTempPlan(day.plan);
+    setTempComment(day.comment);
+    setEditPlanMode(false);
+  };
+
+  const handleSavePlan = () => {
+    const updatedWeeks = [...weeks];
+    const { weekIndex, dayIndex } = modalData;
+
+    updatedWeeks[weekIndex][dayIndex].plan = tempPlan;
+    updatedWeeks[weekIndex][dayIndex].hasPlan = !!tempPlan.trim();
+    updatedWeeks[weekIndex][dayIndex].comment = tempComment;
+
+    setWeeks(updatedWeeks);
+    message.success('Plan saved successfully!');
+    setEditPlanMode(false);
+  };
+
+  const handleCompleteDay = () => {
+    const updatedWeeks = [...weeks];
+    const { weekIndex, dayIndex } = modalData;
+
+    updatedWeeks[weekIndex][dayIndex].done = true;
+    setWeeks(updatedWeeks);
+    message.success('Day marked as completed!');
+    setModalData(null);
+  };
+
+  const handleSharePlan = () => {
+    message.info('Sharing feature coming soon!');
+  };
+
+  const monthYear = currentDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long'
+  });
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="edit" icon={<EditOutlined />} onClick={() => setEditPlanMode(true)}>
+        Edit Plan
+      </Menu.Item>
+      <Menu.Item
+        key="complete"
+        icon={<CheckOutlined />}
+        onClick={handleCompleteDay}
+        disabled={!modalData?.hasPlan}
+      >
+        Mark Complete
+      </Menu.Item>
+      <Menu.Item key="share" icon={<ShareAltOutlined />} onClick={handleSharePlan}>
+        Share
+      </Menu.Item>
+    </Menu>
+  );
+
+  return (
+    <div className="quit-plan-app">
+      {/* Header */}
+      <header className="app-header">
+        <h1>Quit Smoking Tracker</h1>
+        <p>Your journey to a healthier life</p>
+      </header>
+
+      {/* Month Navigation */}
+      <div className="month-navigation">
+        <Button
+          type="text"
+          icon={<LeftOutlined />}
+          onClick={() => handleMonthChange(-1)}
+          className="nav-button"
+        />
+        <h2>{monthYear}</h2>
+        <Button
+          type="text"
+          icon={<RightOutlined />}
+          onClick={() => handleMonthChange(1)}
+          className="nav-button"
+        />
+      </div>
+
+      {/* Week Selector */}
+      <div className="week-selector">
+        {weeks.map((week, idx) => (
+          <div
+            key={idx}
+            className={`week-card ${selectedWeek === idx ? 'active' : ''}`}
+            onClick={() => setSelectedWeek(idx)}
+          >
+            <span className="week-title">Week {idx + 1}</span>
+            <span className="week-dates">
+              {week[0].date.split('/').slice(0, 2).join('/')} - {week[week.length - 1].date.split('/').slice(0, 2).join('/')}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Week Details */}
+      {weeks[selectedWeek] && (
+        <div className="week-details">
+          {/* Progress Summary */}
+          <div className="progress-summary">
+            <div className="progress-item">
+              <span>Completion</span>
+              <div className="progress-bar">
+                <div
+                  className="progress-fill"
+                  style={{ width: `${(weeks[selectedWeek].filter(d => d.done).length / weeks[selectedWeek].length * 100)}%` }}
+                />
+              </div>
+              <span>{weeks[selectedWeek].filter(d => d.done).length}/{weeks[selectedWeek].length} days</span>
+            </div>
+          </div>
+
+          {/* Days Grid */}
+          <div className="days-grid">
+            {weeks[selectedWeek].map((day, index) => (
+              <Card
+                key={index}
+                className={`day-card ${day.hasPlan ? 'has-plan' : 'empty'} ${day.done ? 'completed' : ''}`}
+                onClick={() => handleOpenDayPlan(day, selectedWeek, index)}
+              >
+                <div className="day-header">
+                  <div>
+                    <div className="day-name">{day.day.substring(0, 3)}</div>
+                    <div className="day-date">{day.date.split('/')[0]}</div>
+                  </div>
+                  {day.done ? (
+                    <CheckCircleFilled className="status-icon completed" />
+                  ) : day.hasPlan ? (
+                    <CheckOutlined className="status-icon planned" />
+                  ) : (
+                    <PlusOutlined className="status-icon empty" />
+                  )}
+                </div>
+                <div className="day-content">
+                  {day.hasPlan ? (
+                    <>
+                      <p className="plan-text">{day.plan}</p>
+                      {day.comment && <p className="plan-comment">{day.comment}</p>}
+                    </>
+                  ) : (
+                    <p className="empty-plan">+ Add your plan</p>
+                  )}
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Modal */}
+      <Modal
+        open={!!modalData}
+        onCancel={() => setModalData(null)}
+        footer={null}
+        className="plan-modal"
+        title={
+          <div className="modal-header">
+            <div>
+              <h3>{modalData?.day}</h3>
+              <p>{modalData?.date}</p>
+            </div>
+            <Dropdown overlay={menu} trigger={['click']}>
+              <Button type="text" icon={<MoreOutlined />} />
+            </Dropdown>
+          </div>
+        }
+      >
+        <div className="modal-content">
+          {editPlanMode ? (
+            <div className="edit-plan-mode">
+              <div className="form-group">
+                <label>Your Plan</label>
+                <TextArea
+                  value={tempPlan}
+                  onChange={(e) => setTempPlan(e.target.value)}
+                  placeholder="What will you do instead of smoking?"
+                  rows={4}
+                />
+              </div>
+              <div className="form-group">
+                <label>Notes</label>
+                <TextArea
+                  value={tempComment}
+                  onChange={(e) => setTempComment(e.target.value)}
+                  placeholder="Any additional thoughts..."
+                  rows={3}
+                />
+              </div>
+              <div className="modal-actions">
+                <Button onClick={() => setEditPlanMode(false)}>Cancel</Button>
+                <Button type="primary" onClick={handleSavePlan}>Save Plan</Button>
+              </div>
+            </div>
+          ) : (
+            <div className="view-mode">
+              <div className="plan-section">
+                <h4>Plan</h4>
+                <div className="plan-content">
+                  {modalData?.plan || <span className="no-plan">No plan yet</span>}
+                </div>
+                <Button
+                  icon={<EditOutlined />}
+                  onClick={() => setEditPlanMode(true)}
+                  className="edit-plan-button"
+                >
+                  Edit Plan
+                </Button>
+              </div>
+              <div className="notes-section">
+                <h4>Notes</h4>
+                <TextArea
+                  value={tempComment}
+                  onChange={(e) => {
+                    setTempComment(e.target.value);
+                    // Auto-save comment
+                    const updatedWeeks = [...weeks];
+                    updatedWeeks[modalData.weekIndex][modalData.dayIndex].comment = e.target.value;
+                    setWeeks(updatedWeeks);
+                  }}
+                  placeholder="Add your notes here..."
+                  rows={3}
+                />
+              </div>
+              {modalData?.hasPlan && !modalData?.done && (
+                <div className="complete-section">
+                  <Button
+                    type="primary"
+                    icon={<CheckOutlined />}
+                    onClick={handleCompleteDay}
+                    block
+                  >
+                    Mark Day as Completed
+                  </Button>
+                </div>
+              )}
+              {modalData?.done && (
+                <Tag icon={<CheckOutlined />} color="success" className="completed-tag">
+                  This day is completed!
+                </Tag>
+              )}
+            </div>
+          )}
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
+export default QuitPlan;

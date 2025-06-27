@@ -65,6 +65,12 @@ namespace Smoking.DAL.Repositories
             _dbSet.Remove(entity);
         }
 
+        // Xoá nhiều entity cùng lúc
+        public void RemoveRange(IEnumerable<TEntity> entities)
+        {
+            _dbSet.RemoveRange(entities);
+        }
+
         // Kiểm tra tồn tại theo điều kiện
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
         {
@@ -120,12 +126,5 @@ namespace Smoking.DAL.Repositories
 
             return await query.Where(predicate).ToListAsync();
         }
-
-        // Xoá nhiều entity cùng lúc
-        public void RemoveRange(IEnumerable<TEntity> entities)
-        {
-            _dbSet.RemoveRange(entities);
-        }
-
     }
 }

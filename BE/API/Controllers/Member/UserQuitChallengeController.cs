@@ -39,7 +39,6 @@ public class UserQuitChallengeController : ControllerBase
         }
     }
 
-
     [HttpGet("{userId}/week")]
     public async Task<IActionResult> GetChallengesForWeek(int userId, [FromQuery] DateTime weekStart, [FromQuery] int stage = 1)
     {
@@ -84,7 +83,6 @@ public class UserQuitChallengeController : ControllerBase
         });
     }
 
-
     [HttpPost("complete")]
     public async Task<IActionResult> CompleteChallenge([FromBody] CompleteChallengeRequest request)
     {
@@ -99,14 +97,14 @@ public class UserQuitChallengeController : ControllerBase
         return Ok(new { success = true, message = "Đã huỷ trạng thái hoàn thành." });
     }
 
-    public class UncompleteChallengeRequest
-    {
-        public int ChallengeId { get; set; }
-    }
-
     public class CompleteChallengeRequest
     {
         public int ChallengeId { get; set; }
         public string? Notes { get; set; }
+    }
+
+    public class UncompleteChallengeRequest
+    {
+        public int ChallengeId { get; set; }
     }
 }

@@ -89,6 +89,9 @@ const AuthPage = () => {
             localStorage.setItem('userEmail', userEmail);
             localStorage.setItem('userId', userId);
             console.log("role name", userRole);
+            // Lưu loại gói thành viên (để phân quyền dashboard)
+            const packageType = data.user.membership?.packageType || "Basic";
+            localStorage.setItem('memberPackage', packageType);
             // Điều hướng dựa trên vai trò
             if (userRole === 1) {
                 navigate('/admin');

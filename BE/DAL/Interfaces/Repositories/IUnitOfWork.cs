@@ -25,6 +25,11 @@ namespace Smoking.DAL.Interfaces.Repositories
         IAnswerOptionRepository AnswerOptions { get; }
         IQuitChallengeTemplateRepository QuitChallengeTemplates { get; }
         IUserQuitChallengeRepository UserQuitChallenges { get; }
+
+        // ✅ Thêm các repository mới
+        IMilestoneRepository Milestones { get; }
+        IMilestoneGroupRepository MilestoneGroups { get; }
+
         Task<int> CompleteAsync();
         AppDbContext DbContext { get; }
     }

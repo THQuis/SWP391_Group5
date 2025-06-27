@@ -25,16 +25,13 @@ const UserProfile = () => {
     const [isDeleting, setIsDeleting] = useState(false);
     // --- BẮT ĐẦU THÊM HÀM MỚI TẠI ĐÂY ---
     const handleConfirmDeleteBlog = async () => {
-        console.log("ĐANG CHẠY HÀM XÓA BÀI VIẾT");
+        console.log("Đã nhấn xác nhận xóa blog ID:", blogToDelete);
         if (!blogToDelete) return;
 
         setIsDeleting(true);
         try {
             const token = localStorage.getItem('userToken');
 
-            // SỬA DUY NHẤT VÀ QUAN TRỌNG NHẤT LÀ Ở ĐÂY:
-            // Thay thế bằng đường dẫn đầy đủ đến API của bạn.
-            // Hãy chắc chắn địa chỉ và cổng (7049) là chính xác.
             const res = await fetch(`/api/UserBlog/delete/${blogToDelete}`, {
                 method: 'DELETE',
                 headers: {
@@ -44,40 +41,32 @@ const UserProfile = () => {
             });
 
             if (res.ok) {
-                // Nếu API trả về mã 204 (No Content), không cần phân tích JSON
-                if (res.status === 204) {
-                    toast.success('Đã xóa bài viết thành công!');
-                } else {
-                    // Nếu API trả về nội dung (ví dụ mã 200) thì mới phân tích JSON
+                try {
                     const data = await res.json();
                     toast.success(data.message || 'Đã xóa bài viết thành công!');
+                } catch {
+                    toast.success('Đã xóa bài viết thành công!');
                 }
 
-                // Cập nhật lại giao diện
-                setUserBlogs(currentBlogs => currentBlogs.filter(blog => blog.blogID !== blogToDelete));
+                // Cập nhật danh sách
+                setUserBlogs(currentBlogs =>
+                    currentBlogs.filter(blog => blog.blogId !== Number(blogToDelete))
+                );
+                console.log('Xóa blog ID:', blogToDelete);
+                console.log('Danh sách blog:', userBlogs.map(b => b.blogID));
             } else {
                 const errorText = await res.text();
-                let errorMessage = 'Xóa bài viết thất bại!';
-                try {
-                    // Thử phân tích lỗi JSON từ backend nếu có
-                    const errorJson = JSON.parse(errorText);
-                    errorMessage = errorJson.message || errorJson.title || errorText;
-                } catch (jsonError) {
-                    // Nếu không phải JSON, dùng text
-                    errorMessage = errorText;
-                }
-                throw new Error(errorMessage);
+                throw new Error(errorText || 'Xóa bài viết thất bại!');
             }
         } catch (e) {
-            // Lỗi này sẽ hiển thị khi không kết nối được tới server (sai URL, mất mạng, CORS)
             toast.error(`Lỗi: ${e.message}`);
         } finally {
-            // Khối này LUÔN LUÔN chạy sau khi try...catch kết thúc
             setIsDeleting(false);
             setShowDeleteBlogModal(false);
             setBlogToDelete(null);
         }
     };
+
     // Đổi ảnh đại diện
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
@@ -375,7 +364,7 @@ const UserProfile = () => {
                             return approvedBlogs.length > 0 ? (
                                 <Row xs={1} md={1} lg={1} className="g-4">
                                     {approvedBlogs.map(blog => ( // Sử dụng mảng đã lọc
-                                        <Col key={blog.blogID}>
+                                        <Col key={blog.blogId}>
                                             <Card className="shadow-sm h-100" style={{ borderRadius: '15px', border: '1px solid #e0e0e0' }}>
                                                 <Card.Body>
                                                     <Card.Title className="mb-2 fw-bold" style={{ color: '#0a6435' }}>
@@ -392,10 +381,6 @@ const UserProfile = () => {
                                                             <span className="me-3">
                                                                 <FaHeart className="text-danger me-1" /> {blog.likes} lượt thích
                                                             </span>
-                                                            <span className="me-3">
-                                                                <FaCommentAlt className="text-info me-1" /> {/* Nếu có trường comments, bạn có thể thay thế */}
-                                                                0 bình luận
-                                                            </span>
                                                         </div>
                                                         <Badge
                                                             bg={'success'} // Luôn là màu xanh cho bài đã duyệt
@@ -410,8 +395,9 @@ const UserProfile = () => {
                                                         variant="outline-danger"
                                                         size="sm"
                                                         onClick={() => {
-                                                            setBlogToDelete(blog.blogID);      // Lưu ID của blog cần xóa
-                                                            setShowDeleteBlogModal(true); // Mở modal xác nhận
+                                                            console.log("Gán blog cần xóa là:", blog.blogId);
+                                                            setBlogToDelete(blog.blogId);
+                                                            setTimeout(() => setShowDeleteBlogModal(true), 0);  // Đợi state cập nhật xong rồi mới mở modal
                                                         }}
                                                     >
                                                         <FaTrashAlt className="me-1" /> Xóa

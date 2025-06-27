@@ -14,7 +14,7 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task AddRangeAsync(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
         void Remove(TEntity entity);
-        void RemoveRange(IEnumerable<TEntity> entities);
+        void RemoveRange(IEnumerable<TEntity> entities); // ✅ giữ lại phương thức bị conflict
 
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity?> FindFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);

@@ -58,6 +58,8 @@ const Header = () => {
             <Nav.Link as={Link} to={ROUTERS.USER.QUITPLAN} className="nav-item-custom">Kế hoạch</Nav.Link>
             <Nav.Link as={Link} to={ROUTERS.USER.BLOG} className="nav-item-custom">Cộng đồng</Nav.Link>
             <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">Tiến trình</Nav.Link>
+            <Nav.Link as={Link} to={ROUTERS.USER.CHALENGE} className="nav-item-custom">Thử Thách</Nav.Link>
+
 
           </Nav>
           <Nav>

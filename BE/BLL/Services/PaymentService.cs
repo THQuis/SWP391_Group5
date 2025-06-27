@@ -119,13 +119,12 @@ namespace Smoking.BLL.Services
                 return;
 
             if (payment.Status == "Success")
-                return; // Đã xử lý rồi, bỏ qua callback lặp
+                return;
 
             payment.Status = status;
 
             if (status == "Success")
             {
-                // Tạo UserMembership sau khi thanh toán thành công
                 var membership = await _userMembershipService.CreateOrUpdateMembershipAsync(payment.UserID, payment.PackageID);
                 payment.UserMembershipID = membership.UserMembershipID;
             }

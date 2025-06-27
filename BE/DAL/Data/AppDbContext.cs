@@ -29,6 +29,10 @@ namespace Smoking.DAL.Data
         public DbSet<QuitPlanSelectedAnswers> QuitPlanSelectedAnswers { get; set; }
         public DbSet<AnswerOption> AnswerOptions { get; set; }
         public DbSet<Question> Questions { get; set; }
+<<<<<<< HEAD
+        public DbSet<QuitChallengeTemplate> QuitChallengeTemplates { get; set; }
+        public DbSet<UserQuitChallenge> UserQuitChallenges { get; set; }
+=======
         public DbSet<Milestone> Milestones { get; set; }
         public DbSet<MilestoneGroup> MilestoneGroups { get; set; }
         public DbSet<PackageMilestone> PackageMilestones { get; set; }
@@ -36,6 +40,7 @@ namespace Smoking.DAL.Data
 
 
 
+>>>>>>> 79202d34570aa3dd12fec53e26797522de2d4c2c
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -23,11 +23,16 @@ namespace Smoking.DAL.Interfaces.Repositories
         IQuestionRepository Questions { get; }
         IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswers { get; }
         IAnswerOptionRepository AnswerOptions { get; }
+<<<<<<< HEAD
+        IQuitChallengeTemplateRepository QuitChallengeTemplates { get; }
+        IUserQuitChallengeRepository UserQuitChallenges { get; }
+=======
         IMilestoneRepository Milestones { get; }
         IMilestoneGroupRepository MilestoneGroups { get; }
 
 
 
+>>>>>>> 79202d34570aa3dd12fec53e26797522de2d4c2c
         Task<int> CompleteAsync();
         AppDbContext DbContext { get; }
     }

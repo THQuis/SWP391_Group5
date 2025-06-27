@@ -1648,6 +1648,9 @@ D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\API\obj\Debug\net9.0\refint\Smoking.API.d
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\API\obj\Debug\net9.0\Smoking.API.pdb
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\API\obj\Debug\net9.0\Smoking.API.genruntimeconfig.cache
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\API\obj\Debug\net9.0\ref\Smoking.API.dll
+<<<<<<< HEAD
+D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\API\bin\Debug\net9.0\BCrypt.Net-Next.dll
+=======
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\API\bin\Debug\net9.0\appsettings.Development.json
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\API\bin\Debug\net9.0\appsettings.json
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\API\bin\Debug\net9.0\Smoking.BLL.deps.json
@@ -1828,3 +1831,4 @@ D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\API\obj\Debug\net9.0\refint\Smoking.API
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\API\obj\Debug\net9.0\Smoking.API.pdb
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\API\obj\Debug\net9.0\Smoking.API.genruntimeconfig.cache
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\API\obj\Debug\net9.0\ref\Smoking.API.dll
+>>>>>>> 79202d34570aa3dd12fec53e26797522de2d4c2c

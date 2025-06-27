@@ -1,163 +1,159 @@
 import React, { useState, useEffect } from "react";
 import {
     Container,
-    Row,
-    Col,
-    Image,
-    Badge,
+    Grid,
+    Card,
+    CardContent,
+    CardActions,
+    Avatar,
+    Typography,
+    Chip,
     Button,
-    Spinner,
-    ListGroup,
+    CircularProgress,
     Alert,
-} from "react-bootstrap";
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import styles from "../../styles/CoachList.module.scss";
 
-// Giả lập data từ database (bảng User), chỉ lấy những user có RoleID = 3 (Coach)
 const COACHES = [
     {
         UserID: 1,
-        FullName: "Nguyễn văn A",
-        Email: "nvA@gmail.com",
+        FullName: "Nguyễn Văn A",
+        Email: "nva@gmail.com",
         PhoneNumber: "0905556666",
-        ProfilePicture: null,
+        ProfilePicture:
+            "https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true",
         Status: "Active",
     },
     {
         UserID: 2,
         FullName: "Trần Thị Bình",
-        Email: "member.binh@example.com",
+        Email: "binh@gmail.com",
         PhoneNumber: "0907778888",
         ProfilePicture: null,
-        Status: "Active",
+        Status: "Inactive",
     },
     {
         UserID: 3,
         FullName: "Lê Thị B",
         Email: "ltb@gmail.com",
-        PhoneNumber: "0905556666",
+        PhoneNumber: "0909990000",
         ProfilePicture: null,
         Status: "Active",
     },
     {
         UserID: 4,
-        FullName: "Trần Trung k",
+        FullName: "Trần Trung K",
         Email: "ttk@gmail.com",
-        PhoneNumber: "0907778888",
+        PhoneNumber: "0901234567",
         ProfilePicture: null,
         Status: "Active",
     },
-    // Có thể thêm các coach khác ở đây
 ];
 
-const UserButtonCoach = () => {
+
+const CoachList = () => {
     const [coaches, setCoaches] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const navigate = useNavigate();
 
+    const selectedCoachId = 1; // Coach mà member đã chọn
+
     useEffect(() => {
-        setLoading(true);
-        // Giả lập fetch API
         setTimeout(() => {
             setCoaches(COACHES);
             setLoading(false);
-        }, 400);
+        }, 500);
     }, []);
 
     return (
-        <Container className="pt-4">
-            <h2 className="fw-bold mb-4" style={{ fontSize: 24 }}>
-                Danh sách các Chuyên gia tư vấn (Coach)
-            </h2>
+        <Container className={styles.wrapper}>
+            <Typography className={styles.title}>
+                Danh sách Chuyên gia tư vấn
+            </Typography>
+
             {loading ? (
-                <div className="d-flex justify-content-center my-5">
-                    <Spinner animation="border" />
-                </div>
+                <Grid container justifyContent="center">
+                    <CircularProgress color="primary" size={48} />
+                </Grid>
+            ) : coaches.length === 0 ? (
+                <Alert severity="info">Chưa có Chuyên gia tư vấn nào.</Alert>
             ) : (
-                <Row xs={1} sm={2} md={2} lg={3} className="g-4">
-                    {coaches.length === 0 && (
-                        <Col>
-                            <Alert variant="info">Chưa có Chuyên gia tư vấn nào.</Alert>
-                        </Col>
-                    )}
-                    {coaches.map((coach) => (
-                        <Col key={coach.UserID} className="d-flex align-items-stretch">
-                            <div
-                                className="shadow-sm w-100"
-                                style={{
-                                    borderRadius: 22,
-                                    border: "1.5px solid #e8e8e8",
-                                    background: "#fff",
-                                    padding: 24,
-                                    marginBottom: 10,
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <div className="d-flex align-items-center mb-3">
-                                    <Image
-                                        src={
-                                            coach.ProfilePicture ||
-                                            "https://randomuser.me/api/portraits/lego/6.jpg"
-                                        }
-                                        roundedCircle
-                                        width={70}
-                                        height={70}
-                                        style={{
-                                            objectFit: "cover",
-                                            border: "3px solid #2EA3A3",
-                                            marginRight: 18,
-                                        }}
-                                        alt={coach.FullName}
-                                    />
-                                    <div>
-                                        <div
-                                            className="fw-bold"
-                                            style={{
-                                                fontSize: 20,
-                                                color: "#183153",
-                                                cursor: "pointer",
-                                                textDecoration: "underline",
-                                            }}
-                                            onClick={() =>
-                                                navigate(`/User/coach/profile/${coach.UserID}`)
-                                            }
-                                        >
-                                            {coach.FullName}
-                                        </div>
-                                        <div className="text-muted" style={{ fontSize: 15 }}>
-                                            Email: {coach.Email}
-                                        </div>
-                                        <div>
-                                            <Badge bg="info" style={{ fontSize: 12, marginRight: 4 }}>
-                                                SĐT: {coach.PhoneNumber}
-                                            </Badge>
-                                            <Badge
-                                                bg={coach.Status === "Active" ? "success" : "secondary"}
-                                                style={{ fontSize: 12 }}
+                <Grid container spacing={4} className={styles.grid}>
+                    {coaches.map((c) => (
+                        <Grid item key={c.UserID} xs={12} sm={6} md={4}>
+                            <Card className={styles.card}>
+                                <CardContent>
+                                    <Grid container spacing={2} alignItems="center">
+                                        <Grid item>
+                                            <Avatar
+                                                src={
+                                                    c.ProfilePicture ||
+                                                    "https://randomuser.me/api/portraits/lego/6.jpg"
+                                                }
+                                                alt={c.FullName}
+                                                className={styles.avatar}
+                                            />
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Typography
+                                                className={styles.name}
+                                                onClick={() =>
+                                                    navigate(`/User/coach/profile/${c.UserID}`)
+                                                }
                                             >
-                                                {coach.Status === "Active" ? "Đang hoạt động" : "Không hoạt động"}
-                                            </Badge>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d-flex justify-content-end">
+                                                {c.FullName}
+                                            </Typography>
+
+                                            {c.UserID === selectedCoachId && (
+                                                <Typography className={styles.selectedLabel}>
+                                                    (Chuyên gia tư vấn của bạn)
+                                                </Typography>
+                                            )}
+
+                                            <Typography className={styles.info}>
+                                                Email: {c.Email}
+                                            </Typography>
+                                            <div className={styles.chipContainer}>
+                                                <Chip
+                                                    label={`SĐT: ${c.PhoneNumber}`}
+                                                    size="small"
+                                                    color="info"
+                                                />
+                                                <Chip
+                                                    label={
+                                                        c.Status === "Active"
+                                                            ? "Hoạt động"
+                                                            : "Không hoạt động"
+                                                    }
+                                                    size="small"
+                                                    color={
+                                                        c.Status === "Active" ? "success" : "default"
+                                                    }
+                                                />
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                </CardContent>
+                                <CardActions className={styles.actions}>
                                     <Button
-                                        variant="primary"
-                                        size="sm"
-                                        onClick={() => navigate(`/User/coach/profile/${coach.UserID}`)} // Chuyển đến trang chi tiết coach
+                                        variant="contained"
+                                        size="small"
+                                        color="primary"
+                                        onClick={() =>
+                                            navigate(`/User/coach/profile/${c.UserID}`)
+                                        }
                                     >
                                         Xem chi tiết
                                     </Button>
-                                </div>
-                            </div>
-                        </Col>
+                                </CardActions>
+                            </Card>
+                        </Grid>
                     ))}
-                </Row>
+                </Grid>
             )}
         </Container>
     );
 };
 
-export default UserButtonCoach;
+export default CoachList;

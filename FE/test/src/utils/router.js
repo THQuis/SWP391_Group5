@@ -13,7 +13,9 @@ export const ROUTERS = {
         BLOG: "/User/blog",
         RANKING: "/User/ranking",
         PROGRESS: "/User/progress",
-        PROFILECOACH: "/User/coach/profile/:id"
+        PROFILECOACH: "/User/coach/profile/:id",
+        PLANOVERVIEW: "/User/PlanOverviewPage",
+        CHALENGE: "/User/Challenges"
     },
     COACH: {
 

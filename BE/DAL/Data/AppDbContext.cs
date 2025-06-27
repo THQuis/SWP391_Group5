@@ -29,6 +29,9 @@ namespace Smoking.DAL.Data
         public DbSet<QuitPlanSelectedAnswers> QuitPlanSelectedAnswers { get; set; }
         public DbSet<AnswerOption> AnswerOptions { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Milestone> Milestones { get; set; }
+        public DbSet<MilestoneGroup> MilestoneGroups { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

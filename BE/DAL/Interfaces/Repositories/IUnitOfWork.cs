@@ -23,6 +23,10 @@ namespace Smoking.DAL.Interfaces.Repositories
         IQuestionRepository Questions { get; }
         IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswers { get; }
         IAnswerOptionRepository AnswerOptions { get; }
+        IMilestoneRepository Milestones { get; }
+        IMilestoneGroupRepository MilestoneGroups { get; }
+
+
 
         Task<int> CompleteAsync();
         AppDbContext DbContext { get; }

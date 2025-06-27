@@ -32,6 +32,9 @@ namespace Smoking.DAL.Repositories
             Questions = new QuestionRepository(_context);
             QuitPlanSelectedAnswers = new QuitPlanSelectedAnswerRepository(_context);
             AnswerOptions = new AnswerOptionRepository(_context);
+            Milestones = new MilestoneRepository(_context);
+            MilestoneGroups = new MilestoneGroupRepository(_context);
+
 
         }
 
@@ -52,6 +55,9 @@ namespace Smoking.DAL.Repositories
         public IQuestionRepository Questions { get; private set; }
         public IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswers { get; private set; }
         public IAnswerOptionRepository AnswerOptions { get; private set; }
+        public IMilestoneRepository Milestones { get; private set; }
+
+        public IMilestoneGroupRepository MilestoneGroups { get; private set; }
 
         public async Task<int> CompleteAsync()
         {

@@ -1,40 +1,44 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\",
+  "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\",
   "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\controllers\\member\\usercoachcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\usercoachcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\admin\\adminconsultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\controllers\\admin\\adminconsultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\adminconsultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\interfaces\\iquitplanautoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\bll\\interfaces\\iquitplanautoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\iquitplanautoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\quitplanautoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\bll\\services\\quitplanautoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\quitplanautoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\models\\user\\autoquitplanrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\models\\user\\autoquitplanrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\autoquitplanrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\models\\user\\blogreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\models\\user\\blogreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\blogreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -45,39 +49,81 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 8,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Microsoft.NET.Sdk.StaticWebAssets.targets",
-              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
-              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
-              "ViewState": "AgIAAJkCAAAAAAAAAAAkwKYCAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-06-28T07:43:30.276Z",
+              "Title": "UserCoachController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserCoachController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserCoachController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserCoachController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\UserCoachController.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAowGIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-28T08:01:20.417Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminController.cs",
-              "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAuwJoAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-28T07:32:46.426Z",
-              "EditorCaption": ""
+              "Title": "Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-06-28T07:43:30.276Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAuwJoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-28T07:32:46.426Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "AdminConsultationController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminConsultationController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminConsultationController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminConsultationController.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminConsultationController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminConsultationController.cs",
               "RelativeToolTip": "API\\Controllers\\Admin\\AdminConsultationController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -85,11 +131,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "AuthService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\AuthService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\AuthService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\AuthService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Services\\AuthService.cs",
               "RelativeToolTip": "BLL\\Services\\AuthService.cs",
               "ViewState": "AgIAALAAAAAAAAAAAAA8wMYAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -97,11 +143,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "BlogReport.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Models\\User\\BlogReport.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Models\\User\\BlogReport.cs",
               "RelativeDocumentMoniker": "API\\Models\\User\\BlogReport.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Models\\User\\BlogReport.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Models\\User\\BlogReport.cs",
               "RelativeToolTip": "API\\Models\\User\\BlogReport.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -109,11 +155,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "IQuitPlanAutoService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Interfaces\\IQuitPlanAutoService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Interfaces\\IQuitPlanAutoService.cs",
               "RelativeDocumentMoniker": "BLL\\Interfaces\\IQuitPlanAutoService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Interfaces\\IQuitPlanAutoService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Interfaces\\IQuitPlanAutoService.cs",
               "RelativeToolTip": "BLL\\Interfaces\\IQuitPlanAutoService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -121,11 +167,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "AutoQuitPlanRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Models\\User\\AutoQuitPlanRequest.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Models\\User\\AutoQuitPlanRequest.cs",
               "RelativeDocumentMoniker": "API\\Models\\User\\AutoQuitPlanRequest.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Models\\User\\AutoQuitPlanRequest.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Models\\User\\AutoQuitPlanRequest.cs",
               "RelativeToolTip": "API\\Models\\User\\AutoQuitPlanRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -133,11 +179,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "QuitPlanAutoService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\QuitPlanAutoService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Services\\QuitPlanAutoService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\QuitPlanAutoService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\QuitPlanAutoService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Services\\QuitPlanAutoService.cs",
               "RelativeToolTip": "BLL\\Services\\QuitPlanAutoService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAGgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -145,11 +191,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "QuitPlanController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\QuitPlanController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\QuitPlanController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\QuitPlanController.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\QuitPlanController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\QuitPlanController.cs",
               "RelativeToolTip": "API\\Controllers\\Member\\QuitPlanController.cs",
               "ViewState": "AgIAACAAAAAAAAAAAAAqwFUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

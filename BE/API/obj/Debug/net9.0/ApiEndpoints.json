@@ -1361,6 +1361,42 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "ChooseCoach",
+    "RelativePath": "api/user/coach/choose/{coachId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "coachId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "GetAllCoaches",
+    "RelativePath": "api/user/coach/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "GetMyCoach",
+    "RelativePath": "api/user/coach/my-coach",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Member.UserConsultationController",
     "Method": "BookConsultation",
     "RelativePath": "api/user/consultation/book",

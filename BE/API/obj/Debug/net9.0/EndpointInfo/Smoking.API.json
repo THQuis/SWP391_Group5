@@ -2159,6 +2159,53 @@
         }
       }
     },
+    "/api/user/coach/list": {
+      "get": {
+        "tags": [
+          "UserCoach"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user/coach/choose/{coachId}": {
+      "post": {
+        "tags": [
+          "UserCoach"
+        ],
+        "parameters": [
+          {
+            "name": "coachId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user/coach/my-coach": {
+      "get": {
+        "tags": [
+          "UserCoach"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/consultation/book": {
       "post": {
         "tags": [
@@ -3916,6 +3963,14 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "coachId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "coach": {
+            "$ref": "#/components/schemas/User"
           },
           "userMemberships": {
             "type": "array",

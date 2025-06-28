@@ -8,5 +8,7 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<UserMembership?> GetActiveByUserIdAsync(int userId);
         Task UpdateAsync(UserMembership entity);
+        Task<UserMembership> GetLatestValidMembershipByUserIdAsync(int userId);
+
     }
 }

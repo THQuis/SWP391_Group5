@@ -2159,6 +2159,53 @@
         }
       }
     },
+    "/api/user/coach/list": {
+      "get": {
+        "tags": [
+          "UserCoach"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user/coach/choose/{coachId}": {
+      "post": {
+        "tags": [
+          "UserCoach"
+        ],
+        "parameters": [
+          {
+            "name": "coachId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user/coach/my-coach": {
+      "get": {
+        "tags": [
+          "UserCoach"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/consultation/book": {
       "post": {
         "tags": [
@@ -2486,7 +2533,7 @@
         }
       }
     },
-    "/api/user-challenges/{userId}/week": {
+    "/api/user-challenges/{userId}/stage": {
       "get": {
         "tags": [
           "UserQuitChallenge"
@@ -2499,14 +2546,6 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "weekStart",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
             }
           },
           {
@@ -2738,11 +2777,12 @@
           },
           "startDate": {
             "type": "string",
-            "format": "date-time"
-          },
-          "endDate": {
-            "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "targetDurationInMonths": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -2782,6 +2822,10 @@
             "nullable": true
           },
           "blogType": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
             "type": "string",
             "nullable": true
           },
@@ -2827,6 +2871,10 @@
           "blogType": {
             "type": "string",
             "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2851,6 +2899,10 @@
             "nullable": true
           },
           "blogType": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
             "type": "string",
             "nullable": true
           }
@@ -3904,6 +3956,14 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "coachId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "coach": {
+            "$ref": "#/components/schemas/User"
           },
           "userMemberships": {
             "type": "array",

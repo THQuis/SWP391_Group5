@@ -1164,7 +1164,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Smoking.API.Models.User.AutoQuitPlanRequest",
+        "Type": "AutoQuitPlanRequest",
         "IsRequired": true
       }
     ],
@@ -1304,8 +1304,8 @@
   },
   {
     "ContainingType": "UserQuitChallengeController",
-    "Method": "GetChallengesForWeek",
-    "RelativePath": "api/user-challenges/{userId}/week",
+    "Method": "GetChallengesForStage",
+    "RelativePath": "api/user-challenges/{userId}/stage",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1314,11 +1314,6 @@
         "Name": "userId",
         "Type": "System.Int32",
         "IsRequired": true
-      },
-      {
-        "Name": "weekStart",
-        "Type": "System.DateTime",
-        "IsRequired": false
       },
       {
         "Name": "stage",
@@ -1358,6 +1353,42 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "ChooseCoach",
+    "RelativePath": "api/user/coach/choose/{coachId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "coachId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "GetAllCoaches",
+    "RelativePath": "api/user/coach/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "GetMyCoach",
+    "RelativePath": "api/user/coach/my-coach",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

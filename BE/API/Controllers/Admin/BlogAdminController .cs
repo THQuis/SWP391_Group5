@@ -39,7 +39,8 @@ namespace Smoking.API.Controllers.Admin
                 AuthorName = b.User?.FullName,
                 RoleName = b.User?.Role?.RoleName,
                 CreatedDate = b.CreatedDate,
-                LastModifiedDate = b.LastModifiedDate
+                LastModifiedDate = b.LastModifiedDate,
+                ImageUrl = b.ImageUrl
             }));
         }
 
@@ -55,7 +56,8 @@ namespace Smoking.API.Controllers.Admin
                 AuthorName = b.User?.FullName,
                 RoleName = b.User?.Role?.RoleName,
                 Status = b.Status,
-                CreatedDate = b.CreatedDate
+                CreatedDate = b.CreatedDate,
+                ImageUrl = b.ImageUrl
             }));
         }
 
@@ -71,7 +73,8 @@ namespace Smoking.API.Controllers.Admin
                 ReportCount = b.ReportCount,
                 AuthorName = b.User?.FullName,
                 RoleName = b.User?.Role?.RoleName,
-                CreatedDate = b.CreatedDate
+                CreatedDate = b.CreatedDate,
+                ImageUrl = b.ImageUrl
             }));
         }
 
@@ -87,7 +90,8 @@ namespace Smoking.API.Controllers.Admin
                 AuthorName = b.User?.FullName,
                 RoleName = b.User?.Role?.RoleName,
                 Status = b.Status,
-                CreatedDate = b.CreatedDate
+                CreatedDate = b.CreatedDate,
+                ImageUrl = b.ImageUrl
             }));
         }
 
@@ -142,7 +146,8 @@ namespace Smoking.API.Controllers.Admin
                 CreatedDate = System.DateTime.Now,
                 Likes = 0,
                 Dislikes = 0,
-                ReportCount = 0
+                ReportCount = 0,
+                ImageUrl = model.ImageUrl
             };
             var created = await _blogService.CreateByAdminAsync(blog);
             return Ok(created);

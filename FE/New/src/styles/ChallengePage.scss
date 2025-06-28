@@ -1,0 +1,157 @@
+// variables
+$primary: #36a171;
+$primary-light: #e6f6ef;
+$secondary: #218157;
+$bg-gradient: linear-gradient(120deg, #f4f9f6 0%, #e0f6ef 100%);
+$border-radius: 0.8rem;
+$transition: all 0.2s ease;
+
+// mixin cho box-shadow
+@mixin shadow($alpha: .1) {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, $alpha);
+}
+
+// Block: .challenge-page
+.challenge-page {
+    // background: $bg-gradient;
+    min-height: 100vh;
+    padding: 3rem 0;
+
+    &__title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: $primary;
+        margin-bottom: 2rem;
+        text-shadow: 0 2px 8px rgba($primary, .4);
+    }
+
+    &__tabs {
+        .nav-tabs {
+            justify-content: center;
+            border-bottom: 2px solid lighten($primary, 40);
+
+            .nav-link {
+                color: $primary;
+                font-weight: 600;
+                padding: .8rem 1.5rem;
+                border-radius: $border-radius $border-radius 0 0;
+                transition: $transition;
+
+                &.active,
+                &:hover {
+                    background: $primary-light !important;
+                    color: $secondary !important;
+                }
+            }
+        }
+    }
+}
+
+// Card chính
+.challenge-card {
+    border: none;
+    border-radius: $border-radius;
+    overflow: hidden;
+    @include shadow(.08);
+
+    &__header {
+        background: white;
+        padding: 1rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+
+        h5 {
+            margin: 0;
+            color: $secondary;
+        }
+
+        small {
+            color: darken($primary, 20);
+        }
+
+        & .challenge-card__progress {
+            margin-top: .75rem;
+            height: .6rem;
+
+            .progress-bar {
+                background: $primary !important;
+            }
+        }
+    }
+
+    &__body {
+        background: white;
+        padding: 1rem 0;
+    }
+}
+
+// Mission item
+.mission-item {
+    padding: 1rem 1.5rem;
+    border: none !important;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: $transition;
+    @include shadow(.04);
+
+    &:hover {
+        background: lighten($primary, 50);
+    }
+
+    &.is-open {
+        background: lighten($primary, 60);
+        border-left: 4px solid $secondary !important;
+    }
+
+    &__icon {
+        color: $secondary;
+        font-size: 1.4rem;
+        animation: popIn .25s;
+    }
+}
+
+// Chi tiết mission
+.mission-detail {
+    background: #fafafa;
+    padding: 1rem 1.5rem 1.5rem;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    @include shadow(.02);
+
+    .alert {
+        border-radius: .5rem;
+    }
+
+    .btn {
+        border-radius: 2rem;
+        padding: .4rem 1.2rem;
+    }
+}
+
+// Icon nhỏ cho tab
+.challenge-page__tab-icon {
+    color: $secondary;
+}
+
+// Animation
+@keyframes popIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+// Hiển thị 2 dòng, còn lại là "…"
+.mission-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; // số dòng muốn giữ lại
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}

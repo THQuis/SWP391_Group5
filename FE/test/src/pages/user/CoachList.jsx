@@ -15,55 +15,59 @@ import {
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/CoachList.module.scss";
 
-const COACHES = [
-    {
-        UserID: 1,
-        FullName: "Nguyễn Văn A",
-        Email: "nva@gmail.com",
-        PhoneNumber: "0905556666",
-        ProfilePicture:
-            "https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true",
-        Status: "Active",
-    },
-    {
-        UserID: 2,
-        FullName: "Trần Thị Bình",
-        Email: "binh@gmail.com",
-        PhoneNumber: "0907778888",
-        ProfilePicture: null,
-        Status: "Inactive",
-    },
-    {
-        UserID: 3,
-        FullName: "Lê Thị B",
-        Email: "ltb@gmail.com",
-        PhoneNumber: "0909990000",
-        ProfilePicture: null,
-        Status: "Active",
-    },
-    {
-        UserID: 4,
-        FullName: "Trần Trung K",
-        Email: "ttk@gmail.com",
-        PhoneNumber: "0901234567",
-        ProfilePicture: null,
-        Status: "Active",
-    },
-];
-
+// Hàm lấy danh sách coach từ API
+const fetchCoaches = async () => {
+    try {
+        const response = await fetch("/api/user/coach/list", {
+            method: "GET",
+            headers: {
+                "Accept": "*/*",
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Không thể tải danh sách coach");
+        }
+        const data = await response.json();
+        // Chuẩn hoá lại dữ liệu cho tương thích UI cũ
+        return data.map((coach) => ({
+            UserID: coach.coachId,
+            FullName: coach.fullName,
+            Email: coach.email,
+            PhoneNumber: coach.phone,
+            ProfilePicture: coach.profilePicture || null,
+            Status: "Active", // API không trả về status, bạn có thể sửa lại nếu cần
+            Description: coach.description,
+            Gender: coach.gender,
+            DateOfBirth: coach.dateOfBirth,
+        }));
+    } catch (err) {
+        throw err;
+    }
+};
 
 const CoachList = () => {
     const [coaches, setCoaches] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const selectedCoachId = 1; // Coach mà member đã chọn
+    // TODO: Thay thế selectedCoachId bằng logic thật từ backend/user context nếu có
+    const selectedCoachId = 1;
 
     useEffect(() => {
-        setTimeout(() => {
-            setCoaches(COACHES);
-            setLoading(false);
-        }, 500);
+        const getCoaches = async () => {
+            setLoading(true);
+            setError("");
+            try {
+                const data = await fetchCoaches();
+                setCoaches(data);
+            } catch (err) {
+                setError(err.message || "Lỗi khi tải danh sách coach.");
+            } finally {
+                setLoading(false);
+            }
+        };
+        getCoaches();
     }, []);
 
     return (
@@ -76,6 +80,8 @@ const CoachList = () => {
                 <Grid container justifyContent="center">
                     <CircularProgress color="primary" size={48} />
                 </Grid>
+            ) : error ? (
+                <Alert severity="error">{error}</Alert>
             ) : coaches.length === 0 ? (
                 <Alert severity="info">Chưa có Chuyên gia tư vấn nào.</Alert>
             ) : (
@@ -89,7 +95,7 @@ const CoachList = () => {
                                             <Avatar
                                                 src={
                                                     c.ProfilePicture ||
-                                                    "https://randomuser.me/api/portraits/lego/6.jpg"
+                                                    "https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true"
                                                 }
                                                 alt={c.FullName}
                                                 className={styles.avatar}
@@ -104,22 +110,21 @@ const CoachList = () => {
                                             >
                                                 {c.FullName}
                                             </Typography>
-
                                             {c.UserID === selectedCoachId && (
                                                 <Typography className={styles.selectedLabel}>
                                                     (Chuyên gia tư vấn của bạn)
                                                 </Typography>
                                             )}
-
                                             <Typography className={styles.info}>
                                                 Email: {c.Email}
                                             </Typography>
                                             <div className={styles.chipContainer}>
                                                 <Chip
-                                                    label={`SĐT: ${c.PhoneNumber}`}
+                                                    label={`SĐT: ${c.PhoneNumber || "Chưa có"}`}
                                                     size="small"
                                                     color="info"
                                                 />
+                                                {/* Nếu cần, hiển thị trạng thái hoạt động */}
                                                 <Chip
                                                     label={
                                                         c.Status === "Active"
@@ -132,6 +137,16 @@ const CoachList = () => {
                                                     }
                                                 />
                                             </div>
+                                            {/* Có thể hiện thêm mô tả nếu muốn */}
+                                            {c.Description && (
+                                                <Typography
+                                                    variant="body2"
+                                                    color="textSecondary"
+                                                    className={styles.info}
+                                                >
+                                                    {c.Description}
+                                                </Typography>
+                                            )}
                                         </Grid>
                                     </Grid>
                                 </CardContent>

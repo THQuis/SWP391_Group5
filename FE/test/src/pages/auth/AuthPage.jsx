@@ -81,13 +81,15 @@ const AuthPage = () => {
             const userName = data.user.fullName;
             const userEmail = data.user.email;
             const userId = data.user.userID;
-
+            const coachId = data.user.CoachId;
             // Lưu thông tin vào localStorage
             localStorage.setItem('userToken', data.token);
             localStorage.setItem('userRole', userRole);
             localStorage.setItem('userName', userName);
             localStorage.setItem('userEmail', userEmail);
             localStorage.setItem('userId', userId);
+            localStorage.setItem('coachId', coachId);
+
             console.log("role name", userRole);
             // Lưu loại gói thành viên (để phân quyền dashboard)
             const packageType = data.user.membership?.packageType || "Basic";
@@ -95,6 +97,8 @@ const AuthPage = () => {
             // Điều hướng dựa trên vai trò
             if (userRole === 1) {
                 navigate('/admin');
+            } else if (userRole === 3) {
+                navigate('/coach');
             } else {
                 navigate('/User/progress');
             }

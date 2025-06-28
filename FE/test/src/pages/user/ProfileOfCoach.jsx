@@ -1,23 +1,81 @@
-// src/pages/user/CoachProfileForUser.js
+// ...phần import và code phía trên giữ nguyên...
 
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Badge, Button, Modal, Form, OverlayTrigger, Tooltip, Spinner, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Modal, Form, Spinner, Alert } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaUser, FaTransgender, FaCalendarAlt, FaPhoneAlt, FaEnvelope, FaUserCheck, FaUserTimes, FaCalendarCheck } from "react-icons/fa";
 
+const fetchMyBookings = async () => {
+    const token = localStorage.getItem('userToken');
+    const response = await fetch('/api/user/consultation/my-bookings', {
+        headers: {
+            "Accept": "*/*",
+            "Authorization": "Bearer " + token,
+        },
+    });
+    if (!response.ok) return [];
+    return await response.json();
+};
+const fetchMyCoachId = async () => {
+    const token = localStorage.getItem('userToken');
+    const response = await fetch('/api/user/coach/my-coach', {
+        headers: {
+            "Accept": "*/*",
+            "Authorization": "Bearer " + token,
+        },
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    // data.coach.userID hoặc data.coachId tuỳ BE trả về
+    return (data.coach && data.coach.userID) || data.coachId || null;
+};
 // Giả lập API trả về thông tin chi tiết của một coach
 const fetchCoachById = async (id) => {
-    // ---- THAY THẾ BẰNG API THẬT ----
-    // Ví dụ: const response = await fetch(`/api/user/coach-profile/${id}`);
-    console.log(`Đang fetch thông tin cho coach ID: ${id}`);
-    const FAKE_COACH_DB = [
-        { UserID: 1, fullName: "Nguyễn Văn A", email: "coach.a@example.com", phoneNumber: "0901112222", profilePicture: null, gender: "male", registrationDate: "2024-01-15", description: "Chuyên gia với 10 năm kinh nghiệm hỗ trợ cai nghiện, tập trung vào liệu pháp nhận thức - hành vi." },
-        { UserID: 2, fullName: "Trần Thị Bình", email: "coach.b@example.com", phoneNumber: "0902223333", profilePicture: null, gender: "female", registrationDate: "2023-11-20", description: "Tôi tin vào sức mạnh của sự đồng cảm và xây dựng một lộ trình cá nhân hóa cho từng học viên." },
-    ];
-    return new Promise(resolve => setTimeout(() => resolve(FAKE_COACH_DB.find(c => c.UserID === parseInt(id))), 500));
-    // ---------------------------------
-}
+    const token = localStorage.getItem("userToken");
+    const response = await fetch(`/api/user/coach/${id}`, {
+        headers: {
+            "Accept": "*/*",
+            "Authorization": "Bearer " + token, // Nếu BE yêu cầu, còn không thì bỏ dòng này đi
+        },
+    });
+    if (!response.ok) throw new Error("Không tìm thấy thông tin huấn luyện viên");
+    const data = await response.json();
+    // data.coach là object coach trả về từ BE (theo ảnh 4)
+    return {
+        UserID: data.coach.userID,
+        fullName: data.coach.fullName,
+        email: data.coach.email,
+        phoneNumber: data.coach.phoneNumber,
+        profilePicture: data.coach.profilePicture || null,
+        status: data.coach.status,
+        description: data.coach.description || "",
+        // Thêm các field khác nếu cần
+    };
+};
+
+// API đặt lịch tư vấn
+const bookConsultation = async (data) => {
+    const token = localStorage.getItem("userToken");
+
+    try {
+        const response = await fetch('/api/user/consultation/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token, // Thêm dòng này
+            },
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+            const result = await response.json();
+            throw new Error(result.message || 'Đặt lịch thất bại');
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
 
 const CoachProfileForUser = () => {
     const { id } = useParams(); // Lấy ID của coach từ URL
@@ -26,35 +84,131 @@ const CoachProfileForUser = () => {
     const [coach, setCoach] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     // TODO: Cần thêm logic để biết user đã chọn coach nào
-    const [myChosenCoachId, setMyChosenCoachId] = useState(null);
+    const [myChosenCoachId, setMyChosenCoachId] = useState(() => {
+        const value = localStorage.getItem('coachId');
+        return value ? parseInt(value, 10) : null;
+    });
+
+    // Modal state cho đặt lịch
+    const [showBookingModal, setShowBookingModal] = useState(false);
+    const [bookingData, setBookingData] = useState({
+        consultationDate: '',
+        consultationTime: '08:00:00', // Mặc định 8h sáng
+        duration: 30,
+        notes: ''
+    });
+    const [bookingLoading, setBookingLoading] = useState(false);
+    const [bookingSuccessAlert, setBookingSuccessAlert] = useState(false);
+    const [hasBookingWithThisCoach, setHasBookingWithThisCoach] = useState(false);
+    // Hàm kiểm tra trạng thái còn hiệu lực
+    const isActiveStatus = (status) =>
+        status === "Pending" || status === "Confirmed" || status === "Chờ xác nhận" || status === "Đã xác nhận"; // tuỳ backend
 
     useEffect(() => {
         const getCoachProfile = async () => {
             setIsLoading(true);
             try {
                 const coachData = await fetchCoachById(id);
-                if (coachData) {
-                    setCoach(coachData);
+                setCoach(coachData);
+
+                // Lấy coachId thực tế của user từ BE
+                const chosenId = await fetchMyCoachId();
+                setMyChosenCoachId(chosenId);
+
+                // Update luôn localStorage (nếu muốn sync)
+                if (chosenId) {
+                    localStorage.setItem('coachId', chosenId);
                 } else {
-                    toast.error("Không tìm thấy thông tin của chuyên gia này.");
-                    navigate("/User/coachList"); // Chuyển hướng nếu không có coach
+                    localStorage.removeItem('coachId');
                 }
+
+                // Kiểm tra đã có booking với coach này chưa (còn hiệu lực)
+                const bookings = await fetchMyBookings();
+                const hasBooking = bookings.some(
+                    b =>
+                        // Tốt nhất nên so sánh bằng coachId nếu backend trả về
+                        (b.coachId === coachData.UserID || b.coachName === coachData.fullName) &&
+                        isActiveStatus(b.status)
+                );
+                setHasBookingWithThisCoach(hasBooking);
+
             } catch (e) {
-                toast.error(e.message);
+                toast.error("Không tìm thấy thông tin huấn luyện viên.");
+                navigate("/User/coachList");
             } finally {
                 setIsLoading(false);
             }
         };
-
-        if (id) {
-            getCoachProfile();
-        }
+        if (id) getCoachProfile();
     }, [id, navigate]);
 
     // Xử lý các hành động (Chọn, Hủy, Đặt lịch) - Tạm thời chỉ hiện thông báo
-    const handleChooseCoach = () => toast.success(`Đã gửi yêu cầu chọn Coach ${coach.fullName}!`);
-    const handleUnchooseCoach = () => toast.info(`Đã hủy chọn Coach ${coach.fullName}.`);
-    const handleBookAppointment = () => toast.info(`Mở form đặt lịch với Coach ${coach.fullName}.`);
+    // API chọn coach cho user
+    const chooseCoach = async (coachId) => {
+        const token = localStorage.getItem("userToken");
+        const response = await fetch(`/api/user/coach/choose/${coachId}`, {
+            method: "POST",
+            headers: {
+                "Accept": "*/*",
+                "Authorization": "Bearer " + token,
+            },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || "Chọn coach thất bại");
+        }
+        return data;
+    };
+    const handleChooseCoach = async () => {
+        try {
+            await chooseCoach(coach.UserID);
+            setMyChosenCoachId(coach.UserID);
+            localStorage.setItem('coachId', coach.UserID); // Thêm dòng này
+            toast.success("Đã chọn huấn luyện viên thành công!");
+        } catch (err) {
+            toast.error(err.message || "Chọn coach thất bại");
+        }
+    };
+    const handleUnchooseCoach = () => {
+        setMyChosenCoachId(null);
+        localStorage.removeItem('coachId'); // Thêm dòng này
+        toast.info(`Đã hủy chọn Coach ${coach.fullName}.`);
+    };
+    const handleBookAppointment = () => {
+        setShowBookingModal(true);
+    };
+
+    // Xử lý gửi form đặt lịch
+    const handleBookingSubmit = async (e) => {
+        e.preventDefault();
+        setBookingLoading(true);
+        try {
+            await bookConsultation({
+                coachId: coach.UserID,
+                consultationDate: bookingData.consultationDate,
+                consultationTime: bookingData.consultationTime,
+                duration: Number(bookingData.duration),
+                notes: bookingData.notes
+            });
+            toast.success('Đặt lịch tư vấn thành công!');
+            setHasBookingWithThisCoach(true);
+            setShowBookingModal(false);
+            setBookingData({
+                consultationDate: '',
+                consultationTime: '00:00:00',
+                duration: 30,
+                notes: ''
+            });
+            // Thêm dòng này:
+            setBookingSuccessAlert(true);
+            // Ẩn alert sau 4 giây (tuỳ chọn)
+            setTimeout(() => setBookingSuccessAlert(false), 4000);
+        } catch (err) {
+            toast.error(err.message || 'Đặt lịch thất bại, vui lòng thử lại!');
+        } finally {
+            setBookingLoading(false);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -84,7 +238,7 @@ const CoachProfileForUser = () => {
                 <Card.Body className="d-flex flex-column flex-md-row align-items-center justify-content-center p-4 gap-4" style={{ minHeight: 230 }}>
                     <div className="text-center mb-2 mb-md-0">
                         <img
-                            src={coach.profilePicture || `https://i.pravatar.cc/150?u=${coach.UserID}`}
+                            src={coach.profilePicture || `https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true`}
                             alt="Avatar"
                             className="rounded-circle border border-3 border-success shadow"
                             style={{ width: '140px', height: '140px', objectFit: 'cover', background: "#fff" }}
@@ -120,7 +274,7 @@ const CoachProfileForUser = () => {
                         <Col md={6} xs={12}>
                             <div className="d-flex align-items-center mb-2">
                                 <FaTransgender className="me-2" /><strong>Giới tính:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{coach.gender === 'male' ? 'Nam' : 'Nữ'}</span>
+                                <span className="ms-2" style={{ color: "#222" }}>{coach.gender === 'Male' ? 'Nữ' : 'Nam'}</span>
                             </div>
                             <div className="d-flex align-items-center mb-2">
                                 <FaCalendarAlt className="me-2" /><strong>Ngày tham gia:</strong>
@@ -151,9 +305,16 @@ const CoachProfileForUser = () => {
                         )}
 
                         {/* Nút đặt lịch chỉ sáng khi user đã chọn coach này */}
-                        <Button variant="success" size="lg" disabled={!isThisCoachChosen} onClick={handleBookAppointment}>
-                            <FaCalendarCheck className="me-2" /> Đặt lịch tư vấn
-                        </Button>
+                        {isThisCoachChosen && !hasBookingWithThisCoach && (
+                            <Button variant="success" size="lg" onClick={handleBookAppointment}>
+                                <FaCalendarCheck className="me-2" /> Đặt lịch tư vấn
+                            </Button>
+                        )}
+                        {isThisCoachChosen && hasBookingWithThisCoach && (
+                            <Button variant="info" size="lg" onClick={() => navigate("/User/MyConsultations")}>
+                                <FaCalendarCheck className="me-2" /> Lịch tư vấn của tôi
+                            </Button>
+                        )}
                     </div>
                     {/* Thông báo nếu user đã chọn coach khác */}
                     {hasChosenAnyCoach && !isThisCoachChosen && (
@@ -164,6 +325,66 @@ const CoachProfileForUser = () => {
                 </Card.Body>
             </Card>
 
+            {/* Modal đặt lịch tư vấn */}
+            <Modal show={showBookingModal} onHide={() => setShowBookingModal(false)} centered>
+                <Form onSubmit={handleBookingSubmit}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Đặt lịch tư vấn với {coach.fullName}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Ngày tư vấn</Form.Label>
+                            <Form.Control
+                                type="date"
+                                required
+                                value={bookingData.consultationDate}
+                                onChange={e => setBookingData({ ...bookingData, consultationDate: e.target.value })}
+                                min={new Date().toISOString().split("T")[0]}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Giờ bắt đầu</Form.Label>
+                            <Form.Control
+                                type="time"
+                                required
+                                value={bookingData.consultationTime ? bookingData.consultationTime.slice(0, 5) : "12:00"}
+                                onChange={e => setBookingData({ ...bookingData, consultationTime: e.target.value + ':00' })}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Thời lượng (phút)</Form.Label>
+                            <Form.Control
+                                type="number"
+                                min={15}
+                                max={180}
+                                step={15}
+                                required
+                                value={bookingData.duration}
+                                onChange={e => setBookingData({ ...bookingData, duration: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Ghi chú (tuỳ chọn)</Form.Label>
+                            <Form.Control
+                                type="time"
+                                required
+                                min="08:00"
+                                max="22:00"
+                                value={bookingData.consultationTime ? bookingData.consultationTime.slice(0, 5) : "12:00"}
+                                onChange={e => setBookingData({ ...bookingData, consultationTime: e.target.value + ':00' })}
+                            />
+                        </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowBookingModal(false)} disabled={bookingLoading}>
+                            Đóng
+                        </Button>
+                        <Button variant="success" type="submit" disabled={bookingLoading}>
+                            {bookingLoading ? <Spinner animation="border" size="sm" /> : 'Đặt lịch'}
+                        </Button>
+                    </Modal.Footer>
+                </Form>
+            </Modal>
         </Container>
     );
 };

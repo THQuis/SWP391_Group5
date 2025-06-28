@@ -48,24 +48,30 @@ public class QuitPlanService : IQuitPlanService
 
     public async Task<bool> DeleteAllPlansAndProgressByUserAsync(int userId)
     {
-        // Lấy tất cả kế hoạch của người dùng
         var plans = await _unitOfWork.QuitPlans.FindAsync(q => q.UserID == userId);
         if (!plans.Any()) return false;
 
         foreach (var plan in plans)
         {
-            // Lấy tất cả tiến trình của kế hoạch
+            // Xoá các tiến trình của kế hoạch
             var progresses = await _unitOfWork.QuitProgresses.FindAsync(p => p.QuitPlanID == plan.QuitPlanID);
-            foreach (var p in progresses)
-            {
-                _unitOfWork.QuitProgresses.Remove(p);
-            }
+            _unitOfWork.QuitProgresses.RemoveRange(progresses);
 
+            // Xoá các câu trả lời chọn khi tạo kế hoạch
+            var answers = await _unitOfWork.QuitPlanSelectedAnswers.FindAsync(a => a.QuitPlanID == plan.QuitPlanID);
+            _unitOfWork.QuitPlanSelectedAnswers.RemoveRange(answers);
+
+            // Xoá các thử thách đã gán từ kế hoạch
+            var challenges = await _unitOfWork.UserQuitChallenges.FindAsync(c => c.QuitPlanId == plan.QuitPlanID);
+            _unitOfWork.UserQuitChallenges.RemoveRange(challenges);
+
+            // Cuối cùng xoá kế hoạch
             _unitOfWork.QuitPlans.Remove(plan);
         }
 
         var result = await _unitOfWork.CompleteAsync();
         return result > 0;
     }
+
 
 }

@@ -4,93 +4,71 @@ import {
     Collapse, Form, Image, Row, Col, ListGroup, Alert, ProgressBar
 } from "react-bootstrap";
 import { FaCheckCircle, FaBullseye } from "react-icons/fa";
-import "../../styles/ChallengePage.scss"
-// Dummy data cho các giai đoạn & nhiệm vụ
+import "../../styles/ChallengePage.scss";
 
+const getUserInfo = () => ({
+    userId: localStorage.getItem('userId'),
+    token: localStorage.getItem('userToken'),
+});
 
-
-const PHASES = [
-    {
-        key: "start",
-        title: "Giai đoạn khởi đầu",
-        missions: [
-            {
-                id: 1,
-                title: "Xác định lý do muốn cai thuốc",
-                description: "Viết ra 3 lý do lớn nhất khiến bạn quyết tâm bỏ thuốc",
-                tips: "Bạn có thể tham khảo các lý do về sức khỏe, gia đình, tài chính,..."
-            },
-            {
-                id: 2,
-                title: "Chia sẻ kế hoạch với người thân",
-                description: "Thông báo với ít nhất 1 người thân về quyết định của bạn.",
-                tips: "Việc này giúp bạn có thêm động lực và sự hỗ trợ."
-            },
-            {
-                id: 3,
-                title: "Chia sẻ kế hoạch với người thân",
-                description: "Thông báo với ít nhất 1 người thân về quyết định của bạn.",
-                tips: "Việc này giúp bạn có thêm động lực và sự hỗ trợ."
-            },
-            {
-                id: 4,
-                title: "Chia sẻ kế hoạch với người thân",
-                description: "Thông báo với ít nhất 1 người thân về quyết định của bạn.",
-                tips: "Việc này giúp bạn có thêm động lực và sự hỗ trợ."
-            },
-            {
-                id: 5,
-                title: "Chia sẻ kế hoạch với người thân",
-                description: "Thông báo với ít nhất 1 người thân về quyết định của bạn.",
-                tips: "Việc này giúp bạn có thêm động lực và sự hỗ trợ."
-            },
-            {
-                id: 6,
-                title: "Chia sẻ kế hoạch với người thân",
-                description: "Thông báo với ít nhất 1 người thân về quyết định của bạn.",
-                tips: "Việc này giúp bạn có thêm động lực và sự hỗ trợ."
-            },
-            {
-                id: 7,
-                title: "Chia sẻ kế hoạch với người thân",
-                description: "Thông báo với ít nhất 1 người thân về quyết định của bạn.",
-                tips: "Việc này giúp bạn có thêm động lực và sự hỗ trợ."
-            }
-        ]
-    },
-    {
-        key: "week1",
-        title: "Tuần 1",
-        missions: [
-            {
-                id: 3,
-                title: "Theo dõi ngày không hút",
-                description: "Ghi chú lại từng ngày bạn không hút thuốc trong tuần đầu.",
-                tips: "Đánh dấu từng ngày để tự thưởng khi vượt qua!"
-            }
-        ]
-    }
+const STAGES = [
+    { key: 1, title: "Giai đoạn 1" },
+    { key: 2, title: "Giai đoạn 2" },
+    { key: 3, title: "Giai đoạn 3" },
+    // ... Thêm các stage khác nếu có
 ];
 
 const ChallengePage = () => {
-    const [activeTab, setActiveTab] = useState(PHASES[0].key);
+    const { userId, token } = getUserInfo();
+    const [activeTab, setActiveTab] = useState(STAGES[0].key);
+    const [stageData, setStageData] = useState({});
+    const [loadingStage, setLoadingStage] = useState(true);
     const [expandedMissionId, setExpandedMissionId] = useState(null);
     const [note, setNote] = useState("");
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
-    const [completedMissions, setCompletedMissions] = useState([]);
     const [missionNotes, setMissionNotes] = useState({});
     const [showSuccess, setShowSuccess] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [error, setError] = useState(null);
 
-    const [isLoading, setIsLoading] = useState(true);
-
+    // Fetch missions mỗi khi đổi tab (stage)
     useEffect(() => {
-        // Giả lập 800ms để show spinner
-        const timer = setTimeout(() => setIsLoading(false), 800);
-        return () => clearTimeout(timer);
-    }, []);
+        if (!userId || !token) {
+            setError("Bạn chưa đăng nhập hoặc thiếu thông tin người dùng.");
+            setLoadingStage(false);
+            return;
+        }
+        setLoadingStage(true);
+        setError(null);
 
+        fetch(
+            `/api/user-challenges/${userId}/stage?stage=${activeTab}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                }
+            }
+        )
+            .then((res) => {
+                if (!res.ok) throw new Error("Không tải được dữ liệu!");
+                return res.json();
+            })
+            .then((data) => {
+                setStageData((prev) => ({
+                    ...prev,
+                    [activeTab]: data.data || [],
+                }));
+                setLoadingStage(false);
+            })
+            .catch((err) => {
+                setError(err.message);
+                setLoadingStage(false);
+            });
+    }, [activeTab, userId, token]);
+
+    // Xử lý toggle hiển thị nhiệm vụ
     const handleToggleMission = (mission) => {
         setShowSuccess(false);
         if (expandedMissionId === mission.id) {
@@ -104,6 +82,7 @@ const ChallengePage = () => {
         }
     };
 
+    // Xử lý chọn ảnh minh chứng
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -114,15 +93,53 @@ const ChallengePage = () => {
         }
     };
 
-    const handleCompleteMission = (mission) => {
+    // Xử lý hoàn thành/bỏ hoàn thành nhiệm vụ (SYNC backend)
+    const handleToggleComplete = async (mission) => {
         setSaving(true);
-        setTimeout(() => {
-            setCompletedMissions((prev) =>
-                prev.includes(mission.id) ? prev : [...prev, mission.id]
-            );
+
+        // Nếu nhiệm vụ đã hoàn thành -> gọi API uncomplete, ngược lại gọi complete
+        const isNowCompleted = !mission.isCompleted;
+
+        try {
+            if (isNowCompleted) {
+                // Hoàn thành nhiệm vụ
+                await fetch("/api/user-challenges/complete", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        challengeId: mission.id,
+                        notes: note || ""
+                    })
+                });
+            } else {
+                // Bỏ hoàn thành nhiệm vụ
+                await fetch("/api/user-challenges/uncomplete", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        challengeId: mission.id
+                    })
+                });
+            }
+
+            // Sau khi gọi API xong, cập nhật UI local
+            setStageData((prev) => {
+                const missions = prev[activeTab]?.map((m) =>
+                    m.id === mission.id
+                        ? { ...m, isCompleted: isNowCompleted }
+                        : m
+                );
+                return { ...prev, [activeTab]: missions };
+            });
             setMissionNotes((prev) => ({
                 ...prev,
-                [mission.id]: { note, imagePreview, imageFile }
+                [mission.id]: { note, imagePreview, imageFile },
             }));
             setShowSuccess(true);
             setSaving(false);
@@ -130,41 +147,16 @@ const ChallengePage = () => {
                 setShowSuccess(false);
                 setExpandedMissionId(null);
             }, 1200);
-        }, 700);
-    };
-    const handleToggleComplete = (mission) => {
-        setSaving(true);
-        setTimeout(() => {
-            setCompletedMissions(prev =>
-                prev.includes(mission.id)
-                    // nếu đã hoàn thành thì bỏ đánh dấu
-                    ? prev.filter(id => id !== mission.id)
-                    // nếu chưa thì thêm vào
-                    : [...prev, mission.id]
-            );
-            setMissionNotes(prev => ({
-                ...prev,
-                [mission.id]: { note, imagePreview, imageFile }
-            }));
-            setShowSuccess(true);
+        } catch (err) {
             setSaving(false);
-            setTimeout(() => {
-                setShowSuccess(false);
-                setExpandedMissionId(null);
-            }, 1200);
-        }, 700);
+            alert("Có lỗi khi cập nhật trạng thái nhiệm vụ.");
+        }
     };
-    if (isLoading) {
-        return (
-            <Container
-                className="d-flex justify-content-center align-items-center"
-                style={{ height: '60vh' }}
-            >
-                <Spinner animation="border" variant="success" />
-                <h4 className="ms-3">Đang tải thử thách...</h4>
-            </Container>
-        );
-    }
+
+    // Đếm số nhiệm vụ đã hoàn thành trên từng stage
+    const missions = stageData[activeTab] || [];
+    const doneCount = missions.filter((m) => m.isCompleted).length;
+    const total = missions.length;
 
     return (
         <section className="challenge-page">
@@ -172,58 +164,74 @@ const ChallengePage = () => {
                 <h2 className="challenge-page__title">Thử thách cai thuốc</h2>
                 <Tabs
                     activeKey={activeTab}
-                    onSelect={setActiveTab}
+                    onSelect={(k) => setActiveTab(k)}
                     className="challenge-page__tabs"
                 >
-                    {PHASES.map(phase => {
-                        const doneCount = phase.missions.filter(m => completedMissions.includes(m.id)).length;
-                        const total = phase.missions.length;
-                        return (
-                            <Tab eventKey={phase.key} title={
+                    {STAGES.map((stage) => (
+                        <Tab
+                            eventKey={stage.key}
+                            title={
                                 <div className="d-flex align-items-center">
                                     <FaBullseye className="me-2 challenge-page__tab-icon" />
-                                    {phase.title}
+                                    {stage.title}
                                 </div>
-                            } key={phase.key}>
-                                <Row className="justify-content-center mt-4">
-                                    <Col lg={8} md={10}>
-                                        <Card className="challenge-card">
-                                            <Card.Header className="challenge-card__header">
-                                                <div>
-                                                    <h5>{phase.title}</h5>
-                                                    <small>{doneCount}/{total} nhiệm vụ đã hoàn thành</small>
+                            }
+                            key={stage.key}
+                        >
+                            <Row className="justify-content-center mt-4">
+                                <Col lg={8} md={10}>
+                                    <Card className="challenge-card">
+                                        <Card.Header className="challenge-card__header">
+                                            <div>
+                                                <h5>{stage.title}</h5>
+                                                <small>
+                                                    {doneCount}/{total} nhiệm vụ đã hoàn thành
+                                                </small>
+                                            </div>
+                                            <ProgressBar
+                                                now={total === 0 ? 0 : (doneCount / total) * 100}
+                                                label={`${total === 0 ? 0 : Math.round((doneCount / total) * 100)}%`}
+                                                className="challenge-card__progress"
+                                            />
+                                        </Card.Header>
+                                        <Card.Body className="challenge-card__body">
+                                            {loadingStage ? (
+                                                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 200 }}>
+                                                    <Spinner animation="border" variant="success" />
+                                                    <span className="ms-3">Đang tải nhiệm vụ...</span>
                                                 </div>
-                                                <ProgressBar
-                                                    now={(doneCount / total) * 100}
-                                                    label={`${Math.round((doneCount / total) * 100)}%`}
-                                                    className="challenge-card__progress"
-                                                />
-                                            </Card.Header>
-                                            <Card.Body className="challenge-card__body">
+                                            ) : error ? (
+                                                <Alert variant="danger">{error}</Alert>
+                                            ) : (
                                                 <ListGroup>
-                                                    {phase.missions.map(mission => (
+                                                    {missions.map((mission) => (
                                                         <React.Fragment key={mission.id}>
                                                             <ListGroup.Item
-                                                                className={`mission-item ${expandedMissionId === mission.id ? "is-open" : ""}`}
+                                                                className={`mission-item ${expandedMissionId === mission.id ? "is-open" : ""} ${mission.isCompleted ? "is-completed" : ""}`}
                                                                 onClick={() => handleToggleMission(mission)}
+                                                                style={mission.isLocked ? { opacity: 0.5, pointerEvents: "none" } : {}}
                                                             >
                                                                 <div className="d-flex justify-content-between">
                                                                     <div>
                                                                         <strong>{mission.title}</strong>
                                                                         <p className="text-muted mission-desc">{mission.description}</p>
                                                                     </div>
-                                                                    {completedMissions.includes(mission.id) && (
+                                                                    {mission.isCompleted && (
                                                                         <FaCheckCircle className="mission-item__icon" />
                                                                     )}
                                                                 </div>
+                                                                {mission.isLocked && (
+                                                                    <small className="text-warning">Nhiệm vụ này hiện đang bị khoá.</small>
+                                                                )}
                                                             </ListGroup.Item>
                                                             <Collapse in={expandedMissionId === mission.id}>
                                                                 <div className="mission-detail">
-                                                                    <Alert variant="info">
-                                                                        <strong>Gợi ý:</strong> {mission.tips}
-                                                                    </Alert>
+                                                                    {mission.challengeDate && (
+                                                                        <Alert variant="info" className="mb-2">
+                                                                            <strong>Ngày thử thách:</strong> {mission.challengeDate.split("T")[0]}
+                                                                        </Alert>
+                                                                    )}
                                                                     <Form>
-                                                                        {/* --- Ghi chú --- */}
                                                                         <Form.Group className="mb-3">
                                                                             <Form.Label>Ghi chú của bạn:</Form.Label>
                                                                             <Form.Control
@@ -235,8 +243,6 @@ const ChallengePage = () => {
                                                                                 disabled={saving}
                                                                             />
                                                                         </Form.Group>
-
-                                                                        {/* --- Gửi ảnh minh chứng --- */}
                                                                         <Form.Group className="mb-3">
                                                                             <Form.Label>Ảnh minh chứng (tuỳ chọn):</Form.Label>
                                                                             <Form.Control
@@ -256,33 +262,34 @@ const ChallengePage = () => {
                                                                             )}
                                                                         </Form.Group>
                                                                     </Form>
-
                                                                     <div className="d-flex justify-content-end mt-3">
                                                                         <Button
-                                                                            variant={completedMissions.includes(mission.id) ? "outline-warning" : "success"}
-                                                                            onClick={e => { e.stopPropagation(); handleToggleComplete(mission); }}
-                                                                            disabled={saving}
+                                                                            variant={mission.isCompleted ? "outline-warning" : "success"}
+                                                                            onClick={e => {
+                                                                                e.stopPropagation();
+                                                                                handleToggleComplete(mission);
+                                                                            }}
+                                                                            disabled={saving || mission.isLocked}
                                                                         >
                                                                             {saving
                                                                                 ? "Đang lưu..."
-                                                                                : (completedMissions.includes(mission.id)
+                                                                                : (mission.isCompleted
                                                                                     ? "Chưa hoàn thành"
                                                                                     : "Hoàn thành nhiệm vụ")}
                                                                         </Button>
                                                                     </div>
                                                                 </div>
                                                             </Collapse>
-
                                                         </React.Fragment>
                                                     ))}
                                                 </ListGroup>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                </Row>
-                            </Tab>
-                        );
-                    })}
+                                            )}
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </Tab>
+                    ))}
                 </Tabs>
             </Container>
         </section>

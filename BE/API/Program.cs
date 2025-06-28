@@ -10,6 +10,7 @@ using Smoking.DAL.Data;
 using Smoking.DAL.Interfaces.Repositories;
 using Smoking.DAL.Repositories;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IAchievementEvaluatorService, AchievementEvaluatorService>();
+builder.Services.AddScoped<IUserQuitChallengeService, UserQuitChallengeService>();
+builder.Services.AddScoped<IUserQuitChallengeRepository, UserQuitChallengeRepository>();
+builder.Services.AddScoped<IQuitChallengeTemplateRepository, QuitChallengeTemplateRepository>();
 
 // User Membership & Payment
 builder.Services.AddScoped<IMembershipPackageService, MembershipPackageService>();
@@ -50,6 +54,7 @@ builder.Services.AddScoped<IQuitPlanService, QuitPlanService>();
 builder.Services.AddScoped<IQuitPlanAutoService, QuitPlanAutoService>();
 builder.Services.AddScoped<IQuitProgressService, QuitProgressService>();
 builder.Services.AddScoped<IQuitProgressRepository, QuitProgressRepository>();
+builder.Services.AddScoped<IQuitChallengeTemplateService, QuitChallengeTemplateService>();
 
 // Questionnaire & Email
 builder.Services.AddScoped<IQuestionnaireService, QuestionnaireService>();
@@ -116,6 +121,13 @@ builder.Services.AddSwaggerGen(c =>
         { securityScheme, new string[] { } }
     });
 });
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // hoặc Preserve nếu cần
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
 
 var app = builder.Build();
 

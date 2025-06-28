@@ -38,7 +38,7 @@ const handleLogout = async () => {
 
 const Header = () => {
   const isLoggedIn = !!localStorage.getItem('userToken');
-
+  const userRole = localStorage.getItem('userRole');
   return (
     <Navbar expand="lg" bg="light" className="shadow-sm border-bottom sticky-navbar" style={{ backgroundColor: '#C1DCDC' }}>
       <Container>
@@ -52,15 +52,40 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
           <Nav className="me-auto gap-3 align-items-center">
-            <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
-            <Nav.Link as={Link} to={ROUTERS.USER.PROGRESS} className="nav-item-custom">Dashboard</Nav.Link>
+            {(!isLoggedIn || userRole === "2") && (
+              <>
+                {isLoggedIn ? (
+                  <>
+                    <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.PROGRESS} className="nav-item-custom">Dashboard</Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.QUITPLAN} className="nav-item-custom">Kế hoạch</Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.BLOG} className="nav-item-custom">Cộng đồng</Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">Tiến trình</Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.CHALENGE} className="nav-item-custom">Thử Thách</Nav.Link>
+                  </>
+                ) : (
+                  <>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Dashboard</Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Kế hoạch</Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Cộng đồng</Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Tiến trình</Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Thử Thách</Nav.Link>
+                  </>
+                )}
+              </>
+            )}
 
-            <Nav.Link as={Link} to={ROUTERS.USER.QUITPLAN} className="nav-item-custom">Kế hoạch</Nav.Link>
-            <Nav.Link as={Link} to={ROUTERS.USER.BLOG} className="nav-item-custom">Cộng đồng</Nav.Link>
-            <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">Tiến trình</Nav.Link>
-            <Nav.Link as={Link} to={ROUTERS.USER.CHALENGE} className="nav-item-custom">Thử Thách</Nav.Link>
+            {userRole === "3" && (
+              <>
+                <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
+                <Nav.Link as={Link} to={ROUTERS.COACH.DASHBOARD} className="nav-item-custom">Dashboard</Nav.Link>
+                <Nav.Link as={Link} to={ROUTERS.COACH.MEMBER} className="nav-item-custom">Quản lý thành viên</Nav.Link>
 
-
+                <Nav.Link as={Link} to={ROUTERS.COACH.BOOKING} className="nav-item-custom">Lịch tư vấn</Nav.Link>
+                {/* ... */}
+              </>
+            )}
           </Nav>
           <Nav>
             {isLoggedIn ? (
@@ -76,18 +101,38 @@ const Header = () => {
                   Tài khoản
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>Hồ sơ cá nhân</Dropdown.Item>
-                  <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Bảng xếp hạng</Dropdown.Item>
-                  <Dropdown.Item as={Link} to={ROUTERS.USER.COACH}>Coach</Dropdown.Item>
-                  <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Dashboard</Dropdown.Item>
-                  <Dropdown.Item as={Link} to={ROUTERS.USER.PACKAGE}>Gói thành viên</Dropdown.Item>
+                  {/* MENU CHO MEMBER */}
+                  {userRole === "2" && (
+                    <>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>Hồ sơ cá nhân</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Bảng xếp hạng</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.COACH}>Coach</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Dashboard</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.PACKAGE}>Gói thành viên</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.MYCONSUL}>Lịch tư vấn</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Cài đặt</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Hỗ trợ</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.HOME}>Về Chúng Tôi</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item as="button" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                    </>
+                  )}
 
-                  <Dropdown.Divider />
-                  <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Cài đặt</Dropdown.Item>
-                  <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Hỗ trợ</Dropdown.Item>
-                  <Dropdown.Item as={Link} to={ROUTERS.USER.HOME}>Về Chúng Tôi</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item as="button" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                  {/* MENU CHO COACH */}
+                  {userRole === "3" && (
+                    <>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>Hồ sơ Coach</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.COACH.MANAGE}>Quản lý thành viên</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.COACH.SCHEDULE}>Lịch tư vấn</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item as={Link} to={ROUTERS.COACH.SETTINGS}>Cài đặt</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.COACH.HELP}>Hỗ trợ</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.COACH.HOME}>Về Chúng Tôi</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item as="button" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                    </>
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
             ) : (

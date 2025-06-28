@@ -34,6 +34,10 @@ import ManagementNotification from "../pages/admin/ManagementNotification";
 import ProfileOfCoach from "../pages/user/ProfileOfCoach";
 import PlanOverviewPage from "../pages/user/PlanOverviewPage";
 import ChallengesPage from "../pages/user/ChallengesPage";
+import MyConsultations from "../pages/user/MyConsultations";
+import CoachDashboard from "../pages/coachs/CoachDashboard";
+import CoachBookings from "../pages/coachs/CoachBookings";
+import CoachMembers from "../pages/coachs/CoachMembers";
 
 
 
@@ -60,14 +64,25 @@ const RouterCustom = () => {
                 <Route path={ROUTERS.USER.PROFILECOACH} element={<ProfileOfCoach />} />
                 <Route path={ROUTERS.USER.PLANOVERVIEW} element={<PlanOverviewPage />} />
                 <Route path={ROUTERS.USER.CHALENGE} element={<ChallengesPage />} />
+                <Route path={ROUTERS.USER.MYCONSUL} element={<MyConsultations />} />
+
                 {/* CoachDashboard */}
+            </Route>
+            <Route element={<ProtectedRoute allowedRoles={[3]} />}>
+                <Route path="/coach" element={<UserLayout />}>
+                    <Route index element={<CoachDashboard />} />
+                    <Route path={ROUTERS.COACH.DASHBOARD} element={<CoachDashboard />} />
+                    <Route path={ROUTERS.COACH.BOOKING} element={<CoachBookings />} />
+                    <Route path={ROUTERS.COACH.MEMBER} element={<CoachMembers />} />
+
+
+                </Route>
             </Route>
 
             {/* === LAYOUT CHO ADMIN VÀ CÁC TRANG CON (Được bảo vệ) === */}
             <Route element={<ProtectedRoute allowedRoles={[1]} />}>
                 <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<AdminDashboard />} />
-                    {/* Bỏ các thẻ <AdminLayout> thừa ở đây */}
                     <Route path={ROUTERS.ADMIN.USER} element={<ManagementUser />} />
                     <Route path={ROUTERS.ADMIN.BLOG} element={<ManagementBlog />} />
                     <Route path={ROUTERS.ADMIN.PACKAGE} element={<ManagementPackage />} />

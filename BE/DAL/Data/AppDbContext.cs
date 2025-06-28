@@ -29,13 +29,19 @@ namespace Smoking.DAL.Data
         public DbSet<QuitPlanSelectedAnswers> QuitPlanSelectedAnswers { get; set; }
         public DbSet<AnswerOption> AnswerOptions { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<QuitChallengeTemplate> QuitChallengeTemplates { get; set; }
+        public DbSet<UserQuitChallenge> UserQuitChallenges { get; set; }
 
+        // ✅ Đã giữ lại bảng mới
+        public DbSet<Milestone> Milestones { get; set; }
+        public DbSet<MilestoneGroup> MilestoneGroups { get; set; }
+        public DbSet<PackageMilestone> PackageMilestones { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Ví dụ: nếu cần cấu hình thêm relationships, indexes, v.v.
+            // Relationships
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
@@ -55,13 +61,12 @@ namespace Smoking.DAL.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Notification>()
-                .HasOne(n => n.User)    // Mỗi thông báo sẽ có một User
-                .WithMany(u => u.Notifications)  // Người dùng có thể có nhiều thông báo
-                .HasForeignKey(n => n.UserID)  // Sử dụng UserID làm khóa ngoại
-                .OnDelete(DeleteBehavior.Restrict);  // Ngừng xóa thông báo khi xóa người dùng (hoặc có thể thay đổi hành vi xóa)
+                .HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserID)
+                .OnDelete(DeleteBehavior.Restrict);
 
-
-
+            // Decimal precision
             modelBuilder.Entity<SmokingStatus>()
                 .Property(s => s.MonthlyCost)
                 .HasPrecision(18, 2);
@@ -90,19 +95,19 @@ namespace Smoking.DAL.Data
                 .Property(p => p.Amount)
                 .HasPrecision(18, 2);
 
+            // UserMembership - MembershipPackage
             modelBuilder.Entity<UserMembership>()
                .HasOne(um => um.Package)
                .WithMany(mp => mp.UserMemberships)
                .HasForeignKey(um => um.PackageID)
                .OnDelete(DeleteBehavior.Restrict);
 
-            // UserMembership - Payment
+            // Payment - UserMembership
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.UserMembership)
                 .WithMany(um => um.Payments)
                 .HasForeignKey(p => p.UserMembershipID)
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

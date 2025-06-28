@@ -281,3 +281,14 @@
         filter: brightness(0.85);
     }
 }
+
+// chỉnh phần ở đây chúng tôi có
+.support-card {
+    text-decoration: none;
+    color: black;
+}
+
+.support-card:hover {
+    text-decoration: none;
+    color: black; // Giữ màu không đổi khi hover
+}

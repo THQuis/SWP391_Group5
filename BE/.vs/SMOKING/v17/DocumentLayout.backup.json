@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AdminController.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AdminController.cs",
-              "RelativeToolTip": "API\\Controllers\\Admin\\AdminController.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAIwG8AAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-23T14:58:00.166Z",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-27T14:15:16.588Z",
               "EditorCaption": ""
             }
           ]

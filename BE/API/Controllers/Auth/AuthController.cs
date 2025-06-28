@@ -7,19 +7,20 @@ using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Smoking.API.Controllers.Auth
+{
+    [ApiController]
+    [Route("api/Auth")]
+    public class AuthController : ControllerBase
     {
-        [ApiController]
-        [Route("api/Auth")]
-        public class AuthController : ControllerBase
-        {
-            private readonly IAuthService _authService;
-            private readonly JwtSettings _jwtSettings;
-            private readonly IUserService _userService;
+        private readonly IAuthService _authService;
+        private readonly JwtSettings _jwtSettings;
+        private readonly IUserService _userService;
 
         public AuthController(IAuthService authService, IOptions<JwtSettings> jwtOptions, IUserService userService)
         {
@@ -28,107 +29,120 @@ namespace Smoking.API.Controllers.Auth
             _userService = userService;
         }
 
+        #region Register
 
         // Bước 1: Đăng ký - gửi OTP qua Email
         [HttpPost("register")]
-            public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            try
             {
-                try
-                {
-                    await _authService.RegisterTempAsync(request.FullName, request.Email, request.Password, request.PhoneNumber);
-                    return Ok(new { Message = "Đăng ký thành công. Vui lòng kiểm tra email để lấy mã OTP xác thực." });
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(new { Error = ex.Message });
-                }
+                await _authService.RegisterTempAsync(request.FullName, request.Email, request.Password, request.PhoneNumber);
+                return Ok(new { Message = "Đăng ký thành công. Vui lòng kiểm tra email để lấy mã OTP xác thực." });
             }
-
-            // Bước 2: Xác nhận OTP - lưu user vào database
-            [HttpPost("verify-otp")]
-            public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpRequest request)
+            catch (Exception ex)
             {
-                var success = await _authService.VerifyOtpAndRegisterAsync(request.Email, request.OtpCode);
-                if (!success)
-                    return BadRequest(new { Error = "OTP không hợp lệ hoặc đã hết hạn." });
-
-                return Ok(new { Message = "Xác thực OTP thành công. Tài khoản đã được kích hoạt." });
+                return BadRequest(new { Error = ex.Message });
             }
+        }
+
+        // Bước 2: Xác nhận OTP - lưu user vào database
+        [HttpPost("verify-otp")]
+        public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpRequest request)
+        {
+            var success = await _authService.VerifyOtpAndRegisterAsync(request.Email, request.OtpCode);
+            if (!success)
+                return BadRequest(new { Error = "OTP không hợp lệ hoặc đã hết hạn." });
+
+            return Ok(new { Message = "Xác thực OTP thành công. Tài khoản đã được kích hoạt." });
+        }
+
+        #endregion
+
+        #region Login
 
         // Đăng nhập
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var user = await _authService.AuthenticateAsync(request.Email, request.Password);
-            if (user == null)
-                return Unauthorized(new { Error = "Email hoặc mật khẩu không đúng." });
-
-            if (!string.Equals(user.Status, "Active", StringComparison.OrdinalIgnoreCase))
-                return Unauthorized(new { Error = "Tài khoản của bạn không được phép đăng nhập." });
-
-            // Gọi userService để lấy đầy đủ thông tin user
-            var fullUser = await _userService.GetUserWithMembershipAsync(user.UserID);
-
-            var token = GenerateJwtToken(fullUser);
-
-            var activeMembership = fullUser.UserMemberships?
-                .Where(um =>
-                    (um.PaymentStatus == "Completed" || um.PaymentStatus == "AdminAssigned") &&
-                    um.EndDate >= DateTime.Now)
-                .OrderByDescending(um => um.StartDate)
-                .FirstOrDefault();
-
-            return Ok(new
+            try
             {
-                Token = token,
-                User = new
-                {
-                    fullUser.UserID,
-                    fullUser.FullName,
-                    fullUser.Email,
-                    fullUser.PhoneNumber,
-                    fullUser.Status,
-                    fullUser.RoleID,
-                    RoleName = fullUser.Role?.RoleName ?? "Unknown",
-                    fullUser.Gender,
-                    DateOfBirth = fullUser.DateOfBirth?.ToString("yyyy-MM-dd"),
-                    Membership = activeMembership == null ? null : new
-                    {
-                        PackageName = activeMembership.Package.PackageName,
-                        PackageType = activeMembership.Package.PackageType,
-                        StartDate = activeMembership.StartDate.ToString("yyyy-MM-dd"),
-                        EndDate = activeMembership.EndDate.ToString("yyyy-MM-dd"),
-                        PaymentStatus = activeMembership.PaymentStatus
-                    }
-                }
-            });
-        }
+                var user = await _authService.AuthenticateAsync(request.Email, request.Password);
+                if (user == null)
+                    return Unauthorized(new { Error = "Email hoặc mật khẩu không đúng." });
 
+                if (!string.Equals(user.Status, "Active", StringComparison.OrdinalIgnoreCase))
+                    return Unauthorized(new { Error = "Tài khoản của bạn không được phép đăng nhập." });
+
+                var fullUser = await _userService.GetUserWithMembershipAsync(user.UserID);
+                var token = GenerateJwtToken(fullUser);
+
+                var activeMembership = fullUser.UserMemberships?
+                    .Where(um =>
+                        (um.PaymentStatus == "Completed" || um.PaymentStatus == "AdminAssigned") &&
+                        um.EndDate >= DateTime.Now)
+                    .OrderByDescending(um => um.StartDate)
+                    .FirstOrDefault();
+
+                return Ok(new
+                {
+                    Token = token,
+                    User = new
+                    {
+                        fullUser.UserID,
+                        fullUser.FullName,
+                        fullUser.Email,
+                        fullUser.PhoneNumber,
+                        fullUser.Status,
+                        fullUser.RoleID,
+                        RoleName = fullUser.Role?.RoleName ?? "Unknown",
+                        fullUser.Gender,
+                        DateOfBirth = fullUser.DateOfBirth?.ToString("yyyy-MM-dd"),
+                        Membership = activeMembership == null ? null : new
+                        {
+                            PackageName = activeMembership.Package.PackageName,
+                            PackageType = activeMembership.Package.PackageType,
+                            StartDate = activeMembership.StartDate.ToString("yyyy-MM-dd"),
+                            EndDate = activeMembership.EndDate.ToString("yyyy-MM-dd"),
+                            PaymentStatus = activeMembership.PaymentStatus
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
 
         // Tạo JWT Token
         private string GenerateJwtToken(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_jwtSettings.SecretKey);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.UTF8.GetBytes(_jwtSettings.SecretKey);
-
-                var tokenDescriptor = new SecurityTokenDescriptor
+                Subject = new ClaimsIdentity(new[]
                 {
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
-                        new Claim(ClaimTypes.Name, user.FullName),
-                        new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.Role, user.RoleID.ToString())
-                    }),
-                    Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiresInMinutes),
-                    Issuer = _jwtSettings.Issuer,
-                    Audience = _jwtSettings.Audience,
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
+                    new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
+                    new Claim(ClaimTypes.Name, user.FullName),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.RoleID.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiresInMinutes),
+                Issuer = _jwtSettings.Issuer,
+                Audience = _jwtSettings.Audience,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
 
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                return tokenHandler.WriteToken(token);
-            }
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        #endregion
+
+        #region Forgot Password
 
         // Bước 1: Gửi OTP quên mật khẩu
         [HttpPost("forgot-password")]
@@ -171,10 +185,17 @@ namespace Smoking.API.Controllers.Auth
             }
         }
 
+        #endregion
+
+        #region Logout
+
         [HttpPost("logout")]
         public IActionResult Logout()
         {
+            // Client chỉ cần xoá token
             return Ok(new { Message = "Đăng xuất thành công. Vui lòng xoá token ở client." });
         }
+
+        #endregion
     }
 }

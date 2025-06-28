@@ -26,5 +26,7 @@ namespace Smoking.DAL.Entities
 
         // Navigation
         public virtual ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();
+        public virtual ICollection<PackageMilestone> PackageMilestones { get; set; } = new List<PackageMilestone>();
+
     }
 }

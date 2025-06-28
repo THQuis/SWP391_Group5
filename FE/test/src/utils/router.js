@@ -15,10 +15,13 @@ export const ROUTERS = {
         PROGRESS: "/User/progress",
         PROFILECOACH: "/User/coach/profile/:id",
         PLANOVERVIEW: "/User/PlanOverviewPage",
-        CHALENGE: "/User/Challenges"
+        CHALENGE: "/User/Challenges",
+        MYCONSUL: "/User/MyConsultations"
     },
     COACH: {
-
+        DASHBOARD: "/coach/dashboard",
+        BOOKING: "/coach/managementBooking",
+        MEMBER: "/coach/managemetnMember"
     },
 
     ADMIN: {

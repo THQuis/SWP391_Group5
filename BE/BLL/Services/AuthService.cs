@@ -5,6 +5,7 @@ using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 using System;
 using System.Threading.Tasks;
+using BCrypt.Net;
 
 namespace Smoking.BLL.Services
 {
@@ -30,11 +31,13 @@ namespace Smoking.BLL.Services
 
             var otpCode = new Random().Next(100000, 999999).ToString();
 
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
             var tempUser = new TempUserRegister
             {
                 FullName = fullName,
                 Email = email,
-                Password = password,
+                Password = hashedPassword,
                 PhoneNumber = phoneNumber,
                 OtpCode = otpCode
             };
@@ -56,7 +59,7 @@ namespace Smoking.BLL.Services
                     {
                         FullName = tempUser.FullName,
                         Email = tempUser.Email,
-                        Password = tempUser.Password,
+                        Password = tempUser.Password, // đã băm ở RegisterTempAsync
                         PhoneNumber = tempUser.PhoneNumber,
                         Status = "Active",
                         RoleID = 2
@@ -75,12 +78,45 @@ namespace Smoking.BLL.Services
         }
 
         // -- Đăng nhập --
+        private const int MaxFailedAttempts = 5;
+        private readonly TimeSpan LockoutDuration = TimeSpan.FromMinutes(5);
+
         public async Task<User> AuthenticateAsync(string email, string password)
         {
-            // Nếu có hash, so sánh hash ở đây
-            var user = await _unitOfWork.Users.GetByEmailAndPasswordAsync(email, password);
+            if (_memoryCache.TryGetValue($"LOCK_{email}", out _))
+            {
+                throw new Exception("Tài khoản đã bị khóa tạm thời do đăng nhập sai quá nhiều. Vui lòng thử lại sau vài phút.");
+            }
+
+            var user = await _unitOfWork.Users.GetByEmailAsync(email);
+            if (user == null)
+                return null;
+
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+            if (!isPasswordValid)
+            {
+                string failKey = $"LOGIN_FAILS_{email}";
+                int failCount = _memoryCache.TryGetValue(failKey, out int current) ? current : 0;
+                failCount++;
+
+                if (failCount >= MaxFailedAttempts)
+                {
+                    _memoryCache.Set($"LOCK_{email}", true, LockoutDuration);
+                    _memoryCache.Remove(failKey);
+                }
+                else
+                {
+                    _memoryCache.Set(failKey, failCount, TimeSpan.FromMinutes(5));
+                }
+
+                return null;
+            }
+
+            _memoryCache.Remove($"LOGIN_FAILS_{email}");
             return user;
         }
+
 
         // -- Gửi OTP quên mật khẩu --
         public async Task SendForgotPasswordOtpAsync(string email)
@@ -117,11 +153,8 @@ namespace Smoking.BLL.Services
         // -- Xác thực OTP quên mật khẩu --
         public async Task<bool> VerifyForgotPasswordOtpAsync(string email, string otpCode)
         {
-            if (_memoryCache.TryGetValue($"RESET_PWD_OTP_{email}", out string cachedOtp) && cachedOtp == otpCode)
-            {
-                return true;
-            }
-            return false;
+            return _memoryCache.TryGetValue($"RESET_PWD_OTP_{email}", out string cachedOtp)
+                   && cachedOtp == otpCode;
         }
 
         // -- Đặt lại mật khẩu mới --
@@ -131,13 +164,16 @@ namespace Smoking.BLL.Services
             if (user == null)
                 throw new Exception("Email không tồn tại.");
 
-            user.Password = newPassword; // Hash password nếu cần
+            // Băm lại mật khẩu mới
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
 
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
 
             _memoryCache.Remove($"RESET_PWD_OTP_{email}");
         }
+
+        // -- Xoá người dùng --
         public async Task DeleteUserByEmailAsync(string email)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
@@ -148,6 +184,7 @@ namespace Smoking.BLL.Services
             await _unitOfWork.CompleteAsync();
         }
 
+        // -- Cập nhật thông tin hồ sơ --
         public async Task UpdateProfileAsync(string email, string fullName, string phoneNumber, string profilePicture)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(email);
@@ -161,7 +198,5 @@ namespace Smoking.BLL.Services
             _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
         }
-
-
     }
 }

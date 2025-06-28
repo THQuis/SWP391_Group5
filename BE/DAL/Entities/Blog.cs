@@ -27,6 +27,8 @@ namespace Smoking.DAL.Entities
 
         public string? CategoryName { get; set; }
         public string? BlogType { get; set; }
+        public string? ImageUrl { get; set; }
+
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime? LastModifiedDate { get; set; }

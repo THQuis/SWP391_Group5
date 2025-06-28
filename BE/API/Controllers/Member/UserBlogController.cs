@@ -43,7 +43,8 @@ namespace Smoking.API.Controllers.Member
                 AuthorName = b.User?.FullName ?? "Unknown",
                 RoleName = b.User?.Role?.RoleName ?? "Unknown",
                 CreatedDate = b.CreatedDate,
-                LastModifiedDate = b.LastModifiedDate
+                LastModifiedDate = b.LastModifiedDate,
+                ImageUrl = b.ImageUrl
             }));
         }
 
@@ -67,6 +68,7 @@ namespace Smoking.API.Controllers.Member
                 AuthorId = authorId,
                 CategoryName = model.CategoryName,
                 BlogType = model.BlogType,
+                ImageUrl = model.ImageUrl,
                 Status = "Published",
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
@@ -103,7 +105,8 @@ namespace Smoking.API.Controllers.Member
                 AuthorName = b.User?.FullName ?? "Unknown",
                 RoleName = b.User?.Role?.RoleName ?? "Unknown",
                 CreatedDate = b.CreatedDate,
-                LastModifiedDate = b.LastModifiedDate
+                LastModifiedDate = b.LastModifiedDate,
+                ImageUrl = b.ImageUrl
             }));
         }
 
@@ -127,7 +130,8 @@ namespace Smoking.API.Controllers.Member
                 AuthorName = blog.User?.FullName ?? "Unknown",
                 RoleName = blog.User?.Role?.RoleName ?? "Unknown",
                 CreatedDate = blog.CreatedDate,
-                LastModifiedDate = blog.LastModifiedDate
+                LastModifiedDate = blog.LastModifiedDate,
+                ImageUrl = blog.ImageUrl
             });
         }
 
@@ -145,6 +149,7 @@ namespace Smoking.API.Controllers.Member
             blog.Content = model.Content;
             blog.CategoryName = model.CategoryName;
             blog.BlogType = model.BlogType;
+            blog.ImageUrl = model.ImageUrl;
             blog.LastModifiedDate = DateTime.Now;
 
             var updated = await _blogService.UpdateAsync(blog);

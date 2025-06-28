@@ -27,6 +27,17 @@ namespace Smoking.DAL.Repositories
             _context.Set<UserMembership>().Update(entity);
             await Task.CompletedTask;
         }
+        public async Task<UserMembership> GetLatestValidMembershipByUserIdAsync(int userId)
+        {
+            return await _context.UserMemberships
+                .Include(m => m.Package)
+                .Where(m => m.UserID == userId &&
+                            m.EndDate >= DateTime.Now &&
+                            m.PaymentStatus == "Completed")
+                .OrderByDescending(m => m.EndDate)
+                .FirstOrDefaultAsync();
+        }
+
 
     }
 }

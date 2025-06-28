@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 
 [ApiController]
@@ -11,7 +12,6 @@ public class QuitPlanController : ControllerBase
 {
     private readonly IQuitPlanAutoService _quitPlanAutoService;
     private readonly IQuitPlanService _quitPlanService;
-
 
     public QuitPlanController(IQuitPlanAutoService quitPlanAutoService, IQuitPlanService quitPlanService)
     {
@@ -27,8 +27,8 @@ public class QuitPlanController : ControllerBase
             request.CigarettesPerDay,
             request.PricePerPack,
             request.CigarettesPerPack,
-            request.StartDate, 
-            request.EndDate  
+            request.StartDate,
+            request.TargetDurationInMonths
         );
 
         if (plan == null)
@@ -39,12 +39,9 @@ public class QuitPlanController : ControllerBase
             message = "Tạo kế hoạch cai thuốc thành công.",
             startDate = plan.StartDate.ToString("dd/MM/yyyy"),
             endDate = plan.EndDate?.ToString("dd/MM/yyyy") ?? "Chưa có ngày kết thúc",
-            planDetails = plan.PlanDetails.Split(Environment.NewLine)
+            planDetails = plan.PlanDetails.Split(System.Environment.NewLine)
         });
-
     }
-
-
 
     [HttpPatch("UpdateQuitPlan")]
     public async Task<IActionResult> UpdateCoreInfoByUserId(int userId, [FromBody] QuitPlanUpdateCoreRequest request)
@@ -85,5 +82,4 @@ public class QuitPlanController : ControllerBase
         var plans = await _quitPlanService.GetByUserIdAsync(userId);
         return Ok(plans);
     }
-
 }

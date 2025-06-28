@@ -40,6 +40,10 @@ namespace Smoking.DAL.Entities
         public string? Gender { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
+        public int? CoachId { get; set; }
+
+        [ForeignKey("CoachId")]
+        public virtual User? Coach { get; set; }
 
         // Navigation collections initialized to avoid null reference
         public ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();

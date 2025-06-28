@@ -148,6 +148,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "QuitChallengeTemplateController",
+    "Method": "GetAll",
+    "RelativePath": "api/admin/challenge-templates",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AdminConsultationController",
     "Method": "GetAllAppointments",
     "RelativePath": "api/admin/consultation/all-appointments",
@@ -381,6 +391,101 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.MilestoneAdminController",
+    "Method": "GetById",
+    "RelativePath": "api/admin/milestones/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.MilestoneAdminController",
+    "Method": "Create",
+    "RelativePath": "api/admin/milestones/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Smoking.API.Models.Admin.MilestoneRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.MilestoneAdminController",
+    "Method": "Delete",
+    "RelativePath": "api/admin/milestones/delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.MilestoneAdminController",
+    "Method": "GetAll",
+    "RelativePath": "api/admin/milestones/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.MilestoneAdminController",
+    "Method": "GetByGroupId",
+    "RelativePath": "api/admin/milestones/list/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.MilestoneAdminController",
+    "Method": "Update",
+    "RelativePath": "api/admin/milestones/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "model",
+        "Type": "Smoking.API.Models.Admin.MilestoneRequest",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -1059,7 +1164,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Smoking.API.Models.User.AutoQuitPlanRequest",
+        "Type": "AutoQuitPlanRequest",
         "IsRequired": true
       }
     ],
@@ -1174,6 +1279,116 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserQuitChallengeController",
+    "Method": "AssignStageChallenges",
+    "RelativePath": "api/user-challenges/{userId}/assign-stage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "stage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserQuitChallengeController",
+    "Method": "GetChallengesForStage",
+    "RelativePath": "api/user-challenges/{userId}/stage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "stage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserQuitChallengeController",
+    "Method": "CompleteChallenge",
+    "RelativePath": "api/user-challenges/complete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "UserQuitChallengeController\u002BCompleteChallengeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserQuitChallengeController",
+    "Method": "UncompleteChallenge",
+    "RelativePath": "api/user-challenges/uncomplete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "UserQuitChallengeController\u002BUncompleteChallengeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "ChooseCoach",
+    "RelativePath": "api/user/coach/choose/{coachId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "coachId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "GetAllCoaches",
+    "RelativePath": "api/user/coach/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "GetMyCoach",
+    "RelativePath": "api/user/coach/my-coach",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

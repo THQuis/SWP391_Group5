@@ -65,7 +65,6 @@ public class AchievementAndProgressController : ControllerBase
     [HttpPost("user/UpdateProgress")]
     public async Task<IActionResult> UpdateQuitProgress(int userId, [FromBody] UpdateQuitProgressRequest request)
     {
-        // Kiểm tra gói thành viên còn hiệu lực
         var validMembership = await _unitOfWork.UserMemberships
             .FindFirstOrDefaultAsync(m =>
                 m.UserID == userId &&
@@ -77,8 +76,6 @@ public class AchievementAndProgressController : ControllerBase
         {
             return StatusCode(403, "Chỉ người dùng có gói Premium mới được cập nhật tiến trình hằng ngày.");
         }
-
-        // Kiểm tra loại gói là Premium
         var package = await _unitOfWork.MembershipPackages.GetByIdAsync(validMembership.PackageID);
         if (package == null || !string.Equals(package.PackageType, "Premium", StringComparison.OrdinalIgnoreCase))
         {
@@ -97,7 +94,6 @@ public class AchievementAndProgressController : ControllerBase
         var quitPlan = quitPlans.First();
         var progressDate = DateTime.UtcNow.AddHours(7).Date;
 
-        // Cập nhật tiến trình
         var updateResult = await _quitProgressService.UpdateQuitProgressAsync(
             quitPlan.QuitPlanID,
             progressDate,
@@ -111,7 +107,6 @@ public class AchievementAndProgressController : ControllerBase
             return BadRequest("Cập nhật tiến trình thất bại.");
         }
 
-        // Trả về tiến trình mới nhất sau cập nhật
         var updatedProgressList = await _quitProgressService.GetByPlanIdAsync(quitPlan.QuitPlanID);
 
         return Ok(new

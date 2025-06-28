@@ -2785,6 +2785,10 @@
             "type": "string",
             "nullable": true
           },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
           "createdDate": {
             "type": "string",
             "format": "date-time"
@@ -2827,6 +2831,10 @@
           "blogType": {
             "type": "string",
             "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2851,6 +2859,10 @@
             "nullable": true
           },
           "blogType": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
             "type": "string",
             "nullable": true
           }

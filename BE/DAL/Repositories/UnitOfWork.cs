@@ -59,10 +59,9 @@ namespace Smoking.DAL.Repositories
         public IAnswerOptionRepository AnswerOptions { get; private set; }
         public IQuitChallengeTemplateRepository QuitChallengeTemplates { get; private set; }
         public IUserQuitChallengeRepository UserQuitChallenges { get; private set; }
-
-        // ✅ Thêm thuộc tính mới
         public IMilestoneRepository Milestones { get; private set; }
         public IMilestoneGroupRepository MilestoneGroups { get; private set; }
+        public IPackageMilestoneRepository PackageMilestones { get; private set; }
 
         public async Task<int> CompleteAsync()
         {

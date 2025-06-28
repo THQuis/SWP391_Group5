@@ -35,19 +35,19 @@ namespace Smoking.DAL.Repositories
                 .FirstOrDefaultAsync(pm => pm.PackageMilestoneID == id);
         }
 
-        public async Task AddAsync(PackageMilestone entity)
+        public async Task AddAsync(PackageMilestone milestone)
         {
-            await _context.PackageMilestones.AddAsync(entity);
+            await _context.PackageMilestones.AddAsync(milestone);
         }
 
-        public void Update(PackageMilestone entity)
+        public void Update(PackageMilestone milestone)
         {
-            _context.PackageMilestones.Update(entity);
+            _context.PackageMilestones.Update(milestone);
         }
 
-        public void Delete(PackageMilestone entity)
+        public void Delete(PackageMilestone milestone)
         {
-            _context.PackageMilestones.Remove(entity);
+            _context.PackageMilestones.Remove(milestone);
         }
     }
 }

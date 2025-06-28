@@ -3,6 +3,7 @@ import { Container, Form, Button, Card, Row, Col, Alert, Spinner } from "react-b
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/QuitPlanPage.scss";
+import { useNavigate } from "react-router-dom";
 
 // PHẦN 1: Thói quen hiện tại
 const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
@@ -181,6 +182,7 @@ const QuitPlanSurveySection = ({
 
 // COMPONENT CHA: QUẢN LÝ TOÀN BỘ TRANG
 const QuitPlanPage = () => {
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [editMode, setEditMode] = useState(false);
@@ -188,7 +190,15 @@ const QuitPlanPage = () => {
     const [habitData, setHabitData] = useState(null);
     const [formData, setFormData] = useState({ startDate: '', endDate: '', dynamicAnswers: {}, otherTexts: {} });
     const [surveyQuestions, setSurveyQuestions] = useState([]);
+    const [selectedCoach, setSelectedCoach] = useState('');
     const userId = localStorage.getItem("userId");
+
+    // Dummy coach list (replace with API call if needed)
+    const coachList = [
+        { id: 1, name: "Coach An" },
+        { id: 2, name: "Coach Bình" },
+        { id: 3, name: "Coach Cường" },
+    ];
 
     const loadInitialData = async () => {
         setIsLoading(true);
@@ -325,6 +335,7 @@ const QuitPlanPage = () => {
                 const createPlanRes = await fetch('/api/QuitPlan/CreateQuitPlan', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': token }, body: JSON.stringify(quitPlanPayload) });
                 if (!createPlanRes.ok) throw new Error("Lỗi khi tạo kế hoạch cơ bản.");
 
+                // TODO: Xử lý khảo sát nếu có
                 const surveyPayload = [];
                 Object.entries(formData.dynamicAnswers).forEach(([qId, aIds]) => aIds.forEach(aId => { /* ... */ }));
                 if (surveyPayload.length > 0) {
@@ -334,6 +345,7 @@ const QuitPlanPage = () => {
 
                 toast.success("Tạo kế hoạch thành công!");
                 window.scrollTo({ top: 0, behavior: "smooth" }); // <-- scroll lên đầu trang ngay khi lưu thành công
+                // Hiện modal thử thách
                 await loadInitialData();
             } catch (error) { toast.error(error.message); }
             finally { setIsSubmitting(false); }
@@ -375,7 +387,7 @@ const QuitPlanPage = () => {
                 }
 
                 toast.success("Cập nhật thành công!");
-                window.scrollTo({ top: 0, behavior: "smooth" }); // <-- scroll lên đầu trang ngay khi lưu thành công
+                window.scrollTo({ top: 0, behavior: "smooth" });
                 await loadInitialData();
             } catch (error) {
                 toast.error(error.message || "Đã có lỗi xảy ra khi cập nhật.");
@@ -384,6 +396,8 @@ const QuitPlanPage = () => {
             }
         }
     };
+
+
 
     if (isLoading) return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
@@ -437,12 +451,48 @@ const QuitPlanPage = () => {
                                         (planCreated ? (editMode ? "Lưu thay đổi" : "Chỉnh sửa kế hoạch") : "Hoàn thành và Tạo kế hoạch")
                                     }
                                 </Button>
+                                {planCreated && !editMode && (
+                                    <div className="d-flex flex-column gap-3 mt-3">
+                                        <Button
+                                            variant="warning"
+                                            size="lg"
+                                            className="thq-challenge-btn modern-glass"
+                                            onClick={() => navigate("/User/Challenges")}
+                                            style={{
+                                                background: "linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)",
+                                                color: "#333", fontWeight: 600,
+                                                border: "none",
+                                                boxShadow: "0 4px 12px rgba(255, 204, 51, .12)",
+                                                letterSpacing: ".02em"
+                                            }}
+                                        >
+                                            🚩 Thử thách bản thân!
+                                        </Button>
+                                        <Button
+                                            variant="success"
+                                            size="lg"
+                                            className="thq-coach-btn"
+                                            style={{
+                                                background: "linear-gradient(90deg, #3CA55C 0%, #B5AC49 100%)",
+                                                color: "#fff", fontWeight: 600,
+                                                border: "none",
+                                                boxShadow: "0 4px 12px rgba(60, 165, 92, .12)",
+                                                letterSpacing: ".02em"
+                                            }}
+                                            onClick={() => navigate("/User/coachList")}
+                                        >
+                                            🧑‍🏫 Chọn Coach hỗ trợ
+                                        </Button>
+                                    </div>
+                                )}
                             </div>
                         </Form>
                     </Col>
                 </Row>
             </Container>
             <ToastContainer position="top-right" autoClose={3000} />
+
+
         </div>
     );
 };

@@ -52,6 +52,19 @@ namespace Smoking.DAL.Repositories
                     .ThenInclude(um => um.Package)
                 .FirstOrDefaultAsync(u => u.UserID == userId);
         }
+        public async Task<List<User>> GetUsersByRoleAsync(int roleId)
+        {
+            return await _context.Users
+                .Where(u => u.RoleID == roleId && u.Status == "Active")
+                .ToListAsync();
+        }
+        public async Task<User> GetByIdWithCoachAsync(int userId)
+        {
+            return await _context.Users
+                .Include(u => u.Coach)
+                .FirstOrDefaultAsync(u => u.UserID == userId);
+        }
+
 
     }
 }

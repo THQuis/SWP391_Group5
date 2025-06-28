@@ -15,7 +15,7 @@ import UnauthorizedPage from "../pages/UnauthorizedPage";
 // User Pages
 import HomePage from "../pages/home/HomePage";
 import UserProfile from "../pages/user/UserProfile";
-// import QuitPlanPage from "../pages/user/QuitPlanPage";
+import QuitPlanPage from "../pages/user/QuitPlanPage";
 import MilestonesPage from "../pages/user/MilestonesPage";
 import MockAutomatedProgress from "../pages/user/MockAutomatedProgress";
 import BlogPage from "../pages/user/BlogPage";
@@ -32,8 +32,9 @@ import ManagementPerformance from "../pages/admin/ManagementPerformance";
 import ManagementPlan from "../pages/admin/ManagementPlan";
 import ManagementNotification from "../pages/admin/ManagementNotification";
 import ProfileOfCoach from "../pages/user/ProfileOfCoach";
+import PlanOverviewPage from "../pages/user/PlanOverviewPage";
+import ChallengesPage from "../pages/user/ChallengesPage";
 
-import QuitPlanPage from "../pages/user/test";
 
 
 
@@ -57,12 +58,12 @@ const RouterCustom = () => {
                 <Route path={ROUTERS.USER.COACH} element={<CoachList />} />
                 <Route path={ROUTERS.USER.RANKING} element={<RankingPage />} />
                 <Route path={ROUTERS.USER.PROFILECOACH} element={<ProfileOfCoach />} />
+                <Route path={ROUTERS.USER.PLANOVERVIEW} element={<PlanOverviewPage />} />
+                <Route path={ROUTERS.USER.CHALENGE} element={<ChallengesPage />} />
                 {/* CoachDashboard */}
-
             </Route>
 
             {/* === LAYOUT CHO ADMIN VÀ CÁC TRANG CON (Được bảo vệ) === */}
-            {/* Tất cả các trang của admin sẽ có chung Header và Sidebar của AdminLayout */}
             <Route element={<ProtectedRoute allowedRoles={[1]} />}>
                 <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<AdminDashboard />} />

@@ -11,8 +11,8 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<IEnumerable<PackageMilestone>> GetAllAsync();
         Task<PackageMilestone?> GetByIdAsync(int id);
-        Task AddAsync(PackageMilestone entity);
-        void Update(PackageMilestone entity);
-        void Delete(PackageMilestone entity);
+        Task AddAsync(PackageMilestone milestone);
+        void Update(PackageMilestone milestone);
+        void Delete(PackageMilestone milestone);
     }
 }

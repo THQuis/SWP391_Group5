@@ -32,7 +32,6 @@ namespace Smoking.DAL.Data
         public DbSet<QuitChallengeTemplate> QuitChallengeTemplates { get; set; }
         public DbSet<UserQuitChallenge> UserQuitChallenges { get; set; }
 
-        // ✅ Đã giữ lại bảng mới
         public DbSet<Milestone> Milestones { get; set; }
         public DbSet<MilestoneGroup> MilestoneGroups { get; set; }
         public DbSet<PackageMilestone> PackageMilestones { get; set; }

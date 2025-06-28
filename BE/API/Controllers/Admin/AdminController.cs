@@ -74,7 +74,6 @@ namespace Smoking.API.Controllers.Admin
                 });
             }
 
-            // Lấy UserID của người đang đăng nhập từ JWT
             var currentUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (int.TryParse(currentUserIdClaim, out int currentUserId))
@@ -98,15 +97,12 @@ namespace Smoking.API.Controllers.Admin
 
 
 
-        // 4️ Xóa User   
         [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(id);
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
-
-            // Không xoá thật, chỉ cập nhật Status = "InActive"
             user.Status = "InActive";
 
             _unitOfWork.Users.Update(user);
@@ -149,11 +145,14 @@ namespace Smoking.API.Controllers.Admin
             if (existing != null)
                 return BadRequest(new { Message = "Email đã tồn tại." });
 
+            // Băm mật khẩu trước khi lưu
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
             var user = new User
             {
                 FullName = request.FullName,
                 Email = request.Email,
-                Password = request.Password,
+                Password = hashedPassword, // đã mã hoá
                 PhoneNumber = request.PhoneNumber,
                 Status = "Active",
                 RoleID = request.RoleID

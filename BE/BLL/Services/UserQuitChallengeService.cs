@@ -55,11 +55,33 @@ namespace Smoking.BLL.Services
         public async Task MarkAsCompletedAsync(int challengeId, string? notes)
         {
             var challenge = await _unitOfWork.UserQuitChallenges.GetByIdAsync(challengeId);
-            if (challenge == null) return;
+            if (challenge == null)
+                throw new Exception("Thử thách không tồn tại.");
+
+            var allChallenges = await _unitOfWork.UserQuitChallenges
+                .FindIncludingAsync2(
+                    c => c.UserId == challenge.UserId && c.QuitPlanId == challenge.QuitPlanId,
+                    c => c.Template
+                );
+
+            var ordered = allChallenges
+                .Where(c => c.Template.Stage == challenge.Template.Stage)
+                .OrderBy(c => c.ChallengeDate)
+                .ToList();
+
+            var index = ordered.FindIndex(c => c.Id == challengeId);
+            if (index > 0)
+            {
+                var previous = ordered[index - 1];
+                if (!previous.IsCompleted && previous.ChallengeDate < DateTime.Today)
+                    throw new Exception("Bạn phải hoàn thành thử thách hôm trước trước khi thực hiện thử thách hôm nay.");
+            }
+
+            if (challenge.ChallengeDate > DateTime.Today)
+                throw new Exception("Chưa đến ngày thực hiện thử thách này.");
 
             challenge.IsCompleted = true;
             challenge.Notes = notes;
-
             await _unitOfWork.CompleteAsync();
         }
 
@@ -69,10 +91,32 @@ namespace Smoking.BLL.Services
             if (challenge == null)
                 throw new Exception("Thử thách không tồn tại.");
 
-            challenge.IsCompleted = false;
-            challenge.Notes = null;
+            var allChallenges = await _unitOfWork.UserQuitChallenges
+                .FindIncludingAsync2(
+                    c => c.UserId == challenge.UserId && c.QuitPlanId == challenge.QuitPlanId,
+                    c => c.Template
+                );
 
-            await _unitOfWork.CompleteAsync();
+            var ordered = allChallenges
+                .Where(c => c.Template.Stage == challenge.Template.Stage)
+                .OrderBy(c => c.ChallengeDate)
+                .ToList();
+
+            var index = ordered.FindIndex(c => c.Id == challengeId);
+            if (index >= 0)
+            {
+                for (int i = index; i < ordered.Count; i++)
+                {
+                    ordered[i].IsCompleted = false;
+                    ordered[i].Notes = null;
+                }
+
+                await _unitOfWork.CompleteAsync();
+            }
+            else
+            {
+                throw new Exception("Không tìm thấy thử thách trong danh sách.");
+            }
         }
 
         public async Task<int> AssignChallengesToUserAsync(int userId, int stage)
@@ -121,9 +165,9 @@ namespace Smoking.BLL.Services
             var allChallenges = await _unitOfWork.UserQuitChallenges
                 .FindIncludingAsync2(
                     c => c.UserId == userId
-                      && c.ChallengeDate >= weekStart
-                      && c.ChallengeDate <= endOfWeek
-                      && c.Template.Stage == stage,
+                          && c.ChallengeDate >= weekStart
+                          && c.ChallengeDate <= endOfWeek
+                          && c.Template.Stage == stage,
                     c => c.Template
                 );
 
@@ -132,17 +176,14 @@ namespace Smoking.BLL.Services
 
             foreach (var challenge in ordered)
             {
-                if (challenge.ChallengeDate > today)
-                    break;
-
                 if (result.Count == 0)
                 {
                     result.Add(challenge);
                 }
                 else
                 {
-                    var previous = result.Last();
-                    if (previous.IsCompleted && previous.ChallengeDate < today)
+                    var prev = result.Last();
+                    if (prev.IsCompleted && challenge.ChallengeDate <= today)
                     {
                         result.Add(challenge);
                     }
@@ -155,5 +196,12 @@ namespace Smoking.BLL.Services
 
             return result;
         }
+
+        public async Task<IEnumerable<UserQuitChallenge>> GetChallengesForStageAsync(int userId, int stage)
+        {
+            return await _unitOfWork.UserQuitChallenges
+                .GetByUserIdAndStageAsync(userId, stage);
+        }
     }
+
 }

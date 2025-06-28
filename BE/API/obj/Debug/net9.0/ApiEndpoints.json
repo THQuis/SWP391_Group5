@@ -1164,7 +1164,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Smoking.API.Models.User.AutoQuitPlanRequest",
+        "Type": "AutoQuitPlanRequest",
         "IsRequired": true
       }
     ],
@@ -1304,8 +1304,8 @@
   },
   {
     "ContainingType": "UserQuitChallengeController",
-    "Method": "GetChallengesForWeek",
-    "RelativePath": "api/user-challenges/{userId}/week",
+    "Method": "GetChallengesForStage",
+    "RelativePath": "api/user-challenges/{userId}/stage",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1314,11 +1314,6 @@
         "Name": "userId",
         "Type": "System.Int32",
         "IsRequired": true
-      },
-      {
-        "Name": "weekStart",
-        "Type": "System.DateTime",
-        "IsRequired": false
       },
       {
         "Name": "stage",

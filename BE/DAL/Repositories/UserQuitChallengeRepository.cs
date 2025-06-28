@@ -21,5 +21,15 @@ namespace Smoking.DAL.Repositories
                 .Where(x => x.UserId == userId && x.ChallengeDate >= from && x.ChallengeDate <= to)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<UserQuitChallenge>> GetByUserIdAndStageAsync(int userId, int stage)
+        {
+            return await _context.UserQuitChallenges
+                .Include(x => x.Template)
+                .Where(c => c.UserId == userId && c.Template.Stage == stage)
+                .OrderBy(c => c.ChallengeDate)
+                .ToListAsync();
+        }
+
+
     }
 }

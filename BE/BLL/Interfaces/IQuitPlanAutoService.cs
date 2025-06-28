@@ -1,9 +1,15 @@
 ﻿using Smoking.DAL.Entities;
+using System;
+using System.Threading.Tasks;
 
-namespace Smoking.BLL.Interfaces
+public interface IQuitPlanAutoService
 {
-    public interface IQuitPlanAutoService
-    {
-        Task<QuitPlan?> CreateAutoQuitPlanAsync(int userId, int cigarettesPerDay, decimal pricePerPack, int cigarettesPerPack, DateTime? startDate = null, DateTime? endDate = null);
-    }
+    Task<QuitPlan?> CreateAutoQuitPlanAsync(
+        int userId,
+        int cigarettesPerDay,
+        decimal pricePerPack,
+        int cigarettesPerPack,
+        DateTime? startDate = null,
+        int? targetDurationInMonths = null
+    );
 }

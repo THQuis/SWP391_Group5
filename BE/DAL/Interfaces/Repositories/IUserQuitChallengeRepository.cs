@@ -10,6 +10,8 @@ namespace Smoking.DAL.Interfaces.Repositories
     public interface IUserQuitChallengeRepository : IGenericRepository<UserQuitChallenge>
     {
         Task<List<UserQuitChallenge>> GetChallengesForUserAsync(int userId, DateTime from, DateTime to);
+        Task<IEnumerable<UserQuitChallenge>> GetByUserIdAndStageAsync(int userId, int stage);
+
     }
 
 }

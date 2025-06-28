@@ -20,7 +20,7 @@ public class QuitPlanAutoService : IQuitPlanAutoService
         decimal pricePerPack,
         int cigarettesPerPack,
         DateTime? startDate = null,
-        DateTime? endDate = null)
+        int? targetDurationInMonths = null)
     {
         bool hasActivePlan = await _unitOfWork.QuitPlans
             .AnyAsync(x => x.UserID == userId && x.Status == "Active");
@@ -28,26 +28,21 @@ public class QuitPlanAutoService : IQuitPlanAutoService
         if (hasActivePlan)
             return null;
 
-        var start = startDate ?? DateTime.Now.Date;
+        var start = startDate?.Date ?? DateTime.Today;
+        DateTime? calculatedEndDate = null;
 
-        // Nếu không có endDate, để null trong entity, không tính ngày kết thúc cố định
-        DateTime? calculatedEndDate = endDate?.Date;
-
-        // Số ngày lập kế hoạch
-        int totalPlanDays;
-
-        if (calculatedEndDate.HasValue)
+        if (targetDurationInMonths.HasValue && targetDurationInMonths.Value > 0)
         {
-            totalPlanDays = (calculatedEndDate.Value - start).Days + 1;
-            if (totalPlanDays <= 0)
-                totalPlanDays = 7; // fallback nếu ngày nhập sai
-        }
-        else
-        {
-            totalPlanDays = 7; // mặc định 7 ngày nếu không nhập endDate
+            calculatedEndDate = start.AddMonths(targetDurationInMonths.Value);
         }
 
-        // Mảng tips động, sẽ lặp lại nếu kế hoạch dài hơn 7 ngày
+        int totalPlanDays = (calculatedEndDate.HasValue)
+            ? (calculatedEndDate.Value - start).Days + 1
+            : 7;
+
+        if (totalPlanDays <= 0)
+            totalPlanDays = 7;
+
         string[] tips =
         {
             "Tập trung nhận biết cơn thèm thuốc, ghi lại thời điểm thèm nhất.",
@@ -60,15 +55,12 @@ public class QuitPlanAutoService : IQuitPlanAutoService
         };
 
         var dailyPlan = new List<string>();
-
         for (int day = 1; day <= totalPlanDays; day++)
         {
-            // Giảm số điếu từng ngày
             int targetCigarettes = cigarettesPerDay - (day - 1);
             if (targetCigarettes < 0) targetCigarettes = 0;
 
             string tip = tips[(day - 1) % tips.Length];
-
             dailyPlan.Add($"Ngày {day}: Hút {targetCigarettes} điếu – {tip}");
         }
 
@@ -81,7 +73,7 @@ public class QuitPlanAutoService : IQuitPlanAutoService
             PricePerPackAtStart = pricePerPack,
             CigarettesPerPack = cigarettesPerPack,
             StartDate = start,
-            EndDate = calculatedEndDate, // nullable
+            EndDate = calculatedEndDate,
             Reason = "Tự động lập kế hoạch",
             PlanDetails = planDetails,
             Status = "Active",

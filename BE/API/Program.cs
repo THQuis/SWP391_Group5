@@ -67,6 +67,12 @@ builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IQuestionnaireService, QuestionnaireService>();
 builder.Services.AddScoped<IMailService, MailService>();
 
+// ---- Package Milestone ----
+builder.Services.AddScoped<IPackageMilestoneRepository, PackageMilestoneRepository>();
+builder.Services.AddScoped<IPackageMilestoneService, PackageMilestoneService>();
+
+
+
 // =================== JWT AUTHENTICATION ===================
 var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
 

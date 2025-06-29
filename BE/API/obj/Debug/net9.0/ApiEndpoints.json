@@ -526,6 +526,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
+    "Method": "GetById",
+    "RelativePath": "api/admin/package-milestones/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
+    "Method": "Create",
+    "RelativePath": "api/admin/package-milestones/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Smoking.API.Models.Admin.PackageMilestoneDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
+    "Method": "Delete",
+    "RelativePath": "api/admin/package-milestones/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
+    "Method": "GetAll",
+    "RelativePath": "api/admin/package-milestones/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
+    "Method": "Update",
+    "RelativePath": "api/admin/package-milestones/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Smoking.API.Models.Admin.PackageMilestoneDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Admin.QuitPlanAdminController",
     "Method": "DeleteAllByUser",
     "RelativePath": "api/admin/quitplan/DeleteQuitPlanAndProgressUserID",

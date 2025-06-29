@@ -11,6 +11,7 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<List<UserQuitChallenge>> GetChallengesForUserAsync(int userId, DateTime from, DateTime to);
         Task<IEnumerable<UserQuitChallenge>> GetByUserIdAndStageAsync(int userId, int stage);
+        Task<IEnumerable<UserQuitChallenge>> GetAllWithUserAsync();
 
     }
 

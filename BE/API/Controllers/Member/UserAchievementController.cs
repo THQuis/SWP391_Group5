@@ -49,5 +49,13 @@ namespace Smoking.API.Controllers
                 return BadRequest(new { Message = "Cấp thất bại: đã có thành tựu trước đó." });
             }
         }
+
+        [HttpGet("all-status/{userId}")]
+        public async Task<IActionResult> GetAllAchievementsWithStatus(int userId)
+        {
+            var achievements = await _userAchievementService.GetAchievementsWithStatusAsync(userId);
+            return Ok(achievements);
+        }
+
     }
 }

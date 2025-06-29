@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Smoking.API.Models.User;
 [ApiController]
 [Route("api/user-challenges")]
 [Authorize(Roles = "2")]
@@ -116,11 +116,37 @@ public class UserQuitChallengeController : ControllerBase
     }
 
     [HttpPost("complete")]
-    public async Task<IActionResult> CompleteChallenge([FromBody] CompleteChallengeRequest request)
+    public async Task<IActionResult> CompleteChallenge([FromForm] CompleteChallengeForm request)
     {
         try
         {
-            await _challengeService.MarkAsCompletedAsync(request.ChallengeId, request.Notes);
+            string? imageUrl = null;
+
+            // Nếu có file ảnh thì xử lý upload
+            if (request.Image != null && request.Image.Length > 0)
+            {
+                // Tạo tên file duy nhất
+                var fileName = $"{Guid.NewGuid()}_{request.Image.FileName}";
+                var folderPath = Path.Combine("wwwroot", "uploads", "challenge-images");
+
+                // Tạo thư mục nếu chưa có
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+
+                var filePath = Path.Combine(folderPath, fileName);
+
+                // Ghi file vào ổ đĩa
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await request.Image.CopyToAsync(stream);
+                }
+
+                // Lưu đường dẫn tương đối
+                imageUrl = $"/uploads/challenge-images/{fileName}";
+            }
+
+            await _challengeService.MarkAsCompletedAsync(request.ChallengeId, request.Notes, imageUrl);
+
             return Ok(new { success = true, message = "Đánh dấu hoàn thành thành công." });
         }
         catch (Exception ex)
@@ -130,21 +156,11 @@ public class UserQuitChallengeController : ControllerBase
     }
 
 
+
     [HttpPost("uncomplete")]
     public async Task<IActionResult> UncompleteChallenge([FromBody] UncompleteChallengeRequest request)
     {
         await _challengeService.UnmarkAsCompletedAsync(request.ChallengeId);
         return Ok(new { success = true, message = "Đã huỷ trạng thái hoàn thành." });
-    }
-
-    public class CompleteChallengeRequest
-    {
-        public int ChallengeId { get; set; }
-        public string? Notes { get; set; }
-    }
-
-    public class UncompleteChallengeRequest
-    {
-        public int ChallengeId { get; set; }
     }
 }

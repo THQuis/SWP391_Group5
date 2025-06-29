@@ -13,7 +13,10 @@ namespace Smoking.BLL.Services
         private readonly INotificationService _notificationService;
         private readonly IMailService _mailService;
 
-        public UserAchievementService(IUnitOfWork unitOfWork, INotificationService notificationService, IMailService mailService)
+        public UserAchievementService(
+            IUnitOfWork unitOfWork,
+            INotificationService notificationService,
+            IMailService mailService)
         {
             _unitOfWork = unitOfWork;
             _notificationService = notificationService;
@@ -22,16 +25,33 @@ namespace Smoking.BLL.Services
 
         public async Task<bool> GrantAchievementAsync(int userId, int achievementId, bool sendEmail = true)
         {
+            // 1. Kiểm tra User
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user == null)
+            {
+                Console.WriteLine($"❌ Không tìm thấy User với ID = {userId}");
+                return false;
+            }
+
+            // 2. Kiểm tra Achievement
             var achievement = await _unitOfWork.Achievements.GetByIdAsync(achievementId);
-
-            if (user == null || achievement == null)
+            if (achievement == null)
+            {
+                Console.WriteLine($"❌ Không tìm thấy Achievement với ID = {achievementId}");
                 return false;
+            }
 
-            var existedList = await _unitOfWork.UserAchievements.FindAsync(x => x.UserID == userId && x.AchievementID == achievementId);
+            // 3. Kiểm tra xem đã cấp thành tựu chưa
+            var existedList = await _unitOfWork.UserAchievements
+                .FindAsync(x => x.UserID == userId && x.AchievementID == achievementId);
+
             if (existedList.Any())
+            {
+                Console.WriteLine($"⚠️ Thành tựu ID={achievementId} đã cấp cho User ID={userId} trước đó.");
                 return false;
+            }
 
+            // 4. Thêm bản ghi UserAchievement
             var userAchievement = new UserAchievement
             {
                 UserID = userId,
@@ -40,11 +60,18 @@ namespace Smoking.BLL.Services
             };
 
             await _unitOfWork.UserAchievements.AddAsync(userAchievement);
+            var savedAchievement = await _unitOfWork.CompleteAsync();
+            if (savedAchievement <= 0)
+            {
+                Console.WriteLine("❌ Lỗi khi lưu UserAchievement.");
+                return false;
+            }
 
+            var message = $"Bạn đã đạt thành tựu: {achievement.AchievementName}. Tiếp tục cố gắng nhé!";
             var notify = new Notification
             {
                 UserID = userId,
-                Message = $"Bạn đã đạt thành tựu: {achievement.AchievementName}. Tiếp tục cố gắng nhé!",
+                Message = message,
                 NotificationType = "Achievement",
                 NotificationName = "Thành tựu mới",
                 SentAt = DateTime.Now,
@@ -54,25 +81,30 @@ namespace Smoking.BLL.Services
             };
 
             await _notificationService.CreateAsync(notify);
+            await _unitOfWork.CompleteAsync();
 
-            if (sendEmail && !string.IsNullOrEmpty(user.Email))
+            // 6. Gửi email nếu có
+            if (sendEmail && !string.IsNullOrWhiteSpace(user.Email))
             {
                 try
                 {
-                    await _mailService.SendEmailAsync(user.Email, "Bạn vừa đạt thành tựu mới!", notify.Message);
+                    await _mailService.SendEmailAsync(user.Email, "Bạn vừa đạt thành tựu mới!", message);
+                    Console.WriteLine($"📧 Email đã gửi tới {user.Email}");
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❗ Gửi email thất bại: {ex.Message}");
+                    // Không throw lỗi, vì không ảnh hưởng tới việc cấp thành tựu
+                }
             }
 
-            var saveResult = await _unitOfWork.CompleteAsync();
-
-            return saveResult > 0;
+            Console.WriteLine($"✅ Thành tựu ID={achievementId} đã cấp cho User ID={userId} thành công.");
+            return true;
         }
 
-        // Cài đặt phương thức GetAchievementsByUserIdAsync
+
         public async Task<IEnumerable<UserAchievement>> GetAchievementsByUserIdAsync(int userId)
         {
-            // Lấy danh sách thành tựu của người dùng từ cơ sở dữ liệu
             return await _unitOfWork.UserAchievements.FindAsync(x => x.UserID == userId);
         }
 
@@ -84,6 +116,32 @@ namespace Smoking.BLL.Services
         public async Task<Achievement> GetAchievementByIdAsync(int achievementId)
         {
             return await _unitOfWork.Achievements.GetByIdAsync(achievementId);
+        }
+
+        public async Task<IEnumerable<object>> GetAchievementsWithStatusAsync(int userId)
+        {
+            var allAchievements = await _unitOfWork.Achievements.GetAllAsync();
+            var userAchievements = await _unitOfWork.UserAchievements
+                .FindAsync(ua => ua.UserID == userId);
+
+            var userAchievementDict = userAchievements
+                .ToDictionary(ua => ua.AchievementID, ua => ua.AwardedDate);
+
+            var result = allAchievements.Select(a => new
+            {
+                a.AchievementID,
+                a.AchievementName,
+                a.Description,
+                a.BadgeImage,
+                a.PackageType,
+                a.SmokeFreeDaysRequired,
+                a.MoneySavedRequired,
+                a.CigarettesDroppedRequired,
+                IsUnlocked = userAchievementDict.ContainsKey(a.AchievementID),
+                DateAchieved = userAchievementDict.TryGetValue(a.AchievementID, out var date) ? (DateTime?)date : null
+            });
+
+            return result;
         }
 
     }

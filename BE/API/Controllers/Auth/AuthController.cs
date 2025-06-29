@@ -97,6 +97,7 @@ namespace Smoking.API.Controllers.Auth
                         fullUser.RoleID,
                         RoleName = fullUser.Role?.RoleName ?? "Unknown",
                         fullUser.Gender,
+                        fullUser.CoachId,
                         DateOfBirth = fullUser.DateOfBirth?.ToString("yyyy-MM-dd"),
                         Membership = activeMembership == null ? null : new
                         {

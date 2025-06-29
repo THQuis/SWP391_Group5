@@ -7,7 +7,7 @@ namespace Smoking.API.Controllers.Test
 {
     [Route("api/test/userachievement")]
     [ApiController]
-    [Authorize(Roles = "1")]
+    [Authorize(Roles = "1")] // Chỉ Admin
     public class UserAchievementTestController : ControllerBase
     {
         private readonly IUserAchievementService _userAchievementService;
@@ -26,12 +26,21 @@ namespace Smoking.API.Controllers.Test
         [HttpPost("grant")]
         public async Task<IActionResult> GrantAchievement(int userId, int achievementId)
         {
+            if (userId <= 0 || achievementId <= 0)
+            {
+                return BadRequest(new { Message = "UserID hoặc AchievementID không hợp lệ." });
+            }
+
             var result = await _userAchievementService.GrantAchievementAsync(userId, achievementId);
 
             if (result)
-                return Ok(new { Message = "Đã cấp thành tựu thành công" });
+            {
+                return Ok(new { Message = $"✅ Đã cấp thành tựu (ID={achievementId}) cho user (ID={userId}) thành công." });
+            }
             else
-                return BadRequest(new { Message = "Cấp thành tựu thất bại (user hoặc achievement không tồn tại, hoặc đã cấp trước đó)" });
+            {
+                return BadRequest(new { Message = $"❌ Cấp thất bại. Có thể do không tồn tại hoặc đã cấp trước đó." });
+            }
         }
     }
 }

@@ -30,6 +30,14 @@ namespace Smoking.DAL.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<UserQuitChallenge>> GetAllWithUserAsync()
+        {
+            return await _context.UserQuitChallenges
+                .Include(c => c.User)
+                .ToListAsync();
+        }
+
+
 
     }
 }

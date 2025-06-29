@@ -11,5 +11,7 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<IEnumerable<UserAchievement>> GetByUserIdAsync(int userId);
         Task<bool> CheckIfAchievementGrantedAsync(int userId, int achievementId);
+        Task<IEnumerable<UserAchievement>> GetAllWithUserAndAchievementAsync();
+
     }
 }

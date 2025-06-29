@@ -39,5 +39,13 @@ namespace Smoking.DAL.Repositories
             _context.UserAchievements.Remove(entity);
             await _context.SaveChangesAsync();
         }
+        public async Task<IEnumerable<UserAchievement>> GetAllWithUserAndAchievementAsync()
+        {
+            return await _context.UserAchievements
+                .Include(ua => ua.User)
+                .Include(ua => ua.Achievement)
+                .ToListAsync();
+        }
+
     }
 }

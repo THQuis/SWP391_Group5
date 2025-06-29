@@ -42,11 +42,15 @@ namespace Smoking.BLL.Services
             existingAchievement.Criteria = entity.Criteria;
             existingAchievement.BadgeImage = entity.BadgeImage;
             existingAchievement.PackageType = entity.PackageType;
+            existingAchievement.SmokeFreeDaysRequired = entity.SmokeFreeDaysRequired;
+            existingAchievement.MoneySavedRequired = entity.MoneySavedRequired;
+            existingAchievement.CigarettesDroppedRequired = entity.CigarettesDroppedRequired;
 
             _unitOfWork.Achievements.Update(existingAchievement);
             await _unitOfWork.CompleteAsync();
             return true;
         }
+
 
         public async Task<bool> DeleteAsync(int id)
         {

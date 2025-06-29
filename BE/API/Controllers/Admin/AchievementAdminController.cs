@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Smoking.API.Models.Admin;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Smoking.API.Controllers.Admin
 {
     [ApiController]
-    [Route("api/Admin")]
-    [Authorize(Roles = "1")]
+    [Route("api/Admin/Achievement")]
+    [Authorize(Roles = "2")]
     public class AchievementAdminController : ControllerBase
     {
         private readonly IAchievementService _service;
@@ -19,30 +21,27 @@ namespace Smoking.API.Controllers.Admin
             _service = service;
         }
 
-        //
-        [HttpGet("ListAchievement")]
+        [HttpGet("List")]
         public async Task<IActionResult> GetAll()
         {
             var data = await _service.GetAllAsync();
             return Ok(data);
         }
 
-        [HttpGet("GetAchivementById")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetByIdAsync(id);
             return item == null ? NotFound() : Ok(item);
         }
 
-        [HttpPost("AddAchivement")]
-        public async Task<IActionResult> Create([FromBody] AchievementCreate dto)
+        [HttpPost("Add")]
+        public async Task<IActionResult> Create([FromBody] Achievement dto)
         {
             if (string.IsNullOrWhiteSpace(dto.AchievementName) ||
-                string.IsNullOrWhiteSpace(dto.Description) ||
-                string.IsNullOrWhiteSpace(dto.Criteria) ||
                 string.IsNullOrWhiteSpace(dto.PackageType))
             {
-                return BadRequest(new { ok = false, msg = "Thông tin thành tựu không hợp lệ." });
+                return BadRequest(new { ok = false, msg = "Tên và loại gói là bắt buộc." });
             }
 
             var achievement = new Achievement
@@ -51,7 +50,10 @@ namespace Smoking.API.Controllers.Admin
                 Description = dto.Description,
                 Criteria = dto.Criteria,
                 BadgeImage = dto.BadgeImage,
-                PackageType = dto.PackageType
+                PackageType = dto.PackageType,
+                SmokeFreeDaysRequired = dto.SmokeFreeDaysRequired,
+                MoneySavedRequired = dto.MoneySavedRequired,
+                CigarettesDroppedRequired = dto.CigarettesDroppedRequired
             };
 
             await _service.CreateAsync(achievement);
@@ -64,53 +66,48 @@ namespace Smoking.API.Controllers.Admin
             });
         }
 
-
-        [HttpPut("UpdateAchievement/{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] AchievementUpdate dto)
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Achievement dto)
         {
             var existing = await _service.GetByIdAsync(id);
             if (existing == null)
-                return NotFound(new { ok = false, msg = "Không tìm thấy thành tựu" });
+                return NotFound(new { ok = false, msg = "Không tìm thấy thành tựu." });
 
-            if (!string.IsNullOrWhiteSpace(dto.AchievementName))
-                existing.AchievementName = dto.AchievementName;
-            if (!string.IsNullOrWhiteSpace(dto.Description))
-                existing.Description = dto.Description;
-            if (!string.IsNullOrWhiteSpace(dto.Criteria))
-                existing.Criteria = dto.Criteria;
-            if (!string.IsNullOrWhiteSpace(dto.BadgeImage))
-                existing.BadgeImage = dto.BadgeImage;
-            if (!string.IsNullOrWhiteSpace(dto.PackageType))
-                existing.PackageType = dto.PackageType;
+            existing.AchievementName = dto.AchievementName ?? existing.AchievementName;
+            existing.Description = dto.Description ?? existing.Description;
+            existing.Criteria = dto.Criteria ?? existing.Criteria;
+            existing.BadgeImage = dto.BadgeImage ?? existing.BadgeImage;
+            existing.PackageType = dto.PackageType ?? existing.PackageType;
+            existing.SmokeFreeDaysRequired = dto.SmokeFreeDaysRequired;
+            existing.MoneySavedRequired = dto.MoneySavedRequired;
+            existing.CigarettesDroppedRequired = dto.CigarettesDroppedRequired;
 
             await _service.UpdateAsync(existing);
-            return Ok(new { ok = true, msg = "Cập nhật thành công" });
+            return Ok(new { ok = true, msg = "Cập nhật thành công." });
         }
 
-
-
-        [HttpDelete("DeleteAchivement")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeleteAsync(id);
 
             if (!success)
-                return NotFound(new { ok = false, msg = "Xoá thất bại, không tìm thấy thành tựu." });
+                return NotFound(new { ok = false, msg = "Không tìm thấy thành tựu." });
 
             return Ok(new { ok = true, msg = "Xoá thành công." });
         }
 
         [HttpGet("Search")]
-        public async Task<IActionResult> Search(string keyword)
+        public async Task<IActionResult> Search([FromQuery] string keyword)
         {
             var data = await _service.SearchAsync(keyword);
 
-            if (data == null || !data.Any())
+            if (!data.Any())
             {
                 return Ok(new
                 {
                     ok = false,
-                    msg = "Không tìm thấy kết quả nào",
+                    msg = "Không tìm thấy kết quả nào.",
                     data = Array.Empty<Achievement>()
                 });
             }
@@ -118,10 +115,9 @@ namespace Smoking.API.Controllers.Admin
             return Ok(new
             {
                 ok = true,
-                msg = "Tìm kiếm thành công",
+                msg = "Tìm kiếm thành công.",
                 data
             });
         }
-
     }
 }

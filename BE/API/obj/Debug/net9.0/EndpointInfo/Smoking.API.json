@@ -5,7 +5,7 @@
     "version": "v1"
   },
   "paths": {
-    "/api/Admin/ListAchievement": {
+    "/api/Admin/Achievement/List": {
       "get": {
         "tags": [
           "AchievementAdmin"
@@ -17,7 +17,7 @@
         }
       }
     },
-    "/api/Admin/GetAchivementById": {
+    "/api/Admin/Achievement/{id}": {
       "get": {
         "tags": [
           "AchievementAdmin"
@@ -25,7 +25,8 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -39,7 +40,7 @@
         }
       }
     },
-    "/api/Admin/AddAchivement": {
+    "/api/Admin/Achievement/Add": {
       "post": {
         "tags": [
           "AchievementAdmin"
@@ -48,17 +49,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AchievementCreate"
+                "$ref": "#/components/schemas/Achievement"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AchievementCreate"
+                "$ref": "#/components/schemas/Achievement"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AchievementCreate"
+                "$ref": "#/components/schemas/Achievement"
               }
             }
           }
@@ -70,7 +71,7 @@
         }
       }
     },
-    "/api/Admin/UpdateAchievement/{id}": {
+    "/api/Admin/Achievement/Update/{id}": {
       "put": {
         "tags": [
           "AchievementAdmin"
@@ -90,17 +91,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AchievementUpdate"
+                "$ref": "#/components/schemas/Achievement"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AchievementUpdate"
+                "$ref": "#/components/schemas/Achievement"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AchievementUpdate"
+                "$ref": "#/components/schemas/Achievement"
               }
             }
           }
@@ -112,7 +113,7 @@
         }
       }
     },
-    "/api/Admin/DeleteAchivement": {
+    "/api/Admin/Achievement/Delete/{id}": {
       "delete": {
         "tags": [
           "AchievementAdmin"
@@ -120,7 +121,8 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -134,7 +136,7 @@
         }
       }
     },
-    "/api/Admin/Search": {
+    "/api/Admin/Achievement/Search": {
       "get": {
         "tags": [
           "AchievementAdmin"
@@ -1898,6 +1900,121 @@
         }
       }
     },
+    "/api/ranking/top-smoke-free-days": {
+      "get": {
+        "tags": [
+          "Ranking"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ranking/top-money-saved": {
+      "get": {
+        "tags": [
+          "Ranking"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ranking/top-cigarettes-dropped": {
+      "get": {
+        "tags": [
+          "Ranking"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ranking/top-achievements-cigarettes": {
+      "get": {
+        "tags": [
+          "Ranking"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ranking/top-challenges-completed": {
+      "get": {
+        "tags": [
+          "Ranking"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user-achievement/my-achievements/{userId}": {
       "get": {
         "tags": [
@@ -1938,6 +2055,29 @@
           {
             "name": "achievementId",
             "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user-achievement/all-status/{userId}": {
+      "get": {
+        "tags": [
+          "UserAchievement"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -2572,19 +2712,33 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CompleteChallengeRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompleteChallengeRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompleteChallengeRequest"
+                "type": "object",
+                "properties": {
+                  "ChallengeId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Notes": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "ChallengeId": {
+                  "style": "form"
+                },
+                "Notes": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -2658,8 +2812,22 @@
             "nullable": true
           },
           "packageType": {
-            "maxLength": 50,
             "type": "string",
+            "nullable": true
+          },
+          "smokeFreeDaysRequired": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "moneySavedRequired": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cigarettesDroppedRequired": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
           "userAchievements": {
@@ -2667,58 +2835,6 @@
             "items": {
               "$ref": "#/components/schemas/UserAchievement"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AchievementCreate": {
-        "type": "object",
-        "properties": {
-          "achievementName": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "criteria": {
-            "type": "string",
-            "nullable": true
-          },
-          "badgeImage": {
-            "type": "string",
-            "nullable": true
-          },
-          "packageType": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AchievementUpdate": {
-        "type": "object",
-        "properties": {
-          "achievementName": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "criteria": {
-            "type": "string",
-            "nullable": true
-          },
-          "badgeImage": {
-            "type": "string",
-            "nullable": true
-          },
-          "packageType": {
-            "type": "string",
             "nullable": true
           }
         },
@@ -2921,20 +3037,6 @@
             "nullable": true
           },
           "preferredLanguage": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CompleteChallengeRequest": {
-        "type": "object",
-        "properties": {
-          "challengeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "notes": {
             "type": "string",
             "nullable": true
           }

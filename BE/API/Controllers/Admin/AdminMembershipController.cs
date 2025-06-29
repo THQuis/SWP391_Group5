@@ -20,7 +20,6 @@ namespace Smoking.API.Controllers.Admin
             _unitOfWork = unitOfWork;
         }
 
-        // ✅ Xem danh sách tất cả thành viên đã mua gói
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUserMemberships()
         {

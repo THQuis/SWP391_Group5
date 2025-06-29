@@ -19,23 +19,35 @@ public class AchievementEvaluatorService : IAchievementEvaluatorService
         var user = await _unitOfWork.Users.GetByIdAsync(userId);
         if (user == null) return false;
 
-        var quitPlans = await _unitOfWork.QuitPlans.FindAsync(x => x.UserID == userId && x.Status == "Active");
-        var quitPlan = quitPlans.FirstOrDefault();
+        var quitPlan = (await _unitOfWork.QuitPlans.FindAsync(x => x.UserID == userId && x.Status == "Active"))
+                       .FirstOrDefault();
         if (quitPlan == null) return false;
 
-        var quitProgresses = await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == quitPlan.QuitPlanID);
+        var progresses = await _unitOfWork.QuitProgresses.FindAsync(x => x.QuitPlanID == quitPlan.QuitPlanID);
+        if (!progresses.Any()) return false;
 
-        int smokeFreeDays = quitProgresses.Count(x => x.CigarettesSmokedToday == 0);
-        decimal moneySaved = quitProgresses.Sum(x => x.MoneySaved);
+        int smokeFreeDays = progresses.Count(x => x.CigarettesSmokedToday == 0);
+        decimal moneySaved = progresses.Sum(x => x.MoneySaved);
+        int cigarettesDropped = progresses.Sum(x => x.CigarettesDropped ?? 0);
 
-        if (smokeFreeDays >= 7)
+        var allAchievements = await _unitOfWork.Achievements.GetAllAsync();
+        var userAchievements = await _unitOfWork.UserAchievements.GetByUserIdAsync(userId);
+        var grantedAchievementIds = userAchievements.Select(ua => ua.AchievementID).ToHashSet();
+
+        foreach (var achievement in allAchievements)
         {
-            await GrantAchievement(userId, 1);
-        }
+            if (grantedAchievementIds.Contains(achievement.AchievementID))
+                continue;
 
-        if (moneySaved >= 100000)
-        {
-            await GrantAchievement(userId, 2); // Giả sử AchievementID = 2 là thành tựu 100K
+            bool eligible =
+                (achievement.SmokeFreeDaysRequired.HasValue && smokeFreeDays >= achievement.SmokeFreeDaysRequired.Value) ||
+                (achievement.MoneySavedRequired.HasValue && moneySaved >= achievement.MoneySavedRequired.Value) ||
+                (achievement.CigarettesDroppedRequired.HasValue && cigarettesDropped >= achievement.CigarettesDroppedRequired.Value);
+
+            if (eligible)
+            {
+                await GrantAchievement(userId, achievement.AchievementID);
+            }
         }
 
         return true;
@@ -43,14 +55,14 @@ public class AchievementEvaluatorService : IAchievementEvaluatorService
 
     private async Task GrantAchievement(int userId, int achievementId)
     {
-        var achievement = new UserAchievement
+        var userAchievement = new UserAchievement
         {
             UserID = userId,
             AchievementID = achievementId,
             AwardedDate = DateTime.Now
         };
 
-        await _unitOfWork.UserAchievements.AddAsync(achievement);
+        await _unitOfWork.UserAchievements.AddAsync(userAchievement);
         await _unitOfWork.CompleteAsync();
     }
 }

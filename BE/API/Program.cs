@@ -14,28 +14,42 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- CẤU HÌNH CÁC SETTINGS ---
+// =================== CONFIGURATION ===================
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.Configure<MomoConfig>(builder.Configuration.GetSection("Momo"));
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
-// --- CẤU HÌNH DATABASE ---
+// =================== DATABASE ===================
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// --- ĐĂNG KÝ CÁC SERVICE VÀ REPOSITORIES ---
+// =================== SERVICES & REPOSITORIES ===================
 
-// Authentication & Authorization
+// ---- Authentication & User ----
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// ---- Achievement ----
 builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
 builder.Services.AddScoped<IAchievementEvaluatorService, AchievementEvaluatorService>();
+builder.Services.AddHostedService<AchievementEvaluationHostedService>();
+
+// ---- Quit Plan & Progress ----
+builder.Services.AddScoped<IQuitPlanService, QuitPlanService>();
+builder.Services.AddScoped<IQuitPlanAutoService, QuitPlanAutoService>();
+builder.Services.AddScoped<IQuitProgressService, QuitProgressService>();
+builder.Services.AddScoped<IQuitProgressRepository, QuitProgressRepository>();
+
+// ---- Quit Challenge ----
 builder.Services.AddScoped<IUserQuitChallengeService, UserQuitChallengeService>();
 builder.Services.AddScoped<IUserQuitChallengeRepository, UserQuitChallengeRepository>();
+builder.Services.AddScoped<IQuitChallengeTemplateService, QuitChallengeTemplateService>();
 builder.Services.AddScoped<IQuitChallengeTemplateRepository, QuitChallengeTemplateRepository>();
 
-// User Membership & Payment
+// ---- Membership & Payment ----
 builder.Services.AddScoped<IMembershipPackageService, MembershipPackageService>();
 builder.Services.AddScoped<IUserMembershipService, UserMembershipService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
@@ -43,34 +57,19 @@ builder.Services.AddScoped<IMembershipPackageRepository, MembershipPackageReposi
 builder.Services.AddScoped<IUserMembershipRepository, UserMembershipRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-// Blog & Notification
-builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+// ---- Blog & Notification ----
 builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
-// Progress & Plan
-builder.Services.AddScoped<IQuitPlanService, QuitPlanService>();
-builder.Services.AddScoped<IQuitPlanAutoService, QuitPlanAutoService>();
-builder.Services.AddScoped<IQuitProgressService, QuitProgressService>();
-builder.Services.AddScoped<IQuitProgressRepository, QuitProgressRepository>();
-builder.Services.AddScoped<IQuitChallengeTemplateService, QuitChallengeTemplateService>();
-
-// Questionnaire & Email
+// ---- Questionnaire & Email ----
 builder.Services.AddScoped<IQuestionnaireService, QuestionnaireService>();
 builder.Services.AddScoped<IMailService, MailService>();
-builder.Services.Configure<MomoConfig>(builder.Configuration.GetSection("Momo"));
 
-
-// --- CẤU HÌNH CÁC DỊCH VỤ KHÁC ---
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Đảm bảo bạn đăng ký UnitOfWork nếu chưa có
-builder.Services.AddMemoryCache(); // MemoryCache cho OTP tạm
-
-// --- CẤU HÌNH CONTROLLER ---
-builder.Services.AddControllers();
-
-// --- CẤU HÌNH JWT BEARER AUTHENTICATION ---
+// =================== JWT AUTHENTICATION ===================
 var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -91,10 +90,20 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// --- CẤU HÌNH AUTHORIZE ---
 builder.Services.AddAuthorization();
 
-// --- CẤU HÌNH SWAGGER ---
+// =================== JSON OPTIONS ===================
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
+
+// =================== MEMORY CACHE ===================
+builder.Services.AddMemoryCache();
+
+// =================== SWAGGER ===================
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -122,16 +131,9 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // hoặc Preserve nếu cần
-        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-    });
-
+// =================== APP PIPELINE ===================
 var app = builder.Build();
 
-// --- CẤU HÌNH SWAGGER TRONG MÔI TRƯỜNG DEVELOPMENT ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -145,8 +147,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
-// --- ĐĂNG KÝ CÁC ROUTE ---
 app.MapControllers();
-
 app.Run();

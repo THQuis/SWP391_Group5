@@ -25,6 +25,7 @@ namespace Smoking.DAL.Entities
         public User User { get; set; } = null!;
 
         public QuitPlan QuitPlan { get; set; } = null!;
+        public string? ImageUrl { get; set; }
 
         public QuitChallengeTemplate Template { get; set; } = null!;
     }

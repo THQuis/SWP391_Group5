@@ -27,5 +27,13 @@ namespace Smoking.DAL.Repositories
         {
             return await _context.QuitProgresses.FirstOrDefaultAsync(predicate);
         }
+        public async Task<IEnumerable<QuitProgress>> GetAllWithUserAsync()
+        {
+            return await _context.QuitProgresses
+                .Include(p => p.QuitPlan)
+                    .ThenInclude(q => q.User)
+                .ToListAsync();
+        }
+
     }
 }

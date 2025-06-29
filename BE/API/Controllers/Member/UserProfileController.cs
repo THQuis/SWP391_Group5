@@ -50,6 +50,7 @@ namespace Smoking.API.Controllers.Member
                     DateOfBirth = user.DateOfBirth?.ToString("yyyy-MM-dd"),
                     RegistrationDate = user.RegistrationDate.ToString("yyyy-MM-dd"),
                     RoleName = user.Role?.RoleName ?? "Unknown",
+                    user.CoachId,
                     user.Status,
                     user.Description,
                     Membership = activeMembership == null ? null : new

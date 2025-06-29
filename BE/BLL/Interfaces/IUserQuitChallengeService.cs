@@ -11,7 +11,7 @@ namespace Smoking.BLL.Interfaces
     {
         Task GenerateChallengesAsync(int quitPlanId, int userId, DateTime startDate);
         Task<List<UserQuitChallenge>> GetChallengesForWeekAsync(int userId, DateTime startOfWeek);
-        Task MarkAsCompletedAsync(int challengeId, string? notes);
+        Task MarkAsCompletedAsync(int challengeId, string? notes, string? imageUrl);
         Task<int> AssignChallengesToUserAsync(int userId, int stage);
         Task<List<UserQuitChallenge>> GetProgressiveChallengesForWeekAsync(int userId, DateTime weekStart, int stage);
         Task UnmarkAsCompletedAsync(int challengeId);

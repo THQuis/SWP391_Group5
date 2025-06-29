@@ -8,7 +8,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 
 // Lấy user từ localStorage hoặc bạn tuỳ chỉnh lại tuỳ hệ thống login
-const CURRENT_USER = localStorage.getItem("userName") || "Tài khoản của bạn";
+const CURRENT_USER = localStorage.getItem("displayName") || "Tài khoản của bạn";
 
 function UserBlog() {
     const [blogs, setBlogs] = useState([]);
@@ -20,7 +20,6 @@ function UserBlog() {
     const [editImagePreview, setEditImagePreview] = useState("");
     const [search, setSearch] = useState("");
     const [showCreate, setShowCreate] = useState(false);
-    const [newTitle, setNewTitle] = useState(""); // Thêm trường tiêu đề
     const [newContent, setNewContent] = useState("");
     const [newImage, setNewImage] = useState("");
     const [newImagePreview, setNewImagePreview] = useState("");
@@ -36,7 +35,7 @@ function UserBlog() {
             setIsLoading(true);
             try {
                 const token = localStorage.getItem("userToken");
-                const res = await fetch("/api/UserBlog/all", {
+                const res = await fetch("   /api/UserBlog/all", {
                     headers: token ? { "Authorization": `Bearer ${token}` } : {},
                 });
                 if (!res.ok) throw new Error("Lỗi tải blog");
@@ -84,105 +83,55 @@ function UserBlog() {
     };
 
     // Lưu chỉnh sửa (chỉ làm ở UI, muốn gọi API thì thêm call PATCH/PUT)
-    const handleSaveEdit = async () => {
-        const token = localStorage.getItem("userToken");
-        const payload = {
-            title: editingBlog.title, // hoặc cho phép sửa title luôn
-            content: editContent,
-            categoryName: editingBlog.categoryName || "", // hoặc cho phép sửa
-            blogType: editingBlog.blogType || "",
-            imageUrl: editImagePreview,
-        };
-
-        try {
-            const res = await fetch(`/api/UserBlog/edit/${editingBlog.blogId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                },
-                body: JSON.stringify(payload),
-            });
-            if (!res.ok) throw new Error("Sửa bài thất bại!");
-
-            // Có thể lấy lại bài viết mới từ API nếu trả về
-            // Hoặc chỉ update ở UI như sau:
-            setBlogs((prev) =>
-                prev.map((b) =>
-                    b.blogId === editingBlog.blogId
-                        ? { ...b, ...payload }
-                        : b
-                )
-            );
-            setShowEdit(false);
-            toast.success("Đã lưu chỉnh sửa!");
-        } catch (err) {
-            toast.error("Sửa bài thất bại!");
-        }
+    const handleSaveEdit = () => {
+        setBlogs((prev) =>
+            prev.map((b) =>
+                b.blogId === editingBlog.blogId
+                    ? { ...b, content: editContent, imageUrl: editImagePreview }
+                    : b
+            )
+        );
+        setShowEdit(false);
+        toast.success("Đã lưu chỉnh sửa (chưa sync API).");
     };
 
     // Mở modal tạo bài viết mới
     const handleShowCreate = () => {
         setShowCreate(true);
-        setNewTitle("");
         setNewContent("");
         setNewImage("");
         setNewImagePreview("");
     };
 
-    // Lưu bài viết mới (GỌI API THẬT)
-    const handleSaveCreate = async () => {
-        const token = localStorage.getItem("userToken");
-        const payload = {
-            title: newTitle,
-            content: newContent,
-            categoryName: "",
-            blogType: "",
-            imageUrl: newImagePreview,
-        };
-
-        try {
-            const res = await fetch("/api/UserBlog/create", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                },
-                body: JSON.stringify(payload),
-            });
-            if (!res.ok) throw new Error("Đăng bài thất bại!");
-
-            const newBlog = await res.json();
-            // Fix: nếu thiếu tên user thì tự thêm vào
-            if (!newBlog.authorName) {
-                newBlog.authorName = CURRENT_USER;
-            }
-            setBlogs(prev => [newBlog, ...prev]);
-            setShowCreate(false);
-            toast.success("Đã đăng bài thành công!");
-        } catch (err) {
-            toast.error("Đăng bài thất bại!");
-        }
+    // Lưu bài viết mới (chỉ ở UI demo, muốn gọi API thì dùng POST)
+    const handleSaveCreate = () => {
+        setBlogs([
+            {
+                blogId: Date.now(),
+                title: newContent.slice(0, 25) + "...",
+                content: newContent,
+                categoryName: "Tự tạo",
+                blogType: "Chia sẻ",
+                status: "Published",
+                likes: 0,
+                dislikes: 0,
+                reportCount: 0,
+                authorName: CURRENT_USER,
+                createdDate: new Date().toISOString(),
+                imageUrl: newImagePreview,
+            },
+            ...blogs,
+        ]);
+        setShowCreate(false);
+        toast.success("Đã đăng bài (chưa sync API).");
     };
 
     // Xoá bài viết của mình (chỉ xóa ở UI demo)
-    const handleDeleteBlog = async (blogId) => {
-        const token = localStorage.getItem("userToken");
-        try {
-            const res = await fetch(`/api/UserBlog/delete/${blogId}`, {
-                method: "DELETE",
-                headers: {
-                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                },
-            });
-            if (!res.ok) throw new Error("Xóa bài thất bại!");
-
-            setBlogs((prev) => prev.filter((b) => b.blogId !== blogId));
-            toast.success("Đã xóa bài viết!");
-        } catch (err) {
-            toast.error("Xóa bài thất bại!");
-        }
+    const handleDeleteBlog = (blogId) => {
+        setBlogs((prev) => prev.filter((b) => b.blogId !== blogId));
+        toast.success("Đã xóa bài viết (chưa sync API).");
     };
+
     // Upload ảnh (base64 preview)
     const handleFileChange = (e, setImage, setPreview) => {
         const file = e.target.files[0];
@@ -202,29 +151,33 @@ function UserBlog() {
         setReportReason("");
     };
 
-    // Nhận blog làm tham số
-    const handleSendReport = async (blog) => {
-        if (!blog || !blog.blogId) {
+    const handleSendReport = async () => {
+        if (!reportingBlog || !reportingBlog.blogId) {
             toast.error("Không xác định được bài viết để báo cáo!");
+            setShowReportModal(false);
             return;
         }
         try {
             const token = localStorage.getItem("userToken");
-            const res = await fetch(`/api/UserBlog/report/${blog.blogId}`, {
-                method: "POST",
-                headers: {
-                    "accept": "application/json",
-                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            const res = await fetch(
+                `/api/UserBlog/report/${reportingBlog.blogId}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "accept": "application/json",
+                        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                    }
                 }
-            });
+            );
             if (!res.ok) throw new Error("Báo cáo thất bại!");
             setBlogs((prev) =>
                 prev.map((b) =>
-                    b.blogId === blog.blogId
+                    b.blogId === reportingBlog.blogId
                         ? { ...b, reportCount: (b.reportCount || 0) + 1, reported: true }
                         : b
                 )
             );
+            setShowReportModal(false);
             toast.success("Đã gửi báo cáo bài viết!");
         } catch (err) {
             toast.error("Gửi báo cáo thất bại!");
@@ -405,7 +358,7 @@ function UserBlog() {
                                                     onClick={
                                                         blog.reported
                                                             ? undefined
-                                                            : () => handleSendReport(blog) // gọi trực tiếp, không show modal nữa
+                                                            : () => handleReport(blog)
                                                     }
                                                 >
                                                     <FaFlag className="me-1" />
@@ -485,15 +438,6 @@ function UserBlog() {
                     <Modal.Body>
                         <Form>
                             <Form.Group>
-                                <Form.Label>Tiêu đề</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={newTitle}
-                                    onChange={(e) => setNewTitle(e.target.value)}
-                                    placeholder="Nhập tiêu đề bài viết"
-                                />
-                            </Form.Group>
-                            <Form.Group>
                                 <Form.Label>Nội dung</Form.Label>
                                 <Form.Control
                                     as="textarea"
@@ -529,7 +473,7 @@ function UserBlog() {
                         <Button
                             variant="success"
                             onClick={handleSaveCreate}
-                            disabled={!newTitle.trim() || !newContent.trim()}
+                            disabled={!newContent.trim()}
                         >
                             Đăng bài
                         </Button>
@@ -565,6 +509,13 @@ function UserBlog() {
                         >
                             Hủy
                         </Button>
+                        {/* <Button
+                            variant="danger"
+                            onClick={handleSendReport}
+                            disabled={!reportReason.trim()}
+                        >
+                            Gửi báo cáo
+                        </Button> */}
                         <Button
                             variant="danger"
                             onClick={handleSendReport}

@@ -15,7 +15,6 @@ const STAGES = [
     { key: 1, title: "Giai đoạn 1" },
     { key: 2, title: "Giai đoạn 2" },
     { key: 3, title: "Giai đoạn 3" },
-    { key: 4, title: "Giai đoạn 3" },
     // ... Thêm các stage khác nếu có
 ];
 

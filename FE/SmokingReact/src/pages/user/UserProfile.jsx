@@ -87,8 +87,9 @@ const UserProfile = () => {
     const handleSaveProfile = async () => {
         try {
             const token = localStorage.getItem('userToken');
-            let isoDateOfBirth = '';
+            let isoDateOfBirth = ''; // Biến để lưu ngày sinh ở định
             if (editInfo.dateOfBirth) {
+                // Nếu user nhập 'YYYY-MM-DD', chuyển sang ISO string ở đầu ngày (UTC)
                 isoDateOfBirth = new Date(editInfo.dateOfBirth).toISOString();
             }
             const body = {
@@ -97,8 +98,8 @@ const UserProfile = () => {
                 phoneNumber: editInfo.phoneNumber,
                 profilePicture: editInfo.profilePicture,
                 description: editInfo.description,
-                gender: editInfo.gender,
-                dateOfBirth: isoDateOfBirth || '',
+                gender: editInfo.gender,  // them gen, birth
+                dateOfBirth: isoDateOfBirth || '', // Chuyển đổi sang định dạng ISO nếu có
             };
             const res = await fetch('/api/user/update-profile', {
                 method: 'PUT',
@@ -107,28 +108,10 @@ const UserProfile = () => {
             });
             const data = await res.json();
             if (res.ok) {
-                // Lưu lại các trường vừa chỉnh sửa vào localStorage
-                if (editInfo.profilePicture) {
-                    localStorage.setItem('profilePicture', editInfo.profilePicture);
-                }
-                if (editInfo.fullName) {
-                    localStorage.setItem('userName', editInfo.fullName);
-                }
-                if (editInfo.phoneNumber) {
-                    localStorage.setItem('phoneNumber', editInfo.phoneNumber);
-                }
-                if (editInfo.gender) {
-                    localStorage.setItem('gender', editInfo.gender);
-                }
-                if (editInfo.dateOfBirth) {
-                    localStorage.setItem('dateOfBirth', editInfo.dateOfBirth);
-                }
-                // Thêm những trường khác nếu muốn
-
-                toast.success('Cập nhật hồ sơ thành công!', {
-                    onClose: () => window.location.reload()
-                });
+                toast.success('Cập nhật hồ sơ thành công!');
                 setShowEditModal(false);
+                // CẢI TIỆN 1: Tải lại dữ liệu mà không cần hiển thị lại màn hình loading toàn trang
+                fetchUserProfile(false);
             } else {
                 toast.error(data.error || data.message || 'Cập nhật thất bại!');
             }
@@ -373,13 +356,14 @@ const UserProfile = () => {
                             <p className="ms-3">Đang tải bài viết...</p>
                         </div>
                     ) : (
-                        (() => {
-                            // SỬA Ở ĐÂY: Lọc bài viết Published thay cho Approved
-                            const publishedBlogs = userBlogs.filter(blog => blog.status === 'Published');
+                        // Dòng "const approvedBlogs" PHẢI NẰM TRONG KHỐI JAVASCRIPT {}
+                        // BẮT ĐẦU PHẦN SỬA ĐỔI CHÍNH Ở ĐÂY
+                        (() => { // Sử dụng IIFE (Immediately Invoked Function Expression) hoặc đơn giản là dùng một biến tạm
+                            const approvedBlogs = userBlogs.filter(blog => blog.status === 'Approved');
 
-                            return publishedBlogs.length > 0 ? (
+                            return approvedBlogs.length > 0 ? (
                                 <Row xs={1} md={1} lg={1} className="g-4">
-                                    {publishedBlogs.map(blog => (
+                                    {approvedBlogs.map(blog => ( // Sử dụng mảng đã lọc
                                         <Col key={blog.blogId}>
                                             <Card className="shadow-sm h-100" style={{ borderRadius: '15px', border: '1px solid #e0e0e0' }}>
                                                 <Card.Body>
@@ -389,22 +373,6 @@ const UserProfile = () => {
                                                     <Card.Text className="text-muted small mb-2">
                                                         Ngày đăng: {new Date(blog.createdDate).toLocaleDateString('vi-VN', { year: 'numeric', month: 'numeric', day: 'numeric' })}
                                                     </Card.Text>
-                                                    {/* THÊM ẢNH NẾU CÓ */}
-                                                    {blog.imageUrl && (
-                                                        <div className="text-center mb-2">
-                                                            <img
-                                                                src={blog.imageUrl}
-                                                                alt="blog"
-                                                                style={{
-                                                                    maxWidth: "100%",
-                                                                    maxHeight: 220,
-                                                                    borderRadius: 10,
-                                                                    background: "#fff",
-                                                                    margin: "0 auto",
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    )}
                                                     <Card.Text>
                                                         {blog.content.length > 150 ? blog.content.substring(0, 150) + '...' : blog.content}
                                                     </Card.Text>
@@ -413,14 +381,13 @@ const UserProfile = () => {
                                                             <span className="me-3">
                                                                 <FaHeart className="text-danger me-1" /> {blog.likes} lượt thích
                                                             </span>
-                                                            {/* Có thể thêm số dislike/report nếu muốn */}
                                                         </div>
-                                                        {/* <Badge
-                                                            bg={'success'}
+                                                        <Badge
+                                                            bg={'success'} // Luôn là màu xanh cho bài đã duyệt
                                                             className="p-2 rounded-pill"
                                                         >
-                                                            Đã xuất bản
-                                                        </Badge> */}
+                                                            Đã duyệt
+                                                        </Badge>
                                                     </div>
                                                 </Card.Body>
                                                 <Card.Footer className="text-end bg-white border-top-0" style={{ borderRadius: '0 0 15px 15px' }}>
@@ -428,8 +395,9 @@ const UserProfile = () => {
                                                         variant="outline-danger"
                                                         size="sm"
                                                         onClick={() => {
+                                                            console.log("Gán blog cần xóa là:", blog.blogId);
                                                             setBlogToDelete(blog.blogId);
-                                                            setTimeout(() => setShowDeleteBlogModal(true), 0);
+                                                            setTimeout(() => setShowDeleteBlogModal(true), 0);  // Đợi state cập nhật xong rồi mới mở modal
                                                         }}
                                                     >
                                                         <FaTrashAlt className="me-1" /> Xóa
@@ -440,7 +408,7 @@ const UserProfile = () => {
                                     ))}
                                 </Row>
                             ) : (
-                                <p className="text-center text-muted fst-italic">Bạn chưa có bài viết nào được xuất bản.</p>
+                                <p className="text-center text-muted fst-italic">Bạn chưa có bài viết nào được duyệt.</p>
                             );
                         })()
                     )}

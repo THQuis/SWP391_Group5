@@ -82,24 +82,13 @@ const AuthPage = () => {
             const userEmail = data.user.email;
             const userId = data.user.userID;
             const coachId = data.user.CoachId;
-            const profilePicture = data.user.profilePicture;
-            const DateOfBirth = data.user.dateOfBirth;
-            const gender = data.user.gender;
-            const phoneNumber = data.user.phoneNumber;
-
-
             // Lưu thông tin vào localStorage
             localStorage.setItem('userToken', data.token);
             localStorage.setItem('userRole', userRole);
             localStorage.setItem('userName', userName);
             localStorage.setItem('userEmail', userEmail);
             localStorage.setItem('userId', userId);
-            localStorage.setItem('coachId', coachId);//profilePicture
-            localStorage.setItem('profilePicture', profilePicture);
-            loginForm.setItem('gender', gender);
-            loginForm.setItem('dateOfBirth', DateOfBirth);
-            loginForm.setItem('phoneNumber', phoneNumber);
-
+            localStorage.setItem('coachId', coachId);
 
             console.log("role name", userRole);
             // Lưu loại gói thành viên (để phân quyền dashboard)

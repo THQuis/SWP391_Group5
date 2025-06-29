@@ -8,10 +8,10 @@ namespace Smoking.API.Models.User
         [DefaultValue(1)]
         public int CoachId { get; set; }
 
-        [DefaultValue("2025-06-24")]
+
         public string ConsultationDate { get; set; }
 
-        [DefaultValue("00:00:00")]
+        [DefaultValue("08:00:00")]
         public string ConsultationTime { get; set; }
 
         [DefaultValue(30)]

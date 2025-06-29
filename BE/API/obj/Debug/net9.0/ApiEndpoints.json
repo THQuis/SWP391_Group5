@@ -909,6 +909,11 @@
         "Name": "bookingId",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.Coach.CoachUpdateRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -971,6 +976,58 @@
       {
         "Name": "request",
         "Type": "Smoking.API.Models.Coach.CoachUpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
+    "Method": "GetMyUsers",
+    "RelativePath": "api/coach/my-users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
+    "Method": "GetCoachStats",
+    "RelativePath": "api/coach/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
+    "Method": "GetUserChallenges",
+    "RelativePath": "api/coach/user/{userId}/challenges",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
+    "Method": "GetUserProgress",
+    "RelativePath": "api/coach/user/{userId}/progress",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -1456,6 +1513,22 @@
       {
         "Name": "request",
         "Type": "Smoking.API.Models.User.UncompleteChallengeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "GetCoachById",
+    "RelativePath": "api/user/coach/{coachId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "coachId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

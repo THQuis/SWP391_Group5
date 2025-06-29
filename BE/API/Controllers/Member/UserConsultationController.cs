@@ -22,6 +22,7 @@ namespace Smoking.API.Controllers.Member
             _mailService = mailService;
         }
 
+
         [HttpPost("book")]
         public async Task<IActionResult> BookConsultation([FromBody] ConsultationRequest request)
         {
@@ -31,20 +32,16 @@ namespace Smoking.API.Controllers.Member
                 return Unauthorized(new { Message = "Người dùng không hợp lệ." });
             }
 
-            // ✅ Nếu không gửi ngày => lấy ngày hôm nay
             var consultationDate = string.IsNullOrWhiteSpace(request.ConsultationDate)
-                ? DateTime.Today.ToString("yyyy-MM-dd")
-                : request.ConsultationDate;
+            ? DateTime.Today.AddDays(1).ToString("yyyy-MM-dd") 
+            : request.ConsultationDate;
 
-            // ✅ Nếu không gửi giờ => mặc định 00:00:00
             var consultationTime = string.IsNullOrWhiteSpace(request.ConsultationTime)
-                ? "00:00:00"
+                ? "08:00:00" 
                 : request.ConsultationTime;
 
-            // ✅ Ghép thành DateTime chuẩn
             string combinedDateTime = $"{consultationDate}T{consultationTime}";
 
-            // ✅ Kiểm tra định dạng
             if (!DateTime.TryParseExact(
                     combinedDateTime,
                     new[] { "yyyy-MM-ddTHH:mm", "yyyy-MM-ddTHH:mm:ss" },
@@ -59,14 +56,30 @@ namespace Smoking.API.Controllers.Member
                 });
             }
 
-            // ✅ Kiểm tra Coach
+            // ✅ Ngăn đặt lịch quá sớm (phải từ ngày mai trở đi)
+            if (consultationDateTime.Date <= DateTime.Today)
+            {
+                return BadRequest(new { Message = "Bạn chỉ có thể đặt lịch từ ngày mai trở đi." });
+            }
+
+            // ✅ Giới hạn thời gian đặt lịch trong khoảng 08:00 đến 22:00
+            var startTime = new TimeSpan(8, 0, 0);
+            var endTime = new TimeSpan(22, 0, 0);
+            var selectedTime = consultationDateTime.TimeOfDay;
+
+            if (selectedTime < startTime || selectedTime > endTime)
+            {
+                return BadRequest(new { Message = "Thời gian đặt lịch chỉ trong khoảng 08:00 đến 10:00." });
+            }
+
+            // Kiểm tra Coach hợp lệ
             var coach = await _unitOfWork.Users.GetByIdAsync(request.CoachId);
             if (coach == null || coach.RoleID != 3)
             {
                 return BadRequest(new { Message = "Coach không tồn tại hoặc không hợp lệ." });
             }
 
-            // ✅ Kiểm tra trùng lịch
+            // Kiểm tra trùng lịch
             var existingBooking = await _unitOfWork.ConsultationBookings.GetAllAsync();
             var conflictingBooking = existingBooking.FirstOrDefault(booking =>
                 booking.CoachID == request.CoachId &&
@@ -78,7 +91,7 @@ namespace Smoking.API.Controllers.Member
                 return BadRequest(new { Message = "Thời gian này đã có lịch tư vấn. Vui lòng chọn thời gian khác." });
             }
 
-            // ✅ Tạo mới lịch tư vấn
+            // Tạo mới lịch
             var consultation = new ConsultationBooking
             {
                 UserID = userId,
@@ -93,7 +106,7 @@ namespace Smoking.API.Controllers.Member
             await _unitOfWork.ConsultationBookings.AddAsync(consultation);
             await _unitOfWork.CompleteAsync();
 
-            // ✅ Gửi email
+            // Gửi mail
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
             var emailBodyForUser = $"Bạn đã đặt lịch tư vấn với Coach {coach.FullName} vào {consultationDateTime:yyyy-MM-dd HH:mm}.";
             await _mailService.SendEmailAsync(user.Email, "Đặt lịch tư vấn thành công", emailBodyForUser);
@@ -103,6 +116,7 @@ namespace Smoking.API.Controllers.Member
 
             return Ok(new { Message = "Đặt lịch tư vấn thành công. Chờ Coach duyệt." });
         }
+
 
 
         // 2️⃣ Xem lịch tư vấn của người dùng

@@ -87,5 +87,31 @@ namespace Smoking.API.Controllers.Member
                 ProfilePicture = coach.ProfilePicture
             });
         }
+        // 🔹 4. Lấy thông tin chi tiết của coach theo ID
+        [HttpGet("{coachId}")]
+        [AllowAnonymous] // hoặc [Authorize] nếu chỉ cho người dùng đã đăng nhập xem
+        public async Task<IActionResult> GetCoachById(int coachId)
+        {
+            var coach = await _unitOfWork.Users.GetByIdAsync(coachId);
+
+            if (coach == null || coach.RoleID != 3 || coach.Status != "Active")
+                return NotFound(new { Message = "Không tìm thấy huấn luyện viên phù hợp." });
+
+            return Ok(new
+            {
+                Message = "Thông tin huấn luyện viên",
+                Coach = new
+                {
+                    coach.UserID,
+                    coach.FullName,
+                    coach.Email,
+                    coach.PhoneNumber,
+                    coach.Gender,
+                    DateOfBirth = coach.DateOfBirth?.ToString("yyyy-MM-dd"),
+                    coach.ProfilePicture,
+                    coach.Status
+                }
+            });
+        }
     }
 }

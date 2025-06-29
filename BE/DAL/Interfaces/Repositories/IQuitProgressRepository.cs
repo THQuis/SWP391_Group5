@@ -12,7 +12,7 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<IEnumerable<QuitProgress>> GetByQuitPlanIdAsync(int quitPlanId);
         Task<QuitProgress> FindFirstOrDefaultAsync(Expression<Func<QuitProgress, bool>> predicate);
-        Task<IEnumerable<QuitProgress>> GetAllWithUserAsync();
-
+        Task<IEnumerable<QuitProgress>> GetAllWithUserAsync(); // ✅ giữ lại
+        Task<List<QuitProgress>> GetByUserIdAsync(int userId); // ✅ giữ lại
     }
 }

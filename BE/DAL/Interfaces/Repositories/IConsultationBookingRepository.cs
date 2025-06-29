@@ -11,5 +11,7 @@ namespace Smoking.DAL.Interfaces.Repositories
     {
         Task<IEnumerable<ConsultationBooking>> GetByUserIdAsync(int userId);
         Task<IEnumerable<ConsultationBooking>> GetByCoachIdAsync(int coachId);
+        Task<int> CountByCoachIdAsync(int coachId);
+
     }
 }

@@ -21,6 +21,7 @@ namespace Smoking.DAL.Repositories
                 .Where(x => x.UserId == userId && x.ChallengeDate >= from && x.ChallengeDate <= to)
                 .ToListAsync();
         }
+
         public async Task<IEnumerable<UserQuitChallenge>> GetByUserIdAndStageAsync(int userId, int stage)
         {
             return await _context.UserQuitChallenges
@@ -37,7 +38,12 @@ namespace Smoking.DAL.Repositories
                 .ToListAsync();
         }
 
-
-
+        public async Task<List<UserQuitChallenge>> GetByUserIdAsync(int userId)
+        {
+            return await _context.UserQuitChallenges
+                                 .Include(c => c.Template)
+                                 .Where(c => c.UserId == userId)
+                                 .ToListAsync();
+        }
     }
 }

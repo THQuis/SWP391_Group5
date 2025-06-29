@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.Coach;
+using Smoking.BLL.Interfaces;
+using Smoking.BLL.Services;
 using Smoking.DAL.Interfaces.Repositories;
 using System.Security.Claims;
 
@@ -8,17 +10,18 @@ namespace Smoking.API.Controllers.Coach
 {
     [ApiController]
     [Route("api/coach/consultation")]
-    [Authorize(Roles = "3")] // Chỉ Coach (RoleID = 3)
+    [Authorize(Roles = "3")]
     public class CoachConsultationController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMailService _mailService;
 
-        public CoachConsultationController(IUnitOfWork unitOfWork)
+        public CoachConsultationController(IUnitOfWork unitOfWork, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
+            _mailService = mailService;
         }
 
-        // 🔹 Lấy lịch tư vấn mà Coach nhận được
         [HttpGet("my-appointments")]
         public async Task<IActionResult> GetAppointments()
         {
@@ -37,22 +40,44 @@ namespace Smoking.API.Controllers.Coach
             }));
         }
 
-        // 🔹 Duyệt lịch
         [HttpPut("approve/{bookingId}")]
-        public async Task<IActionResult> ApproveBooking(int bookingId)
+        public async Task<IActionResult> ApproveBooking(int bookingId, [FromBody] CoachUpdateRequest request)
         {
             var booking = await _unitOfWork.ConsultationBookings.GetByIdAsync(bookingId);
             if (booking == null || booking.Status != "Pending")
                 return BadRequest(new { Message = "Lịch không tồn tại hoặc không thể duyệt." });
 
             booking.Status = "Approved";
+            if (!string.IsNullOrWhiteSpace(request.MeetingLink))
+            {
+                booking.MeetingLink = request.MeetingLink;
+            }
+
             _unitOfWork.ConsultationBookings.Update(booking);
             await _unitOfWork.CompleteAsync();
+
+            var user = await _unitOfWork.Users.GetByIdAsync(booking.UserID);
+            if (user != null && !string.IsNullOrWhiteSpace(user.Email))
+            {
+                string subject = "Lịch tư vấn đã được duyệt";
+                string body = $"Xin chào {user.FullName},\n\n"
+                            + "Cuộc hẹn tư vấn cai thuốc của bạn đã được chuyên gia chấp thuận.\n";
+
+                if (!string.IsNullOrWhiteSpace(booking.MeetingLink))
+                {
+                    body += $"Link cuộc họp: {booking.MeetingLink}\n";
+                }
+
+                body += "\nHãy đảm bảo có mặt đúng giờ để buổi tư vấn hiệu quả.\n"
+                      + "Trân trọng,\nHệ thống hỗ trợ cai thuốc - QuitSmart";
+
+                await _mailService.SendEmailAsync(user.Email, subject, body);
+            }
 
             return Ok(new { Message = "Duyệt lịch thành công." });
         }
 
-        // 🔹 Từ chối lịch
+
         [HttpPut("reject/{bookingId}")]
         public async Task<IActionResult> RejectBooking(int bookingId)
         {
@@ -67,7 +92,6 @@ namespace Smoking.API.Controllers.Coach
             return Ok(new { Message = "Đã từ chối lịch." });
         }
 
-        // 🔹 Cập nhật thông tin cuộc hẹn (gửi meeting link, ghi chú,...)
         [HttpPut("update/{bookingId}")]
         public async Task<IActionResult> UpdateConsultation(int bookingId, [FromBody] CoachUpdateRequest request)
         {
@@ -82,10 +106,28 @@ namespace Smoking.API.Controllers.Coach
             _unitOfWork.ConsultationBookings.Update(booking);
             await _unitOfWork.CompleteAsync();
 
+            var user = await _unitOfWork.Users.GetByIdAsync(booking.UserID);
+            if (user != null && !string.IsNullOrWhiteSpace(user.Email))
+            {
+                string subject = "Cập nhật thông tin cuộc hẹn";
+                string body = $"Xin chào {user.FullName},\n\n"
+                            + "Thông tin cuộc hẹn tư vấn của bạn đã được chuyên gia cập nhật.\n";
+
+                if (!string.IsNullOrWhiteSpace(booking.MeetingLink))
+                {
+                    body += $"Link họp mới: {booking.MeetingLink}\n";
+                }
+
+                body += "\nVui lòng kiểm tra và tham gia đúng giờ.\n"
+                      + "Trân trọng,\nHệ thống hỗ trợ cai thuốc - QuitSmart";
+
+                await _mailService.SendEmailAsync(user.Email, subject, body);
+            }
+
             return Ok(new { Message = "Đã cập nhật thông tin cuộc hẹn." });
         }
 
-        // 🔹 Đánh dấu đã hoàn thành
+
         [HttpPut("complete/{bookingId}")]
         public async Task<IActionResult> CompleteConsultation(int bookingId)
         {
@@ -100,5 +142,4 @@ namespace Smoking.API.Controllers.Coach
             return Ok(new { Message = "Đã đánh dấu hoàn thành." });
         }
     }
-
 }

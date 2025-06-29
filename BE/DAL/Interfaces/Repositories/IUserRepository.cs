@@ -14,6 +14,9 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task<User> GetUserWithMembershipAsync(int userId);
         Task<List<User>> GetUsersByRoleAsync(int roleId);
         Task<User> GetByIdWithCoachAsync(int userId);
+        Task<List<User>> GetUsersByCoachIdAsync(int coachId);
+        Task<int> CountUsersByCoachIdAsync(int coachId);
+
 
     }
 }

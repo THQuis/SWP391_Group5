@@ -30,6 +30,15 @@ namespace Smoking.DAL.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<UserQuitChallenge>> GetByUserIdAsync(int userId)
+        {
+            return await _context.UserQuitChallenges
+                                 .Include(c => c.Template)
+                                 .Where(c => c.UserId == userId)
+                                 .ToListAsync();
+        }
+
+
 
     }
 }

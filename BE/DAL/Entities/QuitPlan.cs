@@ -37,5 +37,6 @@ namespace Smoking.DAL.Entities
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public virtual ICollection<QuitProgress> QuitProgresses { get; set; }
+
     }
 }

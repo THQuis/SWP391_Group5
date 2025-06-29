@@ -31,5 +31,12 @@ namespace Smoking.DAL.Repositories
                                  .AsNoTracking()
                                  .ToListAsync();
         }
+
+        public async Task<int> CountByCoachIdAsync(int coachId)
+        {
+            return await _context.ConsultationBookings
+                                 .CountAsync(cb => cb.CoachID == coachId);
+        }
+
     }
 }

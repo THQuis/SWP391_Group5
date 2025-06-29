@@ -64,6 +64,17 @@ namespace Smoking.DAL.Repositories
                 .Include(u => u.Coach)
                 .FirstOrDefaultAsync(u => u.UserID == userId);
         }
+        public async Task<List<User>> GetUsersByCoachIdAsync(int coachId)
+        {
+            return await _context.Users
+                .Where(u => u.CoachId == coachId)
+                .ToListAsync();
+        }
+
+        public async Task<int> CountUsersByCoachIdAsync(int coachId)
+        {
+            return await _context.Users.CountAsync(u => u.CoachId == coachId);
+        }
 
 
     }

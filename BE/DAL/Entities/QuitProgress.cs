@@ -36,5 +36,6 @@ namespace Smoking.DAL.Entities
         public int? TotalCigarettesDropped { get; set; }
         public decimal? TotalMoneySaved { get; set; }
 
+
     }
 }

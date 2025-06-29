@@ -204,5 +204,27 @@ namespace Smoking.API.Controllers.Member
 
             return Ok(new { Message = "Blog đã được báo cáo." });
         }
+        // [POST] Bấm Like
+        [HttpPost("like/{blogId}")]
+        public async Task<IActionResult> LikeBlog(int blogId)
+        {
+            var result = await _blogService.LikeBlogAsync(blogId);
+            if (!result)
+                return NotFound(new { Message = "Không tìm thấy blog để Like." });
+
+            return Ok(new { Message = "Đã thích bài viết." });
+        }
+
+        // [POST] Bấm Dislike
+        [HttpPost("dislike/{blogId}")]
+        public async Task<IActionResult> DislikeBlog(int blogId)
+        {
+            var result = await _blogService.DislikeBlogAsync(blogId);
+            if (!result)
+                return NotFound(new { Message = "Không tìm thấy blog để Dislike." });
+
+            return Ok(new { Message = "Đã không thích bài viết." });
+        }
+
     }
 }

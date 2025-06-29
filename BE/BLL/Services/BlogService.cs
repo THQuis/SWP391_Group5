@@ -145,6 +145,15 @@ namespace Smoking.BLL.Services
         {
             return await _repo.GetAllPublishedWithUserAndRoleAsync();
         }
+        public async Task<bool> LikeBlogAsync(int blogId)
+        {
+            return await _repo.IncrementLikeAsync(blogId);
+        }
+
+        public async Task<bool> DislikeBlogAsync(int blogId)
+        {
+            return await _repo.IncrementDislikeAsync(blogId);
+        }
 
 
     }

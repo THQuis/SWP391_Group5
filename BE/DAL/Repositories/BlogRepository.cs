@@ -136,6 +136,27 @@ namespace Smoking.DAL.Repositories
                 .Where(b => b.Status == "Published")
                 .ToListAsync();
         }
+        public async Task<bool> IncrementLikeAsync(int blogId)
+        {
+            var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.BlogId == blogId);
+            if (blog == null) return false;
+
+            blog.Likes += 1;
+            _context.Blogs.Update(blog);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> IncrementDislikeAsync(int blogId)
+        {
+            var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.BlogId == blogId);
+            if (blog == null) return false;
+
+            blog.Dislikes += 1;
+            _context.Blogs.Update(blog);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
 
     }

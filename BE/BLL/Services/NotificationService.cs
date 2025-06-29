@@ -59,6 +59,10 @@ namespace Smoking.BLL.Services
                 NotificationDate = notification.NotificationDate,
                 NotificationType = notification.NotificationType,
                 SentAt = notification.SentAt,
+                NotificationName = notification.NotificationName ?? "Default Notification",  // Đảm bảo không NULL
+                IsRead = notification.IsRead,  // Thêm trường IsRead
+                ReadAt = notification.ReadAt,  // Thêm trường ReadAt
+                                               // 
                 User = notification.User != null ? new User
                 {
                     UserID = notification.User.UserID,
@@ -88,7 +92,10 @@ namespace Smoking.BLL.Services
                 Message = n.Message,
                 NotificationDate = n.NotificationDate,
                 NotificationType = n.NotificationType,
+                NotificationName = n.NotificationName ?? "Default Notification",  // Đảm bảo không NULL
                 SentAt = n.SentAt,
+                IsRead = n.IsRead,  // Thêm trường IsRead
+                ReadAt = n.ReadAt,  // Thêm trường ReadAt
                 User = n.User != null ? new User
                 {
                     UserID = n.User.UserID,

@@ -1750,6 +1750,22 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "DislikeBlog",
+    "RelativePath": "api/UserBlog/dislike/{blogId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "EditBlog",
     "RelativePath": "api/UserBlog/edit/{blogId}",
     "HttpMethod": "PUT",
@@ -1764,6 +1780,22 @@
       {
         "Name": "model",
         "Type": "Smoking.API.Models.Admin.BlogCreateByUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "LikeBlog",
+    "RelativePath": "api/UserBlog/like/{blogId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

@@ -2388,6 +2388,52 @@
         }
       }
     },
+    "/api/UserBlog/like/{blogId}": {
+      "post": {
+        "tags": [
+          "UserBlog"
+        ],
+        "parameters": [
+          {
+            "name": "blogId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UserBlog/dislike/{blogId}": {
+      "post": {
+        "tags": [
+          "UserBlog"
+        ],
+        "parameters": [
+          {
+            "name": "blogId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/coach/list": {
       "get": {
         "tags": [

@@ -32,7 +32,9 @@ namespace Smoking.API.Controllers.Member
                 n.NotificationDate,
                 n.NotificationType,
                 SentAt = n.SentAt.ToString("dd/MM/yyyy HH:mm"),
-                n.NotificationName
+                n.NotificationName, 
+                n.IsRead,
+                n.ReadAt,
             }));
         }
 
@@ -65,7 +67,7 @@ namespace Smoking.API.Controllers.Member
             if (!notification.IsRead)
             {
                 notification.IsRead = true; // Đánh dấu là đã đọc
-                notification.ReadAt = DateTime.UtcNow; // Ghi lại thời gian đã đọc
+                notification.ReadAt = DateTime.Now; // Ghi lại thời gian đã đọc
                 await _notificationService.UpdateAsync(notification); // Call service to update
             }
 

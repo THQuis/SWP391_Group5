@@ -28,6 +28,12 @@ namespace Smoking.DAL.Interfaces.Repositories
         // Get blogs by AuthorId, including User and Role
         Task<IEnumerable<Blog>> GetByAuthorIdWithUserAndRoleAsync(int authorId);
         Task<IEnumerable<Blog>> GetAllPublishedWithUserAndRoleAsync();
+        // Tăng like
+        Task<bool> IncrementLikeAsync(int blogId);
+
+        // Tăng dislike
+        Task<bool> IncrementDislikeAsync(int blogId);
+
 
 
 

@@ -14,5 +14,6 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task AddAsync(PackageMilestone milestone);
         void Update(PackageMilestone milestone);
         void Delete(PackageMilestone milestone);
+
     }
 }

@@ -14,5 +14,6 @@ namespace Smoking.BLL.Interfaces
         Task AddAsync(PackageMilestone entity);
         Task UpdateAsync(int id, string newDescription);
         Task DeleteAsync(int id);
+
     }
 }

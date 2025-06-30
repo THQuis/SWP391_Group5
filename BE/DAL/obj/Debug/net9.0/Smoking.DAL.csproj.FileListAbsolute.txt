@@ -152,6 +152,7 @@ D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\DAL\obj\Debug\net9.0\refint\Smoking.DAL
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.pdb
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.genruntimeconfig.cache
 D:\Ki_5\PRN212\code\abc\SWP391_Group5\BE\DAL\obj\Debug\net9.0\ref\Smoking.DAL.dll
+D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.sourcelink.json
 D:\Ki_5\PRN212\code\abc2\SWP391_Group5\BE\DAL\bin\Debug\net9.0\Smoking.DAL.exe
 D:\Ki_5\PRN212\code\abc2\SWP391_Group5\BE\DAL\bin\Debug\net9.0\Smoking.DAL.deps.json
 D:\Ki_5\PRN212\code\abc2\SWP391_Group5\BE\DAL\bin\Debug\net9.0\Smoking.DAL.runtimeconfig.json
@@ -453,7 +454,6 @@ D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.Generate
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.AssemblyInfoInputs.cache
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.AssemblyInfo.cs
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.csproj.CoreCompileInputs.cache
-D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.sourcelink.json
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking..F619867B.Up2Date
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\Smoking.DAL.dll
 D:\Ki_5\SWP_Project_3\SWP391_Group5\BE\DAL\obj\Debug\net9.0\refint\Smoking.DAL.dll

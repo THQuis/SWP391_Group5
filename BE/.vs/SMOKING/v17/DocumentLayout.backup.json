@@ -82,8 +82,7 @@
               "RelativeToolTip": "DAL\\Entities\\UserQuitChallenge.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T01:11:38.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T01:11:38.282Z"
             },
             {
               "$type": "Document",
@@ -95,8 +94,7 @@
               "RelativeToolTip": "DAL\\Repositories\\GenericRepository.cs",
               "ViewState": "AgIAAHQAAAAAAAAAAAAqwIgAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T00:52:31.752Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T00:52:31.752Z"
             },
             {
               "$type": "Document",
@@ -108,8 +106,7 @@
               "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IGenericRepository.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAgwBcAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T00:50:32.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T00:50:32.282Z"
             },
             {
               "$type": "Document",
@@ -121,8 +118,7 @@
               "RelativeToolTip": "BLL\\Services\\UserQuitChallengeService.cs",
               "ViewState": "AgIAANoAAAAAAAAAAAAgwOoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T00:47:33.208Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T00:47:33.208Z"
             },
             {
               "$type": "Document",
@@ -134,8 +130,7 @@
               "RelativeToolTip": "BLL\\Interfaces\\IUserQuitChallengeService.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAiwBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T00:47:21.859Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T00:47:21.859Z"
             },
             {
               "$type": "Document",
@@ -145,7 +140,7 @@
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
               "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
               "RelativeToolTip": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
-              "ViewState": "AgIAAPwAAAAAAAAAAAAAAPwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAANgAAAAAAAAAAAAAAPwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-30T00:44:43.671Z",
               "EditorCaption": ""
@@ -160,8 +155,7 @@
               "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUserQuitChallengeRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-29T08:11:24.743Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-29T08:11:24.743Z"
             },
             {
               "$type": "Document",

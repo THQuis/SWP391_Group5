@@ -34,10 +34,10 @@ namespace Smoking.DAL.Repositories
             AnswerOptions = new AnswerOptionRepository(_context);
             QuitChallengeTemplates = new QuitChallengeTemplateRepository(_context);
             UserQuitChallenges = new UserQuitChallengeRepository(_context);
-
-            // ✅ Repository mới thêm
             Milestones = new MilestoneRepository(_context);
             MilestoneGroups = new MilestoneGroupRepository(_context);
+            PackageMilestones = new PackageMilestoneRepository(_context);
+
         }
 
         public IRoleRepository Roles { get; private set; }
@@ -62,6 +62,7 @@ namespace Smoking.DAL.Repositories
         public IMilestoneRepository Milestones { get; private set; }
         public IMilestoneGroupRepository MilestoneGroups { get; private set; }
         public IPackageMilestoneRepository PackageMilestones { get; private set; }
+
 
         public async Task<int> CompleteAsync()
         {

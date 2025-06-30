@@ -107,6 +107,10 @@ namespace Smoking.DAL.Data
                 .WithMany(um => um.Payments)
                 .HasForeignKey(p => p.UserMembershipID)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Achievement>()
+                .Property(a => a.MoneySavedRequired)
+                .HasPrecision(18, 2);
+
         }
     }
 }

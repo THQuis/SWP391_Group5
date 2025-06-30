@@ -21,7 +21,7 @@ namespace Smoking.API.Controllers.Coach
             _unitOfWork = unitOfWork;
             _mailService = mailService;
         }
-
+        
         [HttpGet("my-users")]
         public async Task<IActionResult> GetMyUsers()
         {
@@ -39,6 +39,7 @@ namespace Smoking.API.Controllers.Coach
             }));
         }
 
+        // Xem tiến trình và thử thách của 1 user cụ thể
         [HttpGet("user/{userId}/progress")]
         public async Task<IActionResult> GetUserProgress(int userId)
         {
@@ -90,7 +91,7 @@ namespace Smoking.API.Controllers.Coach
                 return StatusCode(500, new { message = ex.Message, stack = ex.StackTrace });
             }
         }
-
+        // Lấy danh sách người dùng của huấn luyện viên
         [HttpGet("stats")]
         public async Task<IActionResult> GetCoachStats()
         {
@@ -105,6 +106,7 @@ namespace Smoking.API.Controllers.Coach
             });
         }
 
+        //Lấy danh sách thử thách của người dùng
         [HttpGet("user/{userId}/challenges")]
         public async Task<IActionResult> GetUserChallenges(int userId)
         {

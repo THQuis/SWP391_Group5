@@ -318,8 +318,8 @@ const ProgressDashboardPage = () => {
                         <Form.Control
                             type="number"
                             value={relapseCount}
-                            onChange={(e) => setRelapseCount(parseInt(e.target.value) || 1)}
-                            min="1"
+                            onChange={(e) => setRelapseCount(parseInt(e.target.value) || 0)}
+                            min="0"
                             className="modal-form-input"
                         />
                     </Form.Group>

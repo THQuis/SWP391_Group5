@@ -221,12 +221,13 @@ function MemberDetailModal({ show, onHide, member, loadingDetail, surveyAnswers,
                             </tr>
                         </thead>
                         <tbody>
-                            {surveyAnswers.map((ans, idx) => (
+                            {mergeSurveyAnswers(surveyAnswers).map((item, idx) => (
                                 <tr key={idx}>
-                                    <td>{ans.questionText}</td>
+                                    <td>{item.questionText}</td>
                                     <td>
-                                        {ans.answerText}
-                                        {ans.customAnswer && <div><i>Khác: {ans.customAnswer}</i></div>}
+                                        {item.answerList.map((ans, i) => (
+                                            <div key={i}>- {ans}</div>
+                                        ))}
                                     </td>
                                 </tr>
                             ))}
@@ -238,6 +239,25 @@ function MemberDetailModal({ show, onHide, member, loadingDetail, surveyAnswers,
             </Modal.Body>
         </Modal>
     );
+}
+// Thêm vào đầu file CoachMembers.jsx
+function mergeSurveyAnswers(surveyAnswers) {
+    const questionMap = new Map();
+    (surveyAnswers || []).forEach(({ questionText, answerText, customAnswer }) => {
+        if (!questionText) return;
+        if (!questionMap.has(questionText)) {
+            questionMap.set(questionText, []);
+        }
+        let fullAnswer = answerText;
+        if (customAnswer) fullAnswer += ` (Khác: ${customAnswer})`;
+        if (fullAnswer && !questionMap.get(questionText).includes(fullAnswer)) {
+            questionMap.get(questionText).push(fullAnswer);
+        }
+    });
+    return Array.from(questionMap, ([questionText, answerList]) => ({
+        questionText,
+        answerList
+    }));
 }
 
 const CoachMembers = () => {
@@ -255,6 +275,8 @@ const CoachMembers = () => {
 
     const [surveyAnswers, setSurveyAnswers] = useState([]);
     const [loadingSurveyAnswers, setLoadingSurveyAnswers] = useState(false);
+
+
     useEffect(() => {
         const token = localStorage.getItem("userToken");
         if (!token) {
@@ -341,6 +363,7 @@ const CoachMembers = () => {
                 setLoadingSurveyAnswers(false);
             });
     };
+
 
     // Xem thử thách của thành viên
     const handleViewChallenges = (member) => {

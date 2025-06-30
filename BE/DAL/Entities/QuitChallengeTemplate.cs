@@ -18,6 +18,8 @@ namespace Smoking.DAL.Entities
         public int DayOffset { get; set; }
 
         public int Stage { get; set; }
+
+        public string? StageTitle { get; set; }
         public ICollection<UserQuitChallenge> UserChallenges { get; set; } = new List<UserQuitChallenge>();
     }
 }

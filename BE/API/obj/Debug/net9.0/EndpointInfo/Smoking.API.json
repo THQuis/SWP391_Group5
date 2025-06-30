@@ -414,6 +414,41 @@
         }
       }
     },
+    "/api/Admin/approve-coach-change/{userId}": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/pending-coach-changes": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/admin/consultation/all-appointments": {
       "get": {
         "tags": [
@@ -2708,6 +2743,37 @@
         }
       }
     },
+    "/api/user/coach/request-change": {
+      "post": {
+        "tags": [
+          "UserCoach"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeCoachRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeCoachRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeCoachRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/consultation/book": {
       "post": {
         "tags": [
@@ -3411,6 +3477,23 @@
           "imageUrl": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChangeCoachRequest": {
+        "required": [
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "newCoachId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reason": {
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -4475,6 +4558,18 @@
           },
           "coach": {
             "$ref": "#/components/schemas/User"
+          },
+          "pendingCoachId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pendingCoach": {
+            "$ref": "#/components/schemas/User"
+          },
+          "coachChangeReason": {
+            "type": "string",
+            "nullable": true
           },
           "userMemberships": {
             "type": "array",

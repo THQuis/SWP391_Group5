@@ -52,7 +52,7 @@
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserAchievementController.cs",
               "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserAchievementController.cs",
               "RelativeToolTip": "API\\Controllers\\Member\\UserAchievementController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwB0AAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-30T10:39:43.754Z",
               "EditorCaption": ""
@@ -67,8 +67,7 @@
               "RelativeToolTip": "BLL\\Services\\AchievementEvaluatorService.cs",
               "ViewState": "AgIAAHQAAAAAAAAAAAAgwIQAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:15:59.541Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T10:15:59.541Z"
             },
             {
               "$type": "Document",

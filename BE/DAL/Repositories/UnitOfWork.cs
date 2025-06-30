@@ -62,6 +62,9 @@ namespace Smoking.DAL.Repositories
         public IMilestoneRepository Milestones { get; private set; }
         public IMilestoneGroupRepository MilestoneGroups { get; private set; }
         public IPackageMilestoneRepository PackageMilestones { get; private set; }
+        public IQuitPlanSelectedAnswerRepository QuitPlanSelectedAnswerRepository { get; private set; }
+
+
 
 
         public async Task<int> CompleteAsync()

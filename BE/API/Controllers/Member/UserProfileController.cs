@@ -8,7 +8,7 @@ namespace Smoking.API.Controllers.Member
 {
     [ApiController]
     [Route("api/user")]
-    [Authorize(Roles = "2")]
+    [Authorize]
     public class UserProfileController : ControllerBase
     {
         private readonly IUserService _userService;

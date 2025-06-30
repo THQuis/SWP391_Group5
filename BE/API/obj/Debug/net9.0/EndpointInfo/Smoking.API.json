@@ -2892,6 +2892,29 @@
           }
         }
       }
+    },
+    "/api/user-challenges/{userId}/all": {
+      "get": {
+        "tags": [
+          "UserQuitChallenge"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {

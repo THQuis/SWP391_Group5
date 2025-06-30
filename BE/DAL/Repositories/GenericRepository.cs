@@ -126,5 +126,18 @@ namespace Smoking.DAL.Repositories
 
             return await query.Where(predicate).ToListAsync();
         }
+
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> include)
+        {
+            IQueryable<TEntity> query = _dbSet.Where(predicate);
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            return await query.ToListAsync();
+        }
+
     }
 }

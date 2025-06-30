@@ -21,14 +21,33 @@ public class UserQuitChallengeController : ControllerBase
     [HttpPost("{userId}/assign-stage")]
     public async Task<IActionResult> AssignStageChallenges(int userId, [FromQuery] int stage)
     {
-        var count = await _challengeService.AssignChallengesToUserAsync(userId, stage);
-
-        if (count == 0)
+        try
         {
-            return Ok(new { success = false, message = "Người dùng đã nhận thử thách cho giai đoạn này trước đó." });
-        }
+            var count = await _challengeService.AssignChallengesToUserAsync(userId, stage);
 
-        return Ok(new { success = true, message = $"Đã nhận {count} thử thách cho người dùng." });
+            if (count == 0)
+            {
+                return Ok(new
+                {
+                    success = false,
+                    message = "Giai đoạn này đã được nhận trước đó. Vui lòng kiểm tra danh sách thử thách."
+                });
+            }
+
+            return Ok(new
+            {
+                success = true,
+                message = $"Bạn đã nhận thành công {count} thử thách cho giai đoạn {stage}."
+            });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new
+            {
+                success = false,
+                message = ex.Message
+            });
+        }
     }
 
     [HttpGet("{userId}/stage")]
@@ -45,8 +64,8 @@ public class UserQuitChallengeController : ControllerBase
         for (int i = 0; i < ordered.Count; i++)
         {
             var challenge = ordered[i];
+            bool isLocked = false;
 
-            bool isLocked;
             if (i == 0)
             {
                 isLocked = challenge.ChallengeDate > today;
@@ -74,7 +93,6 @@ public class UserQuitChallengeController : ControllerBase
             });
         }
 
-        // Xác định thử thách hôm nay
         var todayChallenge = ordered.FirstOrDefault(c => c.ChallengeDate.Date == today);
 
         if (todayChallenge != null)
@@ -94,18 +112,18 @@ public class UserQuitChallengeController : ControllerBase
 
             if (isLocked)
             {
-                message = "Thử thách hôm nay chưa được mở. Bạn cần hoàn thành thử thách hôm trước.";
+                message = "🔒 Thử thách hôm nay chưa được mở. Hãy hoàn thành thử thách hôm trước.";
             }
             else
             {
                 message = todayChallenge.IsCompleted
-                    ? "Bạn đã hoàn thành thử thách hôm nay!"
-                    : "Bạn chưa hoàn thành thử thách hôm nay!";
+                    ? "✅ Bạn đã hoàn thành thử thách hôm nay!"
+                    : "📌 Hôm nay bạn có thử thách mới cần hoàn thành.";
             }
         }
         else
         {
-            message = "Không có thử thách nào ứng với ngày hôm nay.";
+            message = "📅 Hôm nay không có thử thách nào.";
         }
 
         return Ok(new
@@ -122,45 +140,113 @@ public class UserQuitChallengeController : ControllerBase
         {
             string? imageUrl = null;
 
-            // Nếu có file ảnh thì xử lý upload
             if (request.Image != null && request.Image.Length > 0)
             {
-                // Tạo tên file duy nhất
                 var fileName = $"{Guid.NewGuid()}_{request.Image.FileName}";
                 var folderPath = Path.Combine("wwwroot", "uploads", "challenge-images");
 
-                // Tạo thư mục nếu chưa có
                 if (!Directory.Exists(folderPath))
                     Directory.CreateDirectory(folderPath);
 
                 var filePath = Path.Combine(folderPath, fileName);
 
-                // Ghi file vào ổ đĩa
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await request.Image.CopyToAsync(stream);
                 }
 
-                // Lưu đường dẫn tương đối
                 imageUrl = $"/uploads/challenge-images/{fileName}";
             }
 
             await _challengeService.MarkAsCompletedAsync(request.ChallengeId, request.Notes, imageUrl);
 
-            return Ok(new { success = true, message = "Đánh dấu hoàn thành thành công." });
+            return Ok(new
+            {
+                success = true,
+                message = "🎉 Đánh dấu hoàn thành thử thách thành công!"
+            });
         }
         catch (Exception ex)
         {
-            return BadRequest(new { success = false, message = ex.Message });
+            return BadRequest(new
+            {
+                success = false,
+                message = $"❌ Không thể hoàn thành thử thách: {ex.Message}"
+            });
         }
     }
-
-
 
     [HttpPost("uncomplete")]
     public async Task<IActionResult> UncompleteChallenge([FromBody] UncompleteChallengeRequest request)
     {
         await _challengeService.UnmarkAsCompletedAsync(request.ChallengeId);
-        return Ok(new { success = true, message = "Đã huỷ trạng thái hoàn thành." });
+        return Ok(new
+        {
+            success = true,
+            message = "✅ Đã huỷ trạng thái hoàn thành của thử thách."
+        });
     }
+
+    [HttpGet("{userId}/all")]
+    public async Task<IActionResult> GetAllChallengesGroupedByStage(int userId)
+    {
+        var userChallenges = await _challengeService.GetAllChallengesAsync(userId);
+        var groupedByStage = userChallenges
+            .GroupBy(c => c.Template.Stage)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        var allTemplates = await _challengeService.GetAllTemplatesAsync();
+        var allStages = allTemplates.Select(t => t.Stage).Distinct().OrderBy(s => s).ToList();
+
+        var result = new List<object>();
+
+        foreach (var stage in allStages)
+        {
+            if (groupedByStage.ContainsKey(stage))
+            {
+                // Đã nhận stage này
+                var challenges = groupedByStage[stage];
+                result.Add(new
+                {
+                    Stage = stage,
+                    StageStatus = "✅ Đã nhận",
+                    Challenges = challenges.Select(c => new
+                    {
+                        c.Id,
+                        Title = c.Template.Title,
+                        Description = c.Template.Description,
+                        c.ChallengeDate,
+                        c.IsCompleted,
+                        c.Notes,
+                        c.ImageUrl,
+                        IsLocked = false
+                    }).ToList()
+                });
+            }
+            else
+            {
+                // Chưa nhận stage này → Dùng template để hiển thị
+                var templates = allTemplates.Where(t => t.Stage == stage).OrderBy(t => t.DayOffset).ToList();
+                result.Add(new
+                {
+                    Stage = stage,
+                    StageStatus = "🔒 Chưa nhận. Hãy nhận để bắt đầu.",
+                    Challenges = templates.Select(t => new
+                    {
+                        Id = 0, // chưa có challenge thật
+                        Title = t.Title,
+                        Description = t.Description,
+                        ChallengeDate = (DateTime?)null,
+                        IsCompleted = false,
+                        Notes = (string?)null,
+                        ImageUrl = (string?)null,
+                        IsLocked = true
+                    }).ToList()
+                });
+            }
+        }
+
+        return Ok(new { success = true, data = result });
+    }
+
 }

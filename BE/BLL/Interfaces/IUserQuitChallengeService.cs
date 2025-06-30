@@ -16,6 +16,9 @@ namespace Smoking.BLL.Interfaces
         Task<List<UserQuitChallenge>> GetProgressiveChallengesForWeekAsync(int userId, DateTime weekStart, int stage);
         Task UnmarkAsCompletedAsync(int challengeId);
         Task<IEnumerable<UserQuitChallenge>> GetChallengesForStageAsync(int userId, int stage);
+        Task<List<UserQuitChallenge>> GetAllChallengesAsync(int userId);
+
+        Task<List<QuitChallengeTemplate>> GetAllTemplatesAsync();
 
     }
 }

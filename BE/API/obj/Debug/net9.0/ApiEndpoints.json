@@ -1436,6 +1436,22 @@
   },
   {
     "ContainingType": "UserQuitChallengeController",
+    "Method": "GetAllChallengesGroupedByStage",
+    "RelativePath": "api/user-challenges/{userId}/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserQuitChallengeController",
     "Method": "AssignStageChallenges",
     "RelativePath": "api/user-challenges/{userId}/assign-stage",
     "HttpMethod": "POST",

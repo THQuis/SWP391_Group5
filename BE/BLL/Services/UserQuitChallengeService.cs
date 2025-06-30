@@ -1,4 +1,5 @@
-﻿using Smoking.BLL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
 
@@ -123,6 +124,21 @@ public class UserQuitChallengeService : IUserQuitChallengeService
         if (quitPlan == null)
             throw new InvalidOperationException("Người dùng chưa có kế hoạch cai thuốc.");
 
+        // ✅ Nếu đang nhận stage > 1, kiểm tra stage trước đó:
+        if (stage > 1)
+        {
+            var previousStage = stage - 1;
+            var previousChallenges = await _unitOfWork.UserQuitChallenges
+                .GetByUserIdAndStageAsync(userId, previousStage);
+
+            if (!previousChallenges.Any())
+                throw new Exception("Bạn cần nhận thử thách giai đoạn trước trước khi nhận giai đoạn này.");
+
+            var allCompleted = previousChallenges.All(c => c.IsCompleted);
+            if (!allCompleted)
+                throw new Exception("Bạn cần hoàn thành toàn bộ thử thách ở giai đoạn trước trước khi nhận giai đoạn mới.");
+        }
+
         var startDate = quitPlan.StartDate.Date;
 
         var templates = await _unitOfWork.QuitChallengeTemplates
@@ -155,6 +171,7 @@ public class UserQuitChallengeService : IUserQuitChallengeService
 
         return newChallenges.Count;
     }
+
 
     public async Task<List<UserQuitChallenge>> GetProgressiveChallengesForWeekAsync(int userId, DateTime weekStart, int stage)
     {
@@ -201,4 +218,20 @@ public class UserQuitChallengeService : IUserQuitChallengeService
         return await _unitOfWork.UserQuitChallenges
             .GetByUserIdAndStageAsync(userId, stage);
     }
+    public async Task<List<UserQuitChallenge>> GetAllChallengesAsync(int userId)
+    {
+        var challenges = await _unitOfWork.UserQuitChallenges.FindAsync(
+            c => c.UserId == userId,
+            include: q => q.Include(c => c.Template)
+        );
+
+        return challenges.OrderBy(c => c.Template.Stage).ThenBy(c => c.ChallengeDate).ToList();
+    }
+
+    public async Task<List<QuitChallengeTemplate>> GetAllTemplatesAsync()
+    {
+        return await _unitOfWork.QuitChallengeTemplates.GetAllTemplatesAsync();
+    }
+
+
 }

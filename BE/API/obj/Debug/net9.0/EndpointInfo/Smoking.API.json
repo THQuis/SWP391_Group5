@@ -3215,6 +3215,11 @@
             "format": "int32",
             "nullable": true
           },
+          "checkinDaysRequired": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "userAchievements": {
             "type": "array",
             "items": {

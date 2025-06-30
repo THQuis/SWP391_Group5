@@ -44,6 +44,12 @@ namespace Smoking.DAL.Entities
 
         [ForeignKey("CoachId")]
         public virtual User? Coach { get; set; }
+        public int? PendingCoachId { get; set; }
+
+        [ForeignKey("PendingCoachId")]
+        public virtual User? PendingCoach { get; set; }
+        public string? CoachChangeReason { get; set; }
+
 
         // Navigation collections initialized to avoid null reference
         public ICollection<UserMembership> UserMemberships { get; set; } = new List<UserMembership>();

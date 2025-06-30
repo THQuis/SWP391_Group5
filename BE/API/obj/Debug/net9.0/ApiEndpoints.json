@@ -227,6 +227,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
+    "Method": "ApproveCoachChange",
+    "RelativePath": "api/Admin/approve-coach-change/{userId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "QuitChallengeTemplateController",
     "Method": "GetAll",
     "RelativePath": "api/admin/challenge-templates",
@@ -560,7 +576,7 @@
   {
     "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
     "Method": "Delete",
-    "RelativePath": "api/admin/package-milestones/delete/{id}",
+    "RelativePath": "api/admin/package-milestones/delete",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -568,7 +584,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -586,7 +602,7 @@
   {
     "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
     "Method": "Update",
-    "RelativePath": "api/admin/package-milestones/update/{id}",
+    "RelativePath": "api/admin/package-milestones/update",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -594,7 +610,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       },
       {
         "Name": "dto",
@@ -602,6 +618,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
+    "Method": "GetPendingCoachChanges",
+    "RelativePath": "api/Admin/pending-coach-changes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -1100,6 +1126,22 @@
     "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
     "Method": "GetUserProgress",
     "RelativePath": "api/coach/user/{userId}/progress",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
+    "Method": "GetUserSurveyAnswers",
+    "RelativePath": "api/coach/user/{userId}/survey-answers",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1663,6 +1705,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserCoachController",
+    "Method": "RequestChangeCoach",
+    "RelativePath": "api/user/coach/request-change",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Smoking.API.Models.User.ChangeCoachRequest",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

@@ -18,11 +18,14 @@ namespace Smoking.API.Controllers.Admin
     public class AdminController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-       
-        public AdminController(IUnitOfWork unitOfWork)
+        private readonly IMailService _mailService;
+
+        public AdminController(IUnitOfWork unitOfWork, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
+            _mailService = mailService;
         }
+
 
         // 1️ Lấy danh sách User
         [HttpGet("ListUsers")]
@@ -163,6 +166,68 @@ namespace Smoking.API.Controllers.Admin
 
             return Ok(new { Message = "Tạo User thành công." });
         }
+
+        [HttpPut("approve-coach-change/{userId}")]
+        [Authorize(Roles = "1")] // Admin
+        public async Task<IActionResult> ApproveCoachChange(int userId)
+        {
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user == null || user.PendingCoachId == null)
+                return NotFound(new { Message = "Không có yêu cầu đổi coach nào đang chờ duyệt." });
+
+            // Lấy thông tin coach mới
+            var newCoach = await _unitOfWork.Users.GetByIdAsync(user.PendingCoachId.Value);
+            if (newCoach == null)
+                return NotFound(new { Message = "Huấn luyện viên mới không tồn tại." });
+
+            // Cập nhật coach mới cho user
+            user.CoachId = user.PendingCoachId;
+            user.PendingCoachId = null;
+            user.CoachChangeReason = null; // ✔️ Xoá lý do sau khi duyệt
+
+            _unitOfWork.Users.Update(user);
+
+            // Thông báo
+            var notification = new Notification
+            {
+                NotificationName = "Đã duyệt đổi huấn luyện viên",
+                Message = $"Yêu cầu đổi coach của bạn sang {newCoach.FullName} đã được chấp nhận.",
+                CreatedBy = "Admin",
+                NotificationType = "CoachChangeApproved",
+                NotificationFor = "Member",
+                Condition = "Unread",
+                UserID = user.UserID,
+                SentAt = DateTime.Now
+            };
+            await _unitOfWork.Notifications.AddAsync(notification);
+
+            // Gửi email
+            await _mailService.SendEmailAsync(user.Email, "Yêu cầu đổi coach đã được duyệt",
+                $"Chào {user.FullName},\n\nYêu cầu đổi sang huấn luyện viên {newCoach.FullName} của bạn đã được duyệt.");
+
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new { Message = "Đã duyệt đổi huấn luyện viên cho người dùng." });
+        }
+
+
+
+        [HttpGet("pending-coach-changes")]
+        [Authorize(Roles = "1")]
+        public async Task<IActionResult> GetPendingCoachChanges()
+        {
+            var users = await _unitOfWork.Users.GetAllAsync();
+            var pending = users.Where(u => u.PendingCoachId != null).ToList();
+
+            return Ok(pending.Select(u => new {
+                u.UserID,
+                u.FullName,
+                CurrentCoachId = u.CoachId,
+                RequestedCoachId = u.PendingCoachId,
+                 Reason = u.CoachChangeReason
+            }));
+        }
+
 
     }
 }

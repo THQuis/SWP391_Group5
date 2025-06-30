@@ -64,6 +64,13 @@ namespace Smoking.DAL.Data
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
+            // Quan hệ tự tham chiếu: 1 Coach có nhiều User
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Coach)
+                .WithMany(c => c.AssignedUsers)
+                .HasForeignKey(u => u.CoachId)
+                .OnDelete(DeleteBehavior.Restrict); // Tránh xóa cascade lặp vô hạn
+
 
             // Decimal precision
             modelBuilder.Entity<SmokingStatus>()

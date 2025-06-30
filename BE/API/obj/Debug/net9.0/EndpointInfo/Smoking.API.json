@@ -414,6 +414,41 @@
         }
       }
     },
+    "/api/Admin/approve-coach-change/{userId}": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/pending-coach-changes": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/admin/consultation/all-appointments": {
       "get": {
         "tags": [
@@ -1243,6 +1278,29 @@
         }
       }
     },
+    "/api/coach/user/{userId}/survey-answers": {
+      "get": {
+        "tags": [
+          "Coach"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/coach/consultation/my-appointments": {
       "get": {
         "tags": [
@@ -1690,7 +1748,7 @@
         }
       }
     },
-    "/api/admin/package-milestones/update/{id}": {
+    "/api/admin/package-milestones/update": {
       "put": {
         "tags": [
           "PackageMilestone"
@@ -1698,8 +1756,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1732,7 +1789,7 @@
         }
       }
     },
-    "/api/admin/package-milestones/delete/{id}": {
+    "/api/admin/package-milestones/delete": {
       "delete": {
         "tags": [
           "PackageMilestone"
@@ -1740,8 +1797,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -2635,6 +2691,37 @@
         }
       }
     },
+    "/api/user/coach/request-change": {
+      "post": {
+        "tags": [
+          "UserCoach"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeCoachRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeCoachRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeCoachRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/consultation/book": {
       "post": {
         "tags": [
@@ -3333,6 +3420,23 @@
           "imageUrl": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChangeCoachRequest": {
+        "required": [
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "newCoachId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reason": {
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -4397,6 +4501,18 @@
           },
           "coach": {
             "$ref": "#/components/schemas/User"
+          },
+          "pendingCoachId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pendingCoach": {
+            "$ref": "#/components/schemas/User"
+          },
+          "coachChangeReason": {
+            "type": "string",
+            "nullable": true
           },
           "userMemberships": {
             "type": "array",

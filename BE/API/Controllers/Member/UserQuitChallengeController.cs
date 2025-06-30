@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Smoking.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Smoking.API.Models.User;
+
 [ApiController]
 [Route("api/user-challenges")]
 [Authorize(Roles = "2")]
@@ -60,6 +62,7 @@ public class UserQuitChallengeController : ControllerBase
 
         bool allowNext = true;
         string? message = null;
+        string stageTitle = ordered.FirstOrDefault()?.Template.StageTitle ?? $"Giai đoạn {stage}";
 
         for (int i = 0; i < ordered.Count; i++)
         {
@@ -89,6 +92,7 @@ public class UserQuitChallengeController : ControllerBase
                 challenge.ChallengeDate,
                 challenge.IsCompleted,
                 challenge.Notes,
+                ImageUrl = challenge.ImageUrl,
                 IsLocked = isLocked
             });
         }
@@ -128,10 +132,13 @@ public class UserQuitChallengeController : ControllerBase
 
         return Ok(new
         {
+            stage,
+            stageTitle,
             message,
             data = result
         });
     }
+
 
     [HttpPost("complete")]
     public async Task<IActionResult> CompleteChallenge([FromForm] CompleteChallengeForm request)
@@ -163,6 +170,7 @@ public class UserQuitChallengeController : ControllerBase
             return Ok(new
             {
                 success = true,
+                imageUrl,
                 message = "🎉 Đánh dấu hoàn thành thử thách thành công!"
             });
         }
@@ -202,13 +210,15 @@ public class UserQuitChallengeController : ControllerBase
 
         foreach (var stage in allStages)
         {
+            var stageTitle = allTemplates.FirstOrDefault(t => t.Stage == stage)?.StageTitle ?? $"Giai đoạn {stage}";
+
             if (groupedByStage.ContainsKey(stage))
             {
-                // Đã nhận stage này
                 var challenges = groupedByStage[stage];
                 result.Add(new
                 {
                     Stage = stage,
+                    StageTitle = stageTitle,
                     StageStatus = "✅ Đã nhận",
                     Challenges = challenges.Select(c => new
                     {
@@ -225,15 +235,15 @@ public class UserQuitChallengeController : ControllerBase
             }
             else
             {
-                // Chưa nhận stage này → Dùng template để hiển thị
                 var templates = allTemplates.Where(t => t.Stage == stage).OrderBy(t => t.DayOffset).ToList();
                 result.Add(new
                 {
                     Stage = stage,
+                    StageTitle = stageTitle,
                     StageStatus = "🔒 Chưa nhận. Hãy nhận để bắt đầu.",
                     Challenges = templates.Select(t => new
                     {
-                        Id = 0, // chưa có challenge thật
+                        Id = 0,
                         Title = t.Title,
                         Description = t.Description,
                         ChallengeDate = (DateTime?)null,
@@ -248,5 +258,4 @@ public class UserQuitChallengeController : ControllerBase
 
         return Ok(new { success = true, data = result });
     }
-
 }

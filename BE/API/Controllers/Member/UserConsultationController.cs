@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
@@ -11,6 +12,7 @@ namespace Smoking.API.Controllers.Member
 {
     [ApiController]
     [Route("api/user/consultation")]
+    [Authorize(Roles = "2")]
     public class UserConsultationController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

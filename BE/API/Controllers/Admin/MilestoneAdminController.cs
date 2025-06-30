@@ -12,7 +12,7 @@ namespace Smoking.API.Controllers.Admin
 {
     [ApiController]
     [Route("api/admin/milestones")]
-    [Authorize(Roles = "1")] // Chỉ admin mới truy cập
+    [Authorize(Roles = "1")]
     public class MilestoneAdminController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

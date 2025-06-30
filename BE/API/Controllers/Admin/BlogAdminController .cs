@@ -20,7 +20,6 @@ namespace Smoking.API.Controllers.Admin
             _blogService = blogService;
         }
 
-        // Lấy danh sách tất cả blog (kèm tên tác giả, vai trò)
         [HttpGet("list")]
         public async Task<IActionResult> GetAllBlogs()
         {

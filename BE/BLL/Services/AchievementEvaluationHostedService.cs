@@ -26,7 +26,7 @@ public class AchievementEvaluationHostedService : BackgroundService
             var nextRunTime = now.Date.AddDays(1).AddHours(0).AddMinutes(30);
             var delay = nextRunTime - now;
 
-            _logger.LogInformation("Đợi đến lần chạy tiếp theo vào: {Time}", nextRunTime);
+            _logger.LogInformation("Dự đoán lần chạy tiếp theo vào: {0:dd/MM/yyyy HH:mm:ss}", nextRunTime);
             await Task.Delay(delay, stoppingToken);
 
             using var scope = _serviceProvider.CreateScope();

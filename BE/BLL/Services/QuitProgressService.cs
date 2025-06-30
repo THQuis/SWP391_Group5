@@ -11,10 +11,12 @@ namespace Smoking.BLL.Services
     public class QuitProgressService : IQuitProgressService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAchievementEvaluatorService _achievementEvaluatorService;
 
-        public QuitProgressService(IUnitOfWork unitOfWork)
+        public QuitProgressService(IUnitOfWork unitOfWork, IAchievementEvaluatorService achievementEvaluatorService)
         {
             _unitOfWork = unitOfWork;
+            _achievementEvaluatorService = achievementEvaluatorService;
         }
 
         public async Task<IEnumerable<QuitProgress>> GetByPlanIdAsync(int quitPlanId)
@@ -80,6 +82,9 @@ namespace Smoking.BLL.Services
 
                 _unitOfWork.QuitProgresses.Update(quitProgress);
                 await _unitOfWork.CompleteAsync();
+
+                // 🔥 Gọi kiểm tra & trao thành tựu
+                await _achievementEvaluatorService.EvaluateAndGrantAchievementsAsync(quitPlan.UserID);
             }
 
             return true;

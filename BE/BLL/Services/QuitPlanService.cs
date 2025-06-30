@@ -53,25 +53,23 @@ public class QuitPlanService : IQuitPlanService
 
         foreach (var plan in plans)
         {
-            // Xoá các tiến trình của kế hoạch
             var progresses = await _unitOfWork.QuitProgresses.FindAsync(p => p.QuitPlanID == plan.QuitPlanID);
             _unitOfWork.QuitProgresses.RemoveRange(progresses);
 
-            // Xoá các câu trả lời chọn khi tạo kế hoạch
             var answers = await _unitOfWork.QuitPlanSelectedAnswers.FindAsync(a => a.QuitPlanID == plan.QuitPlanID);
             _unitOfWork.QuitPlanSelectedAnswers.RemoveRange(answers);
 
-            // Xoá các thử thách đã gán từ kế hoạch
             var challenges = await _unitOfWork.UserQuitChallenges.FindAsync(c => c.QuitPlanId == plan.QuitPlanID);
             _unitOfWork.UserQuitChallenges.RemoveRange(challenges);
-
-            // Cuối cùng xoá kế hoạch
-            _unitOfWork.QuitPlans.Remove(plan);
         }
+
+        _unitOfWork.QuitPlans.RemoveRange(plans);
+
+        var userAchievements = await _unitOfWork.UserAchievements.GetByUserIdAsync(userId);
+        _unitOfWork.UserAchievements.RemoveRange(userAchievements);
 
         var result = await _unitOfWork.CompleteAsync();
         return result > 0;
     }
-
 
 }

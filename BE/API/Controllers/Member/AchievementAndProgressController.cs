@@ -4,6 +4,7 @@ using Smoking.API.Models.User;
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Interfaces.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,15 +15,18 @@ public class AchievementAndProgressController : ControllerBase
 {
     private readonly IQuitProgressService _quitProgressService;
     private readonly IUserAchievementService _userAchievementService;
+    private readonly IAchievementEvaluatorService _achievementEvaluatorService;
     private readonly IUnitOfWork _unitOfWork;
 
     public AchievementAndProgressController(
         IQuitProgressService quitProgressService,
         IUserAchievementService userAchievementService,
+        IAchievementEvaluatorService achievementEvaluatorService,
         IUnitOfWork unitOfWork)
     {
         _quitProgressService = quitProgressService;
         _userAchievementService = userAchievementService;
+        _achievementEvaluatorService = achievementEvaluatorService;
         _unitOfWork = unitOfWork;
     }
 
@@ -61,7 +65,6 @@ public class AchievementAndProgressController : ControllerBase
         });
     }
 
-
     [HttpPost("user/UpdateProgress")]
     public async Task<IActionResult> UpdateQuitProgress(int userId, [FromBody] UpdateQuitProgressRequest request)
     {
@@ -76,13 +79,13 @@ public class AchievementAndProgressController : ControllerBase
         {
             return StatusCode(403, "Chỉ người dùng có gói Premium mới được cập nhật tiến trình hằng ngày.");
         }
+
         var package = await _unitOfWork.MembershipPackages.GetByIdAsync(validMembership.PackageID);
         if (package == null || !string.Equals(package.PackageType, "Premium", StringComparison.OrdinalIgnoreCase))
         {
             return StatusCode(403, "Chỉ người dùng có gói Premium mới được cập nhật tiến trình hằng ngày.");
         }
 
-        // Tìm kế hoạch cai thuốc đang hoạt động
         var quitPlans = await _unitOfWork.QuitPlans
             .FindAsync(x => x.UserID == userId && x.Status == "Active");
 
@@ -107,6 +110,9 @@ public class AchievementAndProgressController : ControllerBase
             return BadRequest("Cập nhật tiến trình thất bại.");
         }
 
+        // ✅ Gọi service để kiểm tra và trao thành tựu ngay
+        await _achievementEvaluatorService.EvaluateAndGrantAchievementsAsync(userId);
+
         var updatedProgressList = await _quitProgressService.GetByPlanIdAsync(quitPlan.QuitPlanID);
 
         return Ok(new
@@ -115,7 +121,6 @@ public class AchievementAndProgressController : ControllerBase
             QuitProgress = updatedProgressList
         });
     }
-
 
     [HttpGet("user/showAllProgress")]
     public async Task<IActionResult> GetAllQuitProgress(int userId)
@@ -169,6 +174,4 @@ public class AchievementAndProgressController : ControllerBase
 
         return Ok(allProgress);
     }
-
-
 }

@@ -11,7 +11,7 @@ namespace Smoking.API.Controllers.Admin
 {
     [ApiController]
     [Route("api/Admin/Achievement")]
-    [Authorize(Roles = "2")]
+    [Authorize(Roles = "1")]
     public class AchievementAdminController : ControllerBase
     {
         private readonly IAchievementService _service;

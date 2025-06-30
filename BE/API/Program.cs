@@ -42,6 +42,7 @@ builder.Services.AddScoped<IQuitPlanService, QuitPlanService>();
 builder.Services.AddScoped<IQuitPlanAutoService, QuitPlanAutoService>();
 builder.Services.AddScoped<IQuitProgressService, QuitProgressService>();
 builder.Services.AddScoped<IQuitProgressRepository, QuitProgressRepository>();
+builder.Services.AddScoped<IRevenueService, RevenueService>();
 
 // ---- Quit Challenge ----
 builder.Services.AddScoped<IUserQuitChallengeService, UserQuitChallengeService>();

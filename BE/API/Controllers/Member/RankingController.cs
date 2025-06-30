@@ -9,6 +9,7 @@ namespace Smoking.API.Controllers
 {
     [ApiController]
     [Route("api/ranking")]
+
     public class RankingController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -25,6 +26,7 @@ namespace Smoking.API.Controllers
             var progresses = await _unitOfWork.QuitProgresses.GetAllWithUserAsync();
 
             var ranked = progresses
+                .Where(p => p.QuitPlan != null && p.QuitPlan.User != null)
                 .GroupBy(p => p.QuitPlan.UserID)
                 .Select(g => new
                 {
@@ -47,13 +49,18 @@ namespace Smoking.API.Controllers
             var progresses = await _unitOfWork.QuitProgresses.GetAllWithUserAsync();
 
             var ranked = progresses
+                .Where(p => p.QuitPlan != null && p.QuitPlan.User != null)
                 .GroupBy(p => p.QuitPlan.UserID)
-                .Select(g => new
+                .Select(g =>
                 {
-                    UserID = g.Key,
-                    FullName = g.First().QuitPlan.User.FullName,
-                    ProfilePicture = g.First().QuitPlan.User.ProfilePicture,
-                    TotalMoneySaved = g.Max(p => p.TotalMoneySaved)
+                    var latest = g.OrderByDescending(p => p.ProgressDate).First();
+                    return new
+                    {
+                        UserID = g.Key,
+                        FullName = latest.QuitPlan.User.FullName,
+                        ProfilePicture = latest.QuitPlan.User.ProfilePicture,
+                        TotalMoneySaved = latest.TotalMoneySaved
+                    };
                 })
                 .OrderByDescending(x => x.TotalMoneySaved)
                 .Take(top)
@@ -69,13 +76,18 @@ namespace Smoking.API.Controllers
             var progresses = await _unitOfWork.QuitProgresses.GetAllWithUserAsync();
 
             var ranked = progresses
+                .Where(p => p.QuitPlan != null && p.QuitPlan.User != null)
                 .GroupBy(p => p.QuitPlan.UserID)
-                .Select(g => new
+                .Select(g =>
                 {
-                    UserID = g.Key,
-                    FullName = g.First().QuitPlan.User.FullName,
-                    ProfilePicture = g.First().QuitPlan.User.ProfilePicture,
-                    TotalCigarettesDropped = g.Max(p => p.TotalCigarettesDropped)
+                    var latest = g.OrderByDescending(p => p.ProgressDate).First();
+                    return new
+                    {
+                        UserID = g.Key,
+                        FullName = latest.QuitPlan.User.FullName,
+                        ProfilePicture = latest.QuitPlan.User.ProfilePicture,
+                        TotalCigarettesDropped = latest.TotalCigarettesDropped
+                    };
                 })
                 .OrderByDescending(x => x.TotalCigarettesDropped)
                 .Take(top)
@@ -91,7 +103,7 @@ namespace Smoking.API.Controllers
             var achievements = await _unitOfWork.UserAchievements.GetAllWithUserAndAchievementAsync();
 
             var ranked = achievements
-                .Where(a => a.Achievement.CigarettesDroppedRequired > 0)
+                .Where(a => a.Achievement != null && a.Achievement.CigarettesDroppedRequired > 0 && a.User != null)
                 .GroupBy(a => a.UserID)
                 .Select(g => new
                 {
@@ -114,7 +126,7 @@ namespace Smoking.API.Controllers
             var challenges = await _unitOfWork.UserQuitChallenges.GetAllWithUserAsync();
 
             var ranked = challenges
-                .Where(c => c.IsCompleted)
+                .Where(c => c.IsCompleted && c.User != null)
                 .GroupBy(c => c.UserId)
                 .Select(g => new
                 {

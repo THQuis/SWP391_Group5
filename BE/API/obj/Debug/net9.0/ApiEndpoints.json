@@ -560,7 +560,7 @@
   {
     "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
     "Method": "Delete",
-    "RelativePath": "api/admin/package-milestones/delete/{id}",
+    "RelativePath": "api/admin/package-milestones/delete",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -568,7 +568,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -586,7 +586,7 @@
   {
     "ContainingType": "Smoking.API.Controllers.Admin.PackageMilestoneController",
     "Method": "Update",
-    "RelativePath": "api/admin/package-milestones/update/{id}",
+    "RelativePath": "api/admin/package-milestones/update",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -594,7 +594,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       },
       {
         "Name": "dto",
@@ -1433,6 +1433,43 @@
     "Parameters": [
       {
         "Name": "top",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.RevenueController",
+    "Method": "GetMonthlyRevenue",
+    "RelativePath": "api/Revenue/month",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "year",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "month",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.RevenueController",
+    "Method": "GetYearRevenue",
+    "RelativePath": "api/Revenue/year",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "year",
         "Type": "System.Int32",
         "IsRequired": false
       }

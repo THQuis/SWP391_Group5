@@ -5,7 +5,7 @@ using Smoking.DAL.Interfaces.Repositories;
 
 [ApiController]
 [Route("api/admin/consultation")]
-[Authorize(Roles = "1")]  // Chỉ Admin (RoleID = 1) mới có thể truy cập
+[Authorize(Roles = "1")] 
 public class AdminConsultationController : ControllerBase
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -15,7 +15,6 @@ public class AdminConsultationController : ControllerBase
         _unitOfWork = unitOfWork;
     }
 
-    // 🔹 Lấy tất cả lịch tư vấn
     [HttpGet("all-appointments")]
     public async Task<IActionResult> GetAllAppointments()
     {

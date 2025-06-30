@@ -12,7 +12,7 @@ namespace Smoking.API.Controllers.Member
 {
     [Route("api/UserBlog")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "2")]
     public class UserBlogController : ControllerBase
     {
         private readonly IBlogService _blogService;

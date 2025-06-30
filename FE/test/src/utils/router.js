@@ -16,7 +16,8 @@ export const ROUTERS = {
         PROFILECOACH: "/User/coach/profile/:id",
         PLANOVERVIEW: "/User/PlanOverviewPage",
         CHALENGE: "/User/Challenges",
-        MYCONSUL: "/User/MyConsultations"
+        MYCONSUL: "/User/MyConsultations",
+        ACHIVE: "/User/AchievementGallery"
     },
     COACH: {
         DASHBOARD: "/coach/dashboard",

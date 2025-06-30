@@ -88,17 +88,16 @@ const AuthPage = () => {
             const phoneNumber = data.user.phoneNumber;
 
 
-            // Lưu thông tin vào localStorage
             localStorage.setItem('userToken', data.token);
             localStorage.setItem('userRole', userRole);
             localStorage.setItem('userName', userName);
             localStorage.setItem('userEmail', userEmail);
             localStorage.setItem('userId', userId);
-            localStorage.setItem('coachId', coachId);//profilePicture
+            localStorage.setItem('coachId', coachId);
             localStorage.setItem('profilePicture', profilePicture);
-            loginForm.setItem('gender', gender);
-            loginForm.setItem('dateOfBirth', DateOfBirth);
-            loginForm.setItem('phoneNumber', phoneNumber);
+            localStorage.setItem('gender', gender);
+            localStorage.setItem('dateOfBirth', DateOfBirth);
+            localStorage.setItem('phoneNumber', phoneNumber);
 
 
             console.log("role name", userRole);

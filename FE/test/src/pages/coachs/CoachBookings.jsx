@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
-    Container, Card, Table, Button, Badge, Spinner, Modal, Tabs, Tab, Form
+    Container, Card, Table, Button, Spinner, Modal, Tabs, Tab, Form
 } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-// Modal xác nhận lịch tư vấn
-function BookingActionModal({ show, onHide, booking, onConfirm, onReject, loading }) {
+// Modal xác nhận lịch tư vấn (chỉ để duyệt hoặc từ chối)
+function BookingActionModal({ show, onHide, booking, onApprove, onReject, loading }) {
     if (!booking) return null;
     return (
         <Modal show={show} onHide={onHide} centered>
@@ -22,19 +22,18 @@ function BookingActionModal({ show, onHide, booking, onConfirm, onReject, loadin
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="danger" onClick={onReject} disabled={loading}>Từ chối</Button>
-                <Button variant="success" onClick={onConfirm} disabled={loading}>Nhận lịch</Button>
+                <Button variant="success" onClick={onApprove} disabled={loading}>Nhận lịch & Gửi thông tin</Button>
             </Modal.Footer>
         </Modal>
     );
 }
 
-// Modal gửi thông tin cho member
-function SendInfoModal({ show, onHide, booking, onSend, loading }) {
+// Modal gửi (hoặc cập nhật) thông tin cho member
+function SendInfoModal({ show, onHide, booking, onSend, loading, isUpdate }) {
     const [meetingLink, setMeetingLink] = useState("");
     const [coachNotes, setCoachNotes] = useState("");
     const [preferredLanguage, setPreferredLanguage] = useState("");
 
-    // Reset fields when modal opens/closes or booking changes
     useEffect(() => {
         if (show && booking) {
             setMeetingLink(booking.meetingLink || "");
@@ -56,7 +55,7 @@ function SendInfoModal({ show, onHide, booking, onSend, loading }) {
         <Modal show={show} onHide={onHide} centered>
             <Form onSubmit={handleSubmit}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Gửi thông tin cho thành viên</Modal.Title>
+                    <Modal.Title>{isUpdate ? "Cập nhật thông tin cho thành viên" : "Gửi thông tin cho thành viên"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group className="mb-3">
@@ -68,7 +67,7 @@ function SendInfoModal({ show, onHide, booking, onSend, loading }) {
                             placeholder="Nhập link phòng họp (Zoom, Google Meet...)"
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    {/* <Form.Group className="mb-3">
                         <Form.Label>Ghi chú của Coach</Form.Label>
                         <Form.Control
                             as="textarea"
@@ -86,12 +85,12 @@ function SendInfoModal({ show, onHide, booking, onSend, loading }) {
                             onChange={e => setPreferredLanguage(e.target.value)}
                             placeholder="VD: Vietnamese, English..."
                         />
-                    </Form.Group>
+                    </Form.Group> */}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={onHide} disabled={loading}>Đóng</Button>
                     <Button type="submit" variant="primary" disabled={loading}>
-                        {loading ? <Spinner animation="border" size="sm" /> : "Gửi thông tin"}
+                        {loading ? <Spinner animation="border" size="sm" /> : isUpdate ? "Cập nhật" : "Gửi thông tin"}
                     </Button>
                 </Modal.Footer>
             </Form>
@@ -114,16 +113,17 @@ const CoachBookings = () => {
 
     // Modal & action state
     const [showBookingModal, setShowBookingModal] = useState(false);
+    const [showSendInfoModal, setShowSendInfoModal] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [actionLoading, setActionLoading] = useState(false);
-
-    // Modal gửi info
-    const [showSendInfoModal, setShowSendInfoModal] = useState(false);
     const [infoLoading, setInfoLoading] = useState(false);
 
     // Tab control
     const [activeTab, setActiveTab] = useState("Pending");
+    // Gửi info: phân biệt gửi mới (approve) hay cập nhật (update)
+    const [sendInfoIsUpdate, setSendInfoIsUpdate] = useState(false);
 
+    // API lấy danh sách lịch
     const fetchBookings = async () => {
         setLoading(true);
         try {
@@ -146,34 +146,46 @@ const CoachBookings = () => {
         fetchBookings();
     }, []);
 
+    // Khi bấm Duyệt/Từ chối ở tab Pending
     const handleClickBooking = (booking) => {
         setSelectedBooking(booking);
         setShowBookingModal(true);
     };
 
-    // Duyệt lịch (approve)
-    const handleConfirmBooking = async () => {
+    // Duyệt lịch → mở modal gửi thông tin
+    const handleApproveBooking = () => {
+        setShowBookingModal(false);
+        setSendInfoIsUpdate(false); // gửi info mới (approve)
+        setTimeout(() => setShowSendInfoModal(true), 300);
+    };
+
+    // Gửi thông tin khi duyệt (approve)
+    const handleApproveAndSendInfo = async (info) => {
         if (!selectedBooking) return;
-        setActionLoading(true);
+        setInfoLoading(true);
         try {
             const token = localStorage.getItem("userToken");
             const response = await fetch(`/api/coach/consultation/approve/${selectedBooking.bookingID}`, {
                 method: "PUT",
-                headers: { "Authorization": `Bearer ${token}` }
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(info)
             });
             const data = await response.json();
             if (!response.ok) throw new Error(data.message || "Lỗi khi duyệt lịch!");
             toast.success(data.message || "Duyệt lịch thành công!");
-            setShowBookingModal(false);
+            setShowSendInfoModal(false);
             fetchBookings();
         } catch (error) {
             toast.error(error.message || "Lỗi khi duyệt lịch!");
         } finally {
-            setActionLoading(false);
+            setInfoLoading(false);
         }
     };
 
-    // Từ chối lịch (reject)
+    // Từ chối lịch
     const handleRejectBooking = async () => {
         if (!selectedBooking) return;
         setActionLoading(true);
@@ -216,12 +228,15 @@ const CoachBookings = () => {
         }
     };
 
-    // Gửi thông tin cho member (meeting link, coach note, language)
-    const handleShowSendInfo = (booking) => {
+    // Tab "Đã xác nhận" → bấm "Gửi thông tin" để cập nhật meeting link, note, language
+    const handleShowUpdateInfo = (booking) => {
         setSelectedBooking(booking);
+        setSendInfoIsUpdate(true); // cập nhật info
         setShowSendInfoModal(true);
     };
-    const handleSendInfo = async (info) => {
+
+    // Gửi/cập nhật info cho tab đã xác nhận
+    const handleUpdateInfo = async (info) => {
         if (!selectedBooking) return;
         setInfoLoading(true);
         try {
@@ -236,7 +251,7 @@ const CoachBookings = () => {
             });
             const data = await response.json();
             if (!response.ok) throw new Error(data.message || "Gửi thông tin thất bại!");
-            toast.success(data.message || "Đã gửi thông tin cho thành viên!");
+            toast.success(data.message || "Đã cập nhật thông tin cho thành viên!");
             setShowSendInfoModal(false);
             fetchBookings();
         } catch (error) {
@@ -302,9 +317,9 @@ const CoachBookings = () => {
                                     <Button
                                         size="sm"
                                         variant="info"
-                                        onClick={() => handleShowSendInfo(b)}
+                                        onClick={() => handleShowUpdateInfo(b)}
                                         disabled={infoLoading}
-                                    >Gửi thông tin</Button>
+                                    >Gửi/Cập nhật thông tin</Button>
                                 </>
                             )}
                         </td>
@@ -350,25 +365,26 @@ const CoachBookings = () => {
                 </Card>
             )}
 
-            {/* Modal xác nhận lịch tư vấn */}
+            {/* Modal xác nhận duyệt lịch */}
             <BookingActionModal
                 show={showBookingModal}
                 onHide={() => setShowBookingModal(false)}
                 booking={selectedBooking}
-                onConfirm={handleConfirmBooking}
+                onApprove={handleApproveBooking}
                 onReject={handleRejectBooking}
                 loading={actionLoading}
             />
-            {/* Modal gửi thông tin cho member */}
+            {/* Modal gửi/cập nhật thông tin */}
             <SendInfoModal
                 show={showSendInfoModal}
                 onHide={() => setShowSendInfoModal(false)}
                 booking={selectedBooking}
-                onSend={handleSendInfo}
+                onSend={sendInfoIsUpdate ? handleUpdateInfo : handleApproveAndSendInfo}
                 loading={infoLoading}
+                isUpdate={sendInfoIsUpdate}
             />
         </Container>
     );
 };
 
-export default CoachBookings;
+export default CoachBookings;   

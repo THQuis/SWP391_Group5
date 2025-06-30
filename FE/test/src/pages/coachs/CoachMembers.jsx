@@ -1,73 +1,83 @@
 import React, { useState, useEffect } from "react";
 import {
-    Container, Card, Table, Button, Badge, Spinner, Modal, Row, Col
+    Container, Card, Table, Button, Badge, Spinner, Modal, Row, Col, ListGroup, Alert, Image
 } from "react-bootstrap";
 
-// DUMMY DATA (có thể import từ file dùng chung)
-const DUMMY_MEMBERS = [
-    {
-        UserID: 3,
-        FullName: "Lê Thị Trà Mi",
-        Email: "mi@gmail.com",
-        PhoneNumber: "0905556666",
-        Membership: "Gói Cơ bản",
-        Status: "Active",
-        StartDate: "2025-06-01",
-        Plan: {
-            QuitPlanID: 1,
-            CigarettesPerDayAtStart: 20,
-            PricePerPackAtStart: 25000,
-            StartDate: "2025-06-01",
-            Reason: "Vì sức khỏe của gia đình",
-            PlanDetails: "Giảm dần 2 điếu mỗi ngày",
-            Status: "Active",
-            DaysSmokeFree: 10,
-            CigarettesQuit: 50,
-            MoneySaved: 100000,
-        },
-        Progress: [
-            {
-                name: "Nhịp tim ổn định",
-                percent: 100,
-                description: "Huyết áp và nhịp tim của bạn bắt đầu trở lại mức bình thường, giảm gánh nặng cho tim.",
-                time: "20 phút",
-            },
-            {
-                name: "Mức Oxy tăng",
-                percent: 15,
-                description: "Nồng độ CO trong máu giảm, cho phép oxy lưu thông tốt hơn.",
-                time: "8 giờ",
-            },
-            {
-                name: "Nguy cơ đau tim giảm",
-                percent: 100,
-                description: "Nguy cơ bị một cơn đau tim đột ngột đã giảm đi đáng kể.",
-                time: "24 giờ",
-            },
-            {
-                name: "Vị giác và khứu giác cải thiện",
-                percent: 54,
-                description: "Các đầu dây thần kinh bắt đầu tái tạo, giúp bạn cảm nhận mùi vị tốt hơn.",
-                time: "48 giờ",
-            },
-        ],
-    },
-    {
-        UserID: 4,
-        FullName: "Trần Thị Bình",
-        Email: "member.binh@example.com",
-        PhoneNumber: "0907778888",
-        Membership: "Gói Cao cấp",
-        Status: "Active",
-        StartDate: "2025-05-25",
-        Plan: null,
-        Progress: [],
-    },
-];
+// Modal xem thử thách của thành viên
+function MemberChallengesModal({ show, onHide, challenges, member, loading }) {
+    return (
+        <Modal show={show} onHide={onHide} size="lg" centered>
+            <Modal.Header closeButton>
+                <Modal.Title>Thử thách của {member?.FullName}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {loading ? (
+                    <div className="text-center my-5">
+                        <Spinner animation="border" />
+                    </div>
+                ) : !challenges || challenges.length === 0 ? (
+                    <Alert variant="info">Chưa có thử thách nào.</Alert>
+                ) : (
+                    <ListGroup>
+                        {challenges.map((c) => (
+                            <ListGroup.Item key={c.id}>
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{c.templateTitle}</strong>
+                                        <div className="text-muted" style={{ fontSize: 14 }}>
+                                            {c.description}
+                                        </div>
+                                        <div>
+                                            <span className="me-2">
+                                                <b>Ngày:</b> {c.scheduledDate?.split("T")[0]}
+                                            </span>
+                                            <span>
+                                                <b>Trạng thái:</b>{" "}
+                                                <Badge bg={c.isCompleted ? "success" : "secondary"}>
+                                                    {c.isCompleted ? "Đã hoàn thành" : "Chưa hoàn thành"}
+                                                </Badge>
+                                            </span>
+                                        </div>
+                                        {c.notes && (
+                                            <div>
+                                                <b>Ghi chú:</b> {c.notes}
+                                            </div>
+                                        )}
+                                        {c.imageUrl && (
+                                            <div className="mt-2">
+                                                <Image src={c.imageUrl} thumbnail style={{ maxWidth: 120, maxHeight: 80 }} />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </ListGroup.Item>
+                        ))}
+                    </ListGroup>
+                )}
+            </Modal.Body>
+        </Modal>
+    );
+}
 
 // Modal xem thông tin chi tiết member
-function MemberDetailModal({ show, onHide, member }) {
+function MemberDetailModal({ show, onHide, member, loadingDetail, surveyAnswers, loadingSurveyAnswers }) {
+    // Thêm state để toggle lịch sử tiến trình
+    const [showHistory, setShowHistory] = useState(false);
+
+    useEffect(() => {
+        // Reset khi mở modal mới
+        if (show) setShowHistory(false);
+    }, [show, member]);
+
     if (!member) return null;
+
+    // Sắp xếp tiến trình mới nhất lên đầu (theo ngày giảm dần)
+    let sortedProgress = (member.QuitProgress || []).slice().sort(
+        (a, b) => new Date(b.progressDate) - new Date(a.progressDate)
+    );
+    const latest = sortedProgress[0];
+    const history = sortedProgress.slice(1);
+
     return (
         <Modal show={show} onHide={onHide} centered size="lg">
             <Modal.Header closeButton>
@@ -77,7 +87,7 @@ function MemberDetailModal({ show, onHide, member }) {
                 <Row>
                     <Col md={6}>
                         <h5>Thông tin thành viên</h5>
-                        <Table bordered size="sm">
+                        <Table bordered size="sm" className="mb-4">
                             <tbody>
                                 <tr>
                                     <td>Họ tên</td>
@@ -92,14 +102,6 @@ function MemberDetailModal({ show, onHide, member }) {
                                     <td>{member.PhoneNumber}</td>
                                 </tr>
                                 <tr>
-                                    <td>Gói thành viên</td>
-                                    <td>{member.Membership}</td>
-                                </tr>
-                                <tr>
-                                    <td>Ngày tham gia</td>
-                                    <td>{member.StartDate}</td>
-                                </tr>
-                                <tr>
                                     <td>Trạng thái</td>
                                     <td>
                                         <Badge bg={member.Status === "Active" ? "success" : "secondary"}>
@@ -109,83 +111,130 @@ function MemberDetailModal({ show, onHide, member }) {
                                 </tr>
                             </tbody>
                         </Table>
-                        {member.Plan && (
-                            <>
-                                <h5 className="mt-3">Kế hoạch cai thuốc</h5>
-                                <Table bordered size="sm">
+                    </Col>
+                    <Col md={6}>
+                        <h5>Tiến trình cai thuốc</h5>
+                        {loadingDetail ? (
+                            <Spinner animation="border" size="sm" />
+                        ) : sortedProgress.length > 0 ? (
+                            <div style={{ background: "#f9f9f9", borderRadius: 8, border: "1px solid #e3e4e4", padding: 10 }}>
+                                {/* Hiện tiến trình mới nhất */}
+                                <Table bordered size="sm" className="mb-3" style={{ background: "#fff", borderRadius: 8, overflow: "hidden" }}>
                                     <tbody>
                                         <tr>
-                                            <td>Ngày bắt đầu</td>
-                                            <td>{member.Plan.StartDate}</td>
+                                            <td style={{ width: 120, fontWeight: 500 }}>Ngày</td>
+                                            <td colSpan={2}>{latest.progressDate?.split("T")[0]}</td>
                                         </tr>
                                         <tr>
-                                            <td>Điếu/ngày lúc bắt đầu</td>
-                                            <td>{member.Plan.CigarettesPerDayAtStart}</td>
+                                            <td>Điếu/ngày (gốc)</td>
+                                            <td colSpan={2}>{latest.cigarettesPerDayBaseline}</td>
                                         </tr>
                                         <tr>
-                                            <td>Giá 1 gói thuốc (VND)</td>
-                                            <td>{member.Plan.PricePerPackAtStart?.toLocaleString()}</td>
+                                            <td>Điếu đã hút</td>
+                                            <td colSpan={2}>{latest.cigarettesSmokedToday}</td>
                                         </tr>
                                         <tr>
-                                            <td>Lý do</td>
-                                            <td>{member.Plan.Reason}</td>
+                                            <td>Điếu giảm</td>
+                                            <td colSpan={2}>{latest.cigarettesDropped}</td>
                                         </tr>
                                         <tr>
-                                            <td>Chi tiết kế hoạch</td>
-                                            <td>{member.Plan.PlanDetails}</td>
+                                            <td>Cộng dồn giảm</td>
+                                            <td colSpan={2}>{latest.totalCigarettesDropped}</td>
                                         </tr>
                                         <tr>
-                                            <td>Trạng thái</td>
-                                            <td>
-                                                <Badge bg={member.Plan.Status === "Active" ? "success" : "secondary"}>
-                                                    {member.Plan.Status}
-                                                </Badge>
-                                            </td>
+                                            <td>Tiết kiệm</td>
+                                            <td colSpan={2}>{latest.totalMoneySaved?.toLocaleString()} VNĐ</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ghi chú</td>
+                                            <td colSpan={2}>{latest.notes}</td>
                                         </tr>
                                     </tbody>
                                 </Table>
-                            </>
-                        )}
-                    </Col>
-                    <Col md={6}>
-                        {member.Plan ? (
-                            <div className="mb-3"></div>
+                                {/* Nút toggle lịch sử */}
+                                {history.length > 0 && (
+                                    <div style={{ textAlign: "center" }}>
+                                        <Button
+                                            variant="link"
+                                            onClick={() => setShowHistory((prev) => !prev)}
+                                            style={{ fontWeight: 500, color: "#0d6efd" }}
+                                        >
+                                            {showHistory ? "Ẩn lịch sử ▲" : "Xem lịch sử ▼"}
+                                        </Button>
+                                    </div>
+                                )}
+                                {/* Lịch sử tiến trình */}
+                                {showHistory && history.length > 0 && (
+                                    <div style={{ marginTop: 12 }}>
+                                        {history.map((p, idx) => (
+                                            <Table key={idx} bordered size="sm" className="mb-3" style={{ background: "#fff", borderRadius: 8, overflow: "hidden" }}>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style={{ width: 120, fontWeight: 500 }}>Ngày</td>
+                                                        <td colSpan={2}>{p.progressDate?.split("T")[0]}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Điếu/ngày (gốc)</td>
+                                                        <td colSpan={2}>{p.cigarettesPerDayBaseline}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Điếu đã hút</td>
+                                                        <td colSpan={2}>{p.cigarettesSmokedToday}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Điếu giảm</td>
+                                                        <td colSpan={2}>{p.cigarettesDropped}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cộng dồn giảm</td>
+                                                        <td colSpan={2}>{p.totalCigarettesDropped}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Tiết kiệm</td>
+                                                        <td colSpan={2}>{p.totalMoneySaved?.toLocaleString()} VNĐ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ghi chú</td>
+                                                        <td colSpan={2}>{p.notes}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </Table>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         ) : (
-                            <div className="mb-3">Chưa có kế hoạch cai thuốc.</div>
+                            <div>Chưa có tiến trình.</div>
                         )}
-                        <div>
-                            <h5>Tiến trình milestone</h5>
-                            {member.Progress && member.Progress.length > 0 ? (
-                                <div>
-                                    {member.Progress.map((item, idx) => (
-                                        <div key={idx} style={{
-                                            background: "#fff",
-                                            borderRadius: 12,
-                                            border: "1px solid #e3e4e4",
-                                            margin: "10px 0",
-                                            padding: 12,
-                                            boxShadow: "0 2px 6px #0001"
-                                        }}>
-                                            <div style={{ fontWeight: 600 }}>
-                                                <span style={{
-                                                    color: "#1EAD75",
-                                                    fontWeight: 700,
-                                                    fontSize: 18,
-                                                    marginRight: 10
-                                                }}>{item.percent}%</span>
-                                                {item.name}
-                                            </div>
-                                            <div style={{ color: "#444" }}>{item.description}</div>
-                                            <div className="text-end" style={{ fontSize: 14, color: "#2EA3A3" }}>{item.time}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div>Chưa có tiến trình.</div>
-                            )}
-                        </div>
                     </Col>
                 </Row>
+                <hr />
+                <h5>Câu hỏi khảo sát & đáp án</h5>
+                {loadingSurveyAnswers ? (
+                    <Spinner animation="border" size="sm" />
+                ) : surveyAnswers && surveyAnswers.length > 0 ? (
+                    <Table bordered size="sm">
+                        <thead>
+                            <tr>
+                                <th>Câu hỏi</th>
+                                <th>Đáp án</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {surveyAnswers.map((ans, idx) => (
+                                <tr key={idx}>
+                                    <td>{ans.questionText}</td>
+                                    <td>
+                                        {ans.answerText}
+                                        {ans.customAnswer && <div><i>Khác: {ans.customAnswer}</i></div>}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                ) : (
+                    <Alert variant="info">Chưa có dữ liệu khảo sát.</Alert>
+                )}
             </Modal.Body>
         </Modal>
     );
@@ -196,15 +245,128 @@ const CoachMembers = () => {
     const [loading, setLoading] = useState(true);
     const [showMemberModal, setShowMemberModal] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
+    const [loadingDetail, setLoadingDetail] = useState(false);
 
+    // State for Member Challenges Modal
+    const [showChallengesModal, setShowChallengesModal] = useState(false);
+    const [loadingChallenges, setLoadingChallenges] = useState(false);
+    const [challenges, setChallenges] = useState([]);
+    const [challengeMember, setChallengeMember] = useState(null);
+
+    const [surveyAnswers, setSurveyAnswers] = useState([]);
+    const [loadingSurveyAnswers, setLoadingSurveyAnswers] = useState(false);
     useEffect(() => {
-        setMembers(DUMMY_MEMBERS);
-        setLoading(false);
+        const token = localStorage.getItem("userToken");
+        if (!token) {
+            setLoading(false);
+            return;
+        }
+        fetch("/api/coach/my-users", {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Lỗi lấy danh sách thành viên");
+                return res.json();
+            })
+            .then(data => {
+                const mapped = data.map(u => ({
+                    UserID: u.userID,
+                    FullName: u.fullName,
+                    Email: u.email,
+                    PhoneNumber: u.phoneNumber,
+                    Status: u.status,
+                    profilePicture: u.profilePicture,
+                    QuitProgress: [],
+                }));
+                setMembers(mapped);
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
     }, []);
 
+    // Xem chi tiết member: fetch progress từ API
     const handleClickMember = (member) => {
-        setSelectedMember(member);
-        setShowMemberModal(true);
+        setLoadingDetail(true);
+        setLoadingSurveyAnswers(true);
+        const token = localStorage.getItem("userToken");
+
+        // Lấy tiến trình cai thuốc
+        fetch(`/api/coach/user/${member.UserID}/progress`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Lỗi lấy tiến trình");
+                return res.json();
+            })
+            .then(data => {
+                setSelectedMember({
+                    ...member,
+                    QuitProgress: data.quitProgress || [],
+                });
+                setShowMemberModal(true);
+                setLoadingDetail(false);
+            })
+            .catch(() => {
+                setSelectedMember({ ...member, QuitProgress: [] });
+                setShowMemberModal(true);
+                setLoadingDetail(false);
+            });
+
+        // Lấy survey answers
+        fetch(`/api/coach/user/${member.UserID}/survey-answers`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Lỗi lấy khảo sát");
+                return res.json();
+            })
+            .then(data => {
+                setSurveyAnswers(data || []);
+                setLoadingSurveyAnswers(false);
+            })
+            .catch(() => {
+                setSurveyAnswers([]);
+                setLoadingSurveyAnswers(false);
+            });
+    };
+
+    // Xem thử thách của thành viên
+    const handleViewChallenges = (member) => {
+        setLoadingChallenges(true);
+        setShowChallengesModal(true);
+        setChallengeMember(member);
+        const token = localStorage.getItem("userToken");
+        fetch(`/api/coach/user/${member.UserID}/challenges`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Lỗi lấy thử thách");
+                return res.json();
+            })
+            .then(data => {
+                setChallenges(data || []);
+                setLoadingChallenges(false);
+            })
+            .catch(() => {
+                setChallenges([]);
+                setLoadingChallenges(false);
+            });
     };
 
     return (
@@ -226,20 +388,32 @@ const CoachMembers = () => {
                                         <th>Họ tên</th>
                                         <th>Email</th>
                                         <th>Điện thoại</th>
-                                        <th>Gói thành viên</th>
-                                        <th>Ngày tham gia</th>
                                         <th>Trạng thái</th>
-                                        <th>Xem chi tiết</th>
+                                        <th colSpan={2} style={{ minWidth: 170 }}>Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {members.map((m) => (
                                         <tr key={m.UserID}>
-                                            <td>{m.FullName}</td>
+                                            <td>
+                                                {m.profilePicture && (
+                                                    <img
+                                                        src={m.profilePicture}
+                                                        alt="avatar"
+                                                        style={{
+                                                            width: 32,
+                                                            height: 32,
+                                                            objectFit: "cover",
+                                                            borderRadius: "50%",
+                                                            marginRight: 8,
+                                                            border: "1px solid #eee",
+                                                        }}
+                                                    />
+                                                )}
+                                                {m.FullName}
+                                            </td>
                                             <td>{m.Email}</td>
                                             <td>{m.PhoneNumber}</td>
-                                            <td>{m.Membership}</td>
-                                            <td>{m.StartDate}</td>
                                             <td>
                                                 <Badge bg={m.Status === "Active" ? "success" : "secondary"}>
                                                     {m.Status}
@@ -248,6 +422,11 @@ const CoachMembers = () => {
                                             <td>
                                                 <Button size="sm" variant="primary" onClick={() => handleClickMember(m)}>
                                                     Xem chi tiết
+                                                </Button>
+                                            </td>
+                                            <td>
+                                                <Button size="sm" variant="info" onClick={() => handleViewChallenges(m)}>
+                                                    Thử thách
                                                 </Button>
                                             </td>
                                         </tr>
@@ -264,9 +443,21 @@ const CoachMembers = () => {
                 show={showMemberModal}
                 onHide={() => setShowMemberModal(false)}
                 member={selectedMember}
+                loadingDetail={loadingDetail}
+                surveyAnswers={surveyAnswers}
+                loadingSurveyAnswers={loadingSurveyAnswers}
+            />
+
+            {/* Modal Thử thách của thành viên */}
+            <MemberChallengesModal
+                show={showChallengesModal}
+                onHide={() => setShowChallengesModal(false)}
+                challenges={challenges}
+                member={challengeMember}
+                loading={loadingChallenges}
             />
         </Container>
     );
 };
 
-export default CoachMembers;
+export default CoachMembers;    

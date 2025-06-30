@@ -38,6 +38,7 @@ import MyConsultations from "../pages/user/MyConsultations";
 import CoachDashboard from "../pages/coachs/CoachDashboard";
 import CoachBookings from "../pages/coachs/CoachBookings";
 import CoachMembers from "../pages/coachs/CoachMembers";
+import AchievementGallery from "../pages/Achivement/AchievementGallery";
 
 
 
@@ -65,6 +66,8 @@ const RouterCustom = () => {
                 <Route path={ROUTERS.USER.PLANOVERVIEW} element={<PlanOverviewPage />} />
                 <Route path={ROUTERS.USER.CHALENGE} element={<ChallengesPage />} />
                 <Route path={ROUTERS.USER.MYCONSUL} element={<MyConsultations />} />
+                <Route path={ROUTERS.USER.ACHIVE} element={<AchievementGallery />} />
+
 
                 {/* CoachDashboard */}
             </Route>

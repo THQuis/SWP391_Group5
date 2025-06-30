@@ -103,13 +103,34 @@ const MyConsultations = () => {
                     <tr key={b.bookingID}>
                         <td>{idx + 1}</td>
                         <td>{b.coachName}</td>
-                        <td>{new Date(b.bookingDate).toLocaleString('vi-VN')}</td>
+                        <td>
+                            {(() => {
+                                const d = new Date(b.bookingDate);
+                                const date = d.toLocaleDateString('vi-VN');
+                                const time = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                                return `${date} ${time}`;
+                            })()}
+                        </td>
                         <td>{b.duration}</td>
                         <td>{b.notes}</td>
                         <td>
                             <span className={statusMap[b.status]?.className || "badge bg-secondary"}>
                                 {statusMap[b.status]?.label || b.status}
                             </span>
+                            {/* Thêm nút MeetingLink ở tab Đã xác nhận nếu có meetingLink */}
+                            {statusKey === "Approved" && b.meetingLink && (
+                                <Button
+                                    size="sm"
+                                    variant="outline-primary"
+                                    className="ms-2"
+                                    style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 120 }}
+                                    onClick={() => window.open(b.meetingLink.startsWith("http") ? b.meetingLink : undefined, "_blank")}
+                                    title={b.meetingLink}
+                                    disabled={!b.meetingLink.startsWith("http")}
+                                >
+                                    Link phòng họp
+                                </Button>
+                            )}
                             {statusKey === "Pending" && (
                                 <Button
                                     variant="danger"
@@ -129,7 +150,7 @@ const MyConsultations = () => {
                 ))}
             </tbody>
         </Table>
-    );
+    )
 
     return (
         <Container className="py-4">

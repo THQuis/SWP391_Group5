@@ -4,14 +4,9 @@ import "../../styles/home.scss";
 import { Link } from 'react-router-dom';
 import { ROUTERS } from "../../utils/router";
 
-
-
-
 const HomePage = () => {
     return (
         <div>
-
-
             <section className="hero-carousel" id="home">
                 <Carousel fade controls={false} indicators={false} interval={1000}>
                     <Carousel.Item>
@@ -20,7 +15,6 @@ const HomePage = () => {
                             src="https://github.com/THQuis/SWP391_Group5/blob/Qui2/image/banner_Ko_nicotin.png?raw=true"
                             alt="First slide"
                         />
-
                     </Carousel.Item>
                     <Carousel.Item>
                         <img

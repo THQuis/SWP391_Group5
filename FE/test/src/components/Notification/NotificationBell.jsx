@@ -7,7 +7,6 @@ import '../../styles/nottification.scss';
 const NotificationBell = () => {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
 
     useEffect(() => {
         let intervalId;
@@ -41,12 +40,11 @@ const NotificationBell = () => {
         };
 
         fetchNotifications(); // Lấy lần đầu khi mount
-        intervalId = setInterval(fetchNotifications, 15000); // Lấy lại mỗi 15s
+        // intervalId = setInterval(fetchNotifications, 15000); // Lấy lại mỗi 15s
 
-        return () => clearInterval(intervalId); // Xóa interval khi unmount
+        return () => clearInterval(intervalId);
     }, []);
 
-    // Đánh dấu đã đọc và chuyển trang chi tiết
     const handleViewNotification = async (id) => {
         try {
             await fetch(`/api/user/notifications/${id}/read`, {

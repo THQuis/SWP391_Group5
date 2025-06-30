@@ -1,4 +1,4 @@
-// ...phần import và code phía trên giữ nguyên...
+// ...phần import và code phía trên giữ nzzguyên...
 
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Modal, Form, Spinner, Alert } from 'react-bootstrap';
@@ -30,7 +30,6 @@ const fetchMyCoachId = async () => {
     // data.coach.userID hoặc data.coachId tuỳ BE trả về
     return (data.coach && data.coach.userID) || data.coachId || null;
 };
-// Giả lập API trả về thông tin chi tiết của một coach
 const fetchCoachById = async (id) => {
     const token = localStorage.getItem("userToken");
     const response = await fetch(`/api/user/coach/${id}`, {

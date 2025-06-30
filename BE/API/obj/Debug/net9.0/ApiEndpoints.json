@@ -1113,6 +1113,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
+    "Method": "GetUserSurveyAnswers",
+    "RelativePath": "api/coach/user/{userId}/survey-answers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Member.UserMembershipController",
     "Method": "CreatePayment",
     "RelativePath": "api/membership/create-payment",

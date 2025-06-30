@@ -5,6 +5,7 @@ using Smoking.BLL.Interfaces;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Smoking.DAL.Entities;
 
 namespace Smoking.API.Controllers.Coach
 {
@@ -119,8 +120,26 @@ namespace Smoking.API.Controllers.Coach
                 c.Template?.Description,
                 c.ScheduledDate,
                 c.IsCompleted,
-                c.Notes
+                c.Notes,
+                c.ImageUrl
             }));
         }
+        [HttpGet("user/{userId}/survey-answers")]
+        public async Task<IActionResult> GetUserSurveyAnswers(int userId)
+        {
+            var answers = await _unitOfWork.QuitPlanSelectedAnswers.GetByUserIdAsync(userId);
+
+            var result = answers.Select(a => new
+            {
+                QuestionId = a.AnswerOption.QuestionID,
+                QuestionType = a.AnswerOption.Question.QuestionType,
+                QuestionText = a.AnswerOption.Question.QuestionText,
+                AnswerText = a.AnswerOption.AnswerText,
+                CustomAnswer = a.CustomAnswerText
+            });
+
+            return Ok(result);
+        }
+
     }
 }

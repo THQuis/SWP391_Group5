@@ -24,5 +24,6 @@ namespace Smoking.BLL.Interfaces
         Task<IEnumerable<User>> GetAllUsersAsync(); // Lấy tất cả người dùng
         Task<IEnumerable<User>> GetUsersByRoleAsync(string role); // Lấy người dùng theo role
         Task<User> GetUserWithMembershipAsync(int userId);
+        Task<int> CountUsersByRoleAsync(string roleName);
     }
 }

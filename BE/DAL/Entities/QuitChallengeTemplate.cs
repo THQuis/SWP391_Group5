@@ -15,8 +15,6 @@ namespace Smoking.DAL.Entities
 
         public string? NotesSuggestion { get; set; }
 
-        public int DayOffset { get; set; }
-
         public int Stage { get; set; }
 
         public string? StageTitle { get; set; }

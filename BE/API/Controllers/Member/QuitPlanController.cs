@@ -39,7 +39,6 @@ public class QuitPlanController : ControllerBase
             message = "Tạo kế hoạch cai thuốc thành công.",
             startDate = plan.StartDate.ToString("dd/MM/yyyy"),
             endDate = plan.EndDate?.ToString("dd/MM/yyyy") ?? "Chưa có ngày kết thúc",
-            planDetails = plan.PlanDetails.Split(System.Environment.NewLine)
         });
     }
 
@@ -61,11 +60,17 @@ public class QuitPlanController : ControllerBase
         if (request.CigarettesPerPack.HasValue)
             activePlan.CigarettesPerPack = request.CigarettesPerPack.Value;
 
+        if (request.TargetDurationInMonths.HasValue)
+        {
+            activePlan.EndDate = activePlan.StartDate.AddMonths(request.TargetDurationInMonths.Value);
+        }
+
         var success = await _quitPlanService.UpdateAsync(activePlan);
         return success
             ? Ok(new { message = "Cập nhật thành công.", plan = activePlan })
             : StatusCode(500, "Cập nhật thất bại.");
     }
+
 
     [HttpDelete("DeleteQuitPlanAndProgress")]
     public async Task<IActionResult> DeleteAllByUser(int userId)
@@ -80,6 +85,23 @@ public class QuitPlanController : ControllerBase
     public async Task<IActionResult> GetByUserId(int userId)
     {
         var plans = await _quitPlanService.GetByUserIdAsync(userId);
-        return Ok(plans);
+
+        if (plans == null || !plans.Any())
+            return NotFound("Không tìm thấy kế hoạch nào cho người dùng.");
+
+        var result = plans.Select(plan => new QuitPlanResponse
+        {
+            QuitPlanId = plan.QuitPlanID,
+            CigarettesPerDayAtStart = plan.CigarettesPerDayAtStart,
+            PricePerPackAtStart = plan.PricePerPackAtStart,
+            CigarettesPerPack = plan.CigarettesPerPack,
+            Status = plan.Status,
+            StartDate = plan.StartDate.ToString("dd/MM/yyyy"),
+            EndDate = plan.EndDate?.ToString("dd/MM/yyyy")
+        });
+
+        return Ok(result);
     }
+
+
 }

@@ -55,40 +55,8 @@
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
     "Method": "GetById",
-    "RelativePath": "api/Admin/Achievement/{id}",
+    "RelativePath": "api/admin/achievements/{id}",
     "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
-    "Method": "Create",
-    "RelativePath": "api/Admin/Achievement/Add",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "Smoking.DAL.Entities.Achievement",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
-    "Method": "Delete",
-    "RelativePath": "api/Admin/Achievement/Delete/{id}",
-    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -103,7 +71,7 @@
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
     "Method": "GetAll",
-    "RelativePath": "api/Admin/Achievement/List",
+    "RelativePath": "api/admin/achievements/all",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -112,8 +80,40 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
+    "Method": "Create",
+    "RelativePath": "api/admin/achievements/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Smoking.API.Models.Admin.AchievementUpdate",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
+    "Method": "Delete",
+    "RelativePath": "api/admin/achievements/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
     "Method": "Search",
-    "RelativePath": "api/Admin/Achievement/Search",
+    "RelativePath": "api/admin/achievements/search",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -129,7 +129,7 @@
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AchievementAdminController",
     "Method": "Update",
-    "RelativePath": "api/Admin/Achievement/Update/{id}",
+    "RelativePath": "api/admin/achievements/update/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -141,7 +141,7 @@
       },
       {
         "Name": "dto",
-        "Type": "Smoking.DAL.Entities.Achievement",
+        "Type": "Smoking.API.Models.Admin.AchievementUpdate",
         "IsRequired": true
       }
     ],
@@ -244,12 +244,65 @@
   },
   {
     "ContainingType": "QuitChallengeTemplateController",
-    "Method": "GetAll",
-    "RelativePath": "api/admin/challenge-templates",
+    "Method": "GetAllTemplates",
+    "RelativePath": "api/admin/challenge-templates/all",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuitChallengeTemplateController",
+    "Method": "CreateTemplate",
+    "RelativePath": "api/admin/challenge-templates/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Smoking.API.Models.Admin.QuitChallengeTemplateCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuitChallengeTemplateController",
+    "Method": "DeleteTemplate",
+    "RelativePath": "api/admin/challenge-templates/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuitChallengeTemplateController",
+    "Method": "UpdateTemplate",
+    "RelativePath": "api/admin/challenge-templates/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "Smoking.API.Models.Admin.QuitChallengeTemplateCreateDto",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -1512,27 +1565,6 @@
     "Parameters": [
       {
         "Name": "year",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Test.UserAchievementTestController",
-    "Method": "GrantAchievement",
-    "RelativePath": "api/test/userachievement/grant",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "achievementId",
         "Type": "System.Int32",
         "IsRequired": false
       }

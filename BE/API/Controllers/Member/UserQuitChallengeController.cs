@@ -235,7 +235,8 @@ public class UserQuitChallengeController : ControllerBase
             }
             else
             {
-                var templates = allTemplates.Where(t => t.Stage == stage).OrderBy(t => t.DayOffset).ToList();
+                var templates = allTemplates.Where(t => t.Stage == stage).OrderBy(t => t.Id).ToList(); // ✅ sửa tại đây
+
                 result.Add(new
                 {
                     Stage = stage,
@@ -258,4 +259,5 @@ public class UserQuitChallengeController : ControllerBase
 
         return Ok(new { success = true, data = result });
     }
+
 }

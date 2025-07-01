@@ -3,32 +3,28 @@
   "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\member\\userachievementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userachievementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\achievementadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\achievementevaluatorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\achievementevaluatorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\userquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userquitchallengeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\achievementevaluationhostedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\achievementevaluationhostedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\admin\\quitchallengetemplatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\admin\\quitchallengetemplatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\userachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\member\\userquitchallengecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userquitchallengecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\achievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\achievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\repositories\\quitplanselectedanswerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\repositories\\quitplanselectedanswerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\interfaces\\repositories\\iuserachievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iuserachievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\interfaces\\repositories\\iachievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\interfaces\\repositories\\iachievementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\admin\\achievementupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\dal\\entities\\achievement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,104 +38,98 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserAchievementController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserAchievementController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserAchievementController.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserAchievementController.cs",
-              "RelativeToolTip": "API\\Controllers\\Member\\UserAchievementController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwB0AAABIAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "UserQuitChallengeController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\UserQuitChallengeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:39:43.754Z",
+              "WhenOpened": "2025-07-01T14:13:50.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "QuitPlanSelectedAnswerRepository.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Repositories\\QuitPlanSelectedAnswerRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\QuitPlanSelectedAnswerRepository.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Repositories\\QuitPlanSelectedAnswerRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\QuitPlanSelectedAnswerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T14:13:32.229Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AchievementEvaluatorService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\AchievementEvaluatorService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\AchievementEvaluatorService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\AchievementEvaluatorService.cs",
-              "RelativeToolTip": "BLL\\Services\\AchievementEvaluatorService.cs",
-              "ViewState": "AgIAAHQAAAAAAAAAAAAgwIQAAAAaAAAAAAAAAA==",
+              "Title": "UserQuitChallengeService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserQuitChallengeService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\UserQuitChallengeService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserQuitChallengeService.cs",
+              "RelativeToolTip": "BLL\\Services\\UserQuitChallengeService.cs",
+              "ViewState": "AgIAAGwAAAAAAAAAAADwvzgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:15:59.541Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AchievementEvaluationHostedService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\AchievementEvaluationHostedService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\AchievementEvaluationHostedService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\AchievementEvaluationHostedService.cs",
-              "RelativeToolTip": "BLL\\Services\\AchievementEvaluationHostedService.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAgwDMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:15:54.582Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserAchievementService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserAchievementService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\UserAchievementService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserAchievementService.cs",
-              "RelativeToolTip": "BLL\\Services\\UserAchievementService.cs",
-              "ViewState": "AgIAAH8AAAAAAAAAAAAgwJQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:15:43.273Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AchievementService.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\AchievementService.cs",
-              "RelativeDocumentMoniker": "BLL\\Services\\AchievementService.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\AchievementService.cs",
-              "RelativeToolTip": "BLL\\Services\\AchievementService.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAYwEsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:15:27.856Z"
+              "WhenOpened": "2025-07-01T14:13:31.271Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "IUserAchievementRepository.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IUserAchievementRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IUserAchievementRepository.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IUserAchievementRepository.cs",
-              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IUserAchievementRepository.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "AchievementUpdate.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Models\\Admin\\AchievementUpdate.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Admin\\AchievementUpdate.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Models\\Admin\\AchievementUpdate.cs",
+              "RelativeToolTip": "API\\Models\\Admin\\AchievementUpdate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:15:18.44Z"
+              "WhenOpened": "2025-07-01T14:10:44.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AchievementAdminController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\AchievementAdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T14:09:18.647Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "QuitChallengeTemplateController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\QuitChallengeTemplateController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Admin\\QuitChallengeTemplateController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Admin\\QuitChallengeTemplateController.cs",
+              "RelativeToolTip": "API\\Controllers\\Admin\\QuitChallengeTemplateController.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T14:17:32.679Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "IAchievementRepository.cs",
-              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
-              "RelativeDocumentMoniker": "DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
-              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
-              "RelativeToolTip": "DAL\\Interfaces\\Repositories\\IAchievementRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:15:12.979Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "Achievement.cs",
               "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\Achievement.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Achievement.cs",
               "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Entities\\Achievement.cs",
               "RelativeToolTip": "DAL\\Entities\\Achievement.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAcwB0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAUwBMAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T10:14:28.806Z"
+              "WhenOpened": "2025-07-01T14:10:09.634Z",
+              "EditorCaption": ""
             }
           ]
         }

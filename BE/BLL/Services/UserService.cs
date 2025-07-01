@@ -146,5 +146,11 @@ namespace Smoking.BLL.Services
         {
             return await _unitOfWork.Users.GetUserWithMembershipAsync(userId);
         }
+
+        public async Task<int> CountUsersByRoleAsync(string roleName)
+        {
+            var users = await _unitOfWork.Users.FindAsync(u => u.Role.RoleName == roleName);
+            return users?.Count() ?? 0;
+        }
     }
 }

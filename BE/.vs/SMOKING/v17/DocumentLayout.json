@@ -1,8 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\",
+  "WorkspaceRootPath": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\",
   "Documents": [
     {
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,6 +22,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\bll\\interfaces\\imilestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\imilestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\bll\\services\\userachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\userachievementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\member\\userachievementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userachievementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\quitplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\swp_project_3\\swp391_group5\\be\\api\\controllers\\member\\questionnairecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\questionnairecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> 30c9951f5c0d32cf9546b3aa7727234c873a0fa8
     }
   ],
   "DocumentGroupContainers": [
@@ -33,6 +50,7 @@
           "SelectedChildIndex": 7,
           "Children": [
             {
+<<<<<<< HEAD
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
@@ -110,11 +128,24 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-01T15:43:36.611Z",
+=======
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserAchievementService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserAchievementService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\UserAchievementService.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\BLL\\Services\\UserAchievementService.cs",
+              "RelativeToolTip": "BLL\\Services\\UserAchievementService.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAYwIUAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:36:57.736Z",
+>>>>>>> 30c9951f5c0d32cf9546b3aa7727234c873a0fa8
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+<<<<<<< HEAD
               "Title": "UserMilestoneProgressController.cs",
               "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserMilestoneProgressController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserMilestoneProgressController.cs",
@@ -123,6 +154,42 @@
               "ViewState": "AgIAAC4AAAAAAAAAAAAIwDgAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-01T15:39:43.859Z",
+=======
+              "Title": "UserAchievementController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserAchievementController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserAchievementController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserAchievementController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\UserAchievementController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwBgAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:36:37.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "QuitPlanController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\QuitPlanController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\QuitPlanController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\QuitPlanController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\QuitPlanController.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAYwFoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:21:03.158Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "QuestionnaireController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\QuestionnaireController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\QuestionnaireController.cs",
+              "ToolTip": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\API\\Controllers\\Member\\QuestionnaireController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\QuestionnaireController.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAQwEYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:25:55.009Z",
+>>>>>>> 30c9951f5c0d32cf9546b3aa7727234c873a0fa8
               "EditorCaption": ""
             }
           ]

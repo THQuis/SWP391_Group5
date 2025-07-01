@@ -5,7 +5,7 @@
     "version": "v1"
   },
   "paths": {
-    "/api/Admin/Achievement/List": {
+    "/api/admin/achievements/all": {
       "get": {
         "tags": [
           "AchievementAdmin"
@@ -17,7 +17,7 @@
         }
       }
     },
-    "/api/Admin/Achievement/{id}": {
+    "/api/admin/achievements/{id}": {
       "get": {
         "tags": [
           "AchievementAdmin"
@@ -40,7 +40,7 @@
         }
       }
     },
-    "/api/Admin/Achievement/Add": {
+    "/api/admin/achievements/create": {
       "post": {
         "tags": [
           "AchievementAdmin"
@@ -49,17 +49,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Achievement"
+                "$ref": "#/components/schemas/AchievementUpdate"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Achievement"
+                "$ref": "#/components/schemas/AchievementUpdate"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Achievement"
+                "$ref": "#/components/schemas/AchievementUpdate"
               }
             }
           }
@@ -71,7 +71,7 @@
         }
       }
     },
-    "/api/Admin/Achievement/Update/{id}": {
+    "/api/admin/achievements/update/{id}": {
       "put": {
         "tags": [
           "AchievementAdmin"
@@ -91,17 +91,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Achievement"
+                "$ref": "#/components/schemas/AchievementUpdate"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Achievement"
+                "$ref": "#/components/schemas/AchievementUpdate"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Achievement"
+                "$ref": "#/components/schemas/AchievementUpdate"
               }
             }
           }
@@ -113,7 +113,7 @@
         }
       }
     },
-    "/api/Admin/Achievement/Delete/{id}": {
+    "/api/admin/achievements/delete/{id}": {
       "delete": {
         "tags": [
           "AchievementAdmin"
@@ -136,7 +136,7 @@
         }
       }
     },
-    "/api/Admin/Achievement/Search": {
+    "/api/admin/achievements/search": {
       "get": {
         "tags": [
           "AchievementAdmin"
@@ -1968,10 +1968,106 @@
         }
       }
     },
-    "/api/admin/challenge-templates": {
+    "/api/admin/challenge-templates/all": {
       "get": {
         "tags": [
           "QuitChallengeTemplate"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/challenge-templates/create": {
+      "post": {
+        "tags": [
+          "QuitChallengeTemplate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitChallengeTemplateCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitChallengeTemplateCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitChallengeTemplateCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/challenge-templates/update/{id}": {
+      "put": {
+        "tags": [
+          "QuitChallengeTemplate"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitChallengeTemplateCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitChallengeTemplateCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuitChallengeTemplateCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/admin/challenge-templates/delete/{id}": {
+      "delete": {
+        "tags": [
+          "QuitChallengeTemplate"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -3355,6 +3451,52 @@
         },
         "additionalProperties": false
       },
+      "AchievementUpdate": {
+        "type": "object",
+        "properties": {
+          "achievementName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "criteria": {
+            "type": "string",
+            "nullable": true
+          },
+          "badgeImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "packageType": {
+            "type": "string",
+            "nullable": true
+          },
+          "smokeFreeDaysRequired": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "moneySavedRequired": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cigarettesDroppedRequired": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "checkinDaysRequired": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AdminUpdateMembershipDto": {
         "type": "object",
         "properties": {
@@ -4175,6 +4317,32 @@
         },
         "additionalProperties": false
       },
+      "QuitChallengeTemplateCreateDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "notesSuggestion": {
+            "type": "string",
+            "nullable": true
+          },
+          "stage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stageTitle": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "QuitPlan": {
         "required": [
           "status",
@@ -4273,6 +4441,11 @@
             "nullable": true
           },
           "cigarettesPerPack": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "targetDurationInMonths": {
             "type": "integer",
             "format": "int32",
             "nullable": true

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Smoking.BLL.Interfaces;
+using Smoking.BLL.Services;
 
 namespace Smoking.API.Controllers.Admin
 {
@@ -11,10 +12,11 @@ namespace Smoking.API.Controllers.Admin
     public class RevenueController : ControllerBase
     {
         private readonly IRevenueService _revenueService;
-
-        public RevenueController(IRevenueService revenueService)
+        private readonly IUserService _userService;
+        public RevenueController(IRevenueService revenueService, IUserService userService)
         {
             _revenueService = revenueService;
+            _userService = userService;
         }
 
         [HttpGet("month")]
@@ -27,8 +29,18 @@ namespace Smoking.API.Controllers.Admin
         [HttpGet("year")]
         public async Task<IActionResult> GetYearRevenue([FromQuery] int year)
         {
-            var result = await _revenueService.GetRevenueByMonthRangeAsync(year);
-            return Ok(result);
+            var revenue = await _revenueService.GetRevenueByMonthRangeAsync(year);
+
+            var memberCount = await _userService.CountUsersByRoleAsync("Member");
+            var coachCount = await _userService.CountUsersByRoleAsync("Coach");
+
+            return Ok(new
+            {
+                year,
+                revenue,
+                totalMembers = memberCount,
+                totalCoaches = coachCount
+            });
         }
     }
 

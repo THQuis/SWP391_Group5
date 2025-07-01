@@ -2,6 +2,10 @@
 using Smoking.BLL.Interfaces;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class UserQuitChallengeService : IUserQuitChallengeService
 {
@@ -14,26 +18,35 @@ public class UserQuitChallengeService : IUserQuitChallengeService
 
     public async Task GenerateChallengesAsync(int quitPlanId, int userId, DateTime startDate)
     {
-        var templates = await _unitOfWork.QuitChallengeTemplates.GetAllTemplatesAsync();
+        var templates = (await _unitOfWork.QuitChallengeTemplates.GetAllTemplatesAsync())
+            .OrderBy(t => t.Id) // hoặc thêm SortOrder nếu có
+            .ToList();
 
         var existing = await _unitOfWork.UserQuitChallenges
             .FindAsync(c => c.UserId == userId && c.QuitPlanId == quitPlanId);
 
         var existingTemplateIds = existing.Select(c => c.TemplateId).ToHashSet();
 
-        var newChallenges = templates
-            .Where(t => !existingTemplateIds.Contains(t.Id))
-            .Select(t => new UserQuitChallenge
+        var newChallenges = new List<UserQuitChallenge>();
+
+        for (int i = 0; i < templates.Count; i++)
+        {
+            var template = templates[i];
+            if (existingTemplateIds.Contains(template.Id))
+                continue;
+
+            newChallenges.Add(new UserQuitChallenge
             {
                 UserId = userId,
                 QuitPlanId = quitPlanId,
-                TemplateId = t.Id,
-                ChallengeDate = startDate.AddDays(t.DayOffset),
+                TemplateId = template.Id,
+                ChallengeDate = startDate.AddDays(i), // ✅ tính theo thứ tự
                 ScheduledDate = DateTime.UtcNow,
                 IsCompleted = false,
                 Notes = null,
                 ImageUrl = null
-            }).ToList();
+            });
+        }
 
         if (newChallenges.Any())
         {
@@ -41,6 +54,7 @@ public class UserQuitChallengeService : IUserQuitChallengeService
             await _unitOfWork.CompleteAsync();
         }
     }
+
 
     public async Task<List<UserQuitChallenge>> GetChallengesForWeekAsync(int userId, DateTime startOfWeek)
     {
@@ -124,7 +138,7 @@ public class UserQuitChallengeService : IUserQuitChallengeService
         if (quitPlan == null)
             throw new InvalidOperationException("Người dùng chưa có kế hoạch cai thuốc.");
 
-        // ✅ Nếu đang nhận stage > 1, kiểm tra stage trước đó:
+        // Kiểm tra stage trước đó
         if (stage > 1)
         {
             var previousStage = stage - 1;
@@ -139,29 +153,38 @@ public class UserQuitChallengeService : IUserQuitChallengeService
                 throw new Exception("Bạn cần hoàn thành toàn bộ thử thách ở giai đoạn trước trước khi nhận giai đoạn mới.");
         }
 
-        var startDate = quitPlan.StartDate.Date;
-
-        var templates = await _unitOfWork.QuitChallengeTemplates
-            .FindAsync(t => t.Stage == stage);
+        var templates = (await _unitOfWork.QuitChallengeTemplates
+            .FindAsync(t => t.Stage == stage))
+            .OrderBy(t => t.Id) // hoặc theo thứ tự nào bạn định nghĩa
+            .ToList();
 
         var existing = await _unitOfWork.UserQuitChallenges
             .FindAsync(c => c.UserId == userId && c.QuitPlanId == quitPlan.QuitPlanID);
 
         var existingTemplateIds = existing.Select(e => e.TemplateId).ToHashSet();
 
-        var newChallenges = templates
-            .Where(t => !existingTemplateIds.Contains(t.Id))
-            .Select(t => new UserQuitChallenge
+        // 🔁 ChallengeDate tính từ ngày nhận (ngày hiện tại)
+        var assignDate = DateTime.Today;
+
+        var newChallenges = new List<UserQuitChallenge>();
+        for (int i = 0; i < templates.Count; i++)
+        {
+            var template = templates[i];
+            if (existingTemplateIds.Contains(template.Id))
+                continue;
+
+            newChallenges.Add(new UserQuitChallenge
             {
                 UserId = userId,
                 QuitPlanId = quitPlan.QuitPlanID,
-                TemplateId = t.Id,
-                ChallengeDate = startDate.AddDays(t.DayOffset),
+                TemplateId = template.Id,
+                ChallengeDate = assignDate.AddDays(i),
                 ScheduledDate = DateTime.UtcNow,
                 IsCompleted = false,
                 Notes = null,
                 ImageUrl = null
-            }).ToList();
+            });
+        }
 
         if (newChallenges.Any())
         {
@@ -218,6 +241,7 @@ public class UserQuitChallengeService : IUserQuitChallengeService
         return await _unitOfWork.UserQuitChallenges
             .GetByUserIdAndStageAsync(userId, stage);
     }
+
     public async Task<List<UserQuitChallenge>> GetAllChallengesAsync(int userId)
     {
         var challenges = await _unitOfWork.UserQuitChallenges.FindAsync(
@@ -232,6 +256,4 @@ public class UserQuitChallengeService : IUserQuitChallengeService
     {
         return await _unitOfWork.QuitChallengeTemplates.GetAllTemplatesAsync();
     }
-
-
 }

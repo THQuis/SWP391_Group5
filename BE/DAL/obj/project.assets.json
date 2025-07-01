@@ -4007,23 +4007,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dell\\.nuget\\packages\\": {},
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\DAL\\Smoking.DAL.csproj",
+      "projectUniqueName": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Smoking.DAL.csproj",
       "projectName": "Smoking.DAL",
-      "projectPath": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\DAL\\Smoking.DAL.csproj",
-      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\DAL\\obj\\",
+      "projectPath": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\Smoking.DAL.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "D:\\Ki_5\\SWP_Project_3\\SWP391_Group5\\BE\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4097,7 +4097,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

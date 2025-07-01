@@ -22,6 +22,7 @@ namespace Smoking.DAL.Entities
         public int? SmokeFreeDaysRequired { get; set; }
         public decimal? MoneySavedRequired { get; set; }
         public int? CigarettesDroppedRequired { get; set; }
+        public int? CheckinDaysRequired { get; set; }
 
         public ICollection<UserAchievement> UserAchievements { get; set; }
     }

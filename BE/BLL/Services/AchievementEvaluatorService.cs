@@ -55,9 +55,10 @@ public class AchievementEvaluatorService : IAchievementEvaluatorService
         int smokeFreeDays = progresses.Count(x => x.CigarettesSmokedToday == 0);
         decimal moneySaved = latestProgress.TotalMoneySaved ?? 0;
         int cigarettesDropped = latestProgress.TotalCigarettesDropped ?? 0;
+        int checkinDays = progresses.Count(x => x.CigarettesSmokedToday != null);
 
-        _logger.LogInformation("Tổng kết: SmokeFreeDays = {Days}, MoneySaved = {MoneySaved}, CigarettesDropped = {CigsDropped}",
-            smokeFreeDays, moneySaved, cigarettesDropped);
+        _logger.LogInformation("Tổng kết: SmokeFreeDays = {Days}, MoneySaved = {MoneySaved}, CigarettesDropped = {CigsDropped}, CheckinDays = {CheckinDays}",
+            smokeFreeDays, moneySaved, cigarettesDropped, checkinDays);
 
         var allAchievements = await _unitOfWork.Achievements.GetAllAsync();
         var userAchievements = await _unitOfWork.UserAchievements.GetByUserIdAsync(userId);
@@ -74,7 +75,8 @@ public class AchievementEvaluatorService : IAchievementEvaluatorService
             bool eligible =
                 (achievement.SmokeFreeDaysRequired.HasValue && smokeFreeDays >= achievement.SmokeFreeDaysRequired.Value) ||
                 (achievement.MoneySavedRequired.HasValue && moneySaved >= achievement.MoneySavedRequired.Value) ||
-                (achievement.CigarettesDroppedRequired.HasValue && cigarettesDropped >= achievement.CigarettesDroppedRequired.Value);
+                (achievement.CigarettesDroppedRequired.HasValue && cigarettesDropped >= achievement.CigarettesDroppedRequired.Value) ||
+                (achievement.CheckinDaysRequired.HasValue && checkinDays >= achievement.CheckinDaysRequired.Value);
 
             _logger.LogDebug("🔍 Kiểm tra AchievementID = {AchievementID} → Đủ điều kiện: {Eligible}",
                 achievement.AchievementID, eligible);
@@ -105,15 +107,35 @@ public class AchievementEvaluatorService : IAchievementEvaluatorService
         if (!string.IsNullOrWhiteSpace(user.Email))
         {
             string subject = $"🎉 Bạn vừa đạt thành tựu: {achievement.AchievementName}!";
+
+            // Nếu có ảnh badge thì thêm vào email
             string htmlBody = $@"
-                <div style='font-family: Arial; max-width: 600px; margin: auto; border: 1px solid #ccc; padding: 20px;'>
-                    <h2 style='color: green;'>🎉 Xin chúc mừng {user.FullName ?? "bạn"}!</h2>
-                    <p>Bạn vừa đạt được một thành tựu mới trong hành trình cai thuốc:</p>
-                    <h3 style='color: #2e6c80'>{achievement.AchievementName}</h3>
-                    <p>{achievement.Description}</p>
-                    <hr/>
-                    <p style='font-size: 13px; color: gray;'>Smoking App &copy; 2025</p>
+                <div style='
+                    font-family: Arial, sans-serif;
+                    background: linear-gradient(135deg, #e0ffe0, #f0fff0);
+                    border: 2px dashed #5cb85c;
+                    border-radius: 10px;
+                    padding: 20px;
+                    max-width: 600px;
+                    margin: auto;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);'>
+
+                    <div style='text-align: center;'>
+                        <h1 style='color: #28a745; font-size: 26px;'>🎉 Chúc mừng {user.FullName ?? "bạn"}! 🎉</h1>
+                        <p style='font-size: 16px; color: #333;'>Bạn vừa đạt được một <strong>thành tựu mới</strong> trong hành trình cai thuốc lá:</p>
+        
+                        <div style='margin: 20px 0; padding: 15px; background-color: #dff0d8; border-radius: 8px;'>
+                            <h2 style='color: #3c763d;'>{achievement.AchievementName}</h2>
+                            <p style='font-size: 15px;'>{achievement.Description}</p>
+                        </div>
+
+                        <div style='font-size: 24px; margin-top: 15px;'>🌟👏🎊</div>
+                    </div>
+
+                    <hr style='margin-top: 30px; border: none; border-top: 1px solid #ccc;' />
+                    <p style='font-size: 12px; color: #999; text-align: center;'>Smoking App &copy; 2025</p>
                 </div>";
+
 
             try
             {
@@ -122,12 +144,13 @@ public class AchievementEvaluatorService : IAchievementEvaluatorService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi gửi email thành tựu cho {Email}", user.Email);
+                _logger.LogError(ex, "❌ Lỗi khi gửi email thành tựu cho {Email}", user.Email);
             }
         }
         else
         {
-            _logger.LogWarning("Không thể gửi email thành tựu cho UserID = {UserID} vì email trống.", user.UserID);
+            _logger.LogWarning("⚠️ Không thể gửi email vì UserID = {UserID} không có email.", user.UserID);
         }
     }
+
 }

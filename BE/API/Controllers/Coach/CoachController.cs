@@ -49,21 +49,6 @@ namespace Smoking.API.Controllers.Coach
                 var progressList = await _unitOfWork.QuitProgresses.GetByUserIdAsync(userId);
                 var challenges = await _unitOfWork.UserQuitChallenges.GetByUserIdAsync(userId);
 
-                // Gửi thông báo mail cho user
-                var user = await _unitOfWork.Users.GetByIdAsync(userId);
-                var coachName = User.FindFirst(ClaimTypes.Name)?.Value;
-
-                if (user != null && !string.IsNullOrWhiteSpace(user.Email))
-                {
-                    string subject = "Huấn luyện viên đang theo dõi tiến trình của bạn";
-                    string body = $"Xin chào {user.FullName},\n\n"
-                                + $"Huấn luyện viên {coachName} vừa xem tiến trình và thử thách cai thuốc của bạn.\n"
-                                + $"Nếu bạn cần hỗ trợ thêm, đừng ngần ngại phản hồi qua hệ thống.\n\n"
-                                + $"Trân trọng,\nHệ thống hỗ trợ cai thuốc";
-
-                    await _mailService.SendEmailAsync(user.Email, subject, body);
-                }
-
                 return Ok(new
                 {
                     QuitProgress = progressList.Select(p => new
@@ -92,6 +77,7 @@ namespace Smoking.API.Controllers.Coach
                 return StatusCode(500, new { message = ex.Message, stack = ex.StackTrace });
             }
         }
+
         // Lấy danh sách người dùng của huấn luyện viên
         [HttpGet("stats")]
         public async Task<IActionResult> GetCoachStats()

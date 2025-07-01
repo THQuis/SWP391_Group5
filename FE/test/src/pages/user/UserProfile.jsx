@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Badge, Button, Modal, Form, OverlayTrigger, Tooltip, Spinner } from 'react-bootstrap';
-import { FaUserEdit, FaUser, FaTransgender, FaCalendarAlt, FaGem, FaPhoneAlt, FaEnvelope, FaTrashAlt, FaBirthdayCake, FaHeart, FaCommentAlt, FaEye } from "react-icons/fa"; // THÊM FaHeart, FaCommentAlt, FaEye
-import { data } from 'react-router-dom';
+import { Container, Button, Modal, Form, Spinner } from 'react-bootstrap';
+import { FaCrown, FaUserEdit, FaUser, FaTransgender, FaCalendarAlt, FaGem, FaPhoneAlt, FaEnvelope, FaTrashAlt, FaBirthdayCake, FaHeart, FaCommentAlt, FaEye } from "react-icons/fa"; // THÊM FaHeart, FaCommentAlt, FaEye
 import { toast } from 'react-toastify';
+import styles from '../../styles/profileUser.module.scss';
 const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -271,200 +271,151 @@ const UserProfile = () => {
     }
 
     return (
-        <Container fluid className="py-4" style={{ background: "#d5f5df", minHeight: "100vh" }}>
-            {/* Profile Card */}
-            <Card className="mb-4 mx-auto shadow-sm border-0"
-                style={{ borderRadius: 22, maxWidth: 900 }}>
-                <Card.Body className="d-flex flex-column flex-md-row align-items-center justify-content-center p-4 gap-4" style={{ minHeight: 230 }}>
-                    <div className="text-center mb-2 mb-md-0" style={{ position: "relative" }}>
-                        <img
-                            src={avatarPreview || editInfo.profilePicture || user.avatar}
-                            alt="Avatar"
-                            className="rounded-circle border border-3 border-success shadow"
-                            style={{ width: '140px', height: '140px', objectFit: 'cover', background: "#fff" }}
-                        />
-                        <OverlayTrigger placement="right" overlay={<Tooltip>Sửa hồ sơ</Tooltip>}>
+        <div className={styles.profilePage}>
+            <div className={styles.profileHeader}>
+                <div className={styles.headerContent}>
+                    <div className={styles.avatarSection}>
+                        <div className={styles.avatarWrapper}>
+                            <img
+                                src={avatarPreview || editInfo.profilePicture || user.avatar}
+                                alt={user.fullName}
+                                className={`${styles.avatar} ${user.memberPackage === 'Premium' ? styles.premium : ''
+                                    }`}
+                            />
+                            {user.memberPackage === 'Premium' && (
+                                <div className={styles.premiumBadge}>
+                                    <FaCrown />
+                                </div>
+                            )}
                             <Button
-                                variant="dark"
-                                size="lg"
-                                style={{
-                                    position: "absolute",
-                                    top: 0,
-                                    right: 0,
-                                    borderRadius: 12,
-                                    boxShadow: '0 2px 8px #0002',
-                                    zIndex: 2
-                                }}
+                                className={styles.editButton}
                                 onClick={handleOpenEditModal}
+                                title="Chỉnh sửa hồ sơ"
                             >
-                                <FaUserEdit size={22} />
+                                <FaUserEdit />
                             </Button>
-                        </OverlayTrigger>
+                        </div>
+                        <h1 className={styles.userName}>{user.fullName}</h1>
+                        <p className={styles.userBio}>{user.description || "Chưa có tiểu sử"}</p>
+                        {user.memberPackage === 'Premium' && (
+                            <div className={styles.membershipBadge}>
+                                <FaGem /> Premium
+                            </div>
+                        )}
                     </div>
-                    <div className="flex-grow-1 text-center text-md-start">
-                        <h2 className="fw-bold mb-2" style={{ lineHeight: 1.2 }}>{user.fullName}</h2>
-                        <div className="mb-1" style={{ fontSize: "1.13rem", color: "#555", lineHeight: 1.6 }}>
-                            <span style={{ color: "#4d4d4d", fontWeight: 500 }}>Tiểu sử:&nbsp;</span>
-                            <span>{user.description || <span className="fst-italic text-muted">Chưa có tiểu sử</span>}</span>
+                </div>
+            </div>
+
+            {/* Phần content */}
+            <div className={styles.contentSection}>
+                <div className={styles.mainContent}>
+                    {/* Card thông tin cá nhân */}
+                    <div className={styles.infoCard}>
+                        <div className={styles.cardHeader}>
+                            <FaUser /> Thông tin cá nhân
+                        </div>
+                        <div className={styles.cardContent}>
+                            <div className={styles.infoGrid}>
+                                <div className={styles.infoItem}>
+                                    <FaEnvelope />
+                                    <div>
+                                        <span className={styles.label}>Email</span>
+                                        <span className={styles.value}>{user.email}</span>
+                                    </div>
+                                </div>
+                                <div className={styles.infoItem}>
+                                    <FaPhoneAlt />
+                                    <div>
+                                        <span className={styles.label}>Số điện thoại</span>
+                                        <span className={styles.value}>{user.phoneNumber}</span>
+                                    </div>
+                                </div>
+                                <div className={styles.infoItem}>
+                                    <FaTransgender />
+                                    <div>
+                                        <span className={styles.label}>Giới tính</span>
+                                        <span className={styles.value}>
+                                            {user.gender === 'Male' ? 'Nam' : user.gender === 'Female' ? 'Nữ' : ''}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className={styles.infoItem}>
+                                    <FaBirthdayCake />
+                                    <div>
+                                        <span className={styles.label}>Ngày sinh</span>
+                                        <span className={styles.value}>
+                                            {user.dateOfBirth ? user.dateOfBirth.slice(0, 10) : ''}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </Card.Body>
-            </Card>
 
-            {/* Thông tin cá nhân */}
-            <Card className="mb-4 mx-auto shadow-sm border-0" style={{ borderRadius: 22, maxWidth: 900 }}>
-                <Card.Body style={{ background: "#fff", borderRadius: 22, padding: "2rem" }}>
-                    <h5 className="mb-4" style={{ color: "#3d1877", fontWeight: 700, letterSpacing: 1 }}>
-                        <FaUser className="me-2" /> Thông tin cá nhân
-                    </h5>
-                    <Row style={{ fontSize: "1.08rem", lineHeight: 2 }}>
-                        <Col md={6} xs={12}>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaEnvelope className="me-2" /><strong>Email:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{user.email}</span>
-                            </div>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaTransgender className="me-2" /><strong>Giới tính:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{user.gender === 'Male' ? 'Nam' : user.gender === 'Female' ? 'Nữ' : ''}</span>
-                            </div>
-
-                            <div className="d-flex align-items-center mb-2">
-                                <FaBirthdayCake className="me-2" /><strong>Ngày sinh:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{user.dateOfBirth ? user.dateOfBirth.slice(0, 10) : ''}</span>
-                            </div>
-                        </Col>
-                        <Col md={6} xs={12}>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaCalendarAlt className="me-2" /><strong>Ngày tham gia:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{user.memberSince}</span>
-                            </div>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaGem className="me-2" /><strong>Gói thành viên:</strong>
-                                <Badge
-                                    bg={user.memberPackage === 'Premium' ? "success" : "secondary"}
-                                    style={{
-                                        fontSize: 16,
-                                        padding: "6px 22px",
-                                        borderRadius: 16,
-                                        marginLeft: 10,
-                                        fontWeight: 600,
-                                        letterSpacing: 1.3
-                                    }}>
-                                    {user.memberPackage}
-                                </Badge>
-                            </div>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaPhoneAlt className="me-2" /><strong>Số điện thoại:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{user.phoneNumber}</span>
-                            </div>
-                        </Col>
-                    </Row>
-                </Card.Body>
-            </Card>
-            {/* THÊM MỚI: Phần hiển thị bài viết đã đăng */}
-            <Card className="mb-4 mx-auto shadow-sm border-0" style={{ borderRadius: 22, maxWidth: 900 }}>
-                <Card.Body style={{ background: "#fff", borderRadius: 22, padding: "2rem" }}>
-                    <h5 className="mb-4" style={{ color: "#3d1877", fontWeight: 700, letterSpacing: 1 }}>
-                        <FaEye className="me-2" /> Bài viết đã đăng
-                    </h5>
-                    {isBlogsLoading ? (
-                        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100px' }}>
-                            <Spinner animation="border" variant="success" />
-                            <p className="ms-3">Đang tải bài viết...</p>
+                    {/* Card bài viết */}
+                    <div className={styles.blogsCard}>
+                        <div className={styles.cardHeader}>
+                            <FaEye /> Bài viết đã đăng
                         </div>
-                    ) : (
-                        (() => {
-                            // SỬA Ở ĐÂY: Lọc bài viết Published thay cho Approved
-                            const publishedBlogs = userBlogs.filter(blog => blog.status === 'Published');
-
-                            return publishedBlogs.length > 0 ? (
-                                <Row xs={1} md={1} lg={1} className="g-4">
-                                    {publishedBlogs.map(blog => (
-                                        <Col key={blog.blogId}>
-                                            <Card className="shadow-sm h-100" style={{ borderRadius: '15px', border: '1px solid #e0e0e0' }}>
-                                                <Card.Body>
-                                                    <Card.Title className="mb-2 fw-bold" style={{ color: '#0a6435' }}>
-                                                        {blog.title}
-                                                    </Card.Title>
-                                                    <Card.Text className="text-muted small mb-2">
-                                                        Ngày đăng: {new Date(blog.createdDate).toLocaleDateString('vi-VN', { year: 'numeric', month: 'numeric', day: 'numeric' })}
-                                                    </Card.Text>
-                                                    {/* THÊM ẢNH NẾU CÓ */}
-                                                    {blog.imageUrl && (
-                                                        <div className="text-center mb-2">
-                                                            <img
-                                                                src={blog.imageUrl}
-                                                                alt="blog"
-                                                                style={{
-                                                                    maxWidth: "100%",
-                                                                    maxHeight: 220,
-                                                                    borderRadius: 10,
-                                                                    background: "#fff",
-                                                                    margin: "0 auto",
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    )}
-                                                    <Card.Text>
-                                                        {blog.content.length > 150 ? blog.content.substring(0, 150) + '...' : blog.content}
-                                                    </Card.Text>
-                                                    <div className="d-flex justify-content-between align-items-center mt-3">
-                                                        <div>
-                                                            <span className="me-3">
-                                                                <FaHeart className="text-danger me-1" /> {blog.likes} lượt thích
-                                                            </span>
-                                                            {/* Có thể thêm số dislike/report nếu muốn */}
-                                                        </div>
-                                                        {/* <Badge
-                                                            bg={'success'}
-                                                            className="p-2 rounded-pill"
-                                                        >
-                                                            Đã xuất bản
-                                                        </Badge> */}
+                        <div className={styles.cardContent}>
+                            {isBlogsLoading ? (
+                                <div className={styles.loadingState}>
+                                    <Spinner animation="border" />
+                                    <span>Đang tải bài viết...</span>
+                                </div>
+                            ) : (
+                                <div className={styles.blogsList}>
+                                    {userBlogs
+                                        .filter(blog => blog.status === 'Published')
+                                        .map(blog => (
+                                            <div key={blog.blogId} className={styles.blogItem}>
+                                                {blog.imageUrl && (
+                                                    <div className={styles.blogImage}>
+                                                        <img src={blog.imageUrl} alt={blog.title} />
                                                     </div>
-                                                </Card.Body>
-                                                <Card.Footer className="text-end bg-white border-top-0" style={{ borderRadius: '0 0 15px 15px' }}>
+                                                )}
+                                                <div className={styles.blogContent}>
+                                                    <h3>{blog.title}</h3>
+                                                    <p>{blog.content.substring(0, 150)}...</p>
+                                                    <div className={styles.blogMeta}>
+                                                        <span>
+                                                            <FaHeart /> {blog.likes}
+                                                        </span>
+                                                        <span>
+                                                            <FaCalendarAlt />
+                                                            {new Date(blog.createdDate).toLocaleDateString()}
+                                                        </span>
+                                                    </div>
                                                     <Button
                                                         variant="outline-danger"
                                                         size="sm"
                                                         onClick={() => {
                                                             setBlogToDelete(blog.blogId);
-                                                            setTimeout(() => setShowDeleteBlogModal(true), 0);
+                                                            setShowDeleteBlogModal(true);
                                                         }}
                                                     >
-                                                        <FaTrashAlt className="me-1" /> Xóa
+                                                        <FaTrashAlt /> Xóa
                                                     </Button>
-                                                </Card.Footer>
-                                            </Card>
-                                        </Col>
-                                    ))}
-                                </Row>
-                            ) : (
-                                <p className="text-center text-muted fst-italic">Bạn chưa có bài viết nào được xuất bản.</p>
-                            );
-                        })()
-                    )}
-                </Card.Body>
-            </Card>
-            {/* Nút xóa tài khoản căn giữa */}
-            <div className="my-4 d-flex justify-content-center">
-                <Button
-                    variant="danger"
-                    onClick={handleClickDeleteAccount}
-                    size="lg"
-                    style={{
-                        borderRadius: 16,
-                        padding: "10px 40px",
-                        fontWeight: 700,
-                        fontSize: "1.2rem",
-                        background: "#e74c3c",
-                        border: "none",
-                        boxShadow: '0 2px 8px #0002'
-                    }}
-                >
-                    <FaTrashAlt className="me-2 mb-1" /> Xóa tài khoản
-                </Button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Nút xóa tài khoản */}
+                <div className={styles.deleteSection}>
+                    <Button
+                        className={styles.deleteAccountBtn}
+                        onClick={handleClickDeleteAccount}
+                    >
+                        <FaTrashAlt /> Xóa tài khoản
+                    </Button>
+                </div>
             </div>
+
             {/* --- BẮT ĐẦU THÊM MODAL MỚI TẠI ĐÂY --- */}
             <Modal show={showDeleteBlogModal} onHide={() => setShowDeleteBlogModal(false)} centered>
                 <Modal.Header closeButton>
@@ -575,7 +526,7 @@ const UserProfile = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </Container>
+        </div>
     );
 };
 

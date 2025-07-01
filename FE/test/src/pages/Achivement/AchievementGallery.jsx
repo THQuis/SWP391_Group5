@@ -98,11 +98,11 @@ const AchievementGallery = () => {
                                 style={selected.isUnlocked ? { maxHeight: 240 } : { ...grayscaleStyle, maxHeight: 240 }}
                             />
                             <div className="mt-3">
-                                <h5>Mô tả:</h5>
+                                {/* <h5>Mô tả:</h5> */}
                                 <p>{selected.description}</p>
-                                <p>
+                                {/* <p>
                                     <b>Loại:</b> {selected.packageType}
-                                </p>
+                                </p> */}
                                 <p>
                                     <b>Trạng thái:</b>{" "}
                                     {selected.isUnlocked ?

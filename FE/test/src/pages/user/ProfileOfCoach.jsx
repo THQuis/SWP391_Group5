@@ -1,10 +1,38 @@
-// ...phần import và code phía trên giữ nzzguyên...
-
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button, Modal, Form, Spinner, Alert } from 'react-bootstrap';
+import { Container, Card, Button, Modal, Form, Spinner, Alert } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaUser, FaTransgender, FaCalendarAlt, FaPhoneAlt, FaEnvelope, FaUserCheck, FaUserTimes, FaCalendarCheck } from "react-icons/fa";
+import {
+    FaStar,
+    FaCheckCircle,
+    FaClock,
+    FaUserCheck,
+    FaUser,
+    FaEnvelope,
+    FaPhoneAlt,
+    FaTransgender,
+    FaCalendarAlt,
+    FaUserTimes,
+    FaCalendarCheck
+} from "react-icons/fa";
+import styles from '../../styles/CoachProfile.module.scss';
+// API gửi yêu cầu hủy/chuyển coach
+const requestChangeCoach = async ({ newCoachId, reason }) => {
+    const token = localStorage.getItem("userToken");
+    const response = await fetch('/api/user/coach/request-change', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+            "accept": "*/*"
+        },
+        body: JSON.stringify({ newCoachId, reason }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || "Gửi yêu cầu đổi/hủy coach thất bại");
+    return data;
+};
+
 
 const fetchMyBookings = async () => {
     const token = localStorage.getItem('userToken');
@@ -47,6 +75,7 @@ const fetchCoachById = async (id) => {
         email: data.coach.email,
         phoneNumber: data.coach.phoneNumber,
         profilePicture: data.coach.profilePicture || null,
+        gender: data.coach.gender,
         status: data.coach.status,
         description: data.coach.description || "",
         // Thêm các field khác nếu cần
@@ -87,7 +116,10 @@ const CoachProfileForUser = () => {
         const value = localStorage.getItem('coachId');
         return value ? parseInt(value, 10) : null;
     });
-
+    // State cho modal hủy chọn coach
+    const [showUnchooseCoachModal, setShowUnchooseCoachModal] = useState(false);
+    const [unchooseReason, setUnchooseReason] = useState('');
+    const [unchooseLoading, setUnchooseLoading] = useState(false);
     // Modal state cho đặt lịch
     const [showBookingModal, setShowBookingModal] = useState(false);
     const [bookingData, setBookingData] = useState({
@@ -99,6 +131,47 @@ const CoachProfileForUser = () => {
     const [bookingLoading, setBookingLoading] = useState(false);
     const [bookingSuccessAlert, setBookingSuccessAlert] = useState(false);
     const [hasBookingWithThisCoach, setHasBookingWithThisCoach] = useState(false);
+    const [changeCoachReason, setChangeCoachReason] = useState('');
+    const [changeCoachLoading, setChangeCoachLoading] = useState(false);
+    const [showChangeCoachModal, setShowChangeCoachModal] = useState(false);
+    const handleRequestChangeCoach = async () => {
+        if (!changeCoachReason.trim()) {
+            toast.warning("Bạn cần nhập lý do muốn đổi huấn luyện viên!");
+            return;
+        }
+        setChangeCoachLoading(true);
+        try {
+            await requestChangeCoach({ newCoachId: coach.UserID, reason: changeCoachReason });
+            toast.success("Đã gửi yêu cầu đổi huấn luyện viên, vui lòng chờ xét duyệt!");
+            setShowChangeCoachModal(false);
+            setChangeCoachReason('');
+        } catch (err) {
+            toast.error(err.message || "Gửi yêu cầu thất bại!");
+        } finally {
+            setChangeCoachLoading(false);
+        }
+    };
+    // Hàm gửi yêu cầu hủy chọn coach (báo cho admin duyệt)
+    const submitUnchooseCoach = async () => {
+        if (!unchooseReason.trim()) {
+            toast.warning("Vui lòng nhập lý do muốn hủy chọn coach!");
+            return;
+        }
+        setUnchooseLoading(true);
+        try {
+            await requestChangeCoach({ newCoachId: null, reason: unchooseReason });
+            toast.success("Đã gửi yêu cầu hủy chọn coach, vui lòng chờ admin duyệt!");
+            setShowUnchooseCoachModal(false);
+            setUnchooseReason('');
+            // Không xóa coachId local, chờ backend duyệt
+        } catch (err) {
+            toast.error(err.message || "Gửi yêu cầu thất bại!");
+        } finally {
+            setUnchooseLoading(false);
+        }
+    };
+
+
     // Hàm kiểm tra trạng thái còn hiệu lực
     const isActiveStatus = (status) =>
         status === "Pending" || status === "Confirmed" || status === "Chờ xác nhận" || status === "Đã xác nhận"; // tuỳ backend
@@ -169,10 +242,9 @@ const CoachProfileForUser = () => {
         }
     };
     const handleUnchooseCoach = () => {
-        setMyChosenCoachId(null);
-        localStorage.removeItem('coachId'); // Thêm dòng này
-        toast.info(`Đã hủy chọn Coach ${coach.fullName}.`);
+        setShowUnchooseCoachModal(true);
     };
+
     const handleBookAppointment = () => {
         setShowBookingModal(true);
     };
@@ -230,161 +302,232 @@ const CoachProfileForUser = () => {
     const isThisCoachChosen = myChosenCoachId === coach.UserID;
     const hasChosenAnyCoach = myChosenCoachId !== null;
 
+
     return (
-        <Container fluid className="py-4" style={{ background: "#d5f5df", minHeight: "100vh" }}>
-            {/* Profile Card */}
-            <Card className="mb-4 mx-auto shadow-sm border-0" style={{ borderRadius: 22, maxWidth: 900 }}>
-                <Card.Body className="d-flex flex-column flex-md-row align-items-center justify-content-center p-4 gap-4" style={{ minHeight: 230 }}>
-                    <div className="text-center mb-2 mb-md-0">
-                        <img
-                            src={coach.profilePicture || `https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true`}
-                            alt="Avatar"
-                            className="rounded-circle border border-3 border-success shadow"
-                            style={{ width: '140px', height: '140px', objectFit: 'cover', background: "#fff" }}
-                        />
-                    </div>
-                    <div className="flex-grow-1 text-center text-md-start">
-                        <h2 className="fw-bold mb-2" style={{ lineHeight: 1.2 }}>{coach.fullName}</h2>
-                        <div className="mb-1" style={{ fontSize: "1.13rem", color: "#555", lineHeight: 1.6 }}>
-                            <span style={{ color: "#4d4d4d", fontWeight: 500 }}>Tiểu sử:&nbsp;</span>
-                            <span>{coach.description || <span className="fst-italic text-muted">Chưa có tiểu sử.</span>}</span>
+        <div className={styles.pageWrapper}>
+            <Container>
+                {/* Main Profile Card */}
+                <div className={styles.profileContainer}>
+                    {/* Left Section - Avatar & Main Info */}
+                    <div className={styles.profileMainCard}>
+                        <div className={styles.coverImage}>
+                            <div className={styles.avatarWrapper}>
+                                <img
+                                    src={coach?.profilePicture || 'https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true'}
+                                    alt={coach?.fullName}
+                                    className={styles.avatarImage}
+                                />
+                                {isThisCoachChosen && (
+                                    <div className={styles.verifyBadge}>
+                                        <div className={styles.verifyIcon}>
+                                            <FaCheckCircle />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={styles.mainInfo}>
+                            <h1 className={styles.coachName}>{coach?.fullName}</h1>
+                            <div className={styles.coachRole}>
+                                <FaStar className={styles.roleIcon} />
+                                Chuyên gia tư vấn cao cấp
+                            </div>
+
+                            {isThisCoachChosen && (
+                                <div className={styles.yourCoachBadge}>
+                                    <FaUserCheck /> Chuyên gia của bạn
+                                </div>
+                            )}
+
+                            <div className={styles.statusIndicator}>
+                                <span className={coach?.status === "Active" ? styles.active : styles.inactive}>
+                                    <FaClock /> {coach?.status === "Active" ? "Đang hoạt động" : "Không hoạt động"}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className={styles.actionSection}>
+                            {isThisCoachChosen ? (
+                                <div className={styles.actionButtons}>
+                                    {!hasBookingWithThisCoach && (
+                                        <Button
+                                            className={`${styles.actionBtn} ${styles.bookBtn}`}
+                                            onClick={handleBookAppointment}
+                                        >
+                                            <FaCalendarCheck /> Đặt lịch tư vấn
+                                        </Button>
+                                    )}
+                                    <Button
+                                        className={`${styles.actionBtn} ${styles.cancelBtn}`}
+                                        onClick={handleUnchooseCoach}
+                                    >
+                                        <FaUserTimes /> Hủy chọn chuyên gia
+                                    </Button>
+                                </div>
+                            ) : !hasChosenAnyCoach ? (
+                                <Button
+                                    className={`${styles.actionBtn} ${styles.chooseBtn}`}
+                                    onClick={handleChooseCoach}
+                                >
+                                    <FaUserCheck /> Chọn làm người đồng hành
+                                </Button>
+                            ) : (
+                                <Alert variant="warning" className={styles.warningAlert}>
+                                    Bạn đã có chuyên gia khác. Vui lòng hủy chọn chuyên gia hiện tại trước.
+                                </Alert>
+                            )}
                         </div>
                     </div>
-                </Card.Body>
-            </Card>
 
-            {/* Thông tin cá nhân của Coach */}
-            <Card className="mb-4 mx-auto shadow-sm border-0" style={{ borderRadius: 22, maxWidth: 900 }}>
-                <Card.Body style={{ background: "#fff", borderRadius: 22, padding: "2rem" }}>
-                    <h5 className="mb-4" style={{ color: "#3d1877", fontWeight: 700, letterSpacing: 1 }}>
-                        <FaUser className="me-2" /> Thông tin chuyên gia
-                    </h5>
-                    <Row style={{ fontSize: "1.08rem", lineHeight: 2 }}>
-                        <Col md={6} xs={12}>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaEnvelope className="me-2" /><strong>Email:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{coach.email}</span>
+                    {/* Right Section - Details */}
+                    <div className={styles.detailsSection}>
+                        {/* About Card */}
+                        <div className={styles.detailCard}>
+                            <div className={styles.cardHeader}>
+                                <FaUser />
+                                <h3>Giới thiệu</h3>
                             </div>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaPhoneAlt className="me-2" /><strong>Số điện thoại:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{coach.phoneNumber}</span>
+                            <div className={styles.cardBody}>
+                                <p className={styles.description}>
+                                    {coach?.description || 'Chưa có thông tin giới thiệu.'}
+                                </p>
                             </div>
-                        </Col>
-                        <Col md={6} xs={12}>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaTransgender className="me-2" /><strong>Giới tính:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{coach.gender === 'Male' ? 'Nữ' : 'Nam'}</span>
-                            </div>
-                            <div className="d-flex align-items-center mb-2">
-                                <FaCalendarAlt className="me-2" /><strong>Ngày tham gia:</strong>
-                                <span className="ms-2" style={{ color: "#222" }}>{new Date(coach.registrationDate).toLocaleDateString('vi-VN')}</span>
-                            </div>
-                        </Col>
-                    </Row>
-                </Card.Body>
-            </Card>
+                        </div>
 
-            {/* THÊM MỚI: Khu vực các nút hành động */}
-            <Card className="mb-4 mx-auto shadow-sm border-0" style={{ borderRadius: 22, maxWidth: 900 }}>
-                <Card.Body className="text-center">
-                    <h5 className="mb-3">Tương tác với chuyên gia</h5>
-                    <div className="d-grid gap-2 d-md-flex justify-content-md-center">
-                        {/* Nếu user đã chọn coach này */}
-                        {isThisCoachChosen && (
-                            <Button variant="danger" size="lg" onClick={handleUnchooseCoach}>
-                                <FaUserTimes className="me-2" /> Hủy chọn
-                            </Button>
-                        )}
-
-                        {/* Nếu user chưa chọn coach nào */}
-                        {!hasChosenAnyCoach && (
-                            <Button variant="primary" size="lg" onClick={handleChooseCoach}>
-                                <FaUserCheck className="me-2" /> Chọn làm người đồng hành
-                            </Button>
-                        )}
-
-                        {/* Nút đặt lịch chỉ sáng khi user đã chọn coach này */}
-                        {isThisCoachChosen && !hasBookingWithThisCoach && (
-                            <Button variant="success" size="lg" onClick={handleBookAppointment}>
-                                <FaCalendarCheck className="me-2" /> Đặt lịch tư vấn
-                            </Button>
-                        )}
-                        {isThisCoachChosen && hasBookingWithThisCoach && (
-                            <Button variant="info" size="lg" onClick={() => navigate("/User/MyConsultations")}>
-                                <FaCalendarCheck className="me-2" /> Lịch tư vấn của tôi
-                            </Button>
-                        )}
+                        {/* Contact Info Card */}
+                        <div className={styles.detailCard}>
+                            <div className={styles.cardHeader}>
+                                <FaEnvelope />
+                                <h3>Thông tin liên hệ</h3>
+                            </div>
+                            <div className={styles.cardBody}>
+                                <div className={styles.infoGrid}>
+                                    <div className={styles.infoItem}>
+                                        <FaEnvelope />
+                                        <div>
+                                            <span className={styles.label}>Email</span>
+                                            <span className={styles.value}>{coach?.email}</span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.infoItem}>
+                                        <FaPhoneAlt />
+                                        <div>
+                                            <span className={styles.label}>Số điện thoại</span>
+                                            <span className={styles.value}>{coach?.phoneNumber}</span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.infoItem}>
+                                        <FaTransgender />
+                                        <div>
+                                            <span className={styles.label}>Giới tính</span>
+                                            <span className={styles.value}>
+                                                {coach?.gender === 'Male' ? 'Nam' : 'Nữ'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.infoItem}>
+                                        <FaCalendarAlt />
+                                        <div>
+                                            <span className={styles.label}>Ngày tham gia</span>
+                                            <span className={styles.value}>
+                                                {new Date(coach?.registrationDate).toLocaleDateString('vi-VN')}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    {/* Thông báo nếu user đã chọn coach khác */}
-                    {hasChosenAnyCoach && !isThisCoachChosen && (
-                        <Alert variant="warning" className="mt-3">
-                            Bạn đã có một chuyên gia đồng hành khác. Vui lòng hủy chọn chuyên gia hiện tại trước khi chọn người mới.
-                        </Alert>
-                    )}
-                </Card.Body>
-            </Card>
+                </div>
 
-            {/* Modal đặt lịch tư vấn */}
-            <Modal show={showBookingModal} onHide={() => setShowBookingModal(false)} centered>
-                <Form onSubmit={handleBookingSubmit}>
+                {/* Modal đặt lịch tư vấn */}
+                <Modal show={showBookingModal} onHide={() => setShowBookingModal(false)} centered>
+                    <Form onSubmit={handleBookingSubmit}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Đặt lịch tư vấn với {coach.fullName}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Ngày tư vấn</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    required
+                                    value={bookingData.consultationDate}
+                                    onChange={e => setBookingData({ ...bookingData, consultationDate: e.target.value })}
+                                    min={new Date().toISOString().split("T")[0]}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Giờ bắt đầu</Form.Label>
+                                <Form.Control
+                                    type="time"
+                                    required
+                                    value={bookingData.consultationTime ? bookingData.consultationTime.slice(0, 5) : "12:00"}
+                                    onChange={e => setBookingData({ ...bookingData, consultationTime: e.target.value + ':00' })}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Thời lượng (phút)</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    min={15}
+                                    max={180}
+                                    step={15}
+                                    required
+                                    value={bookingData.duration}
+                                    onChange={e => setBookingData({ ...bookingData, duration: e.target.value })}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Ghi chú (tuỳ chọn)</Form.Label>
+                                <Form.Control
+                                    type="time"
+                                    required
+                                    min="08:00"
+                                    max="22:00"
+                                    value={bookingData.consultationTime ? bookingData.consultationTime.slice(0, 5) : "12:00"}
+                                    onChange={e => setBookingData({ ...bookingData, consultationTime: e.target.value + ':00' })}
+                                />
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setShowBookingModal(false)} disabled={bookingLoading}>
+                                Đóng
+                            </Button>
+                            <Button variant="success" type="submit" disabled={bookingLoading}>
+                                {bookingLoading ? <Spinner animation="border" size="sm" /> : 'Đặt lịch'}
+                            </Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+                {/* Modal gửi yêu cầu hủy chọn coach */}
+                <Modal show={showUnchooseCoachModal} onHide={() => setShowUnchooseCoachModal(false)} centered>
                     <Modal.Header closeButton>
-                        <Modal.Title>Đặt lịch tư vấn với {coach.fullName}</Modal.Title>
+                        <Modal.Title>Yêu cầu hủy chọn huấn luyện viên</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Ngày tư vấn</Form.Label>
-                            <Form.Control
-                                type="date"
-                                required
-                                value={bookingData.consultationDate}
-                                onChange={e => setBookingData({ ...bookingData, consultationDate: e.target.value })}
-                                min={new Date().toISOString().split("T")[0]}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Giờ bắt đầu</Form.Label>
-                            <Form.Control
-                                type="time"
-                                required
-                                value={bookingData.consultationTime ? bookingData.consultationTime.slice(0, 5) : "12:00"}
-                                onChange={e => setBookingData({ ...bookingData, consultationTime: e.target.value + ':00' })}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Thời lượng (phút)</Form.Label>
-                            <Form.Control
-                                type="number"
-                                min={15}
-                                max={180}
-                                step={15}
-                                required
-                                value={bookingData.duration}
-                                onChange={e => setBookingData({ ...bookingData, duration: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Ghi chú (tuỳ chọn)</Form.Label>
-                            <Form.Control
-                                type="time"
-                                required
-                                min="08:00"
-                                max="22:00"
-                                value={bookingData.consultationTime ? bookingData.consultationTime.slice(0, 5) : "12:00"}
-                                onChange={e => setBookingData({ ...bookingData, consultationTime: e.target.value + ':00' })}
-                            />
-                        </Form.Group>
+                        <Form.Label>Lý do hủy chọn huấn luyện viên <span style={{ color: "red" }}>*</span></Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
+                            value={unchooseReason}
+                            onChange={e => setUnchooseReason(e.target.value)}
+                            placeholder="Nhập lý do bạn muốn hủy chọn coach..."
+                            required
+                        />
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowBookingModal(false)} disabled={bookingLoading}>
+                        <Button variant="secondary" onClick={() => setShowUnchooseCoachModal(false)} disabled={unchooseLoading}>
                             Đóng
                         </Button>
-                        <Button variant="success" type="submit" disabled={bookingLoading}>
-                            {bookingLoading ? <Spinner animation="border" size="sm" /> : 'Đặt lịch'}
+                        <Button variant="danger" onClick={submitUnchooseCoach} disabled={unchooseLoading}>
+                            {unchooseLoading ? <Spinner animation="border" size="sm" /> : "Gửi yêu cầu"}
                         </Button>
                     </Modal.Footer>
-                </Form>
-            </Modal>
-        </Container>
+                </Modal>
+            </Container>
+        </div >
     );
 };
 

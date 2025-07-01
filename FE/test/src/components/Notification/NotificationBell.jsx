@@ -40,7 +40,7 @@ const NotificationBell = () => {
         };
 
         fetchNotifications(); // Lấy lần đầu khi mount
-        // intervalId = setInterval(fetchNotifications, 15000); // Lấy lại mỗi 15s
+        intervalId = setInterval(fetchNotifications, 60000); // Lấy lại mỗi 15s
 
         return () => clearInterval(intervalId);
     }, []);

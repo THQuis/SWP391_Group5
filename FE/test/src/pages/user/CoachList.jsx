@@ -11,9 +11,101 @@ import {
     Button,
     CircularProgress,
     Alert,
+    Box,
+    Badge,
+    Divider,
+    Paper,
 } from "@mui/material";
+import {
+    Phone,
+    Email,
+    PersonAdd,
+    Star,
+    Verified,
+    Support,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/CoachList.module.scss";
+
+// Component avatar với badge coach
+const CoachAvatar = ({ src, name, isSelected, size = 100 }) => {
+    return (
+        <Box className={styles.avatarContainer}>
+            <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                badgeContent={
+                    <Box className={styles.coachBadge}>
+                        <Support sx={{ fontSize: 20, color: 'white' }} />
+                    </Box>
+                }
+            >
+                <Avatar
+                    src={src || "https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true"}
+                    alt={name}
+                    className={`${styles.avatar} ${isSelected ? styles.selectedAvatar : ''}`}
+                    sx={{ width: size, height: size }}
+                />
+            </Badge>
+        </Box>
+    );
+};
+
+
+// Component mô tả có thể cắt ngắn với styling mới
+const TruncatedDescription = ({ description, maxLength = 120 }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    if (!description) return null;
+
+    const shouldTruncate = description.length > maxLength;
+    const displayText = isExpanded || !shouldTruncate
+        ? description
+        : `${description.substring(0, maxLength)}...`;
+
+    return (
+        <Box className={styles.descriptionContainer}>
+            <Typography
+                variant="body2"
+                className={styles.description}
+            >
+                {displayText}
+            </Typography>
+            {shouldTruncate && (
+                <Button
+                    size="small"
+                    variant="text"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className={styles.expandButton}
+                >
+                    {isExpanded ? 'Thu gọn' : 'Xem thêm'}
+                </Button>
+            )}
+        </Box>
+    );
+};
+
+// Component thông tin liên hệ
+const ContactInfo = ({ email, phone }) => {
+    return (
+        <Box className={styles.contactInfo}>
+            <Box className={styles.contactItem}>
+                <Email sx={{ fontSize: 16, color: '#666' }} />
+                <Typography variant="body2" className={styles.contactText}>
+                    {email}
+                </Typography>
+            </Box>
+            {phone && (
+                <Box className={styles.contactItem}>
+                    <Phone sx={{ fontSize: 16, color: '#666' }} />
+                    <Typography variant="body2" className={styles.contactText}>
+                        {phone}
+                    </Typography>
+                </Box>
+            )}
+        </Box>
+    );
+};
 
 // Hàm lấy danh sách coach từ API
 const fetchCoaches = async () => {
@@ -28,17 +120,18 @@ const fetchCoaches = async () => {
             throw new Error("Không thể tải danh sách coach");
         }
         const data = await response.json();
-        // Chuẩn hoá lại dữ liệu cho tương thích UI cũ
         return data.map((coach) => ({
             UserID: coach.coachId,
             FullName: coach.fullName,
             Email: coach.email,
             PhoneNumber: coach.phone,
             ProfilePicture: coach.profilePicture || null,
-            Status: "Active", // API không trả về status, bạn có thể sửa lại nếu cần
+            Status: "Active",
             Description: coach.description,
             Gender: coach.gender,
             DateOfBirth: coach.dateOfBirth,
+            Rating: Math.floor(Math.random() * 2) + 4, // Mock rating 4-5
+            Experience: Math.floor(Math.random() * 10) + 2, // Mock experience 2-12 years
         }));
     } catch (err) {
         throw err;
@@ -51,7 +144,6 @@ const CoachList = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    // TODO: Thay thế selectedCoachId bằng logic thật từ backend/user context nếu có
     const selectedCoachId = 1;
 
     useEffect(() => {
@@ -71,103 +163,98 @@ const CoachList = () => {
     }, []);
 
     return (
-        <Container className={styles.wrapper}>
-            <Typography className={styles.title}>
-                Danh sách Chuyên gia tư vấn
-            </Typography>
+        <div className={styles.pageContainer}>
+            {/* Hero Section */}
+            <div className={styles.heroSection}>
+                <div className={styles.heroContent}>
+                    <h1>🌟 Đội ngũ Chuyên gia tư vấn</h1>
+                    <p>Khám phá và kết nối với những chuyên gia tận tâm</p>
+                </div>
+            </div>
 
-            {loading ? (
-                <Grid container justifyContent="center">
-                    <CircularProgress color="primary" size={48} />
-                </Grid>
-            ) : error ? (
-                <Alert severity="error">{error}</Alert>
-            ) : coaches.length === 0 ? (
-                <Alert severity="info">Chưa có Chuyên gia tư vấn nào.</Alert>
-            ) : (
-                <Grid container spacing={4} className={styles.grid}>
-                    {coaches.map((c) => (
-                        <Grid item key={c.UserID} xs={12} sm={6} md={4}>
-                            <Card className={styles.card}>
-                                <CardContent>
-                                    <Grid container spacing={2} alignItems="center">
-                                        <Grid item>
-                                            <Avatar
-                                                src={
-                                                    c.ProfilePicture ||
-                                                    "https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true"
-                                                }
-                                                alt={c.FullName}
+            <Container maxWidth="lg">
+                {loading ? (
+                    <div className={styles.loadingState}>
+                        <CircularProgress size={50} />
+                        <p>Đang tải danh sách chuyên gia...</p>
+                    </div>
+                ) : error ? (
+                    <Alert severity="error" className={styles.alert}>
+                        {error}
+                    </Alert>
+                ) : (
+                    <div className={styles.coachGrid}>
+                        {coaches.map((coach) => (
+                            <div key={coach.UserID} className={styles.coachCard}>
+                                <div className={styles.cardContent}>
+                                    <div className={styles.profileSection}>
+                                        <div className={styles.avatarWrapper}>
+                                            <img
+                                                src={coach.ProfilePicture || "https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true"}
+                                                alt={coach.FullName}
                                                 className={styles.avatar}
                                             />
-                                        </Grid>
-                                        <Grid item xs>
-                                            <Typography
-                                                className={styles.name}
-                                                onClick={() =>
-                                                    navigate(`/User/coach/profile/${c.UserID}`)
-                                                }
-                                            >
-                                                {c.FullName}
-                                            </Typography>
-                                            {c.UserID === selectedCoachId && (
-                                                <Typography className={styles.selectedLabel}>
-                                                    (Chuyên gia tư vấn của bạn)
-                                                </Typography>
+                                            {coach.UserID === selectedCoachId && (
+                                                <div className={styles.verifiedBadge}>
+                                                    <Verified />
+                                                </div>
                                             )}
-                                            <Typography className={styles.info}>
-                                                Email: {c.Email}
-                                            </Typography>
-                                            <div className={styles.chipContainer}>
-                                                <Chip
-                                                    label={`SĐT: ${c.PhoneNumber || "Chưa có"}`}
-                                                    size="small"
-                                                    color="info"
-                                                />
-                                                {/* Nếu cần, hiển thị trạng thái hoạt động */}
-                                                <Chip
-                                                    label={
-                                                        c.Status === "Active"
-                                                            ? "Hoạt động"
-                                                            : "Không hoạt động"
-                                                    }
-                                                    size="small"
-                                                    color={
-                                                        c.Status === "Active" ? "success" : "default"
-                                                    }
-                                                />
+                                        </div>
+                                        <div className={styles.nameSection}>
+                                            <h2>{coach.FullName}</h2>
+                                            {coach.UserID === selectedCoachId && (
+                                                <span className={styles.currentCoach}>
+                                                    <Star /> Chuyên gia của bạn
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.infoSection}>
+                                        <div className={styles.contactRow}>
+                                            <div className={styles.contactItem}>
+                                                <Email className={styles.icon} />
+                                                <span>{coach.Email}</span>
                                             </div>
-                                            {/* Có thể hiện thêm mô tả nếu muốn */}
-                                            {c.Description && (
-                                                <Typography
-                                                    variant="body2"
-                                                    color="textSecondary"
-                                                    className={styles.info}
-                                                >
-                                                    {c.Description}
-                                                </Typography>
-                                            )}
-                                        </Grid>
-                                    </Grid>
-                                </CardContent>
-                                <CardActions className={styles.actions}>
-                                    <Button
-                                        variant="contained"
-                                        size="small"
-                                        color="primary"
-                                        onClick={() =>
-                                            navigate(`/User/coach/profile/${c.UserID}`)
-                                        }
-                                    >
-                                        Xem chi tiết
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            )}
-        </Container>
+                                            <div className={styles.contactItem}>
+                                                <Phone className={styles.icon} />
+                                                <span>{coach.PhoneNumber}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className={styles.statusRow}>
+                                            <Chip
+                                                label={coach.Status === "Active" ? "Hoạt Động" : "Busy"}
+                                                className={coach.Status === "Active" ? styles.activeChip : styles.busyChip}
+                                            />
+                                            <Chip
+                                                label="Đã xác minh"
+                                                className={styles.verifiedChip}
+                                                icon={<Verified />}
+                                            />
+                                        </div>
+
+                                        <p className={styles.description}>
+                                            {coach.Description || "Chưa có thông tin giới thiệu."}
+                                        </p>
+                                    </div>
+
+                                    <div className={styles.actionSection}>
+                                        <Button
+                                            className={styles.viewProfileBtn}
+                                            onClick={() => navigate(`/User/coach/profile/${coach.UserID}`)}
+                                            startIcon={<PersonAdd />}
+                                        >
+                                            Xem hồ sơ
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </Container>
+        </div>
     );
 };
 

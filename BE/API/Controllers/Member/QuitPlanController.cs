@@ -85,23 +85,7 @@ public class QuitPlanController : ControllerBase
     public async Task<IActionResult> GetByUserId(int userId)
     {
         var plans = await _quitPlanService.GetByUserIdAsync(userId);
-
-        if (plans == null || !plans.Any())
-            return NotFound("Không tìm thấy kế hoạch nào cho người dùng.");
-
-        var result = plans.Select(plan => new QuitPlanResponse
-        {
-            QuitPlanId = plan.QuitPlanID,
-            CigarettesPerDayAtStart = plan.CigarettesPerDayAtStart,
-            PricePerPackAtStart = plan.PricePerPackAtStart,
-            CigarettesPerPack = plan.CigarettesPerPack,
-            Status = plan.Status,
-            StartDate = plan.StartDate.ToString("dd/MM/yyyy"),
-            EndDate = plan.EndDate?.ToString("dd/MM/yyyy")
-        });
-
-        return Ok(result);
+        return Ok(plans);
     }
-
 
 }

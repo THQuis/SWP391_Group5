@@ -124,8 +124,14 @@ namespace Smoking.BLL.Services
             var userAchievements = await _unitOfWork.UserAchievements
                 .FindAsync(ua => ua.UserID == userId);
 
+            //var userAchievementDict = userAchievements
+            //    .ToDictionary(ua => ua.AchievementID, ua => ua.AwardedDate);
             var userAchievementDict = userAchievements
-                .ToDictionary(ua => ua.AchievementID, ua => ua.AwardedDate);
+                .GroupBy(ua => ua.AchievementID)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.OrderByDescending(x => x.AwardedDate).First().AwardedDate
+                );
 
             var result = allAchievements.Select(a => new
             {

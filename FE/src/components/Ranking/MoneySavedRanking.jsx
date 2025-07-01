@@ -12,6 +12,8 @@ import {
 import { FaCrown, FaDollarSign } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { useRanking, useApi } from "../../hooks/useApi";
+// import { toast } from "react-toastify"; // Uncomment if using toast notifications
 
 function getCrown(idx) {
     if (idx === 0)
@@ -41,52 +43,56 @@ function getCrown(idx) {
 const USERS_PER_PAGE = 5;
 
 function MoneySavedRanking() {
-    const [ranking, setRanking] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState("");
 
-    useEffect(() => {
-        const fetchRanking = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch('https://localhost:7049/api/ranking/top-money-saved?top=50', {
-                    headers: {
-                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJDYW8gSOG7r3UgVHLDrSIsImVtYWlsIjoiY2FvaHV1dHJpdGwxMjM0QGdtYWlsLmNvbSIsInJvbGUiOiIxIiwibmJmIjoxNzUxMzc1Njk3LCJleHAiOjE3NTEzNzkyOTcsImlhdCI6MTc1MTM3NTY5NywiaXNzIjoiU21va2luZ0FQSSIsImF1ZCI6IlNtb2tpbmdDbGllbnRzIn0.sgKdFiafEqRonwhg24w5oRaWik8eP1hhQj-LCzH-c0g'
-                    }
-                });
+    // Use the custom hook with localStorage integration
+    const { rankingData: ranking, isLoading: loading, error, refetch } = useRanking('money-saved', 50);
+    const { userData, isAuthenticated } = useApi();
 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Money Saved Ranking:', data);
-                    setRanking(data);
-                } else {
-                    console.error('Failed to fetch ranking');
-                    setRanking([]);
-                }
-            } catch (error) {
-                console.error('Error fetching ranking:', error);
-                setRanking([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchRanking();
-    }, []);
-
-    // Filter based on search
+    // Filter based on search - sử dụng fullName từ API response
     const filteredRanking = ranking.filter(u =>
-        u.fullName.toLowerCase().includes(search.toLowerCase())
+        u.fullName && u.fullName.toLowerCase().includes(search.toLowerCase())
     );
 
-    const maxMoney = ranking.length > 0 ? ranking[0].totalMoneySaved : 1;
+    const maxMoney = ranking.length > 0 && ranking[0].totalMoneySaved ? ranking[0].totalMoneySaved : 1;
     const totalPages = Math.ceil(filteredRanking.length / USERS_PER_PAGE);
     const currentPageData = filteredRanking.slice((page - 1) * USERS_PER_PAGE, page * USERS_PER_PAGE);
 
     useEffect(() => {
         setPage(1);
     }, [search]);
+
+    // Show success message when data is loaded
+    useEffect(() => {
+        if (!loading && ranking.length > 0 && !error) {
+            console.log(`✅ Đã tải ${ranking.length} người dùng từ API!`);
+            // toast.success(`Đã tải ${ranking.length} người dùng từ API!`); // Uncomment if using toast
+        }
+    }, [loading, ranking.length, error]);
+
+    // Check if user is authenticated before loading data
+    useEffect(() => {
+        if (!isAuthenticated()) {
+            console.warn('User not authenticated, redirecting...');
+            // Could redirect to login or show message
+        }
+    }, [isAuthenticated]);
+
+    // Show error message if API fails
+    if (error) {
+        return (
+            <div className="text-center my-5">
+                <div className="alert alert-danger">
+                    <h5>⚠️ Lỗi tải dữ liệu</h5>
+                    <p>{error}</p>
+                    <Button variant="primary" onClick={refetch}>
+                        🔄 Thử lại
+                    </Button>
+                </div>
+            </div>
+        );
+    }
 
     const handlePageChange = (number) => setPage(number);
 
@@ -100,8 +106,8 @@ function MoneySavedRanking() {
     const handleExportExcel = () => {
         const data = filteredRanking.map((user, index) => ({
             "STT": index + 1,
-            "Tên thành viên": user.fullName,
-            "Số tiền tiết kiệm": user.totalMoneySaved,
+            "Tên thành viên": user.fullName || "Unknown User",
+            "Số tiền tiết kiệm": user.totalMoneySaved || 0,
         }));
 
         const ws = XLSX.utils.json_to_sheet(data);
@@ -117,10 +123,31 @@ function MoneySavedRanking() {
 
     return (
         <>
+            {/* Debug info - User data from localStorage và API response */}
+            {/* {userData && userData.userToken && (
+                <div className="mb-3 p-2 bg-light rounded" style={{ fontSize: '12px' }}>
+                    <div><strong>👤 User:</strong> {userData.userName} ({userData.userEmail})</div>
+                    <div><strong>🔑 Token:</strong> {userData.userToken.substring(0, 30)}...</div>
+                    <div><strong>📊 API Data:</strong> {ranking.length} users loaded</div>
+                    {ranking.length > 0 && (
+                        <div><strong>🎯 Sample:</strong> {JSON.stringify(ranking[0], null, 2).substring(0, 100)}...</div>
+                    )}
+                </div>
+            )} */}
+
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <h4 className="mb-1">💰 Bảng xếp hạng theo tiền tiết kiệm</h4>
                     <p className="text-muted mb-0">Những người tiết kiệm nhiều nhất từ việc cai thuốc</p>
+                    {/* <Button
+                        variant="outline-primary"
+                        size="sm"
+                        className="mt-2"
+                        onClick={refetch}
+                        disabled={loading}
+                    >
+                        🔄 Làm mới dữ liệu
+                    </Button> */}
                 </div>
                 <div style={{ maxWidth: 300 }}>
                     <Form.Control
@@ -160,7 +187,7 @@ function MoneySavedRanking() {
                                     const realIdx = (page - 1) * USERS_PER_PAGE + index;
                                     return (
                                         <tr
-                                            key={user.userID}
+                                            key={user.userID || index}
                                             style={realIdx === 0 ? { background: "#f0fff4" } : {}}
                                         >
                                             <td className="text-center fw-bold py-3" style={{ fontSize: 18 }}>
@@ -171,7 +198,7 @@ function MoneySavedRanking() {
                                                 <div className="d-flex align-items-center gap-3">
                                                     <Image
                                                         src={user.profilePicture || "https://via.placeholder.com/40"}
-                                                        title={user.fullName}
+                                                        title={user.fullName || "Unknown User"}
                                                         roundedCircle
                                                         width={realIdx === 0 ? 50 : 40}
                                                         height={realIdx === 0 ? 50 : 40}
@@ -182,7 +209,7 @@ function MoneySavedRanking() {
                                                     />
                                                     <div>
                                                         <div className="fw-semibold" style={{ fontSize: realIdx === 0 ? 18 : 16 }}>
-                                                            {user.fullName}
+                                                            {user.fullName || "Unknown User"}
                                                         </div>
                                                         {realIdx === 0 && (
                                                             <Badge bg="success" className="mt-1">
@@ -196,18 +223,18 @@ function MoneySavedRanking() {
                                                 <div className="d-flex align-items-center justify-content-center gap-2">
                                                     <FaDollarSign color="#28a745" size={18} />
                                                     <span className="fw-bold" style={{ fontSize: 16, color: "#28a745" }}>
-                                                        {formatMoney(user.totalMoneySaved)}
+                                                        {formatMoney(user.totalMoneySaved || 0)}
                                                     </span>
                                                 </div>
                                             </td>
                                             <td className="text-center py-3">
                                                 <ProgressBar
-                                                    now={Math.min(100, (user.totalMoneySaved / maxMoney) * 100)}
+                                                    now={Math.min(100, ((user.totalMoneySaved || 0) / maxMoney) * 100)}
                                                     variant="success"
                                                     style={{ height: 8, minWidth: 120 }}
                                                 />
                                                 <small className="text-muted mt-1 d-block">
-                                                    {((user.totalMoneySaved / maxMoney) * 100).toFixed(1)}%
+                                                    {(((user.totalMoneySaved || 0) / maxMoney) * 100).toFixed(1)}%
                                                 </small>
                                             </td>
                                         </tr>

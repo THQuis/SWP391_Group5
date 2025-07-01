@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Container, Form, Button, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
+import { Modal, Container, Form, Button, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/QuitPlanPage.scss";
@@ -91,7 +91,7 @@ const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
 };
 
 // PHẦN 2: Thiết lập mục tiêu
-const QuitPlanGoalSection = ({ formData, onChange, editable }) => (
+const QuitPlanGoalSection = ({ formData, onChange, editable, showEndDate }) => (
     <Card className="thq-card mb-4">
         <Card.Header as="h5" className="thq-card__header">2. Thiết lập mục tiêu</Card.Header>
         <Card.Body className="thq-card__body">
@@ -101,27 +101,46 @@ const QuitPlanGoalSection = ({ formData, onChange, editable }) => (
                     className="thq-form__control"
                     type="date"
                     name="startDate"
-                    value={formData.startDate}
+                    value={formData.startDate || ''}
                     onChange={onChange}
-                    required
-                    disabled={!editable}
+                    disabled={!editable} // Chỉ vô hiệu hóa khi không thể chỉnh sửa
                 />
             </Form.Group>
-            <Form.Group className="thq-form__group mb-3">
-                <Form.Label className="thq-form__label">Ngày dự kiến kết thúc</Form.Label>
-                <Form.Control
-                    className="thq-form__control"
-                    type="date"
-                    name="endDate"
-                    value={formData.endDate}
-                    onChange={onChange}
-                    disabled={!editable}
-                />
-            </Form.Group>
+            {!showEndDate && (
+                <Form.Group className="thq-form__group mb-3">
+                    <Form.Label className="thq-form__label">Thời gian cai thuốc (chọn số tháng)</Form.Label>
+                    <div>
+                        {[3, 6, 9, 12].map(months => (
+                            <Form.Check
+                                key={months}
+                                type="radio"
+                                name="targetDurationMonths"
+                                value={months}
+                                label={`${months} tháng`}
+                                checked={formData.targetDurationMonths === months}
+                                onChange={onChange} // Không phải handleStaticChange
+                                disabled={!editable}
+                                className="thq-form__check"
+                            />
+                        ))}
+                    </div>
+                </Form.Group>
+            )}
+            {showEndDate && (
+                <Form.Group className="thq-form__group mb-3">
+                    <Form.Label className="thq-form__label">Ngày kết thúc cai thuốc</Form.Label>
+                    <Form.Control
+                        className="thq-form__control"
+                        type="date"
+                        name="endDate"
+                        value={formData.endDate || ''}
+                        disabled // Không thể chỉnh sửa
+                    />
+                </Form.Group>
+            )}
         </Card.Body>
     </Card>
 );
-
 // PHẦN 3: Khảo sát
 const QuitPlanSurveySection = ({
     surveyQuestions,
@@ -188,17 +207,16 @@ const QuitPlanPage = () => {
     const [editMode, setEditMode] = useState(false);
     const [planCreated, setPlanCreated] = useState(false);
     const [habitData, setHabitData] = useState(null);
-    const [formData, setFormData] = useState({ startDate: '', endDate: '', dynamicAnswers: {}, otherTexts: {} });
+    const [formData, setFormData] = useState({
+        startDate: '',
+        endDate: '',
+        targetDurationMonths: null,
+        dynamicAnswers: {},
+        otherTexts: {}
+    });
     const [surveyQuestions, setSurveyQuestions] = useState([]);
-    const [selectedCoach, setSelectedCoach] = useState('');
     const userId = localStorage.getItem("userId");
-
-    // Dummy coach list (replace with API call if needed)
-    const coachList = [
-        { id: 1, name: "Coach An" },
-        { id: 2, name: "Coach Bình" },
-        { id: 3, name: "Coach Cường" },
-    ];
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     const loadInitialData = async () => {
         setIsLoading(true);
@@ -269,8 +287,13 @@ const QuitPlanPage = () => {
 
     const handleStaticChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        // setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData(prev => ({
+            ...prev,
+            [name]: name === "targetDurationMonths" ? Number(value) : value
+        }));
     };
+
 
     const handleDynamicChange = (e, questionID, questionType, answerText) => {
         const { value, checked } = e.target;
@@ -313,6 +336,7 @@ const QuitPlanPage = () => {
         setIsSubmitting(true);
         const token = "Bearer " + localStorage.getItem('userToken');
 
+
         if (!habitData || !habitData.cigarettesPerDayAtStart || habitData.cigarettesPerDayAtStart <= 0 || !habitData.cigarettesPerPack || habitData.cigarettesPerPack <= 0 || !habitData.pricePerPackAtStart || habitData.pricePerPackAtStart <= 0) {
             toast.error("Vui lòng điền đầy đủ thông tin hợp lệ ở Phần 1.");
             setIsSubmitting(false); return;
@@ -330,25 +354,54 @@ const QuitPlanPage = () => {
                     pricePerPack: habitData.pricePerPackAtStart,
                     cigarettesPerPack: habitData.cigarettesPerPack,
                     startDate: formData.startDate,
-                    endDate: formData.endDate,
+                    targetDurationInMonths: formData.targetDurationMonths, // <-- ĐÚNG tên
                 };
-                const createPlanRes = await fetch('/api/QuitPlan/CreateQuitPlan', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': token }, body: JSON.stringify(quitPlanPayload) });
+
+                const createPlanRes = await fetch('/api/QuitPlan/CreateQuitPlan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                    body: JSON.stringify(quitPlanPayload),
+                });
+
                 if (!createPlanRes.ok) throw new Error("Lỗi khi tạo kế hoạch cơ bản.");
 
+                const responseData = await createPlanRes.json();
+                setFormData(prev => ({
+                    ...prev,
+                    endDate: responseData.endDate, // Cập nhật endDate từ API
+                }));
+
                 // TODO: Xử lý khảo sát nếu có
+                // Xử lý gửi khảo sát sau khi tạo kế hoạch thành công
                 const surveyPayload = [];
-                Object.entries(formData.dynamicAnswers).forEach(([qId, aIds]) => aIds.forEach(aId => { /* ... */ }));
+                Object.entries(formData.dynamicAnswers).forEach(([qId, aIds]) => {
+                    aIds.forEach(aId => {
+                        const q = surveyQuestions.find(i => i.questionID == qId);
+                        const a = q?.answerOptions.find(o => o.answerOptionID == aId);
+                        surveyPayload.push({
+                            questionID: parseInt(qId, 10),
+                            answerOptionID: aId,
+                            customAnswerText: a?.answerText.toLowerCase().includes('khác') ? (formData.otherTexts[qId] || "") : ""
+                        });
+                    });
+                });
                 if (surveyPayload.length > 0) {
-                    const submitAnswerRes = await fetch(`/api/Questionnaire/SubmitAnwser?userId=${userId}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': token }, body: JSON.stringify(surveyPayload) });
+                    const submitAnswerRes = await fetch(`/api/Questionnaire/SubmitAnwser?userId=${userId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                        body: JSON.stringify(surveyPayload),
+                    });
                     if (!submitAnswerRes.ok) throw new Error("Kế hoạch đã tạo nhưng lỗi nộp khảo sát.");
                 }
 
                 toast.success("Tạo kế hoạch thành công!");
                 window.scrollTo({ top: 0, behavior: "smooth" }); // <-- scroll lên đầu trang ngay khi lưu thành công
-                // Hiện modal thử thách
                 await loadInitialData();
-            } catch (error) { toast.error(error.message); }
-            finally { setIsSubmitting(false); }
+            } catch (error) {
+                toast.error(error.message);
+            } finally {
+                setIsSubmitting(false);
+            }
         }
         else {
             try {
@@ -396,8 +449,23 @@ const QuitPlanPage = () => {
             }
         }
     };
-
-
+    const handleDeletePlan = async () => {
+        setIsSubmitting(true);
+        const token = "Bearer " + localStorage.getItem('userToken');
+        try {
+            const res = await fetch(`/api/QuitPlan/DeleteQuitPlanAndProgress?userId=${userId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': token }
+            });
+            if (!res.ok) throw new Error("Xóa kế hoạch thất bại.");
+            toast.success("Đã xóa tất cả kế hoạch và tiến trình!");
+            await loadInitialData();
+        } catch (error) {
+            toast.error(error.message || "Đã có lỗi khi xóa kế hoạch.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     if (isLoading) return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
@@ -426,6 +494,7 @@ const QuitPlanPage = () => {
                                 formData={formData}
                                 onChange={handleStaticChange}
                                 editable={!planCreated}
+                                showEndDate={planCreated} // Show endDate if the plan is created
                             />
                             <QuitPlanSurveySection
                                 surveyQuestions={surveyQuestions}
@@ -483,6 +552,19 @@ const QuitPlanPage = () => {
                                         >
                                             🧑‍🏫 Chọn Coach hỗ trợ
                                         </Button>
+                                        <Button
+                                            variant="danger"
+                                            size="lg"
+                                            className="thq-delete-btn"
+                                            onClick={() => setShowDeleteConfirm(true)}
+                                            disabled={isSubmitting || isLoading}
+                                            style={{
+                                                fontWeight: 600,
+                                                letterSpacing: ".02em"
+                                            }}
+                                        >
+                                            🗑️ Xóa kế hoạch
+                                        </Button>
                                     </div>
                                 )}
                             </div>
@@ -490,6 +572,32 @@ const QuitPlanPage = () => {
                     </Col>
                 </Row>
             </Container>
+            <Modal
+                show={showDeleteConfirm}
+                onHide={() => setShowDeleteConfirm(false)}
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc muốn xóa toàn bộ kế hoạch và tiến trình không?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteConfirm(false)}>
+                        Hủy
+                    </Button>
+                    <Button
+                        variant="danger"
+                        onClick={async () => {
+                            setShowDeleteConfirm(false);
+                            await handleDeletePlan();
+                        }}
+                    >
+                        Xóa
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <ToastContainer position="top-right" autoClose={3000} />
 
 

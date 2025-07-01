@@ -33,7 +33,6 @@ const requestChangeCoach = async ({ newCoachId, reason }) => {
     return data;
 };
 
-
 const fetchMyBookings = async () => {
     const token = localStorage.getItem('userToken');
     const response = await fetch('/api/user/consultation/my-bookings', {
@@ -104,6 +103,22 @@ const bookConsultation = async (data) => {
         throw error;
     }
 };
+const requestCancelCoach = async ({ reason }) => {
+    const token = localStorage.getItem("userToken");
+    const response = await fetch('/api/user/coach/request-cancel-coach', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+            "accept": "*/*"
+        },
+        body: JSON.stringify({ reason }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || "Gửi yêu cầu hủy coach thất bại");
+    return data;
+};
+
 
 const CoachProfileForUser = () => {
     const { id } = useParams(); // Lấy ID của coach từ URL
@@ -151,7 +166,7 @@ const CoachProfileForUser = () => {
             setChangeCoachLoading(false);
         }
     };
-    // Hàm gửi yêu cầu hủy chọn coach (báo cho admin duyệt)
+    // Thêm API gửi yêu cầu hủy chọn coach đúng endpoint
     const submitUnchooseCoach = async () => {
         if (!unchooseReason.trim()) {
             toast.warning("Vui lòng nhập lý do muốn hủy chọn coach!");
@@ -159,18 +174,20 @@ const CoachProfileForUser = () => {
         }
         setUnchooseLoading(true);
         try {
-            await requestChangeCoach({ newCoachId: null, reason: unchooseReason });
+            await requestCancelCoach({ reason: unchooseReason });
             toast.success("Đã gửi yêu cầu hủy chọn coach, vui lòng chờ admin duyệt!");
             setShowUnchooseCoachModal(false);
             setUnchooseReason('');
-            // Không xóa coachId local, chờ backend duyệt
         } catch (err) {
-            toast.error(err.message || "Gửi yêu cầu thất bại!");
+            if (err.message?.includes("403")) {
+                toast.error("Bạn đã gửi yêu cầu hủy trước đó rồi, không thể gửi lại!");
+            } else {
+                toast.error(err.message || "Gửi yêu cầu thất bại!");
+            }
         } finally {
             setUnchooseLoading(false);
         }
     };
-
 
     // Hàm kiểm tra trạng thái còn hiệu lực
     const isActiveStatus = (status) =>
@@ -482,12 +499,10 @@ const CoachProfileForUser = () => {
                             <Form.Group className="mb-3">
                                 <Form.Label>Ghi chú (tuỳ chọn)</Form.Label>
                                 <Form.Control
-                                    type="time"
-                                    required
-                                    min="08:00"
-                                    max="22:00"
-                                    value={bookingData.consultationTime ? bookingData.consultationTime.slice(0, 5) : "12:00"}
-                                    onChange={e => setBookingData({ ...bookingData, consultationTime: e.target.value + ':00' })}
+                                    type="text"
+                                    value={bookingData.notes}
+                                    onChange={e => setBookingData({ ...bookingData, notes: e.target.value })}
+                                    placeholder="Nhập ghi chú cho buổi tư vấn (nếu có)..."
                                 />
                             </Form.Group>
                         </Modal.Body>

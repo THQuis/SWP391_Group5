@@ -1,11 +1,12 @@
-﻿using Smoking.DAL.Interfaces.Repositories;
+﻿using Smoking.BLL.Interfaces;
+using Smoking.BLL.Models;
+using Smoking.DAL.Entities;
+using Smoking.DAL.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Smoking.BLL.Models;
-using Smoking.BLL.Interfaces;
 
 
 
@@ -40,6 +41,14 @@ namespace Smoking.BLL.Services
                     }).ToList()
                 }).ToList();
         }
+
+        public async Task<List<Milestone>> GetAllAsync()
+        {
+            // Lấy tất cả mốc từ repository (từ cơ sở dữ liệu)
+            var milestones = await _repo.GetAllAsync(); // Phương thức này phải có trong repository
+            return milestones;
+        }
+
     }
 }
     

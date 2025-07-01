@@ -15,13 +15,17 @@ namespace Smoking.API.Controllers
     public class UserMilestoneProgressController : ControllerBase
     {
         private readonly IUserMilestoneProgressService _userMilestoneProgressService;
+        private readonly IMilestoneService _milestoneService; // Thêm service để lấy dữ liệu các mốc
 
-        public UserMilestoneProgressController(IUserMilestoneProgressService userMilestoneProgressService)
+        public UserMilestoneProgressController(
+            IUserMilestoneProgressService userMilestoneProgressService,
+            IMilestoneService milestoneService) // Inject thêm service milestone
         {
             _userMilestoneProgressService = userMilestoneProgressService;
+            _milestoneService = milestoneService; // Khởi tạo service milestone
         }
 
-        // Lấy tất cả tiến trình của người dùng
+        // Lấy tất cả tiến trình của người dùng và tự động thêm vào
         [HttpGet("list")]
         public async Task<IActionResult> GetAll()
         {
@@ -32,19 +36,44 @@ namespace Smoking.API.Controllers
                 return Unauthorized(new { message = "Không thể xác định ID người dùng." });
             }
 
+            // Lấy danh sách các mốc tiến trình có sẵn trong hệ thống
+            var allMilestones = await _milestoneService.GetAllAsync();
+
+            if (allMilestones == null || !allMilestones.Any())
+                return NotFound(new { message = "Không có mốc tiến trình nào trong hệ thống." });
+
+            // Lấy tất cả tiến trình của người dùng từ service
             var progressList = await _userMilestoneProgressService.GetAllByUserIdAsync(userId);
 
+            // Nếu người dùng chưa có tiến trình nào, sẽ tự động gán mốc mới cho họ
             if (progressList == null || !progressList.Any())
-                return NotFound(new { message = "Bạn chưa hoàn thành bất kỳ mốc nào." });
+            {
+                // Lặp qua tất cả các mốc và tạo tiến trình cho người dùng
+                foreach (var milestone in allMilestones)
+                {
+                    var userMilestoneProgress = new UserMilestoneProgress
+                    {
+                        UserID = userId,
+                        MilestoneID = milestone.MilestoneID,
+                        AchievedDate = null, // Chưa hoàn thành, vì chưa đạt được mốc nào
+                    };
 
-            // Sử dụng LINQ để chuyển đổi kết quả
+                    // Gọi service để lưu tiến trình mới vào cơ sở dữ liệu
+                    await _userMilestoneProgressService.AddAsync(userMilestoneProgress);
+                }
+
+                // Cập nhật lại danh sách tiến trình của người dùng sau khi tự động thêm
+                progressList = await _userMilestoneProgressService.GetAllByUserIdAsync(userId);
+            }
+
+            // Trả về danh sách tiến trình của người dùng
             var result = progressList.Select(up => new
             {
                 up.UserMilestoneID,
                 up.MilestoneID,
                 MilestoneName = up.Milestone?.Name ?? "N/A",
                 up.AchievedDate,
-                PackageMilestones = up.Milestone?.PackageMilestones ?? new List<PackageMilestone>() // Thêm thông tin PackageMilestones
+                PackageMilestones = up.Milestone?.PackageMilestones ?? new List<PackageMilestone>()
             }).ToList();
 
             return Ok(result);
@@ -69,5 +98,7 @@ namespace Smoking.API.Controllers
 
             return Ok(progress);
         }
+
+
     }
 }

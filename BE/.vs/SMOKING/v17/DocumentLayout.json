@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\controllers\\member\\usermilestoneprogresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\usermilestoneprogresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\controllers\\member\\usernotificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\usernotificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\dal\\entities\\usermilestoneprogress.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBF6767-87FE-4ADB-983C-5B9BDB6283F4}|DAL\\Smoking.DAL.csproj|solutionrelative:dal\\entities\\usermilestoneprogress.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\models\\user\\consultationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\models\\user\\consultationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\bll\\services\\milestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\services\\milestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\api\\controllers\\member\\userconsultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EDE6A9F4-4D5C-4F4B-824D-C21A3883351F}|API\\Smoking.API.csproj|solutionrelative:api\\controllers\\member\\userconsultationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|d:\\ki_5\\prn212\\code\\abc2\\swp391_group5\\be\\bll\\interfaces\\imilestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D4BC63B2-6062-4728-8C9E-C38C6EF3B2B1}|BLL\\Smoking.BLL.csproj|solutionrelative:bll\\interfaces\\imilestoneservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,60 +30,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserMilestoneProgressController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserMilestoneProgressController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserMilestoneProgressController.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserMilestoneProgressController.cs",
-              "RelativeToolTip": "API\\Controllers\\Member\\UserMilestoneProgressController.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAYwD8AAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T14:08:51.071Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserNotificationController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserNotificationController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserNotificationController.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserNotificationController.cs",
-              "RelativeToolTip": "API\\Controllers\\Member\\UserNotificationController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T14:08:22.888Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ConsultationRequest.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Models\\User\\ConsultationRequest.cs",
-              "RelativeDocumentMoniker": "API\\Models\\User\\ConsultationRequest.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Models\\User\\ConsultationRequest.cs",
-              "RelativeToolTip": "API\\Models\\User\\ConsultationRequest.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAuwBAAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T13:59:51.638Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserConsultationController.cs",
-              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserConsultationController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserConsultationController.cs",
-              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserConsultationController.cs",
-              "RelativeToolTip": "API\\Controllers\\Member\\UserConsultationController.cs",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAYwHwAAABWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T13:58:56.208Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -107,6 +59,71 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAewBwAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:47:31.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserMilestoneProgress.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\DAL\\Entities\\UserMilestoneProgress.cs",
+              "RelativeDocumentMoniker": "DAL\\Entities\\UserMilestoneProgress.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\DAL\\Entities\\UserMilestoneProgress.cs",
+              "RelativeToolTip": "DAL\\Entities\\UserMilestoneProgress.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAYwAsAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:45:37.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MilestoneService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Services\\MilestoneService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\MilestoneService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Services\\MilestoneService.cs",
+              "RelativeToolTip": "BLL\\Services\\MilestoneService.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAYwCwAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:44:09.397Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IMilestoneService.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Interfaces\\IMilestoneService.cs",
+              "RelativeDocumentMoniker": "BLL\\Interfaces\\IMilestoneService.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\BLL\\Interfaces\\IMilestoneService.cs",
+              "RelativeToolTip": "BLL\\Interfaces\\IMilestoneService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:43:36.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserMilestoneProgressController.cs",
+              "DocumentMoniker": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserMilestoneProgressController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Member\\UserMilestoneProgressController.cs",
+              "ToolTip": "D:\\Ki_5\\PRN212\\code\\abc2\\SWP391_Group5\\BE\\API\\Controllers\\Member\\UserMilestoneProgressController.cs",
+              "RelativeToolTip": "API\\Controllers\\Member\\UserMilestoneProgressController.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAIwDgAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T15:39:43.859Z",
+              "EditorCaption": ""
             }
           ]
         }

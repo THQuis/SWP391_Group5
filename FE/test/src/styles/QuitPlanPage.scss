@@ -1,0 +1,185 @@
+$thq-colors: (
+    'primary': #3da679,
+    'secondary': #7fb9a2,
+    'accent': #2d6a4f,
+    'light': #e8f5e9,
+    'background': #f8faf8,
+    'text': #2c4a3e,
+    'border': #a5d6b7,
+    'white': #ffffff,
+    'shadow': rgba(61, 166, 121, 0.1)
+);
+
+@mixin thq-card-shadow {
+    box-shadow:
+        0 4px 6px -1px map-get($thq-colors, 'shadow'),
+        0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+@mixin thq-transition {
+    transition: all 0.3s ease;
+}
+
+.thq-quit-plan {
+    background: linear-gradient(135deg,
+            map-get($thq-colors, 'background'),
+            map-get($thq-colors, 'white'));
+    min-height: 100vh;
+    padding: 2rem 0;
+
+    .thq-header {
+        &__title {
+            color: map-get($thq-colors, 'text');
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        &__subtitle {
+            color: rgba(map-get($thq-colors, 'text'), 0.7);
+            font-size: 1.1rem;
+        }
+    }
+
+    .thq-card {
+        @include thq-card-shadow;
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        background: map-get($thq-colors, 'white');
+
+        &__header {
+            background: linear-gradient(135deg,
+                    map-get($thq-colors, 'primary'),
+                    map-get($thq-colors, 'secondary'));
+            color: map-get($thq-colors, 'white');
+            padding: 1.25rem;
+            font-weight: 600;
+            border: none;
+        }
+
+        &__body {
+            padding: 1.5rem;
+        }
+    }
+
+    .thq-form {
+        &__group {
+            margin-bottom: 1.5rem;
+        }
+
+        &__label {
+            color: map-get($thq-colors, 'text');
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        &__control {
+            border: 2px solid map-get($thq-colors, 'border');
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            @include thq-transition;
+
+            &:focus {
+                border-color: map-get($thq-colors, 'primary');
+                box-shadow: 0 0 0 3px rgba(map-get($thq-colors, 'primary'), 0.1);
+            }
+
+            &:disabled {
+                background-color: map-get($thq-colors, 'light');
+                border-color: map-get($thq-colors, 'border');
+            }
+        }
+
+        &__check {
+            .form-check-input {
+                border-color: map-get($thq-colors, 'border');
+
+                &:checked {
+                    background-color: map-get($thq-colors, 'primary');
+                    border-color: map-get($thq-colors, 'primary');
+                }
+            }
+
+            .form-check-label {
+                color: map-get($thq-colors, 'text');
+                font-weight: 500;
+            }
+        }
+    }
+
+    .thq-alert {
+        background-color: map-get($thq-colors, 'light');
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1rem;
+
+        &__content {
+            color: map-get($thq-colors, 'text');
+
+            strong {
+                color: map-get($thq-colors, 'primary');
+                font-weight: 600;
+            }
+        }
+    }
+
+    .thq-button {
+        padding: 0.875rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        @include thq-transition;
+        border: none;
+
+        &--success {
+            background: linear-gradient(135deg,
+                    map-get($thq-colors, 'primary'),
+                    map-get($thq-colors, 'secondary'));
+            color: map-get($thq-colors, 'white');
+
+            &:hover:not(:disabled) {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(map-get($thq-colors, 'primary'), 0.2);
+            }
+        }
+
+        &--primary {
+            background: map-get($thq-colors, 'secondary');
+            color: map-get($thq-colors, 'white');
+
+            &:hover:not(:disabled) {
+                background: darken(map-get($thq-colors, 'secondary'), 5%);
+            }
+        }
+
+        &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    }
+
+    .thq-spinner {
+        color: map-get($thq-colors, 'white');
+    }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+    .thq-quit-plan {
+        padding: 1rem 0;
+
+        .thq-header__title {
+            font-size: 1.8rem;
+        }
+
+        .thq-card__header {
+            padding: 1rem;
+        }
+
+        .thq-card__body {
+            padding: 1rem;
+        }
+    }
+}

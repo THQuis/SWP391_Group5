@@ -49,8 +49,8 @@ namespace Smoking.DAL.Repositories
         public async Task<List<Milestone>> GetMilestonesWithGroupsAsync()
         {
             return await _context.Milestones
-                .Include(m => m.MilestoneGroup)
-                .ToListAsync();
+        .Include(m => m.MilestoneGroup)  
+        .ToListAsync();
         }
 
         // Thêm filter theo MilestoneGroupID

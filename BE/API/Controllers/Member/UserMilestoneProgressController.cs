@@ -66,18 +66,26 @@ namespace Smoking.API.Controllers
                 progressList = await _userMilestoneProgressService.GetAllByUserIdAsync(userId);
             }
 
-            // Trả về danh sách tiến trình của người dùng
+            // Trả về danh sách tiến trình của người dùng, bao gồm thông tin từ bảng Milestone
             var result = progressList.Select(up => new
             {
                 up.UserMilestoneID,
                 up.MilestoneID,
                 MilestoneName = up.Milestone?.Name ?? "N/A",
                 up.AchievedDate,
+                Description = up.Milestone?.Description ?? "N/A",
+                MilestoneGroupID = up.Milestone?.MilestoneGroupID,
+                MilestoneGroupName = up.Milestone?.MilestoneGroup?.GroupName ?? "N/A",  // Thêm GroupName
+                MilestoneTime = up.Milestone?.MilestoneTime,
+                Percent = up.Milestone?.Percent,
+                TimeUnit = up.Milestone?.TimeUnit,
                 PackageMilestones = up.Milestone?.PackageMilestones ?? new List<PackageMilestone>()
             }).ToList();
 
             return Ok(result);
         }
+
+
 
         // Lấy tiến trình của người dùng theo ID tiến trình
         [HttpGet("{id}")]

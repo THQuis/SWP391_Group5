@@ -24,7 +24,6 @@ namespace Smoking.API.Controllers.Member
             _mailService = mailService;
         }
 
-
         [HttpPost("book")]
         public async Task<IActionResult> BookConsultation([FromBody] ConsultationRequest request)
         {
@@ -35,11 +34,11 @@ namespace Smoking.API.Controllers.Member
             }
 
             var consultationDate = string.IsNullOrWhiteSpace(request.ConsultationDate)
-            ? DateTime.Today.AddDays(1).ToString("yyyy-MM-dd") 
-            : request.ConsultationDate;
+                ? DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")
+                : request.ConsultationDate;
 
             var consultationTime = string.IsNullOrWhiteSpace(request.ConsultationTime)
-                ? "08:00:00" 
+                ? "08:00:00"
                 : request.ConsultationTime;
 
             string combinedDateTime = $"{consultationDate}T{consultationTime}";
@@ -108,18 +107,32 @@ namespace Smoking.API.Controllers.Member
             await _unitOfWork.ConsultationBookings.AddAsync(consultation);
             await _unitOfWork.CompleteAsync();
 
-            // Gửi mail
+            // Gửi email cho người dùng
             var user = await _unitOfWork.Users.GetByIdAsync(userId);
-            var emailBodyForUser = $"Bạn đã đặt lịch tư vấn với Coach {coach.FullName} vào {consultationDateTime:yyyy-MM-dd HH:mm}.";
-            await _mailService.SendEmailAsync(user.Email, "Đặt lịch tư vấn thành công", emailBodyForUser);
+            string formattedDateForUser = consultationDateTime.ToString("HH:mm dd-MM-yyyy");
+            var emailBodyForUser = $@"
+                <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; background-color: #fefefe;'>
+                    <h2 style='color: #2c3e50;'>📅 Đặt lịch tư vấn thành công</h2>
+                    <p><strong>Coach:</strong> {coach.FullName}</p>
+                    <p><strong>Thời gian tư vấn:</strong> {formattedDateForUser}</p>
+                    <p style='color: #888;'>Cảm ơn bạn đã sử dụng dịch vụ tư vấn của chúng tôi!</p>
+                    <hr style='margin: 20px 0;'/>                  
+                </div>";
+            await _mailService.SendHtmlEmailAsync(user.Email, "Đặt lịch tư vấn thành công", emailBodyForUser);
 
-            var emailBodyForCoach = $"Bạn có một lịch tư vấn mới từ người dùng {user.FullName} vào {consultationDateTime:yyyy-MM-dd HH:mm}.";
-            await _mailService.SendEmailAsync(coach.Email, "Lịch tư vấn mới", emailBodyForCoach);
+            // Gửi email cho coach
+            var emailBodyForCoach = $@"
+                <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; background-color: #fefefe;'>
+                    <h2 style='color: #c0392b;'>📅 Lịch tư vấn mới</h2>
+                    <p><strong>Người dùng:</strong> {user.FullName}</p>
+                    <p><strong>Thời gian tư vấn:</strong> {formattedDateForUser}</p>
+                    <p style='color: #888;'>Vui lòng xác nhận lịch tư vấn với người dùng trên hệ thống.</p>
+                    <hr style='margin: 20px 0;'/>                
+                </div>";
+            await _mailService.SendHtmlEmailAsync(coach.Email, "Lịch tư vấn mới", emailBodyForCoach);
 
             return Ok(new { Message = "Đặt lịch tư vấn thành công. Chờ Coach duyệt." });
         }
-
-
 
         // 2️⃣ Xem lịch tư vấn của người dùng
         [HttpGet("my-bookings")]
@@ -131,7 +144,6 @@ namespace Smoking.API.Controllers.Member
                 return Unauthorized(new { Message = "Người dùng không hợp lệ." });
             }
 
-            // Lấy tất cả lịch tư vấn của người dùng
             var consultations = await _unitOfWork.ConsultationBookings.GetByUserIdAsync(userId);
 
             return Ok(consultations.Select(c => new
@@ -164,17 +176,12 @@ namespace Smoking.API.Controllers.Member
             if (consultation.Status != "Pending")
                 return BadRequest(new { Message = "Không thể hủy lịch đã được duyệt hoặc đã hoàn thành." });
 
-            // 🔐 Lưu ID trước khi context dispose
             var bookingIdCopy = consultation.BookingID;
-
-            // Cập nhật trạng thái
             consultation.Status = "Cancelled";
             _unitOfWork.ConsultationBookings.Update(consultation);
 
-            // 1️⃣ Gọi SaveChanges trước
             await _unitOfWork.CompleteAsync();
 
-            // 2️⃣ Sau đó mới gửi email - không truy cập consultation nữa
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "noreply@example.com";
             var message = $"Lịch tư vấn #{bookingIdCopy} của bạn đã bị huỷ.";
 
@@ -182,12 +189,5 @@ namespace Smoking.API.Controllers.Member
 
             return Ok(new { Message = "Huỷ lịch thành công." });
         }
-
-
-
-
-
-
-
     }
 }

@@ -29,8 +29,8 @@ namespace Smoking.API.Controllers.Member
 
         // 🔹 1. Lấy danh sách tất cả các coach đang hoạt động
         [HttpGet("list")]
-            [AllowAnonymous] // Hoặc [Authorize] nếu chỉ cho user login xem
-            public async Task<IActionResult> GetAllCoaches()
+        [Authorize(Roles = "2")]
+        public async Task<IActionResult> GetAllCoaches()
             {
                 var coaches = await _unitOfWork.Users.GetUsersByRoleAsync(roleId: 3); 
 

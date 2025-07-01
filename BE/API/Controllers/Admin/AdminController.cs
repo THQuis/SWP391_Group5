@@ -209,6 +209,7 @@ namespace Smoking.API.Controllers.Admin
 
         //    return Ok(new { Message = "Đã duyệt đổi huấn luyện viên cho người dùng." });
         //}
+
         [HttpPut("approve-coach-change/{userId}")]
         public async Task<IActionResult> ApproveCoachChange(int userId)
         {
@@ -287,6 +288,50 @@ namespace Smoking.API.Controllers.Admin
             await _unitOfWork.CompleteAsync();
 
             return Ok(new { Message = "Duyệt yêu cầu huấn luyện viên thành công." });
+        }
+
+        // Hủy yêu cầu chờ duyệt đổi huấn luyện viên
+        [HttpDelete("cancel-coach-change/{userId}")]
+        public async Task<IActionResult> CancelCoachChange(int userId)
+        {
+            // Tìm người dùng dựa trên userId
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+
+            // Nếu người dùng không tồn tại hoặc không có yêu cầu đổi huấn luyện viên nào
+            if (user == null || user.PendingCoachId == null)
+                return NotFound(new { Message = "Không có yêu cầu đổi huấn luyện viên nào đang chờ duyệt." });
+
+            // Xóa yêu cầu pending
+            user.PendingCoachId = null;
+            user.CoachChangeReason = null;
+
+            // Cập nhật thông tin người dùng
+            _unitOfWork.Users.Update(user);
+            await _unitOfWork.CompleteAsync();
+
+            // Tạo thông báo cho người dùng
+            var notification = new Notification
+            {
+                NotificationName = "Đã hủy yêu cầu đổi huấn luyện viên",
+                Message = "Yêu cầu đổi huấn luyện viên của bạn đã bị hủy.",
+                CreatedBy = "Admin",
+                NotificationType = "CoachChangeCanceled",
+                NotificationFor = "Member",
+                Condition = "Unread",
+                UserID = user.UserID,
+                SentAt = DateTime.Now
+            };
+            await _unitOfWork.Notifications.AddAsync(notification);
+
+            // Gửi email thông báo cho người dùng
+            await _mailService.SendEmailAsync(user.Email, "Yêu cầu đổi huấn luyện viên đã bị hủy",
+                $"Chào {user.FullName},\n\nYêu cầu đổi huấn luyện viên của bạn đã bị hủy. Bạn có thể gửi yêu cầu đổi huấn luyện viên mới nếu cần.");
+
+            // Lưu các thay đổi vào cơ sở dữ liệu
+            await _unitOfWork.CompleteAsync();
+
+            // Trả về kết quả thành công
+            return Ok(new { Message = "Đã hủy yêu cầu đổi huấn luyện viên thành công." });
         }
 
 

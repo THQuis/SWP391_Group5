@@ -243,6 +243,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
+    "Method": "CancelCoachChange",
+    "RelativePath": "api/Admin/cancel-coach-change/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "QuitChallengeTemplateController",
     "Method": "GetAll",
     "RelativePath": "api/admin/challenge-templates",

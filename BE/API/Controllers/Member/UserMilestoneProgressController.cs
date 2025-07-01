@@ -37,12 +37,14 @@ namespace Smoking.API.Controllers
             if (progressList == null || !progressList.Any())
                 return NotFound(new { message = "Bạn chưa hoàn thành bất kỳ mốc nào." });
 
+            // Sử dụng LINQ để chuyển đổi kết quả
             var result = progressList.Select(up => new
             {
                 up.UserMilestoneID,
                 up.MilestoneID,
                 MilestoneName = up.Milestone?.Name ?? "N/A",
-                up.AchievedDate
+                up.AchievedDate,
+                PackageMilestones = up.Milestone?.PackageMilestones ?? new List<PackageMilestone>() // Thêm thông tin PackageMilestones
             }).ToList();
 
             return Ok(result);

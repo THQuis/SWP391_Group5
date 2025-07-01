@@ -22,7 +22,8 @@ namespace Smoking.DAL.Repositories
         {
             return await _context.UserMilestoneProgress
                 .Where(up => up.UserID == userId)
-                .Include(up => up.Milestone)
+                .Include(up => up.Milestone)  // Bao gồm Milestone
+                .ThenInclude(m => m.PackageMilestones)  // Bao gồm PackageMilestones trong Milestone
                 .ToListAsync();
         }
 

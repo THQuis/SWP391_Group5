@@ -110,6 +110,7 @@ namespace Smoking.API.Controllers.Coach
                 c.ImageUrl
             }));
         }
+
         [HttpGet("user/{userId}/survey-answers")]
         public async Task<IActionResult> GetUserSurveyAnswers(int userId)
         {

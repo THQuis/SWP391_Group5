@@ -184,7 +184,67 @@ namespace Smoking.API.Controllers.Member
 
             return Ok(new { Message = "Đã gửi yêu cầu đổi huấn luyện viên, vui lòng chờ xét duyệt." });
         }
+        // hủy coach
+        [HttpPost("request-cancel-coach")]
+        public async Task<IActionResult> RequestCancelCoach([FromBody] CancelCoachRequest request)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var user = await _unitOfWork.Users.GetByIdAsync(userId);
+            if (user == null) return NotFound();
 
+            if (string.IsNullOrWhiteSpace(request.Reason))
+                return BadRequest(new { Message = "Vui lòng nhập lý do hủy huấn luyện viên." });
+
+            if (user.CoachId == null)
+                return BadRequest(new { Message = "Bạn chưa có huấn luyện viên để hủy." });
+
+            if (user.PendingCoachId != null)
+                return BadRequest(new { Message = "Bạn đang có yêu cầu đổi coach đang chờ xử lý." });
+
+            // ✅ Ghi thông tin yêu cầu hủy coach vào CoachChangeReason và đánh dấu PendingCoachId = -1
+            user.CoachChangeReason = request.Reason;
+            user.PendingCoachId = -1; // -1 sẽ được hiểu là “Yêu cầu hủy coach”
+
+            _unitOfWork.Users.Update(user);
+
+            var currentCoach = await _unitOfWork.Users.GetByIdAsync(user.CoachId.Value);
+            var admins = await _unitOfWork.Users.GetUsersByRoleAsync(1);
+
+            // ✅ Gửi thông báo hệ thống
+            foreach (var admin in admins)
+            {
+                var noti = new Notification
+                {
+                    NotificationName = "Yêu cầu hủy huấn luyện viên",
+                    Message = $"Người dùng {user.FullName} yêu cầu hủy coach hiện tại: {currentCoach.FullName}.",
+                    Condition = "Unread",
+                    CreatedBy = user.FullName,
+                    NotificationType = "CoachCancelRequest",
+                    NotificationFor = "Admin",
+                    UserID = admin.UserID,
+                    SentAt = DateTime.Now
+                };
+
+                await _unitOfWork.Notifications.AddAsync(noti);
+            }
+
+            // ✅ Gửi email cho Admin
+            string htmlBody = $@"
+    <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; background-color: #fefefe;'>
+        <h2 style='color: #c0392b;'>🛑 Yêu cầu hủy huấn luyện viên</h2>
+        <p><strong>Người dùng:</strong> {user.FullName} (<a href='mailto:{user.Email}'>{user.Email}</a>)</p>
+        <p><strong>Huấn luyện viên hiện tại:</strong> {currentCoach.FullName}</p>
+        <p><strong>Lý do hủy:</strong> <em>{request.Reason}</em></p>
+        <hr style='margin: 20px 0;'/>
+        <p style='color: #888;'>Email này được tạo tự động từ hệ thống cai thuốc Smoking Platform.</p>
+    </div>";
+
+            await _mailService.SendHtmlEmailAsync("admin@example.com", "🛑 Yêu cầu hủy huấn luyện viên", htmlBody);
+
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(new { Message = "Đã gửi yêu cầu hủy huấn luyện viên, vui lòng chờ admin xét duyệt." });
+        }
 
 
     }

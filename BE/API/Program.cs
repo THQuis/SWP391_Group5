@@ -72,7 +72,9 @@ builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IPackageMilestoneRepository, PackageMilestoneRepository>();
 builder.Services.AddScoped<IPackageMilestoneService, PackageMilestoneService>();
 
-
+// ---- UserMilestoneProgress ----
+builder.Services.AddScoped<IUserMilestoneProgressService, UserMilestoneProgressService>();  // Đăng ký service UserMilestoneProgressService
+builder.Services.AddScoped<IUserMilestoneProgressRepository, UserMilestoneProgressRepository>();  // Đăng ký repository UserMilestoneProgressRepository
 
 // =================== JWT AUTHENTICATION ===================
 var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);

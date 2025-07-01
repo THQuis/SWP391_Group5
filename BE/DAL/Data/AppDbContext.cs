@@ -12,6 +12,7 @@ namespace Smoking.DAL.Data
         {
         }
 
+        // DbSet cho các entity trong hệ thống
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<MembershipPackage> MembershipPackages { get; set; }
@@ -32,38 +33,46 @@ namespace Smoking.DAL.Data
         public DbSet<QuitChallengeTemplate> QuitChallengeTemplates { get; set; }
         public DbSet<UserQuitChallenge> UserQuitChallenges { get; set; }
 
+        // Các DbSet cho UserMilestoneProgress và Milestones
         public DbSet<Milestone> Milestones { get; set; }
         public DbSet<MilestoneGroup> MilestoneGroups { get; set; }
         public DbSet<PackageMilestone> PackageMilestones { get; set; }
+        public DbSet<UserMilestoneProgress> UserMilestoneProgress { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Relationships
+            // Quan hệ giữa các entity
+
+            // User - Role
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleID)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            // ConsultationBooking - User
             modelBuilder.Entity<ConsultationBooking>()
                 .HasOne(cb => cb.User)
                 .WithMany(u => u.ConsultationBookingsAsUser)
                 .HasForeignKey(cb => cb.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // ConsultationBooking - Coach
             modelBuilder.Entity<ConsultationBooking>()
                 .HasOne(cb => cb.Coach)
                 .WithMany(u => u.ConsultationBookingsAsCoach)
                 .HasForeignKey(cb => cb.CoachID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Notification - User
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
+
             // Quan hệ tự tham chiếu: 1 Coach có nhiều User
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Coach)
@@ -71,6 +80,9 @@ namespace Smoking.DAL.Data
                 .HasForeignKey(u => u.CoachId)
                 .OnDelete(DeleteBehavior.Restrict); // Tránh xóa cascade lặp vô hạn
 
+            // Khai báo khóa chính cho các entity
+            modelBuilder.Entity<UserMilestoneProgress>()
+                .HasKey(up => up.UserMilestoneID);  // Khai báo khóa chính cho UserMilestoneProgress
 
             // Decimal precision
             modelBuilder.Entity<SmokingStatus>()
@@ -114,10 +126,10 @@ namespace Smoking.DAL.Data
                 .WithMany(um => um.Payments)
                 .HasForeignKey(p => p.UserMembershipID)
                 .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Achievement>()
                 .Property(a => a.MoneySavedRequired)
                 .HasPrecision(18, 2);
-
         }
     }
 }

@@ -3,10 +3,10 @@ import { Container, Card, Table, Spinner, Alert, Button, Tabs, Tab } from "react
 import { useNavigate } from "react-router-dom";
 import { FaCalendarPlus, FaCalendarCheck, FaTrashAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
-import apiFetch from '../../utils/apiFetch';
+
 const fetchMyBookings = async () => {
     const token = localStorage.getItem('userToken');
-    const response = await apiFetch('/api/user/consultation/my-bookings', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/consultation/my-bookings`, {
         headers: {
             "Accept": "*/*",
             "Authorization": "Bearer " + token,
@@ -18,7 +18,7 @@ const fetchMyBookings = async () => {
 
 const cancelBooking = async (bookingId) => {
     const token = localStorage.getItem('userToken');
-    const response = await apiFetch(`/api/user/consultation/cancel/${bookingId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/consultation/cancel/${bookingId}`, {
         method: "DELETE",
         headers: {
             "Accept": "*/*",

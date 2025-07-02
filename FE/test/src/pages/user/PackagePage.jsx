@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Button, Spinner, Modal } from "react-bootstr
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import '../../styles/UserPackage.scss'; // Thêm file CSS riêng
-import apiFetch from '../../utils/apiFetch';
+
 // Component Modal Thanh toán được làm đẹp
 function MakePaymentModal({ show, handleClose, selectedPackage }) {
     const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ function MakePaymentModal({ show, handleClose, selectedPackage }) {
                 packageId: selectedPackage.id,
                 method: "momo",
             };
-            const res = await apiFetch("/api/membership/create-payment", {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/membership/create-payment`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,7 +65,7 @@ function MakePaymentModal({ show, handleClose, selectedPackage }) {
         setConfirming(true);
         try {
             const token = localStorage.getItem("userToken");
-            const res = await apiFetch("/api/membership/payment-callback", {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/membership/payment-callback`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -242,7 +242,7 @@ export default function UserPackage() {
             try {
                 setLoading(true);
                 const token = localStorage.getItem("userToken");
-                const res = await apiFetch("/api/membership/packages", {
+                const res = await fetch(`${process.env.REACT_APP_API_URL}/api/membership/packages`, {
                     headers: {
                         "Authorization": "Bearer " + token,
                         "Accept": "*/*",

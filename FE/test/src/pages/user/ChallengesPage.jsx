@@ -12,7 +12,7 @@ import {
     FaFire, FaTrophy, FaMedal, FaStopwatch
 } from "react-icons/fa";
 import "../../styles/ChallengePage.scss";
-import apiFetch from '../../utils/apiFetch';
+
 const getUserInfo = () => ({
     userId: localStorage.getItem('userId'),
     token: localStorage.getItem('userToken'),
@@ -40,7 +40,7 @@ const ChallengePage = () => {
             return;
         }
         setLoading(true);
-        apiFetch(`/api/user-challenges/${userId}/all`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/user-challenges/${userId}/all`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -99,7 +99,7 @@ const ChallengePage = () => {
                 if (imageFile) {
                     formData.append("image", imageFile);
                 }
-                await apiFetch("/api/user-challenges/complete", {
+                await fetch(`${process.env.REACT_APP_API_URL}/api/user-challenges/complete`, {
                     method: "POST",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -108,7 +108,7 @@ const ChallengePage = () => {
                 });
             } else {
                 // Bỏ hoàn thành
-                await apiFetch("/api/user-challenges/uncomplete", {
+                await fetch(`${process.env.REACT_APP_API_URL}/api/user-challenges/uncomplete`, {
                     method: "POST",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -119,7 +119,7 @@ const ChallengePage = () => {
             }
             // reload all stage data (đảm bảo sync mọi trường hợp)
             setLoading(true);
-            apiFetch(`/api/user-challenges/${userId}/all`, {
+            fetch(`/api/user-challenges/${userId}/all`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json",
@@ -246,14 +246,14 @@ const ChallengePage = () => {
                                                 className="unlock-button"
                                                 onClick={async () => {
                                                     setLoading(true);
-                                                    await apiFetch(`/api/user-challenges/${userId}/assign-stage?stage=${activeStageObj.stage}`, {
+                                                    await fetch(`/api/user-challenges/${userId}/assign-stage?stage=${activeStageObj.stage}`, {
                                                         method: "POST",
                                                         headers: {
                                                             "Authorization": `Bearer ${token}`,
                                                             "Content-Type": "application/json",
                                                         }
                                                     });
-                                                    const res = await apiFetch(`/api/user-challenges/${userId}/all`, {
+                                                    const res = await fetch(`/api/user-challenges/${userId}/all`, {
                                                         headers: {
                                                             "Authorization": `Bearer ${token}`,
                                                             "Content-Type": "application/json",

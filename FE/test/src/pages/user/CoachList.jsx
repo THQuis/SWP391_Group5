@@ -26,7 +26,7 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/CoachList.module.scss";
-import apiFetch from '../../utils/apiFetch';
+
 // Component avatar với badge coach
 const CoachAvatar = ({ src, name, isSelected, size = 100 }) => {
     return (
@@ -109,7 +109,7 @@ const ContactInfo = ({ email, phone }) => {
 
 const fetchCoaches = async (token) => {
     try {
-        const response = await apiFetch("/api/user/coach/list", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/coach/list`, {
             method: "GET",
             headers: {
                 "Accept": "*/*",

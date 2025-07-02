@@ -40,7 +40,7 @@ const ChallengePage = () => {
             return;
         }
         setLoading(true);
-        fetch(`${process.env.REACT_APP_API_URL}/api/user-challenges/${userId}/all`, {
+        fetch(`/api/user-challenges/${userId}/all`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -99,7 +99,7 @@ const ChallengePage = () => {
                 if (imageFile) {
                     formData.append("image", imageFile);
                 }
-                await fetch(`${process.env.REACT_APP_API_URL}/api/user-challenges/complete`, {
+                await fetch("/api/user-challenges/complete", {
                     method: "POST",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -108,7 +108,7 @@ const ChallengePage = () => {
                 });
             } else {
                 // Bỏ hoàn thành
-                await fetch(`${process.env.REACT_APP_API_URL}/api/user-challenges/uncomplete`, {
+                await fetch("/api/user-challenges/uncomplete", {
                     method: "POST",
                     headers: {
                         "Authorization": `Bearer ${token}`,

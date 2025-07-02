@@ -109,7 +109,7 @@ const ContactInfo = ({ email, phone }) => {
 
 const fetchCoaches = async (token) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/coach/list`, {
+        const response = await fetch("/api/user/coach/list", {
             method: "GET",
             headers: {
                 "Accept": "*/*",

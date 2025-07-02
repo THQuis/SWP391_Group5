@@ -34,7 +34,7 @@ function MakePaymentModal({ show, handleClose, selectedPackage }) {
                 packageId: selectedPackage.id,
                 method: "momo",
             };
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/membership/create-payment`, {
+            const res = await fetch("/api/membership/create-payment", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,7 +65,7 @@ function MakePaymentModal({ show, handleClose, selectedPackage }) {
         setConfirming(true);
         try {
             const token = localStorage.getItem("userToken");
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/membership/payment-callback`, {
+            const res = await fetch("/api/membership/payment-callback", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -242,7 +242,7 @@ export default function UserPackage() {
             try {
                 setLoading(true);
                 const token = localStorage.getItem("userToken");
-                const res = await fetch(`${process.env.REACT_APP_API_URL}/api/membership/packages`, {
+                const res = await fetch("/api/membership/packages", {
                     headers: {
                         "Authorization": "Bearer " + token,
                         "Accept": "*/*",

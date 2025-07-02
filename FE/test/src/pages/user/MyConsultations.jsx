@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const fetchMyBookings = async () => {
     const token = localStorage.getItem('userToken');
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/consultation/my-bookings`, {
+    const response = await fetch('/api/user/consultation/my-bookings', {
         headers: {
             "Accept": "*/*",
             "Authorization": "Bearer " + token,
@@ -18,7 +18,7 @@ const fetchMyBookings = async () => {
 
 const cancelBooking = async (bookingId) => {
     const token = localStorage.getItem('userToken');
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/consultation/cancel/${bookingId}`, {
+    const response = await fetch(`/api/user/consultation/cancel/${bookingId}`, {
         method: "DELETE",
         headers: {
             "Accept": "*/*",

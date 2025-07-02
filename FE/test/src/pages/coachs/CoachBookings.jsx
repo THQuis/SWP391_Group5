@@ -3,7 +3,7 @@ import {
     Container, Card, Table, Button, Spinner, Modal, Tabs, Tab, Form
 } from "react-bootstrap";
 import { toast } from "react-toastify";
-import apiFetch from '../../utils/apiFetch';
+
 // Modal xác nhận lịch tư vấn (chỉ để duyệt hoặc từ chối)
 function BookingActionModal({ show, onHide, booking, onApprove, onReject, loading }) {
     if (!booking) return null;
@@ -128,7 +128,7 @@ const CoachBookings = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("userToken");
-            const response = await apiFetch("/api/coach/consultation/my-appointments", {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/coach/consultation/my-appointments`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             if (!response.ok) throw new Error("Lỗi khi lấy dữ liệu lịch tư vấn");
@@ -165,7 +165,7 @@ const CoachBookings = () => {
         setInfoLoading(true);
         try {
             const token = localStorage.getItem("userToken");
-            const response = await apiFetch(`/api/coach/consultation/approve/${selectedBooking.bookingID}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/coach/consultation/approve/${selectedBooking.bookingID}`, {
                 method: "PUT",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -191,7 +191,7 @@ const CoachBookings = () => {
         setActionLoading(true);
         try {
             const token = localStorage.getItem("userToken");
-            const response = await apiFetch(`/api/coach/consultation/reject/${selectedBooking.bookingID}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/coach/consultation/reject/${selectedBooking.bookingID}`, {
                 method: "PUT",
                 headers: { "Authorization": `Bearer ${token}` }
             });
@@ -213,7 +213,7 @@ const CoachBookings = () => {
         setActionLoading(true);
         try {
             const token = localStorage.getItem("userToken");
-            const response = await apiFetch(`/api/coach/consultation/complete/${booking.bookingID}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/coach/consultation/complete/${booking.bookingID}`, {
                 method: "PUT",
                 headers: { "Authorization": `Bearer ${token}` }
             });
@@ -241,7 +241,7 @@ const CoachBookings = () => {
         setInfoLoading(true);
         try {
             const token = localStorage.getItem("userToken");
-            const response = await apiFetch(`/api/coach/consultation/update/${selectedBooking.bookingID}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/coach/consultation/update/${selectedBooking.bookingID}`, {
                 method: "PUT",
                 headers: {
                     "Authorization": `Bearer ${token}`,

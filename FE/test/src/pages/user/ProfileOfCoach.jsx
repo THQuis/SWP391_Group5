@@ -16,11 +16,11 @@ import {
     FaCalendarCheck
 } from "react-icons/fa";
 import styles from '../../styles/CoachProfile.module.scss';
-import apiFetch from '../../utils/apiFetch';
+import fetch from '../../utils/fetch';
 // API gửi yêu cầu hủy/chuyển coach
 const requestChangeCoach = async ({ newCoachId, reason }) => {
     const token = localStorage.getItem("userToken");
-    const response = await apiFetch('/api/user/coach/request-change', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/coach/request-change`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const requestChangeCoach = async ({ newCoachId, reason }) => {
 
 const fetchMyBookings = async () => {
     const token = localStorage.getItem('userToken');
-    const response = await apiFetch('/api/user/consultation/my-bookings', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/consultation/my-bookings`, {
         headers: {
             "Accept": "*/*",
             "Authorization": "Bearer " + token,
@@ -47,7 +47,7 @@ const fetchMyBookings = async () => {
 };
 const fetchMyCoachId = async () => {
     const token = localStorage.getItem('userToken');
-    const response = await apiFetch('/api/user/coach/my-coach', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/coach/my-coach`, {
         headers: {
             "Accept": "*/*",
             "Authorization": "Bearer " + token,
@@ -60,7 +60,7 @@ const fetchMyCoachId = async () => {
 };
 const fetchCoachById = async (id) => {
     const token = localStorage.getItem("userToken");
-    const response = await apiFetch(`/api/user/coach/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/coach/${id}`, {
         headers: {
             "Accept": "*/*",
             "Authorization": "Bearer " + token, // Nếu BE yêu cầu, còn không thì bỏ dòng này đi
@@ -87,7 +87,7 @@ const bookConsultation = async (data) => {
     const token = localStorage.getItem("userToken");
 
     try {
-        const response = await apiFetch('/api/user/consultation/book', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/consultation/book`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const bookConsultation = async (data) => {
 };
 const requestCancelCoach = async ({ reason }) => {
     const token = localStorage.getItem("userToken");
-    const response = await apiFetch('/api/user/coach/request-cancel-coach', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/coach/request-cancel-coach`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -150,23 +150,6 @@ const CoachProfileForUser = () => {
     const [changeCoachReason, setChangeCoachReason] = useState('');
     const [changeCoachLoading, setChangeCoachLoading] = useState(false);
     const [showChangeCoachModal, setShowChangeCoachModal] = useState(false);
-    const handleRequestChangeCoach = async () => {
-        if (!changeCoachReason.trim()) {
-            toast.warning("Bạn cần nhập lý do muốn đổi huấn luyện viên!");
-            return;
-        }
-        setChangeCoachLoading(true);
-        try {
-            await requestChangeCoach({ newCoachId: coach.UserID, reason: changeCoachReason });
-            toast.success("Đã gửi yêu cầu đổi huấn luyện viên, vui lòng chờ xét duyệt!");
-            setShowChangeCoachModal(false);
-            setChangeCoachReason('');
-        } catch (err) {
-            toast.error(err.message || "Gửi yêu cầu thất bại!");
-        } finally {
-            setChangeCoachLoading(false);
-        }
-    };
     // Thêm API gửi yêu cầu hủy chọn coach đúng endpoint
     const submitUnchooseCoach = async () => {
         if (!unchooseReason.trim()) {
@@ -236,7 +219,7 @@ const CoachProfileForUser = () => {
     // API chọn coach cho user
     const chooseCoach = async (coachId) => {
         const token = localStorage.getItem("userToken");
-        const response = await apiFetch(`/api/user/coach/choose/${coachId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/coach/choose/${coachId}`, {
             method: "POST",
             headers: {
                 "Accept": "*/*",

@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/QuitPlanPage.scss";
 import { useNavigate } from "react-router-dom";
-import apiFetch from '../../utils/apiFetch';
+
 // PHẦN 1: Thói quen hiện tại
 const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
     const dailyCost = useMemo(() => {
@@ -225,9 +225,9 @@ const QuitPlanPage = () => {
 
         try {
             const [planRes, questionsRes, userAnswersRes] = await Promise.all([
-                apiFetch(`/api/QuitPlan/user/${userId}`, { headers: { "Authorization": token } }),
-                apiFetch('/api/Questionnaire/ListQuestion', { headers: { "Authorization": token } }),
-                apiFetch(`/api/Questionnaire/answers-by-user?userId=${userId}`, { headers: { "Authorization": token } })
+                fetch(`${process.env.REACT_APP_API_URL}/api/QuitPlan/user/${userId}`, { headers: { "Authorization": token } }),
+                fetch(`${process.env.REACT_APP_API_URL}/api/Questionnaire/ListQuestion`, { headers: { "Authorization": token } }),
+                fetch(`${process.env.REACT_APP_API_URL}/api/Questionnaire/answers-by-user?userId=${userId}`, { headers: { "Authorization": token } })
             ]);
 
             if (questionsRes.ok) setSurveyQuestions(await questionsRes.json());
@@ -357,7 +357,7 @@ const QuitPlanPage = () => {
                     targetDurationInMonths: formData.targetDurationMonths, // <-- ĐÚNG tên
                 };
 
-                const createPlanRes = await apiFetch('/api/QuitPlan/CreateQuitPlan', {
+                const createPlanRes = await fetch(`${process.env.REACT_APP_API_URL}/api/QuitPlan/CreateQuitPlan`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': token },
                     body: JSON.stringify(quitPlanPayload),
@@ -386,7 +386,7 @@ const QuitPlanPage = () => {
                     });
                 });
                 if (surveyPayload.length > 0) {
-                    const submitAnswerRes = await apiFetch(`/api/Questionnaire/SubmitAnwser?userId=${userId}`, {
+                    const submitAnswerRes = await fetch(`${process.env.REACT_APP_API_URL}/api/Questionnaire/SubmitAnwser?userId=${userId}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': token },
                         body: JSON.stringify(surveyPayload),
@@ -423,12 +423,12 @@ const QuitPlanPage = () => {
                 }));
 
                 const [planUpdateRes, surveyUpdateRes] = await Promise.all([
-                    apiFetch(`/api/QuitPlan/UpdateQuitPlan?userId=${userId}`, {
+                    fetch(`${process.env.REACT_APP_API_URL}/api/QuitPlan/UpdateQuitPlan?userId=${userId}`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json", "Authorization": token },
                         body: JSON.stringify(updatePlanPayload)
                     }),
-                    apiFetch(`/api/Questionnaire/update-by-user?userId=${userId}`, {
+                    fetch(`${process.env.REACT_APP_API_URL}/api/Questionnaire/update-by-user?userId=${userId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json', 'Authorization': token },
                         body: JSON.stringify(updateSurveyPayload)
@@ -453,7 +453,7 @@ const QuitPlanPage = () => {
         setIsSubmitting(true);
         const token = "Bearer " + localStorage.getItem('userToken');
         try {
-            const res = await apiFetch(`/api/QuitPlan/DeleteQuitPlanAndProgress?userId=${userId}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/QuitPlan/DeleteQuitPlanAndProgress?userId=${userId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': token }
             });

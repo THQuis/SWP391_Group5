@@ -13,8 +13,7 @@ import { FaCrown, FaDollarSign } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { useRanking, useApi } from "../../hooks/useApi";
-// import { toast } from "react-toastify"; // Uncomment if using toast notifications
-import apiFetch from '../../utils/apiFetch';
+
 function getCrown(idx) {
     if (idx === 0)
         return (
@@ -123,31 +122,10 @@ function MoneySavedRanking() {
 
     return (
         <>
-            {/* Debug info - User data from localStorage và API response */}
-            {/* {userData && userData.userToken && (
-                <div className="mb-3 p-2 bg-light rounded" style={{ fontSize: '12px' }}>
-                    <div><strong>👤 User:</strong> {userData.userName} ({userData.userEmail})</div>
-                    <div><strong>🔑 Token:</strong> {userData.userToken.substring(0, 30)}...</div>
-                    <div><strong>📊 API Data:</strong> {ranking.length} users loaded</div>
-                    {ranking.length > 0 && (
-                        <div><strong>🎯 Sample:</strong> {JSON.stringify(ranking[0], null, 2).substring(0, 100)}...</div>
-                    )}
-                </div>
-            )} */}
-
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <h4 className="mb-1">💰 Bảng xếp hạng theo tiền tiết kiệm</h4>
                     <p className="text-muted mb-0">Những người tiết kiệm nhiều nhất từ việc cai thuốc</p>
-                    {/* <Button
-                        variant="outline-primary"
-                        size="sm"
-                        className="mt-2"
-                        onClick={refetch}
-                        disabled={loading}
-                    >
-                        🔄 Làm mới dữ liệu
-                    </Button> */}
                 </div>
                 <div style={{ maxWidth: 300 }}>
                     <Form.Control

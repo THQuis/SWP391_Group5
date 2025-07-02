@@ -6,7 +6,7 @@ import {
     FaEdit, FaTrash, FaFlag,
 } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import apiFetch from '../../utils/apiFetch';
+
 // Lấy user từ localStorage hoặc bạn tuỳ chỉnh lại tuỳ hệ thống login
 const CURRENT_USER = localStorage.getItem("userName") || "Tài khoản của bạn";
 
@@ -36,7 +36,7 @@ function UserBlog() {
             setIsLoading(true);
             try {
                 const token = localStorage.getItem("userToken");
-                const res = await apiFetch("/api/UserBlog/all", {
+                const res = await fetch(`${process.env.REACT_APP_API_URL}/api/UserBlog/all`, {
                     headers: token ? { "Authorization": `Bearer ${token}` } : {},
                 });
                 if (!res.ok) throw new Error("Lỗi tải blog");
@@ -95,7 +95,7 @@ function UserBlog() {
         };
 
         try {
-            const res = await apiFetch(`/api/UserBlog/edit/${editingBlog.blogId}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/UserBlog/edit/${editingBlog.blogId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -142,7 +142,7 @@ function UserBlog() {
         };
 
         try {
-            const res = await apiFetch("/api/UserBlog/create", {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/UserBlog/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -169,7 +169,7 @@ function UserBlog() {
     const handleDeleteBlog = async (blogId) => {
         const token = localStorage.getItem("userToken");
         try {
-            const res = await apiFetch(`/api/UserBlog/delete/${blogId}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/UserBlog/delete/${blogId}`, {
                 method: "DELETE",
                 headers: {
                     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -210,7 +210,7 @@ function UserBlog() {
         }
         try {
             const token = localStorage.getItem("userToken");
-            const res = await apiFetch(`/api/UserBlog/report/${blog.blogId}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/UserBlog/report/${blog.blogId}`, {
                 method: "POST",
                 headers: {
                     "accept": "application/json",

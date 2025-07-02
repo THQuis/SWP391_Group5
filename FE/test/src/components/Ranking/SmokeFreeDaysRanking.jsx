@@ -12,7 +12,7 @@ import {
 import { FaCrown, FaCalendarAlt } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-
+import apiFetch from '../../utils/apiFetch';
 function getCrown(idx) {
     if (idx === 0)
         return (
@@ -51,7 +51,7 @@ function SmokeFreeDaysRanking() {
             try {
                 setLoading(true);
                 const userToken = localStorage.getItem('userToken'); // Lấy token từ localStorage
-                const response = await fetch('/api/ranking/top-smoke-free-days?top=50', {
+                const response = await apiFetch('/api/ranking/top-smoke-free-days?top=50', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${userToken}` // Token động từ localStorage

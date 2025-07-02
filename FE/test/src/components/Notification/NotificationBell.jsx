@@ -3,7 +3,7 @@ import { Dropdown, Badge, Spinner } from "react-bootstrap";
 import { BellFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import '../../styles/nottification.scss';
-
+import apiFetch from '../../utils/apiFetch';
 const NotificationBell = () => {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ const NotificationBell = () => {
         const fetchNotifications = async () => {
             setLoading(true);
             try {
-                const res = await fetch("/api/user/notifications/my", {
+                const res = await apiFetch("/api/user/notifications/my", {
                     headers: {
                         "Accept": "*/*",
                         "Authorization": `Bearer ${localStorage.getItem("userToken")}`,
@@ -47,7 +47,7 @@ const NotificationBell = () => {
 
     const handleViewNotification = async (id) => {
         try {
-            await fetch(`/api/user/notifications/${id}/read`, {
+            await apiFetch(`/api/user/notifications/${id}/read`, {
                 method: "POST",
                 headers: {
                     "Accept": "*/*",

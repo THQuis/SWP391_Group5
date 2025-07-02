@@ -10,7 +10,7 @@ import {
     Modal,
     Spinner,
 } from "react-bootstrap";
-
+import apiFetch from '../../utils/apiFetch';
 // DUMMY DATA
 const DUMMY_BOOKINGS = [
     {
@@ -279,7 +279,7 @@ const CoachDashboard = () => {
     // Gửi thông báo cho member khi xác nhận hoặc từ chối (API thực tế ở đây)
     const notifyMember = (memberId, message) => {
         // TODO: Gọi API gửi thông báo cho member
-        // fetch('/api/notify', { method: 'POST', body: JSON.stringify({ userId: memberId, message }) })
+        // apiFetch('/api/notify', { method: 'POST', body: JSON.stringify({ userId: memberId, message }) })
         //   .then(...)
         alert(`Đã gửi thông báo tới member ${memberId}: ${message}`);
     };

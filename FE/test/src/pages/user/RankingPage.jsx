@@ -13,7 +13,7 @@ import CigarettesDroppedRanking from "../../components/Ranking/CigarettesDropped
 import AchievementsRanking from "../../components/Ranking/AchievementsRanking";
 import ChallengesCompletedRanking from "../../components/Ranking/ChallengesCompletedRanking";
 import "../../styles/RankingPage.scss";
-
+import apiFetch from '../../utils/apiFetch';
 function UserRanking() {
     const [activeKey, setActiveKey] = useState("smoke-free-days");
 

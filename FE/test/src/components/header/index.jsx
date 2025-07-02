@@ -5,10 +5,10 @@ import { ROUTERS } from '../../utils/router';
 import "../header/header.scss";
 import { toast } from 'react-toastify';
 import NotificationBell from '../../components/Notification/NotificationBell';
-
+import apiFetch from '../../utils/apiFetch';
 const handleLogout = async () => {
   try {
-    const response = await fetch('/api/Auth/logout', {
+    const response = await apiFetch('/api/Auth/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

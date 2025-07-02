@@ -16,10 +16,11 @@ import {
     FaCalendarCheck
 } from "react-icons/fa";
 import styles from '../../styles/CoachProfile.module.scss';
+import apiFetch from '../../utils/apiFetch';
 // API gửi yêu cầu hủy/chuyển coach
 const requestChangeCoach = async ({ newCoachId, reason }) => {
     const token = localStorage.getItem("userToken");
-    const response = await fetch('/api/user/coach/request-change', {
+    const response = await apiFetch('/api/user/coach/request-change', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -35,7 +36,7 @@ const requestChangeCoach = async ({ newCoachId, reason }) => {
 
 const fetchMyBookings = async () => {
     const token = localStorage.getItem('userToken');
-    const response = await fetch('/api/user/consultation/my-bookings', {
+    const response = await apiFetch('/api/user/consultation/my-bookings', {
         headers: {
             "Accept": "*/*",
             "Authorization": "Bearer " + token,
@@ -46,7 +47,7 @@ const fetchMyBookings = async () => {
 };
 const fetchMyCoachId = async () => {
     const token = localStorage.getItem('userToken');
-    const response = await fetch('/api/user/coach/my-coach', {
+    const response = await apiFetch('/api/user/coach/my-coach', {
         headers: {
             "Accept": "*/*",
             "Authorization": "Bearer " + token,
@@ -59,7 +60,7 @@ const fetchMyCoachId = async () => {
 };
 const fetchCoachById = async (id) => {
     const token = localStorage.getItem("userToken");
-    const response = await fetch(`/api/user/coach/${id}`, {
+    const response = await apiFetch(`/api/user/coach/${id}`, {
         headers: {
             "Accept": "*/*",
             "Authorization": "Bearer " + token, // Nếu BE yêu cầu, còn không thì bỏ dòng này đi
@@ -86,7 +87,7 @@ const bookConsultation = async (data) => {
     const token = localStorage.getItem("userToken");
 
     try {
-        const response = await fetch('/api/user/consultation/book', {
+        const response = await apiFetch('/api/user/consultation/book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -105,7 +106,7 @@ const bookConsultation = async (data) => {
 };
 const requestCancelCoach = async ({ reason }) => {
     const token = localStorage.getItem("userToken");
-    const response = await fetch('/api/user/coach/request-cancel-coach', {
+    const response = await apiFetch('/api/user/coach/request-cancel-coach', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -235,7 +236,7 @@ const CoachProfileForUser = () => {
     // API chọn coach cho user
     const chooseCoach = async (coachId) => {
         const token = localStorage.getItem("userToken");
-        const response = await fetch(`/api/user/coach/choose/${coachId}`, {
+        const response = await apiFetch(`/api/user/coach/choose/${coachId}`, {
             method: "POST",
             headers: {
                 "Accept": "*/*",

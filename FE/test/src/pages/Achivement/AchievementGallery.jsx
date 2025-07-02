@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Modal, Image, Spinner, Alert } from "react-bootstrap";
-
+import apiFetch from '../../utils/apiFetch';
 const getUserInfo = () => ({
     userId: localStorage.getItem('userId'),
     token: localStorage.getItem('userToken'),
@@ -29,7 +29,7 @@ const AchievementGallery = () => {
             setLoading(false);
             return;
         }
-        fetch(`/api/user-achievement/all-status/${userId}`, {
+        apiFetch(`/api/user-achievement/all-status/${userId}`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }

@@ -1,13 +1,13 @@
-// API Service với localStorage integration từ AuthPage
 class ApiService {
+    constructor() {
+        // Lấy baseURL từ biến môi trường
+        this.baseURL = process.env.REACT_APP_API_URL;
+    }
 
-
-    // Lấy token từ localStorage (giống AuthPage)
     getToken() {
         return localStorage.getItem('userToken');
     }
 
-    // Lấy thông tin user từ localStorage (giống AuthPage)
     getUserData() {
         return {
             userToken: localStorage.getItem('userToken'),
@@ -23,13 +23,11 @@ class ApiService {
         };
     }
 
-    // Kiểm tra xem user có đăng nhập không
     isAuthenticated() {
         const token = this.getToken();
         return token && token !== 'null' && token !== 'undefined';
     }
 
-    // Tạo headers với token từ localStorage
     getHeaders() {
         const token = this.getToken();
         return {
@@ -39,14 +37,12 @@ class ApiService {
         };
     }
 
-    // Generic API call method
     async apiCall(endpoint, options = {}) {
         try {
             const url = endpoint.startsWith('http') ? endpoint : `${this.baseURL}${endpoint}`;
-
             const config = {
-                headers: this.getHeaders(),
-                ...options
+                ...options,
+                headers: this.getHeaders()
             };
 
             console.log(`🚀 API Call: ${url}`);
@@ -56,11 +52,16 @@ class ApiService {
 
             if (!response.ok) {
                 if (response.status === 401) {
-                    // Token expired hoặc invalid, clear localStorage
                     this.clearUserData();
                     throw new Error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
                 }
-                throw new Error(`HTTP error! status: ${response.status}`);
+                // Lấy message từ response nếu có
+                let errMsg = `HTTP error! status: ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    errMsg = errorData.message || errorData.error || errMsg;
+                } catch { }
+                throw new Error(errMsg);
             }
 
             const data = await response.json();
@@ -72,23 +73,18 @@ class ApiService {
         }
     }
 
-    // Lấy money saved ranking từ API mới
     async getMoneySavedRanking(topN = 10) {
         return await this.apiCall(`/ranking/top-money-saved?top=${topN}`, {
             method: 'GET'
         });
     }
 
-    // Clear user data from localStorage
     clearUserData() {
         const keysToRemove = [
             'userToken', 'userRole', 'userName', 'userEmail', 'userId',
             'coachId', 'profilePicture', 'gender', 'dateOfBirth', 'phoneNumber'
         ];
-
-        keysToRemove.forEach(key => {
-            localStorage.removeItem(key);
-        });
+        keysToRemove.forEach(key => localStorage.removeItem(key));
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Card, Spinner, Button, Badge, Modal } from 'react-bootstrap';
-
+import apiFetch from '../../utils/apiFetch';
 
 
 
@@ -85,7 +85,7 @@ const MilestonesPage = () => {
             setIsLoading(true);
             try {
                 const token = localStorage.getItem('userToken');
-                const res = await fetch('/api/user/milestones/list', {
+                const res = await apiFetch('/api/user/milestones/list', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error('Không thể tải danh sách cột mốc');

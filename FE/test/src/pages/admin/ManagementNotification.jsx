@@ -4,8 +4,6 @@ import { FaPlus } from "react-icons/fa";
 import NotificationFilter from "../../components/Notification/NotificationFilter";
 import NotificationTable from "../../components/Notification/NotificationTable";
 import NotificationModal from "../../components/Notification/NotificationModal";
-import NotificationPersonalSearch from "../../components/Notification/NotificationPersonalSearch";
-import NotificationPersonalTable from "../../components/Notification/NotificationPersonalTable";
 import SendNotificationTab from "../../components/Notification/SendNotificationTab";
 
 const notificationTypeOptions = [

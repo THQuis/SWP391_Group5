@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
     Container, Card, Table, Button, Badge, Spinner, Modal, Row, Col, ListGroup, Alert, Image
 } from "react-bootstrap";
-
+import apiFetch from '../../utils/apiFetch';
 // Modal xem thử thách của thành viên
 function MemberChallengesModal({ show, onHide, challenges, member, loading }) {
     return (
@@ -283,7 +283,7 @@ const CoachMembers = () => {
             setLoading(false);
             return;
         }
-        fetch("/api/coach/my-users", {
+        apiFetch("/api/coach/my-users", {
             method: "GET",
             headers: {
                 "accept": "*/*",
@@ -317,7 +317,7 @@ const CoachMembers = () => {
         const token = localStorage.getItem("userToken");
 
         // Lấy tiến trình cai thuốc
-        fetch(`/api/coach/user/${member.UserID}/progress`, {
+        apiFetch(`/api/coach/user/${member.UserID}/progress`, {
             method: "GET",
             headers: {
                 "accept": "*/*",
@@ -371,7 +371,7 @@ const CoachMembers = () => {
         setShowChallengesModal(true);
         setChallengeMember(member);
         const token = localStorage.getItem("userToken");
-        fetch(`/api/coach/user/${member.UserID}/challenges`, {
+        apiFetch(`/api/coach/user/${member.UserID}/challenges`, {
             method: "GET",
             headers: {
                 "accept": "*/*",

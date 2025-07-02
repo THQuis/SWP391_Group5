@@ -4,6 +4,7 @@ import ProgressPieChart from '../../components/Chart/ProgressPieChart';
 import FeedbackBarChart from '../../components/Chart/FeedbackBarChart';
 import RevenueLineChart from '../../components/Chart/RevenueLineChart';
 import '../../styles/AdminDashboard.scss';
+import apiFetch from '../../utils/apiFetch';
 
 
 const AdminDashboard = () => {

@@ -64,6 +64,7 @@ const HomePage = () => {
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.3.jpg?raw=true"
                         // alt="First slide"
                         />
+
                         {/* <div className="about-image"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Phoi4.png?raw=true" alt=""/></div> */}
 
                     </div>

@@ -24,7 +24,7 @@ const ProgressDashboardPage = () => {
     // Đưa fetch logic ra ngoài useEffect để tái sử dụng sau khi cập nhật relapse
     const fetchProgressData = useCallback(async () => {
         try {
-            const response = await fetch(`/api/AchievementAndProgress/user/ProgressInformation?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/AchievementAndProgress/user/ProgressInformation?userId=${userId}`, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("userToken"),
                     "accept": "*/*"
@@ -52,7 +52,7 @@ const ProgressDashboardPage = () => {
 
     const fetchProgressHistory = useCallback(async () => {
         try {
-            const response = await fetch(`/api/AchievementAndProgress/user/showAllProgress?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/AchievementAndProgress/user/showAllProgress?userId=${userId}`, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("userToken"),
                     "accept": "*/*"
@@ -87,7 +87,7 @@ const ProgressDashboardPage = () => {
 
     const handleLogRelapse = async () => {
         try {
-            const response = await fetch(`/api/AchievementAndProgress/user/UpdateProgress?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/AchievementAndProgress/user/UpdateProgress?userId=${userId}`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

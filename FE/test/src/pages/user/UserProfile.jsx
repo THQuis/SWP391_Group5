@@ -3,7 +3,6 @@ import { Container, Button, Modal, Form, Spinner } from 'react-bootstrap';
 import { FaCrown, FaUserEdit, FaUser, FaTransgender, FaCalendarAlt, FaGem, FaPhoneAlt, FaEnvelope, FaTrashAlt, FaBirthdayCake, FaHeart, FaCommentAlt, FaEye } from "react-icons/fa"; // THÊM FaHeart, FaCommentAlt, FaEye
 import { toast } from 'react-toastify';
 import styles from '../../styles/profileUser.module.scss';
-
 const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +32,7 @@ const UserProfile = () => {
         try {
             const token = localStorage.getItem('userToken');
 
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/UserBlog/delete/${blogToDelete}`, {
+            const res = await fetch(`/api/UserBlog/delete/${blogToDelete}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -101,7 +100,7 @@ const UserProfile = () => {
                 gender: editInfo.gender,
                 dateOfBirth: isoDateOfBirth || '',
             };
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/update-profile`, {
+            const res = await fetch('/api/user/update-profile', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(body),
@@ -142,7 +141,7 @@ const UserProfile = () => {
         setIsBlogsLoading(true); // Bắt đầu tải, hiển thị spinner
         try {
             const token = localStorage.getItem('userToken');
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/UserBlog/my-blogs`, { // SỬA: Đảm bảo URL đầy đủ nếu đang dùng localhost:3000
+            const res = await fetch('/api/UserBlog/my-blogs', { // SỬA: Đảm bảo URL đầy đủ nếu đang dùng localhost:3000
                 headers: { 'Authorization': `Bearer ${token}`, 'Accept': '*/*' }
             });
             if (!res.ok) {
@@ -165,7 +164,7 @@ const UserProfile = () => {
         }
         try {
             const token = localStorage.getItem('userToken');
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/profile`, {
+            const res = await fetch('/api/user/profile', {
                 headers: { 'Authorization': `Bearer ${token}`, 'Accept': '*/*' }
             });
             if (!res.ok) throw new Error('Không lấy được thông tin người dùng');
@@ -227,7 +226,7 @@ const UserProfile = () => {
         try {
             const token = localStorage.getItem('userToken');
             const email = user.email;
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/delete-user`, {
+            const response = await fetch('/api/user/delete-user', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({ email }),

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import "../../styles/Auth.scss"; // Đảm bảo bạn đã có file CSS này
 import { toast } from 'react-toastify';
 
-
 const CountdownTimer = ({ initialTime, onTimeout }) => {
     const [timeLeft, setTimeLeft] = useState(initialTime);
 
@@ -66,7 +65,7 @@ const AuthPage = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/Auth/login`, {
+            const res = await fetch(`/api/Auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: loginForm.email, password: loginForm.password })
@@ -138,7 +137,7 @@ const AuthPage = () => {
         });
 
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/Auth/register`, {
+            const res = await fetch(`/api/Auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -176,7 +175,7 @@ const AuthPage = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/Auth/verify-otp`, {
+            const res = await fetch(`/api/Auth/verify-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: registerForm.email, otpCode: registerOtp })
@@ -202,7 +201,7 @@ const AuthPage = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/Auth/forgot-password`, {
+            const res = await fetch(`/api/Auth/forgot-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: forgotEmail })
@@ -226,7 +225,7 @@ const AuthPage = () => {
         if (isOtpExpired) { toast.error('Mã OTP đã hết hạn. Vui lòng yêu cầu mã mới.'); return; }
         setIsLoading(true);
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/Auth/verify-reset-otp`, {
+            const res = await fetch(`/api/Auth/verify-reset-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: forgotEmail, otpCode: forgotOtp })
@@ -250,7 +249,7 @@ const AuthPage = () => {
         if (newPassword !== confirmNewPassword) return toast.warn('Mật khẩu xác nhận không khớp!');
         setIsLoading(true);
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/Auth/reset-password`, {
+            const res = await fetch(`/api/Auth/reset-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: forgotEmail, newPassword: newPassword })

@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Card, Spinner, Button, Badge, Modal } from 'react-bootstrap';
+
+
+
+
 // Component Progress Circle để hiển thị %
 const ProgressCircle = ({ percentage, size = '60px' }) => {
     const color = percentage === 100 ? '#4caf50' : '#2196f3';
@@ -81,7 +85,7 @@ const MilestonesPage = () => {
             setIsLoading(true);
             try {
                 const token = localStorage.getItem('userToken');
-                const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/milestones/list`, {
+                const res = await fetch('/api/user/milestones/list', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error('Không thể tải danh sách cột mốc');

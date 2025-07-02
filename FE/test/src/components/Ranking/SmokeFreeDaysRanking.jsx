@@ -51,7 +51,7 @@ function SmokeFreeDaysRanking() {
             try {
                 setLoading(true);
                 const userToken = localStorage.getItem('userToken'); // Lấy token từ localStorage
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/ranking/top-smoke-free-days?top=50`, {
+                const response = await fetch('/api/ranking/top-smoke-free-days?top=50', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${userToken}` // Token động từ localStorage

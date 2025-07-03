@@ -12,26 +12,25 @@ const ManagementPackage = () => {
     const [packages, setPackages] = useState([]);
     const [pkgPage, setPkgPage] = useState(1);
 
-    // THÊM MỚI: State cho danh sách thành viên sử dụng gói
+    // State cho danh sách thành viên sử dụng gói
     const [userMemberships, setUserMemberships] = useState([]);
     const [membershipPage, setMembershipPage] = useState(1);
 
-    // State cho giao dịch
+    // State cho giao dịch (chưa xử lý API, để trống)
     const [transactions, setTransactions] = useState([]);
     const [txnPage, setTxnPage] = useState(1);
 
-    // State cho Modal
+    // State cho Modal gói (chưa dùng chỉnh sửa)
     const [showModal, setShowModal] = useState(false);
     const [currentPkg, setCurrentPkg] = useState({
         packageID: null, packageName: '', packageType: '', price: '', duration: '', description: ''
     });
 
-    // ĐỔI TÊN: State cho Modal "Cấp gói"
+    // Modal "Cấp gói"
     const [showAssignModal, setShowAssignModal] = useState(false);
-
-    // ĐỔI TÊN: State cho form "Cấp gói"
     const [assignment, setAssignment] = useState({ userId: '', packageId: '' });
-    // SỬA ĐỔI: Tải dữ liệu gói và dữ liệu của view hiện tại
+
+    // Tải dữ liệu khi view thay đổi
     useEffect(() => {
         const token = localStorage.getItem('userToken');
         if (!token) {
@@ -43,7 +42,7 @@ const ManagementPackage = () => {
         const fetchDataForView = async () => {
             setIsLoading(true);
             try {
-                // CẢI TIỆN: Luôn tải danh sách các gói để dùng cho Modal "Cấp gói"
+                // Luôn tải danh sách các gói cho modal
                 const packagesResponse = await fetch('/api/admin/memberships/packages', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
@@ -51,7 +50,6 @@ const ManagementPackage = () => {
                 const packagesData = await packagesResponse.json();
                 setPackages(packagesData);
 
-                // Tải dữ liệu cho view hiện tại
                 if (view === 'userMemberships') {
                     const usersResponse = await fetch('/api/admin/memberships/users', {
                         headers: { 'Authorization': `Bearer ${token}` }
@@ -60,7 +58,9 @@ const ManagementPackage = () => {
                     const usersData = await usersResponse.json();
                     setUserMemberships(usersData);
                 }
-                // Thêm các view khác ở đây nếu cần
+
+                // Xử lý view giao dịch nếu cần ở đây
+                // if (view === 'transactions') { ... }
             } catch (error) {
                 toast.error(error.message);
             } finally {
@@ -71,39 +71,36 @@ const ManagementPackage = () => {
         fetchDataForView();
     }, [view]);
 
-    // Hàm phân trang: nhận mảng và số trang, trả về mảng con
+    // Phân trang
     const paginate = (data, page) => {
         const start = (page - 1) * pageSize;
         return data.slice(start, start + pageSize);
     };
 
-    // Tính toán số trang cho từng bảng
+    // Tổng số trang
     const totalPkgPages = Math.ceil(packages.length / pageSize);
     const totalMembershipPages = Math.ceil(userMemberships.length / pageSize);
     const totalTxnPages = Math.ceil(transactions.length / pageSize);
 
-    // ĐỔI TÊN: Hàm đóng/mở Modal "Cấp gói"
+    // Modal "Cấp gói"
     const handleCloseAssignModal = () => {
         setShowAssignModal(false);
-        setAssignment({ userId: '', packageId: '' }); // Reset form
+        setAssignment({ userId: '', packageId: '' });
     };
     const handleShowAssignModal = () => setShowAssignModal(true);
 
-    // Cập nhật state form
-
-    // Hàm cập nhật state cho form "Cấp gói"
     const handleAssignmentChange = e => {
         const { name, value } = e.target;
         setAssignment(prev => ({ ...prev, [name]: value }));
     };
-    // THAY ĐỔI LỚN: Hàm xử lý submit form "Cấp gói"
+
+    // Xử lý API: Cấp gói cho user
     const handleAssignSubmit = async (e) => {
         e.preventDefault();
         if (!assignment.userId || !assignment.packageId) {
             toast.warn("Vui lòng nhập ID người dùng và chọn một gói.");
             return;
         }
-
         const token = localStorage.getItem('userToken');
         try {
             const response = await fetch('/api/admin/memberships/assign', {
@@ -117,18 +114,15 @@ const ManagementPackage = () => {
                     packageId: parseInt(assignment.packageId)
                 })
             });
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Cấp gói thất bại.');
             }
-
             const result = await response.json();
             toast.success(result.message || "Cấp gói thành công!");
             handleCloseAssignModal();
-            // Tải lại danh sách thành viên VIP để cập nhật
             if (view === 'userMemberships') {
-                // Tự gọi lại hàm fetch để cập nhật bảng
+                // Reload lại danh sách thành viên
                 const usersResponse = await fetch('/api/admin/memberships/users', { headers: { 'Authorization': `Bearer ${token}` } });
                 const usersData = await usersResponse.json();
                 setUserMemberships(usersData);
@@ -137,27 +131,37 @@ const ManagementPackage = () => {
             toast.error(error.message);
         }
     };
-    // Hàm mở modal để chỉnh sửa gói
-    const handleEditPkg = (pkg) => {
-        setCurrentPkg(pkg); // Đặt thông tin gói hiện tại vào form
-        setShowModal(true); // Mở modal
-    };
-    // Hàm xóa gói
+
+    // Xử lý API: Xóa gói
     const handleDeletePkg = async (pkgId) => {
         if (window.confirm(`Bạn có chắc chắn muốn xóa gói có ID: ${pkgId}?`)) {
-            // TODO: Thay thế URL API cho đúng
+            const token = localStorage.getItem('userToken');
             toast.info(`Đang xóa gói ID: ${pkgId}...`);
-            // await axios.delete(`/api/admin/memberships/packages/${pkgId}`);
-            // setPackages(prev => prev.filter(p => p.packageID !== pkgId));
-            // toast.success("Xóa gói thành công!");
+            try {
+                const response = await fetch(`/api/admin/memberships/packages/${pkgId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.message || 'Xóa gói thất bại.');
+                toast.success(data.message || "Xóa gói thành công!");
+                setPackages(prev => prev.filter(p => p.packageId !== pkgId && p.packageID !== pkgId));
+            } catch (error) {
+                toast.error(error.message);
+            }
         }
     };
+
+    // Hàm mở modal chỉnh sửa gói (chưa xử lý API)
+    const handleEditPkg = (pkg) => {
+        setCurrentPkg(pkg);
+        setShowModal(true);
+    };
+
     if (isLoading) {
-        // SỬA ĐỔI: Màn hình tải hiển thị text động
         const loadingText = view === 'packages'
             ? "Đang tải danh sách gói..."
             : "Đang tải danh sách thành viên...";
-
         return (
             <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
                 <Spinner animation="border" variant="success" />
@@ -169,9 +173,9 @@ const ManagementPackage = () => {
     return (
         <Container fluid className="mt-4">
             <h2 className="text-center text-success"> Quản lý gói thành viên  </h2>
-            {/* Nút chuyển giữa hai bảng */}
+            {/* Nút chuyển giữa các bảng */}
             <Row className="mb-4">
-                <Col className="d-flex justify-content-start gap-3"> {/* Căn trái và khoảng cách giữa các nút */}
+                <Col className="d-flex justify-content-start gap-3">
                     <Button
                         variant={view === 'packages' ? 'primary' : 'outline-primary'}
                         onClick={() => setView('packages')}
@@ -207,30 +211,27 @@ const ManagementPackage = () => {
                     <Table striped bordered hover responsive>
                         <thead>
                             <tr>
-                                {/* SỬA ĐỔI: Cập nhật các cột cho khớp với API */}
                                 <th>ID</th>
                                 <th>Tên gói</th>
-                                <th>Loại gói</th> {/* THÊM MỚI */}
+                                <th>Loại gói</th>
                                 <th>Giá (VND)</th>
                                 <th>Thời hạn (Tháng)</th>
                                 <th>Mô tả</th>
-                                <th>Lượt đăng ký</th> {/* SỬA ĐỔI */}
                                 <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
                             {paginate(packages, pkgPage).map(pkg => (
-                                // SỬA ĐỔI: Key và các trường dữ liệu cho khớp API
-                                <tr key={pkg.packageID}>
-                                    <td>{pkg.packageID}</td>
+                                <tr key={pkg.packageId || pkg.packageID}>
+                                    <td>{pkg.packageId || pkg.packageID}</td>
                                     <td>{pkg.packageName}</td>
-                                    <td>{pkg.packageType}</td> {/* THÊM MỚI */}
-                                    <td>{pkg.price.toLocaleString('vi-VN')}</td>
+                                    <td>{pkg.packageType}</td>
+                                    <td>{pkg.price?.toLocaleString?.('vi-VN') || pkg.price}</td>
                                     <td>{pkg.duration}</td>
                                     <td>{pkg.description}</td>
-                                    <td>{pkg.userMemberships ? pkg.userMemberships.length : 0}</td> {/* SỬA ĐỔI */}
                                     <td>
                                         <Button variant="warning" size="sm" className="me-2" onClick={() => handleEditPkg(pkg)}>Sửa</Button>
+                                        <Button variant="danger" size="sm" onClick={() => handleDeletePkg(pkg.packageId || pkg.packageID)}>Xóa</Button>
                                     </td>
                                 </tr>
                             ))}
@@ -248,7 +249,7 @@ const ManagementPackage = () => {
                 </>
             )}
 
-            {/* THÊM MỚI: Bảng hiển thị danh sách thành viên sử dụng gói */}
+            {/* Bảng thành viên */}
             {view === 'userMemberships' && (
                 <>
                     <h2 className="mt-4">Thành viên đang sử dụng gói</h2>
@@ -267,13 +268,13 @@ const ManagementPackage = () => {
                         </thead>
                         <tbody>
                             {paginate(userMemberships, membershipPage).map(item => (
-                                <tr key={item.userMembershipID}>
-                                    <td>{item.userMembershipID}</td>
+                                <tr key={item.userMembershipID || item.userMembershipId}>
+                                    <td>{item.userMembershipID || item.userMembershipId}</td>
                                     <td>{item.fullName}</td>
                                     <td>{item.email}</td>
                                     <td>{item.packageName}</td>
-                                    <td>{new Date(item.startDate).toLocaleDateString('vi-VN')}</td>
-                                    <td>{new Date(item.endDate).toLocaleDateString('vi-VN')}</td>
+                                    <td>{item.startDate ? new Date(item.startDate).toLocaleDateString('vi-VN') : ''}</td>
+                                    <td>{item.endDate ? new Date(item.endDate).toLocaleDateString('vi-VN') : ''}</td>
                                     <td>
                                         <span className={`badge bg-${item.paymentStatus === 'Completed' ? 'success' : 'warning'}`}>
                                             {item.paymentStatus}
@@ -335,7 +336,7 @@ const ManagementPackage = () => {
                 </>
             )}
 
-            {/* THAY ĐỔI LỚN: Modal này giờ dùng để "Cấp gói" */}
+            {/* Modal "Cấp gói" */}
             <Modal show={showAssignModal} onHide={handleCloseAssignModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Cấp gói thành viên cho người dùng</Modal.Title>
@@ -363,8 +364,8 @@ const ManagementPackage = () => {
                             >
                                 <option value="">-- Vui lòng chọn một gói --</option>
                                 {packages.map(pkg => (
-                                    <option key={pkg.packageID} value={pkg.packageID}>
-                                        {pkg.packageName} ({pkg.price.toLocaleString('vi-VN')} VND)
+                                    <option key={pkg.packageId || pkg.packageID} value={pkg.packageId || pkg.packageID}>
+                                        {pkg.packageName} ({pkg.price?.toLocaleString?.('vi-VN') || pkg.price} VND)
                                     </option>
                                 ))}
                             </Form.Select>

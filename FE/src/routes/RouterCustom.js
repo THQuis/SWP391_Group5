@@ -39,6 +39,7 @@ import CoachDashboard from "../pages/coachs/CoachDashboard";
 import CoachBookings from "../pages/coachs/CoachBookings";
 import CoachMembers from "../pages/coachs/CoachMembers";
 import AchievementGallery from "../pages/Achivement/AchievementGallery";
+import AdminPendingCoachChangesPage from "../pages/admin/AdPendiCoachChangePage";
 
 
 
@@ -92,6 +93,8 @@ const RouterCustom = () => {
                     <Route path={ROUTERS.ADMIN.ACHIVE} element={<ManagementPerformance />} />
                     <Route path={ROUTERS.ADMIN.PLAN} element={<ManagementPlan />} />
                     <Route path={ROUTERS.ADMIN.NOTIFICATION} element={<ManagementNotification />} />
+                    <Route path={ROUTERS.ADMIN.CHANGECOACH} element={<AdminPendingCoachChangesPage />} />
+
                 </Route>
             </Route>
 

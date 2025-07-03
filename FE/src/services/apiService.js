@@ -1,8 +1,6 @@
 // API Service với localStorage integration từ AuthPage
 class ApiService {
-    constructor() {
-        this.baseURL = 'https://localhost:7049/api';
-    }
+
 
     // Lấy token từ localStorage (giống AuthPage)
     getToken() {

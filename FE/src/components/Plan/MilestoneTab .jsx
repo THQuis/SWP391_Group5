@@ -3,6 +3,7 @@ import { Table, Button, Modal, Form, Row, Col, InputGroup, Card, Badge, Paginati
 import { FaPlus, FaEdit, FaTrash, FaClock, FaHeart, FaLungs, FaBrain, FaLeaf } from "react-icons/fa";
 import { toast } from "react-toastify";
 
+
 function MilestoneTab() {
     const [milestones, setMilestones] = useState([]);
     const [milestoneModalShow, setMilestoneModalShow] = useState(false);
@@ -10,33 +11,39 @@ function MilestoneTab() {
     const [milestoneForm, setMilestoneForm] = useState({ label: "", status: [{ type: "", content: "", percent: 0 }] });
     const [loading, setLoading] = useState(true);
 
+
     // Pagination states
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5); // 5 milestones per page
     const [totalItems, setTotalItems] = useState(0);
+    const token = localStorage.getItem('userToken');
 
     useEffect(() => {
         const fetchMilestones = async () => {
             try {
                 setLoading(true);
-                const res = await fetch('https://localhost:7049/api/admin/milestones/list', {
+                const res = await fetch('/api/admin/milestones/list', {
                     headers: {
-                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJDYW8gSOG7r3UgVHLDrSIsImVtYWlsIjoiY2FvaHV1dHJpdGwxMjM0QGdtYWlsLmNvbSIsInJvbGUiOiIxIiwibmJmIjoxNzUxMzc1Njk3LCJleHAiOjE3NTEzNzkyOTcsImlhdCI6MTc1MTM3NTY5NywiaXNzIjoiU21va2luZ0FQSSIsImF1ZCI6IlNtb2tpbmdDbGllbnRzIn0.sgKdFiafEqRonwhg24w5oRaWik8eP1hhQj-LCzH-c0g'
+                        'Authorization': `Bearer ${token}`
                     }
                 });
+
 
                 if (res.ok) {
                     const data = await res.json();
                     console.log('Dữ liệu milestones từ API:', data);
 
+
                     // Chuyển đổi dữ liệu từ API sang format của component
                     const convertedMilestones = [];
                     let milestoneId = 1;
+
 
                     data.forEach(group => {
                         group.milestones.forEach(milestone => {
                             // Tìm milestone với cùng time hoặc tạo mới
                             let existingMilestone = convertedMilestones.find(m => m.label === milestone.time);
+
 
                             if (existingMilestone) {
                                 // Thêm status vào milestone đã có
@@ -60,6 +67,7 @@ function MilestoneTab() {
                         });
                     });
 
+
                     setMilestones(convertedMilestones);
                     setTotalItems(convertedMilestones.length);
                     console.log('Dữ liệu milestones đã chuyển đổi:', convertedMilestones);
@@ -79,8 +87,10 @@ function MilestoneTab() {
             }
         };
 
+
         fetchMilestones();
     }, []);
+
 
     const openAddMilestoneModal = () => {
         setEditMilestone(null);
@@ -88,17 +98,20 @@ function MilestoneTab() {
         setMilestoneModalShow(true);
     };
 
+
     const openEditMilestoneModal = (ms) => {
         setEditMilestone(ms.id);
         setMilestoneForm(JSON.parse(JSON.stringify(ms))); // Deep copy
         setMilestoneModalShow(true);
     };
 
+
     const handleDeleteMilestone = (id) => {
         // TODO: Gọi API xóa milestone
         setMilestones(milestones.filter(ms => ms.id !== id));
         toast.success("Xóa mốc thành công!");
     };
+
 
     const handleMilestoneModalSave = () => {
         if (editMilestone) {
@@ -113,15 +126,18 @@ function MilestoneTab() {
         setMilestoneModalShow(false);
     };
 
+
     const handleMilestoneFormStatusChange = (idx, field, value) => {
         const newStatus = [...milestoneForm.status];
         newStatus[idx][field] = value;
         setMilestoneForm({ ...milestoneForm, status: newStatus });
     };
 
+
     const handleAddMilestoneStatusRow = () => {
         setMilestoneForm({ ...milestoneForm, status: [...milestoneForm.status, { type: "", content: "", percent: 0 }] });
     };
+
 
     const handleRemoveMilestoneStatusRow = (idx) => {
         if (milestoneForm.status.length > 1) {
@@ -131,6 +147,7 @@ function MilestoneTab() {
         }
     };
 
+
     // Pagination functions
     const getCurrentPageData = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -138,12 +155,15 @@ function MilestoneTab() {
         return milestones.slice(startIndex, endIndex);
     };
 
+
     const getTotalPages = () => {
         return Math.ceil(totalItems / itemsPerPage);
     };
 
+
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+
 
         // Scroll to top when changing page
         window.scrollTo({
@@ -152,19 +172,23 @@ function MilestoneTab() {
         });
     };
 
+
     const renderPagination = () => {
         const totalPages = getTotalPages();
         if (totalPages <= 1) return null;
+
 
         const items = [];
         const maxVisiblePages = 5;
         let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
         let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
+
         // Adjust start page if we're near the end
         if (endPage - startPage + 1 < maxVisiblePages) {
             startPage = Math.max(1, endPage - maxVisiblePages + 1);
         }
+
 
         // Previous button
         items.push(
@@ -174,6 +198,7 @@ function MilestoneTab() {
                 onClick={() => handlePageChange(currentPage - 1)}
             />
         );
+
 
         // First page
         if (startPage > 1) {
@@ -191,6 +216,7 @@ function MilestoneTab() {
             }
         }
 
+
         // Page numbers
         for (let page = startPage; page <= endPage; page++) {
             items.push(
@@ -203,6 +229,7 @@ function MilestoneTab() {
                 </Pagination.Item>
             );
         }
+
 
         // Last page
         if (endPage < totalPages) {
@@ -220,6 +247,7 @@ function MilestoneTab() {
             );
         }
 
+
         // Next button
         items.push(
             <Pagination.Next
@@ -228,6 +256,7 @@ function MilestoneTab() {
                 onClick={() => handlePageChange(currentPage + 1)}
             />
         );
+
 
         return (
             <div className="d-flex justify-content-between align-items-center mt-4 px-3">
@@ -240,6 +269,7 @@ function MilestoneTab() {
             </div>
         );
     };
+
 
     // Hàm lấy icon theo loại
     const getStatusIcon = (type) => {
@@ -259,6 +289,7 @@ function MilestoneTab() {
         }
     };
 
+
     // Hàm lấy màu badge theo loại
     const getBadgeColor = (type) => {
         switch (type.toLowerCase()) {
@@ -276,6 +307,7 @@ function MilestoneTab() {
                 return 'secondary';
         }
     };
+
 
     return (
         <div>
@@ -300,6 +332,7 @@ function MilestoneTab() {
                             <FaPlus className="me-2" /> Thêm mốc mới
                         </Button>
                     </div>
+
 
                     {/* Table View */}
                     {getCurrentPageData().length > 0 ? (
@@ -396,7 +429,9 @@ function MilestoneTab() {
                         </div>
                     )}
 
+
                     {/* Card View - Removed */}
+
 
                     {/* Modal thêm/sửa Milestone */}
                     <Modal show={milestoneModalShow} onHide={() => setMilestoneModalShow(false)} centered size="lg">
@@ -420,6 +455,7 @@ function MilestoneTab() {
                                     />
                                 </Form.Group>
 
+
                                 <div className="mb-3">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <Form.Label className="fw-bold mb-0">Danh sách trạng thái</Form.Label>
@@ -431,6 +467,7 @@ function MilestoneTab() {
                                             <FaPlus className="me-1" /> Thêm trạng thái
                                         </Button>
                                     </div>
+
 
                                     {milestoneForm.status.map((s, idx) => (
                                         <Card key={idx} className="mb-3">
@@ -508,5 +545,4 @@ function MilestoneTab() {
         </div>
     );
 }
-
 export default MilestoneTab;

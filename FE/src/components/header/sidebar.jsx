@@ -18,6 +18,7 @@ const Sidebar = () => {
                 <Nav.Link as={Link} to="/admin/ManagementPerformance">Thành tích - huy hiệu</Nav.Link>
                 <Nav.Link as={Link} to="/admin/ManagementNotification">Thông báo</Nav.Link>
                 <Nav.Link as={Link} to="/admin/ManagementPlan">Quản lý tiến trình</Nav.Link>
+                <Nav.Link as={Link} to="/admin/ManagementChangCoach">Quản lý đổi coach</Nav.Link>
             </Nav>
         </div>
     );

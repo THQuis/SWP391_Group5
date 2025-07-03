@@ -1,43 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Card, Spinner, Button, Badge, Modal } from 'react-bootstrap';
 
-// --- GIẢ LẬP API RESPONSE ---
-// Đã cập nhật một mô tả dài hơn để kiểm tra
-const mockMilestoneData = {
-    summary: {
-        timeSinceQuit: "1 ngày 2 giờ",
-        cigarettesAvoided: 8,
-        moneySaved: 17600,
-        achievementsUnlocked: 5,
-    },
-    milestoneGroups: [
-        {
-            groupId: 1,
-            groupName: "Sức khỏe",
-            milestones: [
-                { milestoneId: 101, name: "Nhịp tim ổn định", description: "Huyết áp và nhịp tim của bạn bắt đầu trở lại mức bình thường, giảm gánh nặng cho tim.", timeToAchieve: "20 phút", progressPercent: 100 },
-                { milestoneId: 102, name: "Mức Oxy tăng", description: "Nồng độ Carbon Monoxide (CO) trong máu giảm, cho phép oxy lưu thông tốt hơn.", timeToAchieve: "8 giờ", progressPercent: 15 },
-                { milestoneId: 103, name: "Nguy cơ đau tim giảm", description: "Nguy cơ bị một cơn đau tim đột ngột đã giảm đi đáng kể. Đây là một trong những lợi ích sức khỏe quan trọng nhất và đến sớm nhất khi bạn ngừng hút thuốc. Carbon monoxide trong khói thuốc làm giảm lượng oxy trong máu, buộc tim phải làm việc vất vả hơn. Chỉ sau một ngày, mức oxy của bạn tăng lên và huyết áp bắt đầu giảm, làm giảm căng thẳng cho tim và các mạch máu. Điều này không chỉ giúp bạn cảm thấy khỏe mạnh hơn mà còn là một bước tiến lớn trong việc bảo vệ sức khỏe tim mạch lâu dài.", timeToAchieve: "24 giờ", progressPercent: 100 },
-                { milestoneId: 104, name: "Vị giác và khứu giác cải thiện", description: "Các đầu dây thần kinh bắt đầu tái tạo, giúp bạn cảm nhận mùi vị tốt hơn.", timeToAchieve: "48 giờ", progressPercent: 54 },
-            ]
-        },
-        {
-            groupId: 2,
-            groupName: "Thể trạng",
-            milestones: [
-                { milestoneId: 201, name: "Hô hấp dễ dàng hơn", description: "Các ống phế quản bắt đầu giãn ra, giúp việc hít thở trở nên thoải mái hơn.", timeToAchieve: "72 giờ", progressPercent: 36 },
-                { milestoneId: 202, name: "Năng lượng tăng lên", description: "Lưu thông máu được cải thiện giúp bạn cảm thấy tràn đầy năng lượng hơn trong các hoạt động hàng ngày.", timeToAchieve: "2 tuần", progressPercent: 9 },
-            ]
-        },
-        {
-            groupId: 3,
-            groupName: "Thành tựu",
-            milestones: [
-                { milestoneId: 301, name: "Vượt qua 24 giờ đầu tiên", description: "Bạn đã chiến thắng một trong những giai đoạn khó khăn nhất của việc cai thuốc.", timeToAchieve: "1 ngày", progressPercent: 100 },
-            ]
-        }
-    ]
-};
+
 
 
 // Component Progress Circle để hiển thị %
@@ -117,16 +81,61 @@ const MilestonesPage = () => {
     };
 
     useEffect(() => {
-        // Giả lập gọi API
-        setTimeout(() => {
-            setData(mockMilestoneData);
-            if (mockMilestoneData.milestoneGroups && mockMilestoneData.milestoneGroups.length > 0) {
-                setActiveFilter(mockMilestoneData.milestoneGroups[0].groupId);
-            }
-            setIsLoading(false);
-        }, 1000);
-    }, []);
+        const fetchMilestones = async () => {
+            setIsLoading(true);
+            try {
+                const token = localStorage.getItem('userToken');
+                const res = await fetch('/api/user/milestones/list', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error('Không thể tải danh sách cột mốc');
+                const progressList = await res.json();
 
+                // Group milestones by groupId
+                const groupMap = {};
+                progressList.forEach(item => {
+                    const groupId = item.milestoneGroupID ?? 0;
+                    if (!groupMap[groupId]) {
+                        groupMap[groupId] = {
+                            groupId,
+                            groupName: item.milestoneGroupName ?? "Nhóm khác",
+                            milestones: [],
+                        }
+                    }
+                    groupMap[groupId].milestones.push({
+                        milestoneId: item.milestoneID,
+                        name: item.milestoneName,
+                        description: item.description,
+                        timeToAchieve: `${item.milestoneTime ?? ''} ${item.timeUnit ?? ''}`.trim(),
+                        progressPercent: item.achievedDate ? 100 : (item.percent ?? 0)
+                    });
+                });
+                const milestoneGroups = Object.values(groupMap).sort((a, b) => a.groupId - b.groupId);
+                const achievementsUnlocked = progressList.filter(x => x.achievedDate).length;
+
+                const apiData = {
+                    summary: {
+                        timeSinceQuit: '', // Có thể lấy từ API khác hoặc bổ sung backend
+                        cigarettesAvoided: 0,
+                        moneySaved: 0,
+                        achievementsUnlocked,
+                    },
+                    milestoneGroups
+                };
+
+                setData(apiData);
+                if (milestoneGroups.length > 0)
+                    setActiveFilter(milestoneGroups[0].groupId);
+            } catch (err) {
+                setData(null);
+                alert(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchMilestones();
+    }, []);
     const filteredMilestones = useMemo(() => {
         if (!data || !activeFilter) return [];
         const activeGroup = data.milestoneGroups.find(group => group.groupId === activeFilter);

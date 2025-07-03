@@ -21,16 +21,6 @@ const ProgressDashboardPage = () => {
     const navigate = useNavigate();
     const memberPackage = localStorage.getItem('memberPackage'); // Sẽ là "Premium" hoặc "Basic"
 
-    //-------phân gói 
-    const handleRequirePremium = () => {
-        toast.info("Tính năng này chỉ dành cho gói Premium. Vui lòng nâng cấp để sử dụng!", {
-            autoClose: 1800,
-        });
-        setTimeout(() => {
-            navigate('/User/package');
-        }, 1800);
-    };
-    //------------
     // Đưa fetch logic ra ngoài useEffect để tái sử dụng sau khi cập nhật relapse
     const fetchProgressData = useCallback(async () => {
         try {
@@ -279,8 +269,7 @@ const ProgressDashboardPage = () => {
                         className="relapse-button"
                         onClick={() => {
                             if (memberPackage === 'Basic') {
-                                // navigate('/User/package'); // Trang mua gói của bạn 
-                                handleRequirePremium(); // Hiển thị thông báo yêu cầu nâng cấp gói
+                                navigate('/User/package'); // Trang mua gói của bạn 
                             } else {
                                 setShowRelapseModal(true);
                             }
@@ -296,7 +285,7 @@ const ProgressDashboardPage = () => {
                         variant="primary"
                         onClick={() => {
                             if (memberPackage === 'Basic') {
-                                handleRequirePremium(); // Trang mua gói của bạn 
+                                navigate('/User/package'); // Trang mua gói của bạn (
                             } else {
                                 setShowCalendarModal(true);
                             }
@@ -329,8 +318,8 @@ const ProgressDashboardPage = () => {
                         <Form.Control
                             type="number"
                             value={relapseCount}
-                            onChange={(e) => setRelapseCount(parseInt(e.target.value) || 1)}
-                            min="1"
+                            onChange={(e) => setRelapseCount(parseInt(e.target.value) || 0)}
+                            min="0"
                             className="modal-form-input"
                         />
                     </Form.Group>

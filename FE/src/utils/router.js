@@ -32,6 +32,7 @@ export const ROUTERS = {
         PACKAGE: "ManagementPackage",
         ACHIVE: "ManagementPerformance",
         PLAN: "ManagementPlan",
-        NOTIFICATION: "ManagementNotification"
+        NOTIFICATION: "ManagementNotification",
+        CHANGECOACH: "ManagementChangCoach",
     },
 };

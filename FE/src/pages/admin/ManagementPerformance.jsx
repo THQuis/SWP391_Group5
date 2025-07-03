@@ -28,19 +28,19 @@ const ManagementPerformance = () => {
     }, [currentPage]);
 
     const fetchBadges = async () => {
-        setIsLoading(true); // Bật loading
+        setIsLoading(true);
         try {
             const token = localStorage.getItem('userToken');
-            const res = await axios.get('/api/Admin/ListAchievement', {
+            const res = await axios.get('/api/Admin/Achievement/List', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBadges(res.data);
-            setCurrentPage(1); // Reset về trang 1 mỗi khi tải lại toàn bộ
+            setCurrentPage(1);
         } catch (err) {
             console.error('Error fetching data', err);
             toast.error("Không thể tải danh sách thành tích.");
         } finally {
-            setIsLoading(false); // Tắt loading
+            setIsLoading(false);
         }
     };
 
@@ -54,12 +54,12 @@ const ManagementPerformance = () => {
                 fetchBadges();
                 return;
             }
-            const res = await axios.get(`/api/Admin/Search`, {
+            const res = await axios.get(`/api/Admin/Achievement/Search`, {
                 params: { keyword: search },
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBadges(res.data.data || []);
-            setCurrentPage(1); // Reset về trang 1 sau khi tìm kiếm
+            setCurrentPage(1);
         } catch (err) {
             console.error('Lỗi khi tìm kiếm:', err);
             toast.error("Tìm kiếm thất bại.");
@@ -72,7 +72,7 @@ const ManagementPerformance = () => {
     const handleAddBadge = async () => {
         try {
             const token = localStorage.getItem('userToken');
-            const res = await axios.post('/api/Admin/AddAchivement', {
+            const res = await axios.post('/api/Admin/Achievement/Add', {
                 achievementName: newBadge.achievementName,
                 badgeImage: newBadge.badgeImage,
                 criteria: newBadge.criteria,
@@ -101,7 +101,7 @@ const ManagementPerformance = () => {
         try {
             const token = localStorage.getItem('userToken');
             await axios.put(
-                `/api/Admin/UpdateAchievement/${editingBadge.achievementID}`,
+                `/api/Admin/Achievement/Update/${editingBadge.achievementID}`,
                 {
                     achievementName: editingBadge.achievementName,
                     description: editingBadge.description,
@@ -115,7 +115,6 @@ const ManagementPerformance = () => {
                     }
                 }
             );
-            // Cập nhật lại danh sách badge sau khi sửa
             await fetchBadges();
             setShowEditModal(false);
         } catch (err) {
@@ -127,8 +126,7 @@ const ManagementPerformance = () => {
     const handleDelete = async (badgeId) => {
         try {
             const token = localStorage.getItem('userToken');
-            await axios.delete(`/api/Admin/DeleteAchivement?id=${badgeId}`, {
-                params: { id: badgeId },
+            await axios.delete(`/api/Admin/Achievement/Delete/${badgeId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             await fetchBadges();

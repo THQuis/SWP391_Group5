@@ -107,13 +107,13 @@ const ContactInfo = ({ email, phone }) => {
     );
 };
 
-// Hàm lấy danh sách coach từ API
-const fetchCoaches = async () => {
+const fetchCoaches = async (token) => {
     try {
         const response = await fetch("/api/user/coach/list", {
             method: "GET",
             headers: {
                 "Accept": "*/*",
+                "Authorization": `Bearer ${token}`, // dùng template string
             },
         });
         if (!response.ok) {
@@ -125,24 +125,30 @@ const fetchCoaches = async () => {
             FullName: coach.fullName,
             Email: coach.email,
             PhoneNumber: coach.phone,
-            ProfilePicture: coach.profilePicture || null,
+            ProfilePicture: coach.profilePicture
+                ? (coach.profilePicture.startsWith("data:image/")
+                    ? coach.profilePicture
+                    : `data:image/png;base64,${coach.profilePicture}`)
+                : null,
             Status: "Active",
             Description: coach.description,
             Gender: coach.gender,
             DateOfBirth: coach.dateOfBirth,
-            Rating: Math.floor(Math.random() * 2) + 4, // Mock rating 4-5
-            Experience: Math.floor(Math.random() * 10) + 2, // Mock experience 2-12 years
+            Rating: 5,
+            Experience: 10,
         }));
     } catch (err) {
         throw err;
     }
 };
 
+
 const CoachList = () => {
     const [coaches, setCoaches] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const token = localStorage.getItem("userToken");
 
     const selectedCoachId = 1;
 
@@ -151,7 +157,7 @@ const CoachList = () => {
             setLoading(true);
             setError("");
             try {
-                const data = await fetchCoaches();
+                const data = await fetchCoaches(token); // truyền token vào đây
                 setCoaches(data);
             } catch (err) {
                 setError(err.message || "Lỗi khi tải danh sách coach.");
@@ -159,8 +165,9 @@ const CoachList = () => {
                 setLoading(false);
             }
         };
-        getCoaches();
-    }, []);
+        if (token) getCoaches();
+        else setError("Bạn chưa đăng nhập hoặc token không hợp lệ.");
+    }, [token]);
 
     return (
         <div className={styles.pageContainer}>

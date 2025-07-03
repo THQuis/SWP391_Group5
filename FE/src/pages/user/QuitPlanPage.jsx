@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "../../styles/QuitPlanPage.scss";
 import { useNavigate } from "react-router-dom";
 
-
 // PHẦN 1: Thói quen hiện tại
 const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
     const dailyCost = useMemo(() => {
@@ -14,9 +13,7 @@ const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
         return (habitData.pricePerPackAtStart / habitData.cigarettesPerPack) * habitData.cigarettesPerDayAtStart;
     }, [habitData]);
 
-
     const data = habitData || { cigarettesPerDayAtStart: '', pricePerPackAtStart: '', cigarettesPerPack: '' };
-
 
     return (
         <Card className="thq-card mb-4">
@@ -93,7 +90,6 @@ const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
     );
 };
 
-
 // PHẦN 2: Thiết lập mục tiêu
 const QuitPlanGoalSection = ({ formData, onChange, editable, showEndDate }) => (
     <Card className="thq-card mb-4">
@@ -156,7 +152,6 @@ const QuitPlanSurveySection = ({
 }) => {
     const mapQuestionTypeToInputType = (type) => type === "SingleChoice" ? "radio" : "checkbox";
 
-
     return (
         <Card className="thq-card mb-4">
             <Card.Header as="h5" className="thq-card__header">3. Tìm hiểu về bạn</Card.Header>
@@ -204,7 +199,6 @@ const QuitPlanSurveySection = ({
     );
 };
 
-
 // COMPONENT CHA: QUẢN LÝ TOÀN BỘ TRANG
 const QuitPlanPage = () => {
     const navigate = useNavigate();
@@ -224,12 +218,10 @@ const QuitPlanPage = () => {
     const userId = localStorage.getItem("userId");
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-
     const loadInitialData = async () => {
         setIsLoading(true);
         const token = "Bearer " + localStorage.getItem("userToken");
         const defaultHabitData = { cigarettesPerDayAtStart: '', pricePerPackAtStart: '', cigarettesPerPack: '' };
-
 
         try {
             const [planRes, questionsRes, userAnswersRes] = await Promise.all([
@@ -238,11 +230,9 @@ const QuitPlanPage = () => {
                 fetch(`/api/Questionnaire/answers-by-user?userId=${userId}`, { headers: { "Authorization": token } })
             ]);
 
-
             if (questionsRes.ok) setSurveyQuestions(await questionsRes.json());
             const planDataArray = await planRes.json().catch(() => null);
             const planData = (planDataArray && planDataArray.length > 0) ? planDataArray[0] : null;
-
 
             if (planRes.ok && planData && planData.quitPlanID) {
                 setHabitData(planData);
@@ -258,7 +248,6 @@ const QuitPlanPage = () => {
                 setPlanCreated(false);
                 setEditMode(true);
             }
-
 
             if (userAnswersRes.ok) {
                 const savedAnswers = await userAnswersRes.json();
@@ -283,7 +272,6 @@ const QuitPlanPage = () => {
         }
     };
 
-
     useEffect(() => {
         if (userId) loadInitialData();
         else {
@@ -292,12 +280,10 @@ const QuitPlanPage = () => {
         }
     }, [userId]);
 
-
     const handleHabitChange = (e) => {
         const { name, value } = e.target;
         setHabitData(prev => ({ ...prev, [name]: value ? Number(value) : '' }));
     };
-
 
     const handleStaticChange = (e) => {
         const { name, value } = e.target;
@@ -309,8 +295,6 @@ const QuitPlanPage = () => {
     };
 
 
-
-
     const handleDynamicChange = (e, questionID, questionType, answerText) => {
         const { value, checked } = e.target;
         const answerId = parseInt(value);
@@ -319,7 +303,6 @@ const QuitPlanPage = () => {
             const newDynamicAnswers = { ...prev.dynamicAnswers };
             const newOtherTexts = { ...prev.otherTexts };
             let currentAnswers = newDynamicAnswers[questionID] || [];
-
 
             if (questionType === 'MultipleChoice') {
                 if (isOtherOption && checked) {
@@ -343,19 +326,15 @@ const QuitPlanPage = () => {
         });
     };
 
-
     const handleOtherTextChange = (questionID, value) => {
         setFormData(prev => ({ ...prev, otherTexts: { ...prev.otherTexts, [questionID]: value } }));
     };
-
 
     // SỬA ĐÚNG Ý MUỐN: scroll lên đầu trang ngay khi LƯU thành công (ngay sau toast.success)
     const handleCreateOrUpdate = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         const token = "Bearer " + localStorage.getItem('userToken');
-
-
 
 
         if (!habitData || !habitData.cigarettesPerDayAtStart || habitData.cigarettesPerDayAtStart <= 0 || !habitData.cigarettesPerPack || habitData.cigarettesPerPack <= 0 || !habitData.pricePerPackAtStart || habitData.pricePerPackAtStart <= 0) {
@@ -366,7 +345,6 @@ const QuitPlanPage = () => {
             toast.error('Vui lòng chọn ngày bắt đầu cai thuốc!');
             setIsSubmitting(false); return;
         }
-
 
         if (!planCreated) {
             try {
@@ -379,23 +357,19 @@ const QuitPlanPage = () => {
                     targetDurationInMonths: formData.targetDurationMonths, // <-- ĐÚNG tên
                 };
 
-
                 const createPlanRes = await fetch('/api/QuitPlan/CreateQuitPlan', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': token },
                     body: JSON.stringify(quitPlanPayload),
                 });
 
-
                 if (!createPlanRes.ok) throw new Error("Lỗi khi tạo kế hoạch cơ bản.");
-
 
                 const responseData = await createPlanRes.json();
                 setFormData(prev => ({
                     ...prev,
                     endDate: responseData.endDate, // Cập nhật endDate từ API
                 }));
-
 
                 // TODO: Xử lý khảo sát nếu có
                 // Xử lý gửi khảo sát sau khi tạo kế hoạch thành công
@@ -420,7 +394,6 @@ const QuitPlanPage = () => {
                     if (!submitAnswerRes.ok) throw new Error("Kế hoạch đã tạo nhưng lỗi nộp khảo sát.");
                 }
 
-
                 toast.success("Tạo kế hoạch thành công!");
                 window.scrollTo({ top: 0, behavior: "smooth" }); // <-- scroll lên đầu trang ngay khi lưu thành công
                 await loadInitialData();
@@ -438,7 +411,6 @@ const QuitPlanPage = () => {
                     cigarettesPerPack: habitData.cigarettesPerPack,
                 };
 
-
                 const updateSurveyPayload = [];
                 Object.entries(formData.dynamicAnswers).forEach(([qId, aIds]) => aIds.forEach(aId => {
                     const q = surveyQuestions.find(i => i.questionID == qId);
@@ -449,7 +421,6 @@ const QuitPlanPage = () => {
                         customAnswerText: a?.answerText.toLowerCase().includes('khác') ? (formData.otherTexts[qId] || "") : ""
                     });
                 }));
-
 
                 const [planUpdateRes, surveyUpdateRes] = await Promise.all([
                     fetch(`/api/QuitPlan/UpdateQuitPlan?userId=${userId}`, {
@@ -464,11 +435,9 @@ const QuitPlanPage = () => {
                     })
                 ]);
 
-
                 if (!planUpdateRes.ok || !surveyUpdateRes.ok) {
                     throw new Error("Có lỗi xảy ra trong quá trình cập nhật. Vui lòng thử lại.");
                 }
-
 
                 toast.success("Cập nhật thành công!");
                 window.scrollTo({ top: 0, behavior: "smooth" });
@@ -498,14 +467,12 @@ const QuitPlanPage = () => {
         }
     };
 
-
     if (isLoading) return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
             <Spinner animation="border" variant="success" />
             <h4 className="ms-3">Đang tải dữ liệu...</h4>
         </Container>
     );
-
 
     return (
         <div className="thq-quit-plan">
@@ -516,7 +483,6 @@ const QuitPlanPage = () => {
                             <h1 className="thq-header__title">Lập kế hoạch cai thuốc</h1>
                             <p className="thq-header__subtitle">Trả lời các câu hỏi sau để nhận một lộ trình được cá nhân hóa.</p>
                         </div>
-
 
                         <Form onSubmit={handleCreateOrUpdate} className="thq-form">
                             <QuitPlanHabitSection
@@ -538,7 +504,6 @@ const QuitPlanPage = () => {
                                 onOtherTextChange={handleOtherTextChange}
                                 editable={editMode || !planCreated}
                             />
-
 
                             <div className="thq-form__button-wrapper d-grid mb-3">
                                 <Button
@@ -636,12 +601,8 @@ const QuitPlanPage = () => {
             <ToastContainer position="top-right" autoClose={3000} />
 
 
-
-
         </div>
     );
 };
 
-
 export default QuitPlanPage;
-

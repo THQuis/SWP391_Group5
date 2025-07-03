@@ -420,7 +420,7 @@ const HomePage = () => {
                                     <div className="row g-3 mb-4">
                                         <div className="col-6 col-md-3">
                                             <button
-                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'smoke-free-days' ? 'btn-primary' : 'btn-light'}`}
+                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'smoke-free-days' ? 'btn-success' : 'btn-light'}`}
                                                 onClick={() => setActiveRankingType('smoke-free-days')}
                                                 style={{
                                                     transition: 'all 0.3s ease',
@@ -435,7 +435,7 @@ const HomePage = () => {
                                         </div>
                                         <div className="col-6 col-md-3">
                                             <button
-                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'money-saved' ? 'btn-primary' : 'btn-light'}`}
+                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'money-saved' ? 'btn-success' : 'btn-light'}`}
                                                 onClick={() => setActiveRankingType('money-saved')}
                                                 style={{
                                                     transition: 'all 0.3s ease',
@@ -450,7 +450,7 @@ const HomePage = () => {
                                         </div>
                                         <div className="col-6 col-md-3">
                                             <button
-                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'cigarettes-dropped' ? 'btn-primary' : 'btn-light'}`}
+                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'cigarettes-dropped' ? 'btn-success' : 'btn-light'}`}
                                                 onClick={() => setActiveRankingType('cigarettes-dropped')}
                                                 style={{
                                                     transition: 'all 0.3s ease',
@@ -465,7 +465,7 @@ const HomePage = () => {
                                         </div>
                                         <div className="col-6 col-md-3">
                                             <button
-                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'achievements' ? 'btn-primary' : 'btn-light'}`}
+                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'achievements' ? 'btn-success' : 'btn-light'}`}
                                                 onClick={() => setActiveRankingType('achievements')}
                                                 style={{
                                                     transition: 'all 0.3s ease',

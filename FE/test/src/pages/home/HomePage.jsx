@@ -1,10 +1,109 @@
-import { memo } from "react";
-import { Carousel } from 'react-bootstrap';
+import { memo, useState, useEffect } from "react";
+import { Carousel, Image } from 'react-bootstrap';
 import "../../styles/home.scss";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTERS } from "../../utils/router";
 
 const HomePage = () => {
+    const navigate = useNavigate();
+    const [topUsers, setTopUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [activeRankingType, setActiveRankingType] = useState("smoke-free-days");
+    const handleStartJourney = () => {
+        // Kiểm tra xem user đã đăng nhập chưa
+        const userToken = localStorage.getItem('userToken');
+
+        if (userToken) {
+            // Đã đăng nhập -> chuyển đến trang tiến trình (quit plan)
+            navigate(ROUTERS.USER.PROGRESS);
+        } else {
+            // Chưa đăng nhập -> chuyển đến trang login
+            navigate(ROUTERS.USER.LOGIN);
+        }
+    };
+    useEffect(() => {
+        const fetchTopRanking = async () => {
+            try {
+                setLoading(true);
+                const userToken = localStorage.getItem('userToken');
+
+                let endpoint = '';
+                switch (activeRankingType) {
+                    case 'smoke-free-days':
+                        endpoint = '/api/ranking/top-smoke-free-days?top=3';
+                        break;
+                    case 'money-saved':
+                        endpoint = '/api/ranking/top-money-saved?top=3';
+                        break;
+                    case 'cigarettes-dropped':
+                        endpoint = '/api/ranking/top-cigarettes-dropped?top=3';
+                        break;
+                    default:
+                        endpoint = '/api/ranking/top-smoke-free-days?top=3';
+                }
+
+                const response = await fetch(endpoint, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(`Top 3 ${activeRankingType} Ranking API Response:`, data);
+                    setTopUsers(data || []);
+                } else {
+                    console.error('API Error:', response.status, response.statusText);
+                    // Fallback to static data if API fails
+                    setTopUsers([
+                        { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
+                        { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
+                        { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
+                    ]);
+                }
+            } catch (error) {
+                console.error('Network Error:', error);
+                // Fallback to static data if network fails
+                setTopUsers([
+                    { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
+                    { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
+                    { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
+                ]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTopRanking();
+    }, [activeRankingType]);
+
+    const getRankingValue = (user, type) => {
+        switch (type) {
+            case 'smoke-free-days':
+                return `${user.smokeFreeDays || 0} ngày`;
+            case 'money-saved':
+                return `${(user.totalMoneySaved || 0).toLocaleString('vi-VN')} VNĐ`;
+            case 'cigarettes-dropped':
+                return `${user.totalCigarettesDropped || 0} điếu`;
+            default:
+                return `${user.smokeFreeDays || 0} ngày`;
+        }
+    };
+
+    const getRankingTitle = (type) => {
+        switch (type) {
+            case 'smoke-free-days':
+                return '🚭 Top Ngày Không Hút Thuốc';
+            case 'money-saved':
+                return '💰 Top Tiền Tiết Kiệm';
+            case 'cigarettes-dropped':
+                return '🚬 Top Điếu Đã Bỏ';
+            default:
+                return '🚭 Top Ngày Không Hút Thuốc';
+        }
+    };
+
     return (
         <div>
             <section className="hero-carousel" id="home">
@@ -12,7 +111,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/Qui2/image/banner_Ko_nicotin.png?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/bannerFirst.png?raw=true"
                             alt="First slide"
                         />
                     </Carousel.Item>
@@ -22,7 +121,6 @@ const HomePage = () => {
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Thien1.2.jpg?raw=true"
                             alt="Second slide"
                         />
-
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
@@ -36,7 +134,6 @@ const HomePage = () => {
                             className="d-block w-100"
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.1.jpg?raw=true"
                             alt="Four slide"
-
                         />
                     </Carousel.Item>
                 </Carousel>
@@ -55,17 +152,12 @@ const HomePage = () => {
                             </p>
                             <p>
                                 Hãy bắt đầu thay đổi vì chính bạn, vì những người thân yêu và vì tương lai không còn khói thuốc. BreathAgain – Khơi lại một cuộc sống mới, khỏe mạnh hơn từng ngày cùng bạn!
-
-
                             </p>
                         </div>
                         <img
                             className="d-block w-100"
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.3.jpg?raw=true"
-                        // alt="First slide"
                         />
-                        {/* <div className="about-image"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Phoi4.png?raw=true" alt=""/></div> */}
-
                     </div>
                 </div>
             </section>
@@ -109,7 +201,6 @@ const HomePage = () => {
                             <div className="icon">📊</div>
                             <h3>Xem các blogger chia sẻ kinh nghiệm</h3>
                         </Link>
-
                         <Link to={ROUTERS.USER.COACH} className="support-card">
                             <div className="icon">👥</div>
                             <h3>Giao lưu với chuyên môn</h3>
@@ -121,38 +212,276 @@ const HomePage = () => {
             {/* Rankings Section */}
             <section className="rankings" id="rankings">
                 <div className="container">
-                    <h2>Bảng xếp hạng</h2>
-                    <div className="rankings-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên người dùng</th>
-                                    <th>Số ngày cai thuốc</th>
-                                    <th>Huy hiệu</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Người dùng 1</td>
-                                    <td>365 ngày</td>
-                                    <td>🏆</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Người dùng 2</td>
-                                    <td>200 ngày</td>
-                                    <td>🥈</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Người dùng 3</td>
-                                    <td>150 ngày</td>
-                                    <td>🥉</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div className="text-center mb-4">
+                        <h2 className="fw-bold" style={{ fontSize: 32, color: "green", marginBottom: 16 }}>
+                            🏆 Bảng xếp hạng thành viên
+                        </h2>
+                        <p className="text-muted" style={{ fontSize: 18 }}>
+                            {getRankingTitle(activeRankingType)}
+                        </p>
+                    </div>
+
+                    <div className="row justify-content-center">
+                        <div className="col-lg-8">
+                            <div className="card" style={{ borderRadius: 18, boxShadow: "0 6px 30px rgba(0,0,0,0.08)", border: "none" }}>
+                                <div className="card-body" style={{ padding: "32px" }}>
+                                    {/* Top 3 Rankings */}
+                                    {loading ? (
+                                        <div className="text-center py-5">
+                                            <div className="spinner-border text-primary" role="status">
+                                                <span className="visually-hidden">Đang tải...</span>
+                                            </div>
+                                            <p className="mt-2 text-muted">Đang tải bảng xếp hạng...</p>
+                                        </div>
+                                    ) : (
+                                        <div className="row text-center mb-4">
+                                            {/* 2nd Place */}
+                                            <div className="col-4">
+                                                <div className="mb-3">
+                                                    <div className="position-relative d-inline-block">
+                                                        {topUsers[1]?.profilePicture ? (
+                                                            <div className="position-relative">
+                                                                <Image
+                                                                    src={topUsers[1].profilePicture}
+                                                                    alt={topUsers[1].fullName}
+                                                                    roundedCircle
+                                                                    width={80}
+                                                                    height={80}
+                                                                    style={{
+                                                                        objectFit: "cover",
+                                                                        border: "3px solid #6c757d"
+                                                                    }}
+                                                                />
+                                                                <div
+                                                                    className="position-absolute d-flex align-items-center justify-content-center text-white fw-bold"
+                                                                    style={{
+                                                                        top: '-5px',
+                                                                        left: '-5px',
+                                                                        width: 30,
+                                                                        height: 30,
+                                                                        backgroundColor: '#6c757d',
+                                                                        borderRadius: '50%',
+                                                                        fontSize: 14,
+                                                                        border: '2px solid white'
+                                                                    }}
+                                                                >
+                                                                    #2
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <div
+                                                                className="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white fw-bold"
+                                                                style={{ width: 80, height: 80, fontSize: 24 }}
+                                                            >
+                                                                #2
+                                                            </div>
+                                                        )}
+                                                        <span
+                                                            className="position-absolute top-0 start-100 translate-middle badge"
+                                                            style={{ fontSize: 20 }}
+                                                        >
+                                                            🥈
+                                                        </span>
+                                                    </div>
+                                                    <h6 className="mt-2 fw-bold">
+                                                        {topUsers[1]?.fullName || "Chưa có dữ liệu"}
+                                                    </h6>
+                                                    <p className="text-muted mb-0" style={{ fontSize: 14 }}>
+                                                        {getRankingValue(topUsers[1], activeRankingType)}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            {/* 1st Place */}
+                                            <div className="col-4">
+                                                <div className="mb-3">
+                                                    <div className="position-relative d-inline-block">
+                                                        {topUsers[0]?.profilePicture ? (
+                                                            <div className="position-relative">
+                                                                <Image
+                                                                    src={topUsers[0].profilePicture}
+                                                                    alt={topUsers[0].fullName}
+                                                                    roundedCircle
+                                                                    width={100}
+                                                                    height={100}
+                                                                    style={{
+                                                                        objectFit: "cover",
+                                                                        border: "4px solid #ffd700"
+                                                                    }}
+                                                                />
+                                                                <div
+                                                                    className="position-absolute d-flex align-items-center justify-content-center text-white fw-bold"
+                                                                    style={{
+                                                                        top: '-8px',
+                                                                        left: '-8px',
+                                                                        width: 35,
+                                                                        height: 35,
+                                                                        background: "linear-gradient(45deg, #ffd700, #ffed4e)",
+                                                                        borderRadius: '50%',
+                                                                        fontSize: 16,
+                                                                        border: '3px solid white'
+                                                                    }}
+                                                                >
+                                                                    #1
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <div
+                                                                className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                                                                style={{
+                                                                    width: 100,
+                                                                    height: 100,
+                                                                    fontSize: 28,
+                                                                    background: "linear-gradient(45deg, #ffd700, #ffed4e)"
+                                                                }}
+                                                            >
+                                                                #1
+                                                            </div>
+                                                        )}
+                                                        <span
+                                                            className="position-absolute top-0 start-100 translate-middle badge"
+                                                            style={{ fontSize: 24 }}
+                                                        >
+                                                            🏆
+                                                        </span>
+                                                    </div>
+                                                    <h5 className="mt-2 fw-bold text-warning">
+                                                        {topUsers[0]?.fullName || "Chưa có dữ liệu"}
+                                                    </h5>
+                                                    <p className="text-muted mb-0" style={{ fontSize: 16 }}>
+                                                        {getRankingValue(topUsers[0], activeRankingType)}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            {/* 3rd Place */}
+                                            <div className="col-4">
+                                                <div className="mb-3">
+                                                    <div className="position-relative d-inline-block">
+                                                        {topUsers[2]?.profilePicture ? (
+                                                            <div className="position-relative">
+                                                                <Image
+                                                                    src={topUsers[2].profilePicture}
+                                                                    alt={topUsers[2].fullName}
+                                                                    roundedCircle
+                                                                    width={80}
+                                                                    height={80}
+                                                                    style={{
+                                                                        objectFit: "cover",
+                                                                        border: "3px solid #f0ad4e"
+                                                                    }}
+                                                                />
+                                                                <div
+                                                                    className="position-absolute d-flex align-items-center justify-content-center text-white fw-bold"
+                                                                    style={{
+                                                                        top: '-5px',
+                                                                        left: '-5px',
+                                                                        width: 30,
+                                                                        height: 30,
+                                                                        backgroundColor: '#f0ad4e',
+                                                                        borderRadius: '50%',
+                                                                        fontSize: 14,
+                                                                        border: '2px solid white'
+                                                                    }}
+                                                                >
+                                                                    #3
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <div
+                                                                className="rounded-circle bg-warning d-flex align-items-center justify-content-center text-white fw-bold"
+                                                                style={{ width: 80, height: 80, fontSize: 24 }}
+                                                            >
+                                                                #3
+                                                            </div>
+                                                        )}
+                                                        <span
+                                                            className="position-absolute top-0 start-100 translate-middle badge"
+                                                            style={{ fontSize: 20 }}
+                                                        >
+                                                            🥉
+                                                        </span>
+                                                    </div>
+                                                    <h6 className="mt-2 fw-bold">
+                                                        {topUsers[2]?.fullName || "Chưa có dữ liệu"}
+                                                    </h6>
+                                                    <p className="text-muted mb-0" style={{ fontSize: 14 }}>
+                                                        {getRankingValue(topUsers[2], activeRankingType)}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Stats Cards - Only 3 buttons now */}
+                                    <div className="row g-3 mb-4 justify-content-center">
+                                        <div className="col-6 col-md-4">
+                                            <button
+                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'smoke-free-days' ? 'btn-success' : 'btn-light'}`}
+                                                onClick={() => setActiveRankingType('smoke-free-days')}
+                                                style={{
+                                                    transition: 'all 0.3s ease',
+                                                    transform: activeRankingType === 'smoke-free-days' ? 'scale(1.05)' : 'scale(1)'
+                                                }}
+                                            >
+                                                <div style={{ fontSize: 20 }}>🚭</div>
+                                                <small className={activeRankingType === 'smoke-free-days' ? 'text-white' : 'text-muted'}>
+                                                    Ngày không hút
+                                                </small>
+                                            </button>
+                                        </div>
+                                        <div className="col-6 col-md-4">
+                                            <button
+                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'money-saved' ? 'btn-success' : 'btn-light'}`}
+                                                onClick={() => setActiveRankingType('money-saved')}
+                                                style={{
+                                                    transition: 'all 0.3s ease',
+                                                    transform: activeRankingType === 'money-saved' ? 'scale(1.05)' : 'scale(1)'
+                                                }}
+                                            >
+                                                <div style={{ fontSize: 20 }}>💰</div>
+                                                <small className={activeRankingType === 'money-saved' ? 'text-white' : 'text-muted'}>
+                                                    Tiền tiết kiệm
+                                                </small>
+                                            </button>
+                                        </div>
+                                        <div className="col-6 col-md-4">
+                                            <button
+                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'cigarettes-dropped' ? 'btn-success' : 'btn-light'}`}
+                                                onClick={() => setActiveRankingType('cigarettes-dropped')}
+                                                style={{
+                                                    transition: 'all 0.3s ease',
+                                                    transform: activeRankingType === 'cigarettes-dropped' ? 'scale(1.05)' : 'scale(1)'
+                                                }}
+                                            >
+                                                <div style={{ fontSize: 20 }}>🚬</div>
+                                                <small className={activeRankingType === 'cigarettes-dropped' ? 'text-white' : 'text-muted'}>
+                                                    Điếu đã bỏ
+                                                </small>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* View More Button */}
+                                    <div className="text-center">
+                                        <Link
+                                            to={ROUTERS.USER.RANKING}
+                                            className="btn btn-primary px-4 py-2"
+                                            style={{
+                                                borderRadius: 25,
+                                                background: "linear-gradient(90deg, #2563eb 60%, #38bdf8 100%)",
+                                                border: "none",
+                                                fontSize: 16,
+                                                fontWeight: "500"
+                                            }}
+                                        >
+                                            Xem bảng xếp hạng đầy đủ
+                                            <i className="ms-2">→</i>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -166,7 +495,7 @@ const HomePage = () => {
                         chỉ có hiểu - hỗ trợ - và hy vọng.
                     </p>
                     <p>Vì một ngày không thuốc là một ngày bạn sống trọn vẹn hơn.</p>
-                    <button className="cta-button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <button className="cta-button" onClick={handleStartJourney}>
                         Bắt đầu hành trình
                     </button>
                 </div>

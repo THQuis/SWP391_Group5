@@ -1,95 +1,91 @@
-// API Service với localStorage integration từ AuthPage
-class ApiService {
+// class ApiService {
+//     // Lấy token từ localStorage (giống AuthPage)
+//     getToken() {
+//         return localStorage.getItem('userToken');
+//     }
+//     // Lấy thông tin user từ localStorage (giống AuthPage)
+//     getUserData() {
+//         return {
+//             userToken: localStorage.getItem('userToken'),
+//             userRole: localStorage.getItem('userRole'),
+//             userName: localStorage.getItem('userName'),
+//             userEmail: localStorage.getItem('userEmail'),
+//             userId: localStorage.getItem('userId'),
+//             coachId: localStorage.getItem('coachId'),
+//             profilePicture: localStorage.getItem('profilePicture'),
+//             gender: localStorage.getItem('gender'),
+//             dateOfBirth: localStorage.getItem('dateOfBirth'),
+//             phoneNumber: localStorage.getItem('phoneNumber')
+//         };
+//     }
 
+//     // Kiểm tra xem user có đăng nhập không
+//     isAuthenticated() {
+//         const token = this.getToken();
+//         return token && token !== 'null' && token !== 'undefined';
+//     }
 
-    // Lấy token từ localStorage (giống AuthPage)
-    getToken() {
-        return localStorage.getItem('userToken');
-    }
+//     // Tạo headers với token từ localStorage
+//     getHeaders() {
+//         const token = this.getToken();
+//         return {
+//             'Content-Type': 'application/json',
+//             'Accept': '*/*',
+//             ...(token && { 'Authorization': `Bearer ${token}` })
+//         };
+//     }
+//     // Generic API call method
+//     async apiCall(endpoint, options = {}) {
+//         try {
+//             const url = endpoint.startsWith('http') ? endpoint : `${this.baseURL}${endpoint}`;
 
-    // Lấy thông tin user từ localStorage (giống AuthPage)
-    getUserData() {
-        return {
-            userToken: localStorage.getItem('userToken'),
-            userRole: localStorage.getItem('userRole'),
-            userName: localStorage.getItem('userName'),
-            userEmail: localStorage.getItem('userEmail'),
-            userId: localStorage.getItem('userId'),
-            coachId: localStorage.getItem('coachId'),
-            profilePicture: localStorage.getItem('profilePicture'),
-            gender: localStorage.getItem('gender'),
-            dateOfBirth: localStorage.getItem('dateOfBirth'),
-            phoneNumber: localStorage.getItem('phoneNumber')
-        };
-    }
+//             const config = {
+//                 headers: this.getHeaders(),
+//                 ...options
+//             };
 
-    // Kiểm tra xem user có đăng nhập không
-    isAuthenticated() {
-        const token = this.getToken();
-        return token && token !== 'null' && token !== 'undefined';
-    }
+//             console.log(`🚀 API Call: ${url}`);
+//             console.log(`📋 Headers:`, config.headers);
 
-    // Tạo headers với token từ localStorage
-    getHeaders() {
-        const token = this.getToken();
-        return {
-            'Content-Type': 'application/json',
-            'Accept': '*/*',
-            ...(token && { 'Authorization': `Bearer ${token}` })
-        };
-    }
+//             const response = await fetch(url, config);
 
-    // Generic API call method
-    async apiCall(endpoint, options = {}) {
-        try {
-            const url = endpoint.startsWith('http') ? endpoint : `${this.baseURL}${endpoint}`;
+//             if (!response.ok) {
+//                 if (response.status === 401) {
+//                     // Token expired hoặc invalid, clear localStorage
+//                     this.clearUserData();
+//                     throw new Error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
+//                 }
+//                 throw new Error(`HTTP error! status: ${response.status}`);
+//             }
 
-            const config = {
-                headers: this.getHeaders(),
-                ...options
-            };
+//             const data = await response.json();
+//             console.log(`✅ API Response:`, data);
+//             return data;
+//         } catch (error) {
+//             console.error('❌ API call failed:', error);
+//             throw error;
+//         }
+//     }
 
-            console.log(`🚀 API Call: ${url}`);
-            console.log(`📋 Headers:`, config.headers);
+//     // // Lấy money saved ranking từ API mới
+//     // async getMoneySavedRanking(topN = 10) {
+//     //     return await this.apiCall(`/api/ranking/top-money-saved?top=${topN}`, {
+//     //         method: 'GET'
+//     //     });
+//     // }
 
-            const response = await fetch(url, config);
+//     // Clear user data from localStorage
+//     clearUserData() {
+//         const keysToRemove = [
+//             'userToken', 'userRole', 'userName', 'userEmail', 'userId',
+//             'coachId', 'profilePicture', 'gender', 'dateOfBirth', 'phoneNumber'
+//         ];
 
-            if (!response.ok) {
-                if (response.status === 401) {
-                    // Token expired hoặc invalid, clear localStorage
-                    this.clearUserData();
-                    throw new Error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
-                }
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+//         keysToRemove.forEach(key => {
+//             localStorage.removeItem(key);
+//         });
+//     }
+// }
 
-            const data = await response.json();
-            console.log(`✅ API Response:`, data);
-            return data;
-        } catch (error) {
-            console.error('❌ API call failed:', error);
-            throw error;
-        }
-    }
-
-    // Lấy money saved ranking từ API mới
-    async getMoneySavedRanking(topN = 10) {
-        return await this.apiCall(`/ranking/top-money-saved?top=${topN}`, {
-            method: 'GET'
-        });
-    }
-
-    // Clear user data from localStorage
-    clearUserData() {
-        const keysToRemove = [
-            'userToken', 'userRole', 'userName', 'userEmail', 'userId',
-            'coachId', 'profilePicture', 'gender', 'dateOfBirth', 'phoneNumber'
-        ];
-
-        keysToRemove.forEach(key => {
-            localStorage.removeItem(key);
-        });
-    }
-}
-
-export default new ApiService();
+// // eslint-disable-next-line import/no-anonymous-default-export
+// export default new ApiService();

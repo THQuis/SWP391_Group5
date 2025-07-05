@@ -143,21 +143,66 @@ const fetchCoaches = async (token) => {
 };
 
 
+
 const CoachList = () => {
     const [coaches, setCoaches] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [myCoach, setMyCoach] = useState(null);
+    const [myCoachLoading, setMyCoachLoading] = useState(true);
+    const [myCoachError, setMyCoachError] = useState("");
     const navigate = useNavigate();
     const token = localStorage.getItem("userToken");
 
-    const selectedCoachId = 1;
+    // Lấy coach hiện tại của user
+    useEffect(() => {
+        const fetchMyCoach = async () => {
+            setMyCoachLoading(true);
+            setMyCoachError("");
+            try {
+                const response = await fetch("/api/user/coach/my-coach", {
+                    method: "GET",
+                    headers: {
+                        "Accept": "*/*",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) throw new Error("Không thể tải coach hiện tại");
+                const coach = await response.json();
+                setMyCoach({
+                    UserID: coach.coachId,
+                    FullName: coach.fullName,
+                    Email: coach.email,
+                    PhoneNumber: coach.phone,
+                    ProfilePicture: coach.profilePicture
+                        ? (coach.profilePicture.startsWith("data:image/")
+                            ? coach.profilePicture
+                            : `data:image/png;base64,${coach.profilePicture}`)
+                        : null,
+                    Status: "Active",
+                    Description: coach.description,
+                    Gender: coach.gender,
+                    DateOfBirth: coach.dateOfBirth,
+                    Rating: 5,
+                    Experience: 10,
+                });
+            } catch (err) {
+                setMyCoachError(err.message || "Lỗi khi tải coach hiện tại.");
+            } finally {
+                setMyCoachLoading(false);
+            }
+        };
+        if (token) fetchMyCoach();
+        else setMyCoachError("Bạn chưa đăng nhập hoặc token không hợp lệ.");
+    }, [token]);
 
+    // Lấy danh sách coach
     useEffect(() => {
         const getCoaches = async () => {
             setLoading(true);
             setError("");
             try {
-                const data = await fetchCoaches(token); // truyền token vào đây
+                const data = await fetchCoaches(token);
                 setCoaches(data);
             } catch (err) {
                 setError(err.message || "Lỗi khi tải danh sách coach.");
@@ -168,6 +213,9 @@ const CoachList = () => {
         if (token) getCoaches();
         else setError("Bạn chưa đăng nhập hoặc token không hợp lệ.");
     }, [token]);
+
+    // Lấy id coach hiện tại
+    const selectedCoachId = myCoach?.UserID;
 
     return (
         <div className={styles.pageContainer}>
@@ -180,6 +228,81 @@ const CoachList = () => {
             </div>
 
             <Container maxWidth="lg">
+                {/* My Coach Section */}
+                <div className={styles.myCoachSection}>
+                    <h2 className={styles.myCoachTitle}>My Coach</h2>
+                    {myCoachLoading ? (
+                        <div className={styles.loadingState}>
+                            <CircularProgress size={30} />
+                            <span>Đang tải coach của bạn...</span>
+                        </div>
+                    ) : myCoachError ? (
+                        <Alert severity="warning" className={styles.alert}>{myCoachError}</Alert>
+                    ) : myCoach ? (
+                        <div className={styles.coachGrid}>
+                            <div className={styles.coachCard} style={{ width: '100%' }}>
+                                <div className={styles.cardContent}>
+                                    <div className={styles.profileSection}>
+                                        <div className={styles.avatarWrapper}>
+                                            <img
+                                                src={myCoach.ProfilePicture || "https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true"}
+                                                alt={myCoach.FullName}
+                                                className={styles.avatar}
+                                            />
+                                            <div className={styles.verifiedBadge}>
+                                                <Verified />
+                                            </div>
+                                        </div>
+                                        <div className={styles.nameSection}>
+                                            <h2>{myCoach.FullName}</h2>
+                                            <span className={styles.currentCoach}>
+                                                <Star /> Chuyên gia của bạn
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.infoSection}>
+                                        <div className={styles.contactRow}>
+                                            <div className={styles.contactItem}>
+                                                <Email className={styles.icon} />
+                                                <span>{myCoach.Email}</span>
+                                            </div>
+                                            <div className={styles.contactItem}>
+                                                <Phone className={styles.icon} />
+                                                <span>{myCoach.PhoneNumber}</span>
+                                            </div>
+                                        </div>
+                                        <div className={styles.statusRow}>
+                                            <Chip
+                                                label={myCoach.Status === "Active" ? "Hoạt Động" : "Busy"}
+                                                className={myCoach.Status === "Active" ? styles.activeChip : styles.busyChip}
+                                            />
+                                            <Chip
+                                                label="Đã xác minh"
+                                                className={styles.verifiedChip}
+                                                icon={<Verified />}
+                                            />
+                                        </div>
+                                        <p className={styles.description}>
+                                            {myCoach.Description || "Chưa có thông tin giới thiệu."}
+                                        </p>
+                                    </div>
+                                    <div className={styles.actionSection}>
+                                        <Button
+                                            className={styles.viewProfileBtn}
+                                            onClick={() => navigate(`/User/coach/profile/${myCoach.UserID}`)}
+                                            startIcon={<PersonAdd />}
+                                        >
+                                            Xem hồ sơ
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : null}
+                </div>
+
+                {/* Danh sách coach */}
+                <h2 className={styles.listCoachTitle} style={{ marginTop: 32, marginBottom: 16 }}>Danh sách coach</h2>
                 {loading ? (
                     <div className={styles.loadingState}>
                         <CircularProgress size={50} />

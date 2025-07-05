@@ -132,7 +132,7 @@ function SmokeFreeDaysRanking() {
             {loading ? (
                 <div className="text-center my-5">
                     <Spinner animation="border" variant="primary" />
-                    <p className="mt-3 text-muted">Đang tải dữ liệu từ API...</p>
+                    <p className="mt-3 text-muted">Đang tải...</p>
                 </div>
             ) : (
                 <>

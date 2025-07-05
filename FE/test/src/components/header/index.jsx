@@ -63,10 +63,10 @@ const Header = () => {
                 {isLoggedIn ? (
                   <>
                     <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
-                    <Nav.Link as={Link} to={ROUTERS.USER.PROGRESS} className="nav-item-custom">Dashboard</Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.PROGRESS} className="nav-item-custom">Tiến trình</Nav.Link>
                     <Nav.Link as={Link} to={ROUTERS.USER.QUITPLAN} className="nav-item-custom">Kế hoạch</Nav.Link>
                     <Nav.Link as={Link} to={ROUTERS.USER.BLOG} className="nav-item-custom">Cộng đồng</Nav.Link>
-                    <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">Tiến trình</Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">Cẩm nang</Nav.Link>
                     <Nav.Link as={Link} to={ROUTERS.USER.CHALENGE} className="nav-item-custom">Thử Thách</Nav.Link>
                   </>
                 ) : (
@@ -112,7 +112,7 @@ const Header = () => {
                       <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>Hồ sơ cá nhân</Dropdown.Item>
                       <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Bảng xếp hạng</Dropdown.Item>
                       <Dropdown.Item as={Link} to={ROUTERS.USER.COACH}>Coach</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Dashboard</Dropdown.Item>
+                      {/* <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Dashboard</Dropdown.Item> */}
                       <Dropdown.Item as={Link} to={ROUTERS.USER.PACKAGE}>Gói thành viên</Dropdown.Item>
                       <Dropdown.Item as={Link} to={ROUTERS.USER.ACHIVE}>Huy hiệu và thành tích</Dropdown.Item>
                       <Dropdown.Item as={Link} to={ROUTERS.USER.MYCONSUL}>Lịch tư vấn</Dropdown.Item>

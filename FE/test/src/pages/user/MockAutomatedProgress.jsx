@@ -21,6 +21,11 @@ const ProgressDashboardPage = () => {
     const navigate = useNavigate();
     const memberPackage = localStorage.getItem('memberPackage'); // Sẽ là "Premium" hoặc "Basic"
 
+    // Fix scroll issue - scroll to top when component mounts
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     // Đưa fetch logic ra ngoài useEffect để tái sử dụng sau khi cập nhật relapse
     const fetchProgressData = useCallback(async () => {
         try {

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-// THÊM MỚI: Import thêm Pagination và Spinner
 import { Row, Col, Card, Button, Table, Modal, Form, InputGroup, Pagination, Spinner, Container } from 'react-bootstrap';
 import { FaPlus, FaEdit, FaTrash, FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import { FaHandsClapping } from 'react-icons/fa6';
-import { toast } from 'react-toastify'; // Thêm toast để có thông báo
+import { toast } from 'react-toastify';
 
 const ManagementPerformance = () => {
     const [badges, setBadges] = useState([]);
@@ -31,10 +30,10 @@ const ManagementPerformance = () => {
         setIsLoading(true);
         try {
             const token = localStorage.getItem('userToken');
-            const res = await axios.get('/api/Admin/Achievement/List', {
+            const res = await axios.get('/api/admin/achievements/all', {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setBadges(res.data);
+            setBadges(res.data.data || []);
             setCurrentPage(1);
         } catch (err) {
             console.error('Error fetching data', err);
@@ -44,50 +43,52 @@ const ManagementPerformance = () => {
         }
     };
 
-    // Xử lý tìm kiếm
-    const handleSearch = async (e) => {
+    // Xử lý tìm kiếm local không dùng API
+    const handleSearch = (e) => {
         e.preventDefault();
-        setIsLoading(true);
-        try {
-            const token = localStorage.getItem('userToken');
-            if (!search.trim()) {
-                fetchBadges();
-                return;
-            }
-            const res = await axios.get(`/api/Admin/Achievement/Search`, {
-                params: { keyword: search },
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setBadges(res.data.data || []);
-            setCurrentPage(1);
-        } catch (err) {
-            console.error('Lỗi khi tìm kiếm:', err);
-            toast.error("Tìm kiếm thất bại.");
-        } finally {
-            setIsLoading(false);
+        if (!search.trim()) {
+            fetchBadges();
+            return;
         }
+        // Lọc local trên badges hiện tại
+        const keyword = search.trim().toLowerCase();
+        const filtered = badges.filter(badge =>
+            (badge.achievementName && badge.achievementName.toLowerCase().includes(keyword)) ||
+            (badge.description && badge.description.toLowerCase().includes(keyword)) ||
+            (badge.criteria && badge.criteria.toLowerCase().includes(keyword))
+        );
+        setBadges(filtered);
+        setCurrentPage(1);
     };
 
     // Thêm huy hiệu mới
     const handleAddBadge = async () => {
         try {
             const token = localStorage.getItem('userToken');
-            const res = await axios.post('/api/Admin/Achievement/Add', {
+            // Chuẩn hóa dữ liệu gửi đi đúng với API mới
+            const payload = {
                 achievementName: newBadge.achievementName,
-                badgeImage: newBadge.badgeImage,
-                criteria: newBadge.criteria,
                 description: newBadge.description,
-                packageType: newBadge.packageType
-            }, {
+                criteria: newBadge.criteria,
+                badgeImage: newBadge.badgeImage,
+                packageType: newBadge.packageType,
+                smokeFreeDaysRequired: Number(newBadge.smokeFreeDaysRequired) || 0,
+                moneySavedRequired: Number(newBadge.moneySavedRequired) || 0,
+                cigarettesDroppedRequired: Number(newBadge.cigarettesDroppedRequired) || 0,
+                checkinDaysRequired: Number(newBadge.checkinDaysRequired) || 0
+            };
+            const res = await axios.post('/api/admin/achievements/create', payload, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            setBadges([...badges, res.data.data]);
+            // Sau khi tạo thành công, reload lại danh sách
+            await fetchBadges();
             setShowModal(false);
-            setNewBadge({ achievementName: '', badgeImage: '', criteria: '', description: '', packageType: 'Basic' });
+            setNewBadge({ achievementName: '', badgeImage: '', criteria: '', description: '', packageType: 'Basic', smokeFreeDaysRequired: '', moneySavedRequired: '', cigarettesDroppedRequired: '', checkinDaysRequired: '' });
         } catch (err) {
             console.error('Lỗi khi thêm huy hiệu:', err);
+            toast.error('Lỗi khi thêm huy hiệu!');
         }
     };
 
@@ -100,15 +101,21 @@ const ManagementPerformance = () => {
     const handleSaveEdit = async () => {
         try {
             const token = localStorage.getItem('userToken');
+            // Chuẩn hóa dữ liệu gửi đi đúng với API mới
+            const payload = {
+                achievementName: editingBadge.achievementName,
+                description: editingBadge.description,
+                criteria: editingBadge.criteria,
+                badgeImage: editingBadge.badgeImage,
+                packageType: editingBadge.packageType,
+                smokeFreeDaysRequired: Number(editingBadge.smokeFreeDaysRequired) || 0,
+                moneySavedRequired: Number(editingBadge.moneySavedRequired) || 0,
+                cigarettesDroppedRequired: Number(editingBadge.cigarettesDroppedRequired) || 0,
+                checkinDaysRequired: Number(editingBadge.checkinDaysRequired) || 0
+            };
             await axios.put(
-                `/api/Admin/Achievement/Update/${editingBadge.achievementID}`,
-                {
-                    achievementName: editingBadge.achievementName,
-                    description: editingBadge.description,
-                    criteria: editingBadge.criteria,
-                    badgeImage: editingBadge.badgeImage,
-                    packageType: editingBadge.packageType
-                },
+                `/api/admin/achievements/update/${editingBadge.achievementID}`,
+                payload,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -139,6 +146,16 @@ const ManagementPerformance = () => {
     const indexOfFirstBadge = indexOfLastBadge - itemsPerPage;
     const currentBadges = badges.slice(indexOfFirstBadge, indexOfLastBadge);
     const totalPages = Math.ceil(badges.length / itemsPerPage);
+
+
+    // State cho modal xem chi tiết (đặt ở đầu component, không đặt sau return hoặc điều kiện)
+    const [showDetailModal, setShowDetailModal] = useState(false);
+    const [detailBadge, setDetailBadge] = useState(null);
+
+    const handleShowDetail = (badge) => {
+        setDetailBadge(badge);
+        setShowDetailModal(true);
+    };
 
     if (isLoading) {
         return (
@@ -198,22 +215,33 @@ const ManagementPerformance = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* SỬA ĐỔI: Dùng `currentBadges` thay vì `badges` */}
                                     {currentBadges.map((badge) => (
                                         <tr key={badge.achievementID}>
                                             <td>{badge.achievementID}</td>
                                             <td>{badge.achievementName}</td>
                                             <td>{badge.description}</td>
                                             <td>
-                                                {/* Giả sử badgeImage là URL */}
                                                 {badge.badgeImage ?
                                                     <img src={badge.badgeImage} alt={badge.achievementName} width="30" /> :
                                                     <FaHandsClapping color="#f7b801" size={22} />
                                                 }
                                             </td>
-                                            <td>{badge.criteria}</td>
+                                            <td>
+                                                {/* Xử lý điều kiện hiển thị */}
+                                                {badge.smokeFreeDaysRequired
+                                                    ? `Không hút thuốc ${badge.smokeFreeDaysRequired} ngày`
+                                                    : badge.cigarettesDroppedRequired
+                                                        ? `Không hút ${badge.cigarettesDroppedRequired} điếu`
+                                                        : badge.checkinDaysRequired
+                                                            ? `Check-in ${badge.checkinDaysRequired} lần`
+                                                            : badge.criteria
+                                                }
+                                            </td>
                                             <td>{badge.packageType}</td>
                                             <td>
+                                                <Button variant="link" size="sm" onClick={() => handleShowDetail(badge)} title="Xem chi tiết">
+                                                    <FaSearch color="#0d6efd" />
+                                                </Button>
                                                 <Button variant="link" size="sm" onClick={() => handleEdit(badge)}><FaEdit /></Button>
                                                 <Button variant="link" size="sm" onClick={() => handleDelete(badge.achievementID)}><FaTrash /></Button>
                                             </td>
@@ -240,6 +268,35 @@ const ManagementPerformance = () => {
                 </Col>
             </Row>
 
+            {/* Modal xem chi tiết huy hiệu */}
+            <Modal show={showDetailModal} onHide={() => setShowDetailModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Chi tiết huy hiệu</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {detailBadge && (
+                        <div>
+                            <div className="text-center mb-3">
+                                {detailBadge.badgeImage && <img src={detailBadge.badgeImage} alt={detailBadge.achievementName} style={{ maxWidth: 100 }} />}
+                            </div>
+                            <h5>{detailBadge.achievementName}</h5>
+                            <p><b>Mô tả:</b> {detailBadge.description}</p>
+                            <p><b>Tiêu chí:</b> {detailBadge.criteria}</p>
+                            <p><b>Loại gói:</b> {detailBadge.packageType}</p>
+                            {detailBadge.smokeFreeDaysRequired ? <p><b>Số ngày không hút thuốc:</b> {detailBadge.smokeFreeDaysRequired}</p> : null}
+                            {detailBadge.moneySavedRequired ? <p><b>Số tiền tiết kiệm:</b> {detailBadge.moneySavedRequired}</p> : null}
+                            {detailBadge.cigarettesDroppedRequired ? <p><b>Số điếu không hút:</b> {detailBadge.cigarettesDroppedRequired}</p> : null}
+                            {detailBadge.checkinDaysRequired ? <p><b>Số ngày check-in:</b> {detailBadge.checkinDaysRequired}</p> : null}
+                        </div>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDetailModal(false)}>
+                        Đóng
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             {/* Modal tạo huy hiệu */}
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                 <Modal.Header closeButton>
@@ -255,25 +312,6 @@ const ManagementPerformance = () => {
                                 onChange={e => setNewBadge({ ...newBadge, achievementName: e.target.value })}
                             />
                         </Form.Group>
-
-                        <Form.Group controlId="formImage">
-                            <Form.Label>Ảnh:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={newBadge.badgeImage}
-                                onChange={e => setNewBadge({ ...newBadge, badgeImage: e.target.value })}
-                            />
-                        </Form.Group>
-
-                        <Form.Group controlId="formCondition">
-                            <Form.Label>Điều kiện:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={newBadge.criteria}
-                                onChange={e => setNewBadge({ ...newBadge, criteria: e.target.value })}
-                            />
-                        </Form.Group>
-
                         <Form.Group controlId="formDescription">
                             <Form.Label>Mô tả:</Form.Label>
                             <Form.Control
@@ -282,16 +320,67 @@ const ManagementPerformance = () => {
                                 onChange={e => setNewBadge({ ...newBadge, description: e.target.value })}
                             />
                         </Form.Group>
-
+                        <Form.Group controlId="formCriteria">
+                            <Form.Label>Tiêu chí:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newBadge.criteria}
+                                onChange={e => setNewBadge({ ...newBadge, criteria: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formImage">
+                            <Form.Label>Ảnh (URL):</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newBadge.badgeImage}
+                                onChange={e => setNewBadge({ ...newBadge, badgeImage: e.target.value })}
+                            />
+                        </Form.Group>
                         <Form.Group controlId="formPackageType">
                             <Form.Label>Loại gói:</Form.Label>
                             <Form.Select
                                 value={newBadge.packageType}
                                 onChange={e => setNewBadge({ ...newBadge, packageType: e.target.value })}
                             >
+                                <option value="Streak">Streak</option>
+                                <option value="Superstar">Superstar</option>
+                                <option value="JoinDays">JoinDays</option>
+                                <option value="CheckIn">CheckIn</option>
                                 <option value="Basic">Basic</option>
                                 <option value="Premium">Premium</option>
                             </Form.Select>
+                        </Form.Group>
+                        <Form.Group controlId="formSmokeFreeDaysRequired">
+                            <Form.Label>Số ngày không hút thuốc (smokeFreeDaysRequired):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={newBadge.smokeFreeDaysRequired || ''}
+                                onChange={e => setNewBadge({ ...newBadge, smokeFreeDaysRequired: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formMoneySavedRequired">
+                            <Form.Label>Số tiền tiết kiệm (moneySavedRequired):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={newBadge.moneySavedRequired || ''}
+                                onChange={e => setNewBadge({ ...newBadge, moneySavedRequired: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCigarettesDroppedRequired">
+                            <Form.Label>Số điếu không hút (cigarettesDroppedRequired):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={newBadge.cigarettesDroppedRequired || ''}
+                                onChange={e => setNewBadge({ ...newBadge, cigarettesDroppedRequired: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCheckinDaysRequired">
+                            <Form.Label>Số ngày check-in (checkinDaysRequired):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={newBadge.checkinDaysRequired || ''}
+                                onChange={e => setNewBadge({ ...newBadge, checkinDaysRequired: e.target.value })}
+                            />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -354,9 +443,46 @@ const ManagementPerformance = () => {
                                 value={editingBadge?.packageType}
                                 onChange={e => setEditingBadge({ ...editingBadge, packageType: e.target.value })}
                             >
+                                <option value="Streak">Streak</option>
+                                <option value="Superstar">Superstar</option>
+                                <option value="JoinDays">JoinDays</option>
+                                <option value="CheckIn">CheckIn</option>
                                 <option value="Basic">Basic</option>
                                 <option value="Premium">Premium</option>
                             </Form.Select>
+                        </Form.Group>
+
+                        <Form.Group controlId="formEditSmokeFreeDaysRequired">
+                            <Form.Label>Số ngày không hút thuốc (smokeFreeDaysRequired):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={editingBadge?.smokeFreeDaysRequired || ''}
+                                onChange={e => setEditingBadge({ ...editingBadge, smokeFreeDaysRequired: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formEditMoneySavedRequired">
+                            <Form.Label>Số tiền tiết kiệm (moneySavedRequired):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={editingBadge?.moneySavedRequired || ''}
+                                onChange={e => setEditingBadge({ ...editingBadge, moneySavedRequired: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formEditCigarettesDroppedRequired">
+                            <Form.Label>Số điếu không hút (cigarettesDroppedRequired):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={editingBadge?.cigarettesDroppedRequired || ''}
+                                onChange={e => setEditingBadge({ ...editingBadge, cigarettesDroppedRequired: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formEditCheckinDaysRequired">
+                            <Form.Label>Số ngày check-in (checkinDaysRequired):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={editingBadge?.checkinDaysRequired || ''}
+                                onChange={e => setEditingBadge({ ...editingBadge, checkinDaysRequired: e.target.value })}
+                            />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

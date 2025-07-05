@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaUserTie } from 'react-icons/fa';
 import { Container, Button, Modal, Form, Spinner } from 'react-bootstrap';
 import { FaCrown, FaUserEdit, FaUser, FaTransgender, FaCalendarAlt, FaGem, FaPhoneAlt, FaEnvelope, FaTrashAlt, FaBirthdayCake, FaHeart, FaCommentAlt, FaEye } from "react-icons/fa"; // THÊM FaHeart, FaCommentAlt, FaEye
 import { toast } from 'react-toastify';
@@ -13,16 +14,39 @@ const UserProfile = () => {
         phoneNumber: '',
         profilePicture: '',
         description: '',
-        gender: '',  //them gender, dateofbirth
+        gender: '',
         dateOfBirth: '',
     });
-    const [showDeleteModal, setShowDeleteModal] = useState(false); // Thêm state cho modal xác nhận xóa
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [userBlogs, setUserBlogs] = useState([]);
     const [isBlogsLoading, setIsBlogsLoading] = useState(true);
-
     const [showDeleteBlogModal, setShowDeleteBlogModal] = useState(false);
     const [blogToDelete, setBlogToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    // Coach info
+    const [coach, setCoach] = useState(null);
+    const [isCoachLoading, setIsCoachLoading] = useState(true);
+    const [showCoachModal, setShowCoachModal] = useState(false);
+    // Lấy thông tin coach đã chọn
+    const fetchMyCoach = async () => {
+        setIsCoachLoading(true);
+        try {
+            const token = localStorage.getItem('userToken');
+            const res = await fetch('/api/user/coach/my-coach', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) {
+                setCoach(null);
+                setIsCoachLoading(false);
+                return;
+            }
+            const data = await res.json();
+            setCoach(data);
+        } catch (e) {
+            setCoach(null);
+        }
+        setIsCoachLoading(false);
+    };
     // --- BẮT ĐẦU THÊM HÀM MỚI TẠI ĐÂY ---
     const handleConfirmDeleteBlog = async () => {
         console.log("Đã nhấn xác nhận xóa blog ID:", blogToDelete);
@@ -213,6 +237,7 @@ const UserProfile = () => {
     useEffect(() => {
         fetchUserProfile();
         fetchUserBlogs();
+        fetchMyCoach();
     }, []);
 
     // Xử lý khi nhấn nút xóa (chỉ mở modal xác nhận)
@@ -279,8 +304,7 @@ const UserProfile = () => {
                             <img
                                 src={avatarPreview || editInfo.profilePicture || user.avatar}
                                 alt={user.fullName}
-                                className={`${styles.avatar} ${user.memberPackage === 'Premium' ? styles.premium : ''
-                                    }`}
+                                className={`${styles.avatar} ${user.memberPackage === 'Premium' ? styles.premium : ''}`}
                             />
                             {user.memberPackage === 'Premium' && (
                                 <div className={styles.premiumBadge}>
@@ -302,9 +326,54 @@ const UserProfile = () => {
                                 <FaGem /> Premium
                             </div>
                         )}
+                        {/* Coach info */}
+                        <div className={styles.coachSection}>
+                            <div className="d-flex align-items-center gap-2 mt-2">
+                                <FaUserTie />
+                                <span>Huấn luyện viên của bạn:</span>
+                                {isCoachLoading ? (
+                                    <span className="text-muted ms-2">Đang tải...</span>
+                                ) : coach && coach.coachId ? (
+                                    <>
+                                        <Button variant="link" size="sm" className="p-0 ms-2" onClick={() => {
+                                            // Điều hướng sang trang profile coach
+                                            window.location.href = `/User/coach/profile/${coach.coachId}`;
+                                        }}>
+                                            <img src={coach.profilePicture || 'https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true'} alt="coach" style={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover', border: '1px solid #ccc' }} />
+                                            <span className={`ms-2 fw-bold ${styles.coachName}`}>{coach.fullName}</span>
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <span className="text-danger ms-2">Chưa chọn huấn luyện viên</span>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            {/* Modal xem profile coach */}
+            <Modal show={showCoachModal} onHide={() => setShowCoachModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Thông tin huấn luyện viên</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {coach && coach.coachId ? (
+                        <div className="text-center">
+                            <img src={coach.profilePicture || 'https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true'} alt="coach" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '2px solid #0d6efd' }} />
+                            <h5 className="mt-3 mb-1">{coach.fullName}</h5>
+                            <div className="mb-2 text-muted">{coach.gender === 'Male' ? 'Nam' : coach.gender === 'Female' ? 'Nữ' : ''}</div>
+                            <div><b>Email:</b> {coach.email}</div>
+                            <div><b>Số điện thoại:</b> {coach.phone}</div>
+                            <div><b>Mô tả:</b> {coach.description || 'Chưa có mô tả'}</div>
+                        </div>
+                    ) : (
+                        <div className="text-center text-danger">Không tìm thấy thông tin huấn luyện viên.</div>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowCoachModal(false)}>Đóng</Button>
+                </Modal.Footer>
+            </Modal>
 
             {/* Phần content */}
             <div className={styles.contentSection}>

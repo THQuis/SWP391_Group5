@@ -62,39 +62,39 @@ const BlogManagementTab = forwardRef((props, ref) => {
                     <tr>
                         <th>#</th>
                         <th>Tiêu đề</th>
-                        <th>Nội dung</th>
-                        <th>Chuyên mục</th>
-                        <th>Loại blog</th>
+                        <th>Ảnh</th>
                         <th>Tác giả</th>
-                        <th>Trạng thái</th>
                         <th>Ngày tạo</th>
+                        <th>Trạng thái</th>
                         <th>Likes</th>
-                        <th>Báo cáo</th>
+                        <th>Dislikes</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                     {loading ? (
                         <tr>
-                            <td colSpan={12} className="text-center">Đang tải...</td>
+                            <td colSpan={9} className="text-center">Đang tải...</td>
                         </tr>
                     ) : blogs.length === 0 ? (
                         <tr>
-                            <td colSpan={12} className="text-center text-secondary">Không có bài viết nào.</td>
+                            <td colSpan={9} className="text-center text-secondary">Không có bài viết nào.</td>
                         </tr>
                     ) : (
                         blogs.map((blog, idx) => (
                             <tr key={blog.blogId}>
                                 <td>{idx + 1}</td>
                                 <td>{blog.title}</td>
-                                <td style={{ maxWidth: 200, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{blog.content}</td>
-                                <td>{blog.categoryName}</td>
-                                <td>{blog.blogType}</td>
+                                <td>
+                                    {blog.imageUrl && blog.imageUrl.startsWith('data:image') ? (
+                                        <img src={blog.imageUrl} alt="blog" style={{ maxWidth: 60, maxHeight: 40, objectFit: 'cover' }} />
+                                    ) : null}
+                                </td>
                                 <td>{blog.authorName}</td>
+                                <td>{blog.createdDate ? new Date(blog.createdDate).toLocaleString('vi-VN') : ''}</td>
                                 <td>{blog.status}</td>
-                                <td>{blog.createdDate?.split("T")[0]}</td>
                                 <td>{blog.likes}</td>
-                                <td>{blog.reportCount > 0 ? `Bị báo cáo (${blog.reportCount})` : ""}</td>
+                                <td>{blog.dislikes}</td>
                                 <td>
                                     <Button variant="link" size="sm" className="me-2"><FaEdit /></Button>
                                     <Button variant="link" size="sm" onClick={() => handleDelete(blog.blogId)}><FaTrash /></Button>

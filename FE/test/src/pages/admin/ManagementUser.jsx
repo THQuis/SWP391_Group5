@@ -331,10 +331,8 @@ const ManagementUser = () => {
                                         <th>Tên tài khoản</th>
                                         <th>Email</th>
                                         <th>Vai trò</th>
-                                        <th>Gói</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày đăng ký</th>
-                                        <th>Thành tích</th>
                                         <th>Hành động</th>
                                     </tr>
                                 </thead>
@@ -345,10 +343,8 @@ const ManagementUser = () => {
                                             <td>{u.fullName}</td>
                                             <td>{u.email}</td>
                                             <td> {u.role}</td>
-                                            <td>{u.package}</td>
                                             <td>{u.status}</td>
                                             <td>{u.registrationDate}</td>
-                                            <td>{u.achievements}</td>
                                             <td className="text-center">
                                                 <Button variant="link" size="sm" onClick={() => handleEdit(u)}>
                                                     <FaEdit />

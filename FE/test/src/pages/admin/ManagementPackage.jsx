@@ -134,21 +134,32 @@ const ManagementPackage = () => {
 
     // Xử lý API: Xóa gói
     const handleDeletePkg = async (pkgId) => {
-        if (window.confirm(`Bạn có chắc chắn muốn xóa gói có ID: ${pkgId}?`)) {
-            const token = localStorage.getItem('userToken');
-            toast.info(`Đang xóa gói ID: ${pkgId}...`);
-            try {
-                const response = await fetch(`/api/admin/memberships/packages/${pkgId}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.message || 'Xóa gói thất bại.');
-                toast.success(data.message || "Xóa gói thành công!");
-                setPackages(prev => prev.filter(p => p.packageId !== pkgId && p.packageID !== pkgId));
-            } catch (error) {
-                toast.error(error.message);
+        if (!window.confirm(`Bạn có chắc chắn muốn xóa gói có ID: ${pkgId}?`)) return;
+        const token = localStorage.getItem('userToken');
+        toast.info(`Đang xóa gói ID: ${pkgId}...`);
+        try {
+            const response = await fetch(`/api/admin/memberships/packages/${pkgId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (response.status === 404) {
+                toast.error('Không tìm thấy gói.');
+                return;
             }
+            if (response.status === 400) {
+                const data = await response.json();
+                toast.error(data.message || 'Không thể xoá vì có người dùng đang sử dụng gói này.');
+                return;
+            }
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.message || 'Xóa gói thất bại.');
+            }
+            const data = await response.json();
+            toast.success(data.message || "Xóa gói thành công!");
+            setPackages(prev => prev.filter(p => p.packageId !== pkgId && p.packageID !== pkgId));
+        } catch (error) {
+            toast.error(error.message);
         }
     };
 
@@ -213,10 +224,9 @@ const ManagementPackage = () => {
                             <tr>
                                 <th>ID</th>
                                 <th>Tên gói</th>
-                                <th>Loại gói</th>
+                                <th>Thời hạn (tháng)</th>
                                 <th>Giá (VND)</th>
-                                <th>Thời hạn (Tháng)</th>
-                                <th>Mô tả</th>
+                                <th>Số lượt mua</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
@@ -225,10 +235,9 @@ const ManagementPackage = () => {
                                 <tr key={pkg.packageId || pkg.packageID}>
                                     <td>{pkg.packageId || pkg.packageID}</td>
                                     <td>{pkg.packageName}</td>
-                                    <td>{pkg.packageType}</td>
-                                    <td>{pkg.price?.toLocaleString?.('vi-VN') || pkg.price}</td>
                                     <td>{pkg.duration}</td>
-                                    <td>{pkg.description}</td>
+                                    <td>{pkg.price?.toLocaleString?.('vi-VN') || pkg.price}</td>
+                                    <td>{pkg.purchasedCount ?? 0}</td>
                                     <td>
                                         <Button variant="warning" size="sm" className="me-2" onClick={() => handleEditPkg(pkg)}>Sửa</Button>
                                         <Button variant="danger" size="sm" onClick={() => handleDeletePkg(pkg.packageId || pkg.packageID)}>Xóa</Button>

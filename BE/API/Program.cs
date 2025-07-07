@@ -30,6 +30,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IMilestoneService, MilestoneService>(); 
+builder.Services.AddScoped<IMilestoneRepository, MilestoneRepository>();
 
 // ---- Achievement ----
 builder.Services.AddScoped<IAchievementService, AchievementService>();

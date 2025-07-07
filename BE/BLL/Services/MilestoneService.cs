@@ -1,11 +1,13 @@
-﻿using Smoking.DAL.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Smoking.BLL.Interfaces;
+using Smoking.BLL.Models;
+using Smoking.DAL.Entities;
+using Smoking.DAL.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Smoking.BLL.Models;
-using Smoking.BLL.Interfaces;
 
 
 
@@ -40,6 +42,13 @@ namespace Smoking.BLL.Services
                     }).ToList()
                 }).ToList();
         }
+
+        public async Task<List<Milestone>> GetAllAsync()
+        {
+            return await _repo.GetMilestonesWithGroupsAsync();
+        }
+
+
     }
 }
     

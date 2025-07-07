@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Smoking.DAL.Entities
 {
@@ -14,7 +11,9 @@ namespace Smoking.DAL.Entities
 
         public int UserID { get; set; }
         public int MilestoneID { get; set; }
-        public DateTime AchievedDate { get; set; }
+
+        // Sửa DateTime thành DateTime? (nullable DateTime)
+        public DateTime? AchievedDate { get; set; }  // Cho phép null nếu người dùng chưa đạt mốc nào
 
         // Navigation Properties
         public virtual User User { get; set; }

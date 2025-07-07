@@ -15,10 +15,23 @@ const ManagementPackage = () => {
     // State cho danh sách thành viên sử dụng gói
     const [userMemberships, setUserMemberships] = useState([]);
     const [membershipPage, setMembershipPage] = useState(1);
+    // State filter ngày cho thành viên premium
+    const [membershipDateFrom, setMembershipDateFrom] = useState('');
+    const [membershipDateTo, setMembershipDateTo] = useState('');
 
-    // State cho giao dịch (chưa xử lý API, để trống)
+    // State cho giao dịch
     const [transactions, setTransactions] = useState([]);
     const [txnPage, setTxnPage] = useState(1);
+    // State cho filter trạng thái giao dịch
+    const [txnStatusFilter, setTxnStatusFilter] = useState('');
+    // State cho filter ngày giao dịch
+    const [txnDateFrom, setTxnDateFrom] = useState('');
+    const [txnDateTo, setTxnDateTo] = useState('');
+    // State cho modal chi tiết giao dịch
+    const [showTxnDetail, setShowTxnDetail] = useState(false);
+    const [txnDetail, setTxnDetail] = useState([]);
+    const [txnDetailLoading, setTxnDetailLoading] = useState(false);
+    const [txnDetailUser, setTxnDetailUser] = useState(null);
 
     // State cho Modal gói (chưa dùng chỉnh sửa)
     const [showModal, setShowModal] = useState(false);
@@ -59,8 +72,16 @@ const ManagementPackage = () => {
                     setUserMemberships(usersData);
                 }
 
-                // Xử lý view giao dịch nếu cần ở đây
-                // if (view === 'transactions') { ... }
+                if (view === 'transactions') {
+                    // Lấy danh sách giao dịch thanh toán
+                    const txnResponse = await fetch('/api/admin/payments/all', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!txnResponse.ok) throw new Error('Không tải được danh sách giao dịch.');
+                    const txnData = await txnResponse.json();
+                    // Chuẩn hóa dữ liệu cho bảng
+                    setTransactions(Array.isArray(txnData) ? txnData : []);
+                }
             } catch (error) {
                 toast.error(error.message);
             } finally {
@@ -262,6 +283,13 @@ const ManagementPackage = () => {
             {view === 'userMemberships' && (
                 <>
                     <h2 className="mt-4">Thành viên đang sử dụng gói</h2>
+                    <div className="mb-3 d-flex align-items-center gap-3 flex-wrap">
+                        <span>Lọc theo ngày bắt đầu:</span>
+                        <span>Từ ngày:</span>
+                        <input type="date" className="form-control w-auto" value={membershipDateFrom} onChange={e => { setMembershipDateFrom(e.target.value); setMembershipPage(1); }} />
+                        <span>Đến ngày:</span>
+                        <input type="date" className="form-control w-auto" value={membershipDateTo} onChange={e => { setMembershipDateTo(e.target.value); setMembershipPage(1); }} />
+                    </div>
                     <Table striped bordered hover responsive>
                         <thead>
                             <tr>
@@ -276,7 +304,31 @@ const ManagementPackage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {paginate(userMemberships, membershipPage).map(item => (
+                            {paginate(
+                                (membershipDateFrom || membershipDateTo
+                                    ? userMemberships.filter(item => {
+                                        let ok = true;
+                                        if (membershipDateFrom) {
+                                            const start = item.startDate ? new Date(item.startDate) : null;
+                                            const from = new Date(membershipDateFrom);
+                                            if (!start || start < from) ok = false;
+                                        }
+                                        if (membershipDateTo) {
+                                            const start = item.startDate ? new Date(item.startDate) : null;
+                                            const to = new Date(membershipDateTo);
+                                            to.setHours(23, 59, 59, 999);
+                                            if (!start || start > to) ok = false;
+                                        }
+                                        return ok;
+                                    }) : userMemberships)
+                                    .slice()
+                                    .sort((a, b) => {
+                                        const dateA = a.startDate ? new Date(a.startDate) : new Date(0);
+                                        const dateB = b.startDate ? new Date(b.startDate) : new Date(0);
+                                        return dateB - dateA;
+                                    }),
+                                membershipPage
+                            ).map(item => (
                                 <tr key={item.userMembershipID || item.userMembershipId}>
                                     <td>{item.userMembershipID || item.userMembershipId}</td>
                                     <td>{item.fullName}</td>
@@ -297,7 +349,24 @@ const ManagementPackage = () => {
                         </tbody>
                     </Table>
                     <Pagination>
-                        {Array.from({ length: totalMembershipPages }, (_, i) => (
+                        {Array.from({
+                            length: Math.ceil(((membershipDateFrom || membershipDateTo)
+                                ? userMemberships.filter(item => {
+                                    let ok = true;
+                                    if (membershipDateFrom) {
+                                        const start = item.startDate ? new Date(item.startDate) : null;
+                                        const from = new Date(membershipDateFrom);
+                                        if (!start || start < from) ok = false;
+                                    }
+                                    if (membershipDateTo) {
+                                        const start = item.startDate ? new Date(item.startDate) : null;
+                                        const to = new Date(membershipDateTo);
+                                        to.setHours(23, 59, 59, 999);
+                                        if (!start || start > to) ok = false;
+                                    }
+                                    return ok;
+                                }).length : userMemberships.length) / pageSize)
+                        }, (_, i) => (
                             <Pagination.Item
                                 key={i + 1}
                                 active={membershipPage === i + 1}
@@ -312,21 +381,94 @@ const ManagementPackage = () => {
             {view === 'transactions' && (
                 <>
                     <h2 className="mt-5">Các giao dịch thanh toán</h2>
+                    <div className="mb-3 d-flex align-items-center gap-3 flex-wrap">
+                        <span>Lọc theo trạng thái:</span>
+                        <select className="form-select w-auto" value={txnStatusFilter} onChange={e => { setTxnStatusFilter(e.target.value); setTxnPage(1); }}>
+                            <option value="">Tất cả</option>
+                            <option value="Success">Thành công</option>
+                            <option value="Pending">Chờ xử lý</option>
+                            <option value="Failed">Thất bại</option>
+                        </select>
+                        <span className="ms-3">Từ ngày:</span>
+                        <input type="date" className="form-control w-auto" value={txnDateFrom} onChange={e => { setTxnDateFrom(e.target.value); setTxnPage(1); }} />
+                        <span>Đến ngày:</span>
+                        <input type="date" className="form-control w-auto" value={txnDateTo} onChange={e => { setTxnDateTo(e.target.value); setTxnPage(1); }} />
+                    </div>
                     <Table striped bordered hover responsive>
                         <thead>
                             <tr>
-                                <th>STT</th><th>Người dùng</th><th>Gói đã mua</th>
-                                <th>Số tiền</th><th>Thời gian</th><th>Trạng thái</th><th>Hành động</th>
+                                <th>STT</th>
+                                <th>Người dùng</th>
+                                <th>Email</th>
+                                <th>Gói đã mua</th>
+                                <th>Số tiền</th>
+                                <th>Phương thức</th>
+                                <th>Thời gian thanh toán</th>
+                                <th>Ngày hết hạn</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {paginate(transactions, txnPage).map((txn, idx) => (
-                                <tr key={txn.id || idx}>
+                            {paginate(
+                                ((txnStatusFilter || txnDateFrom || txnDateTo)
+                                    ? transactions.filter(txn => {
+                                        let ok = true;
+                                        if (txnStatusFilter) ok = ok && (txn.status || '').toLowerCase() === txnStatusFilter.toLowerCase();
+                                        if (txnDateFrom) {
+                                            const created = txn.createdAt ? new Date(txn.createdAt) : null;
+                                            const from = new Date(txnDateFrom);
+                                            if (!created || created < from) ok = false;
+                                        }
+                                        if (txnDateTo) {
+                                            const created = txn.createdAt ? new Date(txn.createdAt) : null;
+                                            const to = new Date(txnDateTo);
+                                            to.setHours(23, 59, 59, 999);
+                                            if (!created || created > to) ok = false;
+                                        }
+                                        return ok;
+                                    })
+                                    : transactions)
+                                    .slice() // clone array
+                                    .sort((a, b) => {
+                                        const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+                                        const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+                                        return dateB - dateA; // mới nhất lên đầu
+                                    }),
+                                txnPage
+                            ).map((txn, idx) => (
+                                <tr key={txn.paymentId || idx}>
                                     <td>{(txnPage - 1) * pageSize + idx + 1}</td>
-                                    <td>{txn.userName}</td><td>{txn.packageName}</td>
-                                    <td>{txn.amount}</td><td>{txn.time}</td><td>{txn.status}</td>
+                                    <td>{txn.userName}</td>
+                                    <td>{txn.email}</td>
+                                    <td>{txn.packageName}</td>
+                                    <td>{txn.amount?.toLocaleString?.('vi-VN') || txn.amount}</td>
+                                    <td>{txn.method}</td>
+                                    <td>{txn.createdAt ? new Date(txn.createdAt).toLocaleString('vi-VN') : ''}</td>
+                                    <td>{txn.endDate ? new Date(txn.endDate).toLocaleString('vi-VN') : ''}</td>
                                     <td>
-                                        <Button variant="info" size="sm" className="me-2">Xem</Button>
+                                        <span className={`badge bg-${txn.status === 'Success' ? 'success' : 'warning'}`}>{txn.status}</span>
+                                    </td>
+                                    <td>
+                                        <Button variant="info" size="sm" className="me-2" onClick={async () => {
+                                            setShowTxnDetail(true);
+                                            setTxnDetailLoading(true);
+                                            setTxnDetailUser(txn.userName);
+                                            try {
+                                                const token = localStorage.getItem('userToken');
+                                                const res = await fetch(`/api/admin/payments/by-user/${txn.userId || txn.userID || txn.user_id || ''}`, {
+                                                    headers: { 'Authorization': `Bearer ${token}` }
+                                                });
+                                                if (!res.ok) throw new Error('Không lấy được chi tiết giao dịch.');
+                                                const data = await res.json();
+                                                setTxnDetail(Array.isArray(data) ? data : []);
+                                            } catch (err) {
+                                                setTxnDetail([]);
+                                                toast.error(err.message);
+                                            } finally {
+                                                setTxnDetailLoading(false);
+                                            }
+                                        }}>Xem</Button>
                                         <Button variant="secondary" size="sm">Hoàn tiền</Button>
                                     </td>
                                 </tr>
@@ -334,7 +476,25 @@ const ManagementPackage = () => {
                         </tbody>
                     </Table>
                     <Pagination>
-                        {Array.from({ length: totalTxnPages }, (_, i) => (
+                        {Array.from({
+                            length: Math.ceil(((txnStatusFilter || txnDateFrom || txnDateTo)
+                                ? transactions.filter(txn => {
+                                    let ok = true;
+                                    if (txnStatusFilter) ok = ok && (txn.status || '').toLowerCase() === txnStatusFilter.toLowerCase();
+                                    if (txnDateFrom) {
+                                        const created = txn.createdAt ? new Date(txn.createdAt) : null;
+                                        const from = new Date(txnDateFrom);
+                                        if (!created || created < from) ok = false;
+                                    }
+                                    if (txnDateTo) {
+                                        const created = txn.createdAt ? new Date(txn.createdAt) : null;
+                                        const to = new Date(txnDateTo);
+                                        to.setHours(23, 59, 59, 999);
+                                        if (!created || created > to) ok = false;
+                                    }
+                                    return ok;
+                                }).length : transactions.length) / pageSize)
+                        }, (_, i) => (
                             <Pagination.Item
                                 key={i + 1}
                                 active={txnPage === i + 1}
@@ -344,6 +504,50 @@ const ManagementPackage = () => {
                     </Pagination>
                 </>
             )}
+
+            {/* Modal chi tiết giao dịch */}
+            <Modal show={showTxnDetail} onHide={() => setShowTxnDetail(false)} size="lg" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Chi tiết giao dịch của {txnDetailUser}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {txnDetailLoading ? (
+                        <div className="d-flex align-items-center gap-2"><Spinner animation="border" size="sm" /> Đang tải...</div>
+                    ) : txnDetail.length === 0 ? (
+                        <div>Không có giao dịch nào.</div>
+                    ) : (
+                        <Table striped bordered hover responsive>
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Gói đã mua</th>
+                                    <th>Số tiền</th>
+                                    <th>Phương thức</th>
+                                    <th>Thời gian thanh toán</th>
+                                    <th>Ngày hết hạn</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {txnDetail.map((item, idx) => (
+                                    <tr key={item.paymentId || idx}>
+                                        <td>{idx + 1}</td>
+                                        <td>{item.packageName}</td>
+                                        <td>{item.amount?.toLocaleString?.('vi-VN') || item.amount}</td>
+                                        <td>{item.method}</td>
+                                        <td>{item.createdAt ? new Date(item.createdAt).toLocaleString('vi-VN') : ''}</td>
+                                        <td>{item.endDate ? new Date(item.endDate).toLocaleString('vi-VN') : ''}</td>
+                                        <td><span className={`badge bg-${item.status === 'Success' ? 'success' : 'warning'}`}>{item.status}</span></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowTxnDetail(false)}>Đóng</Button>
+                </Modal.Footer>
+            </Modal>
 
             {/* Modal "Cấp gói" */}
             <Modal show={showAssignModal} onHide={handleCloseAssignModal} centered>

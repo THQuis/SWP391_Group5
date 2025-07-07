@@ -85,14 +85,14 @@ namespace Smoking.BLL.Services
             return null;
         }
 
-        // MỚI THÊM:
         public async Task DeleteUserByEmailAsync(string email)
         {
-            var user = await _unitOfWork.Users.GetByEmailAsync(email);
+            var user = await _unitOfWork.Users.FindFirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
-                throw new System.Exception("Không tìm thấy user với email này.");
+                throw new Exception("Không tìm thấy người dùng.");
 
-            _unitOfWork.Users.Remove(user);
+            user.Status = "Inactive";
+            _unitOfWork.Users.Update(user);
             await _unitOfWork.CompleteAsync();
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Smoking.BLL.Interfaces;
 using Smoking.BLL.Models;
 using Smoking.DAL.Entities;
@@ -143,5 +144,19 @@ namespace Smoking.BLL.Services
             var hashmessage = hmacsha256.ComputeHash(messageBytes);
             return BitConverter.ToString(hashmessage).Replace("-", "").ToLower();
         }
+        public async Task<IEnumerable<Payment>> GetPaymentsByFilterAsync(DateTime? fromDate, DateTime? toDate, string? status, int? userId)
+        {
+            return await _unitOfWork.Payments.FindAsync(
+                p =>
+                    (!fromDate.HasValue || p.PaymentDate >= fromDate.Value) &&
+                    (!toDate.HasValue || p.PaymentDate <= toDate.Value) &&
+                    (string.IsNullOrEmpty(status) || p.Status == status) &&
+                    (!userId.HasValue || p.UserID == userId),
+                q => q.Include(p => p.User)
+                      .Include(p => p.Package)
+                      .Include(p => p.UserMembership)
+            );
+        }
+
     }
 }

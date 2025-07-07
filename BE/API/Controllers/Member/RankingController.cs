@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Smoking.BLL.Interfaces;
 using Smoking.DAL.Interfaces.Repositories;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +8,6 @@ namespace Smoking.API.Controllers
 {
     [ApiController]
     [Route("api/ranking")]
-
     public class RankingController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -26,7 +24,9 @@ namespace Smoking.API.Controllers
             var progresses = await _unitOfWork.QuitProgresses.GetAllWithUserAsync();
 
             var ranked = progresses
-                .Where(p => p.QuitPlan != null && p.QuitPlan.User != null)
+                .Where(p => p.QuitPlan != null
+                            && p.QuitPlan.User != null
+                            && p.QuitPlan.User.Status == "Active")
                 .GroupBy(p => p.QuitPlan.UserID)
                 .Select(g => new
                 {
@@ -49,7 +49,9 @@ namespace Smoking.API.Controllers
             var progresses = await _unitOfWork.QuitProgresses.GetAllWithUserAsync();
 
             var ranked = progresses
-                .Where(p => p.QuitPlan != null && p.QuitPlan.User != null)
+                .Where(p => p.QuitPlan != null
+                            && p.QuitPlan.User != null
+                            && p.QuitPlan.User.Status == "Active")
                 .GroupBy(p => p.QuitPlan.UserID)
                 .Select(g =>
                 {
@@ -76,7 +78,9 @@ namespace Smoking.API.Controllers
             var progresses = await _unitOfWork.QuitProgresses.GetAllWithUserAsync();
 
             var ranked = progresses
-                .Where(p => p.QuitPlan != null && p.QuitPlan.User != null)
+                .Where(p => p.QuitPlan != null
+                            && p.QuitPlan.User != null
+                            && p.QuitPlan.User.Status == "Active")
                 .GroupBy(p => p.QuitPlan.UserID)
                 .Select(g =>
                 {
@@ -103,7 +107,10 @@ namespace Smoking.API.Controllers
             var achievements = await _unitOfWork.UserAchievements.GetAllWithUserAndAchievementAsync();
 
             var ranked = achievements
-                .Where(a => a.Achievement != null && a.Achievement.CigarettesDroppedRequired > 0 && a.User != null)
+                .Where(a => a.Achievement != null
+                            && a.Achievement.CigarettesDroppedRequired > 0
+                            && a.User != null
+                            && a.User.Status == "Active")
                 .GroupBy(a => a.UserID)
                 .Select(g => new
                 {
@@ -126,7 +133,9 @@ namespace Smoking.API.Controllers
             var challenges = await _unitOfWork.UserQuitChallenges.GetAllWithUserAsync();
 
             var ranked = challenges
-                .Where(c => c.IsCompleted && c.User != null)
+                .Where(c => c.IsCompleted
+                            && c.User != null
+                            && c.User.Status == "Active")
                 .GroupBy(c => c.UserId)
                 .Select(g => new
                 {

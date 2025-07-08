@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Modal, Container, Form, Button, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { Modal, Container, Form, Button, Card, Row, Col, Spinner, Badge } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/QuitPlanPage.scss";
 import { useNavigate } from "react-router-dom";
+import { FaSmokingBan, FaCoins, FaCalendarAlt, FaChartLine, FaHeart, FaTrophy, FaUsers, FaTrash, FaEdit, FaSave, FaClipboardList, FaQuestionCircle, FaInfoCircle, FaTimes, FaPlay, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 
 // PHẦN 1: Thói quen hiện tại
 const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
@@ -16,130 +17,195 @@ const QuitPlanHabitSection = ({ habitData, editable, onChange }) => {
     const data = habitData || { cigarettesPerDayAtStart: '', pricePerPackAtStart: '', cigarettesPerPack: '' };
 
     return (
-        <Card className="thq-card mb-4">
-            <Card.Header as="h5" className="thq-card__header">1. Thói quen hiện tại</Card.Header>
-            <Card.Body className="thq-card__body">
-                <Form.Group as={Row} className="thq-form__group mb-3">
-                    <Form.Label column sm={6} className="thq-form__label">Bạn hút bao nhiêu điếu mỗi ngày?</Form.Label>
-                    <Col sm={6}>
+        <div className="modern-section">
+            <div className="section-header">
+                <div className="section-icon">
+                    <FaSmokingBan />
+                </div>
+                <div className="section-title">
+                    <h3>Thói quen hiện tại của bạn</h3>
+                    <p>Hãy chia sẻ về thói quen hút thuốc hiện tại để chúng tôi tạo kế hoạch phù hợp</p>
+                </div>
+            </div>
+
+            <div className="form-grid">
+                <div className="input-group-modern">
+                    <label className="input-label">
+                        <FaChartLine className="label-icon" />
+                        Số điếu mỗi ngày
+                    </label>
+                    <div className="input-wrapper">
                         <Form.Control
-                            className="thq-form__control"
                             type="number"
                             name="cigarettesPerDayAtStart"
                             value={data.cigarettesPerDayAtStart}
                             onChange={onChange}
                             disabled={!editable}
                             min="0"
+                            placeholder="Ví dụ: 10"
+                            className="modern-input"
                         />
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="thq-form__group mb-3">
-                    <Form.Label column sm={6} className="thq-form__label">Một gói bạn hút có bao nhiêu điếu?</Form.Label>
-                    <Col sm={6}>
+                        <span className="input-unit">điếu/ngày</span>
+                    </div>
+                </div>
+
+                <div className="input-group-modern">
+                    <label className="input-label">
+                        <FaSmokingBan className="label-icon" />
+                        Số điếu trong 1 gói
+                    </label>
+                    <div className="input-wrapper">
                         <Form.Control
-                            className="thq-form__control"
                             type="number"
                             name="cigarettesPerPack"
                             value={data.cigarettesPerPack}
                             onChange={onChange}
                             disabled={!editable}
                             min="0"
+                            placeholder="Ví dụ: 20"
+                            className="modern-input"
                         />
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="thq-form__group mb-3">
-                    <Form.Label column sm={6} className="thq-form__label">Giá tiền một gói (VND)?</Form.Label>
-                    <Col sm={6}>
+                        <span className="input-unit">điếu/gói</span>
+                    </div>
+                </div>
+
+                <div className="input-group-modern">
+                    <label className="input-label">
+                        <FaCoins className="label-icon" />
+                        Giá tiền 1 gói
+                    </label>
+                    <div className="input-wrapper">
                         <Form.Control
-                            className="thq-form__control"
                             type="number"
                             name="pricePerPackAtStart"
                             value={data.pricePerPackAtStart}
                             onChange={onChange}
                             disabled={!editable}
                             min="0"
+                            placeholder="Ví dụ: 25000"
+                            className="modern-input"
                         />
-                    </Col>
-                </Form.Group>
-                {dailyCost > 0 && (
-                    <Alert variant="info" className="thq-alert mt-3">
-                        <p className="thq-alert__content mb-0 d-flex justify-content-between">
-                            <span>Chi phí mỗi ngày (ước tính):</span>
-                            <strong>{(dailyCost).toLocaleString("vi-VN")} VND</strong>
-                        </p>
-                    </Alert>
-                )}
-                {dailyCost > 0 && (
-                    <Alert variant="info" className="thq-alert mt-3">
-                        <p className="thq-alert__content mb-0 d-flex justify-content-between">
-                            <span>Chi phí mỗi Tuần (ước tính):</span>
-                            <strong>{(dailyCost * 7).toLocaleString("vi-VN")} VND</strong>
-                        </p>
-                    </Alert>
-                )}
-                {dailyCost > 0 && (
-                    <Alert variant="info" className="thq-alert mt-3">
-                        <p className="thq-alert__content mb-0 d-flex justify-content-between">
-                            <span>Chi phí mỗi tháng (ước tính):</span>
-                            <strong>{(dailyCost * 30).toLocaleString("vi-VN")} VND</strong>
-                        </p>
-                    </Alert>
-                )}
-            </Card.Body>
-        </Card>
+                        <span className="input-unit">VNĐ</span>
+                    </div>
+                </div>
+            </div>
+
+            {dailyCost > 0 && (
+                <div className="cost-summary">
+                    <h4 className="cost-title">
+                        <FaCoins className="me-2" />
+                        Chi phí ước tính
+                    </h4>
+                    <div className="cost-grid">
+                        <div className="cost-item daily">
+                            <div className="cost-period">Mỗi ngày</div>
+                            <div className="cost-amount">{dailyCost.toLocaleString("vi-VN")} ₫</div>
+                        </div>
+                        <div className="cost-item weekly">
+                            <div className="cost-period">Mỗi tuần</div>
+                            <div className="cost-amount">{(dailyCost * 7).toLocaleString("vi-VN")} ₫</div>
+                        </div>
+                        <div className="cost-item monthly">
+                            <div className="cost-period">Mỗi tháng</div>
+                            <div className="cost-amount">{(dailyCost * 30).toLocaleString("vi-VN")} ₫</div>
+                        </div>
+                        <div className="cost-item yearly">
+                            <div className="cost-period">Mỗi năm</div>
+                            <div className="cost-amount">{(dailyCost * 365).toLocaleString("vi-VN")} ₫</div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 };
 
 // PHẦN 2: Thiết lập mục tiêu
 const QuitPlanGoalSection = ({ formData, onChange, editable, showEndDate }) => (
-    <Card className="thq-card mb-4">
-        <Card.Header as="h5" className="thq-card__header">2. Thiết lập mục tiêu</Card.Header>
-        <Card.Body className="thq-card__body">
-            <Form.Group className="thq-form__group mb-3">
-                <Form.Label className="thq-form__label">Ngày bắt đầu cai thuốc (*)</Form.Label>
-                <Form.Control
-                    className="thq-form__control"
-                    type="date"
-                    name="startDate"
-                    value={formData.startDate || ''}
-                    onChange={onChange}
-                    disabled={!editable} // Chỉ vô hiệu hóa khi không thể chỉnh sửa
-                />
-            </Form.Group>
-            {!showEndDate && (
-                <Form.Group className="thq-form__group mb-3">
-                    <Form.Label className="thq-form__label">Thời gian cai thuốc (chọn số tháng)</Form.Label>
-                    <div>
-                        {[3, 6, 9, 12].map(months => (
-                            <Form.Check
-                                key={months}
-                                type="radio"
-                                name="targetDurationMonths"
-                                value={months}
-                                label={`${months} tháng`}
-                                checked={formData.targetDurationMonths === months}
-                                onChange={onChange} // Không phải handleStaticChange
-                                disabled={!editable}
-                                className="thq-form__check"
-                            />
+    <div className="modern-section">
+        <div className="section-header">
+            <div className="section-icon">
+                <FaCalendarAlt />
+            </div>
+            <div className="section-title">
+                <h3>Thiết lập mục tiêu</h3>
+                <p>Chọn thời gian bắt đầu và thời lượng cai thuốc phù hợp với bạn</p>
+            </div>
+        </div>
+
+        <div className="goal-form">
+            <div className="input-group-modern">
+                <label className="input-label required">
+                    <FaCalendarAlt className="label-icon" />
+                    Ngày bắt đầu cai thuốc
+                </label>
+                <div className="input-wrapper">
+                    <Form.Control
+                        type="date"
+                        name="startDate"
+                        value={formData.startDate || ''}
+                        onChange={onChange}
+                        disabled={!editable}
+                        className="modern-input"
+                    />
+                </div>
+            </div>
+
+            {!showEndDate ? (
+                <div className="duration-selector">
+                    <label className="input-label">
+                        <FaHeart className="label-icon" />
+                        Thời gian cai thuốc mục tiêu
+                    </label>
+                    <div className="duration-options">
+                        {[
+                            { value: 3, label: '3 tháng', desc: 'Thử thách ngắn hạn', color: 'primary' },
+                            { value: 6, label: '6 tháng', desc: 'Cân bằng và thực tế', color: 'success' },
+                            { value: 9, label: '9 tháng', desc: 'Thay đổi bền vững', color: 'warning' },
+                            { value: 12, label: '1 năm', desc: 'Mục tiêu dài hạn', color: 'danger' }
+                        ].map(option => (
+                            <div
+                                key={option.value}
+                                className={`duration-card ${formData.targetDurationMonths === option.value ? 'active' : ''}`}
+                                onClick={() => onChange({ target: { name: 'targetDurationMonths', value: option.value } })}
+                            >
+                                <div className="duration-main">{option.label}</div>
+                                <div className="duration-desc">{option.desc}</div>
+                                <Form.Check
+                                    type="radio"
+                                    name="targetDurationMonths"
+                                    value={option.value}
+                                    checked={formData.targetDurationMonths === option.value}
+                                    onChange={onChange}
+                                    disabled={!editable}
+                                    className="duration-radio"
+                                />
+                            </div>
                         ))}
                     </div>
-                </Form.Group>
+                </div>
+            ) : (
+                <div className="input-group-modern">
+                    <label className="input-label">
+                        <FaCalendarAlt className="label-icon" />
+                        Ngày kết thúc dự kiến
+                    </label>
+                    <div className="input-wrapper">
+                        <Form.Control
+                            type="date"
+                            name="endDate"
+                            value={formData.endDate || ''}
+                            disabled
+                            className="modern-input disabled"
+                        />
+                        <Badge className="end-date-badge">
+                            Tự động tính toán
+                        </Badge>
+                    </div>
+                </div>
             )}
-            {showEndDate && (
-                <Form.Group className="thq-form__group mb-3">
-                    <Form.Label className="thq-form__label">Ngày kết thúc cai thuốc</Form.Label>
-                    <Form.Control
-                        className="thq-form__control"
-                        type="date"
-                        name="endDate"
-                        value={formData.endDate || ''}
-                        disabled // Không thể chỉnh sửa
-                    />
-                </Form.Group>
-            )}
-        </Card.Body>
-    </Card>
+        </div>
+    </div>
 );
 // PHẦN 3: Khảo sát
 const QuitPlanSurveySection = ({
@@ -153,46 +219,76 @@ const QuitPlanSurveySection = ({
     const mapQuestionTypeToInputType = (type) => type === "SingleChoice" ? "radio" : "checkbox";
 
     return (
-        <Card className="thq-card mb-4">
-            <Card.Header as="h5" className="thq-card__header">3. Tìm hiểu về bạn</Card.Header>
+        <Card className="thq-card thq-survey-card mb-4">
+            <Card.Header className="thq-card__header">
+                <div className="d-flex align-items-center">
+                    <FaClipboardList className="me-2" />
+                    <div>
+                        <h4 className="mb-0">Tìm hiểu về bạn</h4>
+                        <p className="mb-0 mt-1 opacity-75">Giúp chúng tôi tạo kế hoạch phù hợp nhất</p>
+                    </div>
+                </div>
+            </Card.Header>
             <Card.Body className="thq-card__body">
                 <fieldset disabled={!editable}>
-                    {surveyQuestions.length > 0 ? surveyQuestions.map(q => {
-                        const otherOption = q.answerOptions.find(opt => opt.answerText.toLowerCase().includes('khác'));
-                        const isOtherSelected = otherOption && (dynamicAnswers[q.questionID] || []).includes(otherOption.answerOptionID);
-                        return (
-                            <Form.Group key={q.questionID} className="thq-form__group mb-4">
-                                <Form.Label as="legend" className="fw-bold thq-form__label">{q.questionText}</Form.Label>
-                                {q.answerOptions.map(opt => {
-                                    const isThisTheOtherOption = opt.answerText.toLowerCase().includes('khác');
-                                    return (
-                                        <div key={opt.answerOptionID}>
-                                            <Form.Check
-                                                className="thq-form__check"
-                                                type={mapQuestionTypeToInputType(q.questionType)}
-                                                id={`q-${q.questionID}-a-${opt.answerOptionID}`}
-                                                label={opt.answerText}
-                                                name={`question-${q.questionID}`}
-                                                value={opt.answerOptionID}
-                                                checked={(dynamicAnswers[q.questionID] || []).includes(opt.answerOptionID)}
-                                                onChange={(e) => onDynamicChange(e, q.questionID, q.questionType, opt.answerText)}
-                                            />
-                                            {isThisTheOtherOption && isOtherSelected && (
-                                                <Form.Control
-                                                    className="thq-form__control mt-2 ms-4"
-                                                    type="text"
-                                                    placeholder="Vui lòng ghi rõ..."
-                                                    style={{ maxWidth: "90%" }}
-                                                    value={otherTexts[q.questionID] || ""}
-                                                    onChange={(e) => onOtherTextChange(q.questionID, e.target.value)}
-                                                />
-                                            )}
+                    {surveyQuestions.length > 0 ? (
+                        <Row>
+                            {surveyQuestions.map((q, index) => {
+                                const otherOption = q.answerOptions.find(opt => opt.answerText.toLowerCase().includes('khác'));
+                                const isOtherSelected = otherOption && (dynamicAnswers[q.questionID] || []).includes(otherOption.answerOptionID);
+
+                                return (
+                                    <Col key={q.questionID} md={6} className="mb-4">
+                                        <div className="thq-question-card">
+                                            <Form.Group className="thq-form__group">
+                                                <Form.Label as="legend" className="thq-form__label d-flex align-items-start">
+                                                    <FaQuestionCircle className="me-2 mt-1 text-primary flex-shrink-0" />
+                                                    <span>{q.questionText}</span>
+                                                </Form.Label>
+                                                <div className="thq-options-container">
+                                                    {q.answerOptions.map(opt => {
+                                                        const isThisTheOtherOption = opt.answerText.toLowerCase().includes('khác');
+                                                        const isChecked = (dynamicAnswers[q.questionID] || []).includes(opt.answerOptionID);
+
+                                                        return (
+                                                            <div key={opt.answerOptionID} className="thq-option-item">
+                                                                <Form.Check
+                                                                    className="thq-form__check"
+                                                                    type={mapQuestionTypeToInputType(q.questionType)}
+                                                                    id={`q-${q.questionID}-a-${opt.answerOptionID}`}
+                                                                    label={opt.answerText}
+                                                                    name={`question-${q.questionID}`}
+                                                                    value={opt.answerOptionID}
+                                                                    checked={isChecked}
+                                                                    onChange={(e) => onDynamicChange(e, q.questionID, q.questionType, opt.answerText)}
+                                                                />
+                                                                {isThisTheOtherOption && isOtherSelected && (
+                                                                    <div className="thq-other-input-wrapper mt-2">
+                                                                        <Form.Control
+                                                                            className="thq-form__control thq-other-input"
+                                                                            type="text"
+                                                                            placeholder="Vui lòng ghi rõ..."
+                                                                            value={otherTexts[q.questionID] || ""}
+                                                                            onChange={(e) => onOtherTextChange(q.questionID, e.target.value)}
+                                                                        />
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </Form.Group>
                                         </div>
-                                    );
-                                })}
-                            </Form.Group>
-                        );
-                    }) : <p className="text-muted">Không có dữ liệu khảo sát.</p>}
+                                    </Col>
+                                );
+                            })}
+                        </Row>
+                    ) : (
+                        <div className="text-center py-5">
+                            <FaInfoCircle className="text-muted mb-3" size={48} />
+                            <p className="text-muted fs-5">Không có dữ liệu khảo sát.</p>
+                        </div>
+                    )}
                 </fieldset>
             </Card.Body>
         </Card>
@@ -218,7 +314,7 @@ const QuitPlanPage = () => {
     const userId = localStorage.getItem("userId");
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-    const loadInitialData = async () => {
+    const loadInitialData = useCallback(async () => {
         setIsLoading(true);
         const token = "Bearer " + localStorage.getItem("userToken");
         const defaultHabitData = { cigarettesPerDayAtStart: '', pricePerPackAtStart: '', cigarettesPerPack: '' };
@@ -270,7 +366,7 @@ const QuitPlanPage = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [userId]);
 
     useEffect(() => {
         if (userId) loadInitialData();
@@ -278,7 +374,12 @@ const QuitPlanPage = () => {
             setIsLoading(false);
             toast.error("Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.");
         }
-    }, [userId]);
+    }, [userId, loadInitialData]);
+
+    // Auto scroll to top when page loads
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
 
     const handleHabitChange = (e) => {
         const { name, value } = e.target;
@@ -376,8 +477,8 @@ const QuitPlanPage = () => {
                 const surveyPayload = [];
                 Object.entries(formData.dynamicAnswers).forEach(([qId, aIds]) => {
                     aIds.forEach(aId => {
-                        const q = surveyQuestions.find(i => i.questionID == qId);
-                        const a = q?.answerOptions.find(o => o.answerOptionID == aId);
+                        const q = surveyQuestions.find(i => i.questionID === qId);
+                        const a = q?.answerOptions.find(o => o.answerOptionID === aId);
                         surveyPayload.push({
                             questionID: parseInt(qId, 10),
                             answerOptionID: aId,
@@ -413,8 +514,8 @@ const QuitPlanPage = () => {
 
                 const updateSurveyPayload = [];
                 Object.entries(formData.dynamicAnswers).forEach(([qId, aIds]) => aIds.forEach(aId => {
-                    const q = surveyQuestions.find(i => i.questionID == qId);
-                    const a = q?.answerOptions.find(o => o.answerOptionID == aId);
+                    const q = surveyQuestions.find(i => i.questionID === qId);
+                    const a = q?.answerOptions.find(o => o.answerOptionID === aId);
                     updateSurveyPayload.push({
                         questionID: parseInt(qId),
                         answerOptionID: aId,
@@ -478,13 +579,57 @@ const QuitPlanPage = () => {
         <div className="thq-quit-plan">
             <Container>
                 <Row className="justify-content-center">
-                    <Col md={10} lg={8}>
-                        <div className="thq-header text-center mb-4 pt-4">
+                    <Col md={11} lg={10} xl={9}>
+                        {/* Modern Header */}
+                        <div className="thq-header text-center mb-5 pt-4">
+                            <div className="thq-header-icon mb-3">
+                                <FaSmokingBan size={48} className="text-primary" />
+                            </div>
                             <h1 className="thq-header__title">Lập kế hoạch cai thuốc</h1>
-                            <p className="thq-header__subtitle">Trả lời các câu hỏi sau để nhận một lộ trình được cá nhân hóa.</p>
+                            <p className="thq-header__subtitle">
+                                Trả lời các câu hỏi dưới đây để nhận được lộ trình cai thuốc được cá nhân hóa và phù hợp nhất với bạn
+                            </p>
+                            {planCreated && (
+                                <div className="thq-status-badge">
+                                    <Badge bg="success" className="px-3 py-2 fs-6">
+                                        <FaCheckCircle className="me-2" />
+                                        Kế hoạch đã được tạo
+                                    </Badge>
+                                </div>
+                            )}
                         </div>
 
                         <Form onSubmit={handleCreateOrUpdate} className="thq-form">
+                            {/* Progress Steps */}
+                            <div className="thq-progress-steps mb-4">
+                                <div className="row">
+                                    <div className="col-4">
+                                        <div className="thq-step active">
+                                            <div className="thq-step-icon">
+                                                <FaSmokingBan />
+                                            </div>
+                                            <div className="thq-step-title">Thói quen hiện tại</div>
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <div className="thq-step active">
+                                            <div className="thq-step-icon">
+                                                <FaCalendarAlt />
+                                            </div>
+                                            <div className="thq-step-title">Mục tiêu</div>
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <div className="thq-step active">
+                                            <div className="thq-step-icon">
+                                                <FaClipboardList />
+                                            </div>
+                                            <div className="thq-step-title">Khảo sát</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <QuitPlanHabitSection
                                 habitData={habitData}
                                 onChange={handleHabitChange}
@@ -494,7 +639,7 @@ const QuitPlanPage = () => {
                                 formData={formData}
                                 onChange={handleStaticChange}
                                 editable={!planCreated}
-                                showEndDate={planCreated} // Show endDate if the plan is created
+                                showEndDate={planCreated}
                             />
                             <QuitPlanSurveySection
                                 surveyQuestions={surveyQuestions}
@@ -505,66 +650,98 @@ const QuitPlanPage = () => {
                                 editable={editMode || !planCreated}
                             />
 
-                            <div className="thq-form__button-wrapper d-grid mb-3">
-                                <Button
-                                    className={`thq-button ${planCreated
-                                        ? (editMode ? "thq-button--success" : "thq-button--primary")
-                                        : "thq-button--success"
-                                        }`}
-                                    size="lg"
-                                    type={planCreated && !editMode ? "button" : "submit"}
-                                    onClick={planCreated && !editMode ? (e) => { e.preventDefault(); setEditMode(true); } : undefined}
-                                    disabled={isSubmitting || isLoading}
-                                >
-                                    {isSubmitting ? <Spinner as="span" animation="border" size="sm" className="thq-spinner" /> :
-                                        (planCreated ? (editMode ? "Lưu thay đổi" : "Chỉnh sửa kế hoạch") : "Hoàn thành và Tạo kế hoạch")
-                                    }
-                                </Button>
+                            {/* Action Buttons */}
+                            <div className="thq-actions-section">
+                                <div className="thq-form__button-wrapper d-grid mb-4">
+                                    <Button
+                                        className={`thq-button ${planCreated
+                                            ? (editMode ? "thq-button--success" : "thq-button--primary")
+                                            : "thq-button--success"
+                                            }`}
+                                        size="lg"
+                                        type={planCreated && !editMode ? "button" : "submit"}
+                                        onClick={planCreated && !editMode ? (e) => { e.preventDefault(); setEditMode(true); } : undefined}
+                                        disabled={isSubmitting || isLoading}
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <Spinner as="span" animation="border" size="sm" className="thq-spinner me-2" />
+                                                Đang xử lý...
+                                            </>
+                                        ) : (
+                                            <>
+                                                {planCreated ? (
+                                                    editMode ? (
+                                                        <>
+                                                            <FaSave className="me-2" />
+                                                            Lưu thay đổi
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <FaEdit className="me-2" />
+                                                            Chỉnh sửa kế hoạch
+                                                        </>
+                                                    )
+                                                ) : (
+                                                    <>
+                                                        <FaPlay className="me-2" />
+                                                        Hoàn thành và Tạo kế hoạch
+                                                    </>
+                                                )}
+                                            </>
+                                        )}
+                                    </Button>
+                                </div>
+
                                 {planCreated && !editMode && (
-                                    <div className="d-flex flex-column gap-3 mt-3">
-                                        <Button
-                                            variant="warning"
-                                            size="lg"
-                                            className="thq-challenge-btn modern-glass"
-                                            onClick={() => navigate("/User/Challenges")}
-                                            style={{
-                                                background: "linear-gradient(90deg, #ffb347 0%, #ffcc33 100%)",
-                                                color: "#333", fontWeight: 600,
-                                                border: "none",
-                                                boxShadow: "0 4px 12px rgba(255, 204, 51, .12)",
-                                                letterSpacing: ".02em"
-                                            }}
-                                        >
-                                            🚩 Thử thách bản thân!
-                                        </Button>
-                                        <Button
-                                            variant="success"
-                                            size="lg"
-                                            className="thq-coach-btn"
-                                            style={{
-                                                background: "linear-gradient(90deg, #3CA55C 0%, #B5AC49 100%)",
-                                                color: "#fff", fontWeight: 600,
-                                                border: "none",
-                                                boxShadow: "0 4px 12px rgba(60, 165, 92, .12)",
-                                                letterSpacing: ".02em"
-                                            }}
-                                            onClick={() => navigate("/User/coachList")}
-                                        >
-                                            🧑‍🏫 Chọn Coach hỗ trợ
-                                        </Button>
-                                        <Button
-                                            variant="danger"
-                                            size="lg"
-                                            className="thq-delete-btn"
-                                            onClick={() => setShowDeleteConfirm(true)}
-                                            disabled={isSubmitting || isLoading}
-                                            style={{
-                                                fontWeight: 600,
-                                                letterSpacing: ".02em"
-                                            }}
-                                        >
-                                            🗑️ Xóa kế hoạch
-                                        </Button>
+                                    <div className="thq-quick-actions">
+                                        <h5 className="text-center mb-4 text-muted">Tiếp tục hành trình của bạn</h5>
+                                        <Row className="g-3">
+                                            <Col md={6}>
+                                                <Button
+                                                    variant="warning"
+                                                    size="lg"
+                                                    className="thq-quick-action-btn w-100"
+                                                    onClick={() => navigate("/User/Challenges")}
+                                                >
+                                                    <div className="d-flex align-items-center justify-content-center">
+                                                        <FaTrophy className="me-2" size={20} />
+                                                        <div>
+                                                            <div className="fw-bold">Thử thách</div>
+                                                            <small>Thử thách bản thân</small>
+                                                        </div>
+                                                    </div>
+                                                </Button>
+                                            </Col>
+                                            <Col md={6}>
+                                                <Button
+                                                    variant="success"
+                                                    size="lg"
+                                                    className="thq-quick-action-btn w-100"
+                                                    onClick={() => navigate("/User/coachList")}
+                                                >
+                                                    <div className="d-flex align-items-center justify-content-center">
+                                                        <FaUsers className="me-2" size={20} />
+                                                        <div>
+                                                            <div className="fw-bold">Coach</div>
+                                                            <small>Chọn huấn luyện viên</small>
+                                                        </div>
+                                                    </div>
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                        <div className="text-center mt-4">
+                                            <Button
+                                                variant="outline-danger"
+                                                size="sm"
+                                                className="thq-delete-btn"
+                                                onClick={() => setShowDeleteConfirm(true)}
+                                                disabled={isSubmitting || isLoading}
+                                            >
+                                                <FaTrash className="me-2" />
+                                                Xóa kế hoạch
+                                            </Button>
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -576,16 +753,34 @@ const QuitPlanPage = () => {
                 show={showDeleteConfirm}
                 onHide={() => setShowDeleteConfirm(false)}
                 centered
+                className="thq-delete-modal"
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>Xác nhận xóa</Modal.Title>
+                <Modal.Header closeButton className="border-0 pb-0">
+                    <Modal.Title className="d-flex align-items-center text-danger">
+                        <FaTrash className="me-2" />
+                        Xác nhận xóa kế hoạch
+                    </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    Bạn có chắc muốn xóa toàn bộ kế hoạch và tiến trình không?
+                <Modal.Body className="py-4">
+                    <div className="text-center">
+                        <div className="mb-3">
+                            <FaExclamationTriangle size={48} className="text-warning" />
+                        </div>
+                        <h5 className="mb-3">Bạn có chắc chắn muốn xóa?</h5>
+                        <p className="text-muted mb-0">
+                            Hành động này sẽ xóa toàn bộ kế hoạch cai thuốc và tiến trình của bạn.
+                            Dữ liệu này không thể khôi phục được.
+                        </p>
+                    </div>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteConfirm(false)}>
-                        Hủy
+                <Modal.Footer className="border-0 pt-0">
+                    <Button
+                        variant="outline-secondary"
+                        onClick={() => setShowDeleteConfirm(false)}
+                        className="px-4"
+                    >
+                        <FaTimes className="me-2" />
+                        Hủy bỏ
                     </Button>
                     <Button
                         variant="danger"
@@ -593,8 +788,10 @@ const QuitPlanPage = () => {
                             setShowDeleteConfirm(false);
                             await handleDeletePlan();
                         }}
+                        className="px-4"
                     >
-                        Xóa
+                        <FaTrash className="me-2" />
+                        Xóa vĩnh viễn
                     </Button>
                 </Modal.Footer>
             </Modal>

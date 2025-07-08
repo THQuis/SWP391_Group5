@@ -1,14 +1,84 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../styles/BlogPage.scss";
-import { Container, Row, Col, Form, Button, Card, Modal, InputGroup, Dropdown, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Card, Modal, Dropdown, Spinner } from "react-bootstrap";
 import {
-    FaUserCircle, FaPlus, FaHeart, FaRegHeart, FaEllipsisV,
-    FaEdit, FaTrash, FaFlag,
+    FaPlus, FaHeart, FaRegHeart, FaEllipsisV,
+    FaEdit, FaTrash, FaFlag, FaSearch
 } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
 // Lấy user từ localStorage hoặc bạn tuỳ chỉnh lại tuỳ hệ thống login
 const CURRENT_USER = localStorage.getItem("userName") || "Tài khoản của bạn";
+const USER_AVATAR = localStorage.getItem("profilePicture") || null;
+
+// Component Avatar
+const Avatar = ({ src, name, avatarUrl, size = 40, className = "" }) => {
+    const getInitials = (name) => {
+        if (!name) return "U";
+        const names = name.split(" ");
+        if (names.length >= 2) {
+            return (names[0][0] + names[names.length - 1][0]).toUpperCase();
+        }
+        return name[0].toUpperCase();
+    };
+
+    // Generate avatar từ DiceBear API
+    const generateAvatar = (name) => {
+        if (!name) return null;
+        return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}&backgroundColor=52c41a`;
+    };
+
+    // Ưu tiên: avatarUrl từ BE > src prop > generated avatar > fallback
+    // Kiểm tra nếu avatar null, undefined, hoặc empty string
+    const hasValidAvatar = avatarUrl && avatarUrl.trim() !== "";
+    const hasValidSrc = src && src.trim() !== "";
+    const avatarSrc = hasValidAvatar ? avatarUrl : (hasValidSrc ? src : generateAvatar(name));
+
+    const [imageError, setImageError] = React.useState(false);
+
+    const handleImageError = () => {
+        setImageError(true);
+    };
+
+    if (avatarSrc && !imageError) {
+        return (
+            <img
+                src={avatarSrc}
+                alt={name}
+                className={`avatar-image ${className}`}
+                style={{
+                    width: size,
+                    height: size,
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    border: "2px solid #52c41a"
+                }}
+                onError={handleImageError}
+            />
+        );
+    }
+
+    return (
+        <div
+            className={`avatar-placeholder ${className}`}
+            style={{
+                width: size,
+                height: size,
+                borderRadius: "50%",
+                backgroundColor: "#52c41a",
+                color: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: "600",
+                fontSize: size > 50 ? "1.5rem" : "1rem",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
+            }}
+        >
+            {getInitials(name)}
+        </div>
+    );
+};
 
 function UserBlog() {
     const [blogs, setBlogs] = useState([]);
@@ -16,21 +86,22 @@ function UserBlog() {
     const [showEdit, setShowEdit] = useState(false);
     const [editingBlog, setEditingBlog] = useState(null);
     const [editContent, setEditContent] = useState("");
-    const [editImage, setEditImage] = useState("");
     const [editImagePreview, setEditImagePreview] = useState("");
     const [search, setSearch] = useState("");
     const [showCreate, setShowCreate] = useState(false);
     const [newTitle, setNewTitle] = useState(""); // Thêm trường tiêu đề
     const [newContent, setNewContent] = useState("");
-    const [newImage, setNewImage] = useState("");
     const [newImagePreview, setNewImagePreview] = useState("");
-    const [reportingBlog, setReportingBlog] = useState(null);
     const [showReportModal, setShowReportModal] = useState(false);
     const [reportReason, setReportReason] = useState("");
     const fileInputRef = useRef();
     const fileEditInputRef = useRef();
 
     // Gọi API lấy danh sách blog (sử dụng Bearer token nếu cần)
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
+
     useEffect(() => {
         const fetchBlogs = async () => {
             setIsLoading(true);
@@ -78,7 +149,6 @@ function UserBlog() {
     const handleShowEdit = (blog) => {
         setEditingBlog(blog);
         setEditContent(blog.content || "");
-        setEditImage(blog.imageUrl || "");
         setEditImagePreview(blog.imageUrl || "");
         setShowEdit(true);
     };
@@ -126,7 +196,6 @@ function UserBlog() {
         setShowCreate(true);
         setNewTitle("");
         setNewContent("");
-        setNewImage("");
         setNewImagePreview("");
     };
 
@@ -195,13 +264,6 @@ function UserBlog() {
         reader.readAsDataURL(file);
     };
 
-    // Báo cáo bài viết
-    const handleReport = (blog) => {
-        setReportingBlog(blog);
-        setShowReportModal(true);
-        setReportReason("");
-    };
-
     // Nhận blog làm tham số
     const handleSendReport = async (blog) => {
         if (!blog || !blog.blogId) {
@@ -231,350 +293,369 @@ function UserBlog() {
         }
     };
     return (
-        <div className="user-blog-bg">
-            <Container style={{ minHeight: 700 }} className="py-3">
-                <ToastContainer position="top-right" />
-                {/* Thanh tìm kiếm */}
-                <Row className="mb-3">
-                    <Col md={12} className="d-flex align-items-center">
-                        <InputGroup>
-                            <InputGroup.Text>
-                                <i className="bi bi-search"></i>
-                            </InputGroup.Text>
-                            <Form.Control
-                                placeholder="Tìm kiếm bài viết..."
-                                onChange={(e) => setSearch(e.target.value)}
-                                style={{ background: "#eef6f7" }}
-                            />
-                        </InputGroup>
-                    </Col>
-                </Row>
-                {/* Button tạo bài viết mới */}
-                <Row className="mb-3">
-                    <Col md={12} className="d-flex align-items-center gap-2">
-                        <FaUserCircle size={36} color="#8aa" />
-                        <Button
-                            variant="info"
-                            style={{
-                                background: "#c9e4ea",
-                                color: "#3a4e5c",
-                                border: "none",
-                                borderRadius: 15,
-                                fontWeight: 500,
-                                fontSize: 18,
-                            }}
-                            className="py-2 px-4"
-                            onClick={handleShowCreate}
-                        >
-                            Hãy cùng chia sẻ nào!! <FaPlus className="ms-2" />
-                        </Button>
-                    </Col>
-                </Row>
-                {/* Danh sách bài viết */}
-                <Row>
-                    <Col>
-                        {isLoading ? (
-                            <div className="text-center py-5">
-                                <Spinner animation="border" />
-                            </div>
-                        ) : filteredBlogs.length === 0 ? (
-                            <div className="text-center py-5 text-muted">
-                                Không tìm thấy bài viết nào.
-                            </div>
-                        ) : (
-                            filteredBlogs.map((blog) => (
-                                <Card
-                                    key={blog.blogId}
-                                    className="mb-4"
-                                    style={{
-                                        background: "#f5f2f2",
-                                        border: "none",
-                                        borderRadius: 15,
-                                        boxShadow: "0 2px 8px #e3e3e3",
-                                        maxWidth: 550,
-                                        margin: "0 auto",
-                                    }}
-                                >
-                                    <Card.Body style={{ paddingBottom: 10 }}>
-                                        <div className="d-flex align-items-center mb-2">
-                                            <FaUserCircle size={30} color="#888" />
-                                            <span style={{ fontWeight: 700, marginLeft: 8 }}>
-                                                {blog.authorName}
-                                            </span>
-                                            <span style={{ color: "#888", marginLeft: 14, fontSize: 15 }}>
-                                                {blog.createdDate?.slice(0, 10)}
-                                            </span>
-                                            {/* Menu chỉnh sửa bên phải nếu là bài của mình */}
-                                            {blog.authorName === CURRENT_USER && (
-                                                <Dropdown align="end" className="ms-auto">
-                                                    <Dropdown.Toggle
-                                                        as="button"
-                                                        style={{
-                                                            background: "transparent",
-                                                            border: "none",
-                                                            color: "#333",
-                                                            fontSize: 22,
-                                                            lineHeight: 1,
-                                                            padding: 0,
-                                                            marginLeft: 8,
-                                                        }}
-                                                        aria-label="Hành động"
-                                                    >
-                                                        <FaEllipsisV />
-                                                    </Dropdown.Toggle>
-                                                    <Dropdown.Menu>
-                                                        <Dropdown.Item onClick={() => handleShowEdit(blog)}>
-                                                            <FaEdit className="me-2" />
-                                                            Chỉnh sửa
-                                                        </Dropdown.Item>
-                                                        <Dropdown.Item
-                                                            onClick={() => handleDeleteBlog(blog.blogId)}
-                                                            className="text-danger"
-                                                        >
-                                                            <FaTrash className="me-2" />
-                                                            Xóa
-                                                        </Dropdown.Item>
-                                                    </Dropdown.Menu>
-                                                </Dropdown>
-                                            )}
-                                        </div>
-                                        <div style={{ color: "#444", marginBottom: 5, fontSize: 17 }}>
-                                            <strong>{blog.title}</strong>
-                                        </div>
-                                        <div style={{ color: "#444", marginBottom: 5, fontSize: 17 }}>
-                                            {blog.content}
-                                        </div>
-                                        {blog.imageUrl && (
-                                            <div className="mb-2 text-center">
-                                                <img
-                                                    src={blog.imageUrl}
-                                                    alt="blog"
-                                                    style={{
-                                                        maxHeight: 230,
-                                                        maxWidth: "100%",
-                                                        borderRadius: 10,
-                                                        margin: "0 auto",
-                                                        display: "block",
-                                                        background: "#fff",
-                                                    }}
-                                                />
-                                            </div>
-                                        )}
-                                        <div className="small text-muted mb-2">
-                                            {/* {blog.categoryName && <>Chuyên mục: <b>{blog.categoryName}</b> | </>}
-                                            {blog.blogType && <>{blog.blogType}</>} */}
-                                        </div>
-                                    </Card.Body>
-                                    {/* Footer: Like và Báo cáo nằm cùng hàng */}
-                                    <Card.Footer
-                                        style={{
-                                            background: "transparent",
-                                            border: "none",
-                                            paddingBottom: 12,
-                                            paddingTop: 2,
-                                        }}
-                                    >
-                                        <div className="d-flex align-items-center gap-3 justify-content-between">
-                                            {/* Like/Unlike */}
-                                            <div className="d-flex align-items-center gap-2">
-                                                <Button
-                                                    variant="link"
-                                                    className="p-0 d-flex align-items-center"
-                                                    style={{ color: blog.liked ? "#e25565" : "#666" }}
-                                                    onClick={() => handleToggleLike(blog.blogId)}
-                                                >
-                                                    {blog.liked ? (
-                                                        <FaHeart size={22} />
-                                                    ) : (
-                                                        <FaRegHeart size={22} />
-                                                    )}
-                                                </Button>
-                                                <span style={{ fontSize: 16, color: "#666" }}>
-                                                    {(blog.likes || 0)} lượt
-                                                </span>
-                                            </div>
-                                            {/* Báo cáo */}
-                                            {blog.authorName !== CURRENT_USER ? (
-                                                <span
-                                                    style={{
-                                                        color: blog.reported ? "#e25565" : "#555",
-                                                        fontStyle: "italic",
-                                                        fontSize: 15,
-                                                        cursor: blog.reported ? "not-allowed" : "pointer",
-                                                    }}
-                                                    onClick={
-                                                        blog.reported
-                                                            ? undefined
-                                                            : () => handleSendReport(blog) // gọi trực tiếp, không show modal nữa
-                                                    }
-                                                >
-                                                    <FaFlag className="me-1" />
-                                                    {blog.reported ? "Đã báo cáo" : "Báo cáo"}
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    style={{
-                                                        color: "#999",
-                                                        fontStyle: "italic",
-                                                        fontSize: 15,
-                                                        pointerEvents: "none",
-                                                    }}
-                                                >
-                                                    Báo cáo
-                                                </span>
-                                            )}
-                                        </div>
-                                    </Card.Footer>
-                                </Card>
-                            ))
-                        )}
-                    </Col>
-                </Row>
+        <div className="blog-quit-style">
+            <ToastContainer position="top-right" />
 
-                {/* Modal chỉnh sửa bài viết */}
-                <Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Chỉnh sửa bài viết</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group>
-                                <Form.Label>Nội dung</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    rows={4}
-                                    value={editContent}
-                                    onChange={(e) => setEditContent(e.target.value)}
+            {/* Header Section */}
+            <div className="blog-header-section">
+                <Container>
+                    <div className="header-content">
+                        <div className="title-section">
+                            <h1 className="main-title">
+                                <Avatar
+                                    src={USER_AVATAR}
+                                    name={CURRENT_USER}
+                                    size={32}
+                                    className="me-3"
                                 />
-                            </Form.Group>
-                            <Form.Group className="mt-2">
-                                <Form.Label>Hình ảnh</Form.Label>
-                                <Form.Control
-                                    type="file"
-                                    accept="image/*"
-                                    ref={fileEditInputRef}
-                                    onChange={(e) =>
-                                        handleFileChange(e, setEditImage, setEditImagePreview)
-                                    }
-                                />
-                                {editImagePreview && (
-                                    <img
-                                        src={editImagePreview}
-                                        alt="preview"
-                                        style={{ maxWidth: "100%", marginTop: 10, borderRadius: 8 }}
-                                    />
-                                )}
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowEdit(false)}>
-                            Hủy
-                        </Button>
-                        <Button variant="primary" onClick={handleSaveEdit}>
-                            Lưu
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                                Cộng Đồng Chia Sẻ
+                            </h1>
+                            <p className="subtitle">Chia sẻ hành trình cai thuốc lá của bạn với cộng đồng</p>
+                        </div>
 
-                {/* Modal tạo bài viết mới */}
-                <Modal show={showCreate} onHide={() => setShowCreate(false)} centered>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Chia sẻ bài viết mới</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group>
-                                <Form.Label>Tiêu đề</Form.Label>
+                        {/* Search and Create */}
+                        <div className="action-section">
+                            <div className="search-container">
+                                <FaSearch className="search-icon" />
                                 <Form.Control
                                     type="text"
-                                    value={newTitle}
-                                    onChange={(e) => setNewTitle(e.target.value)}
-                                    placeholder="Nhập tiêu đề bài viết"
+                                    placeholder="Tìm kiếm bài viết..."
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    className="search-input"
                                 />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Nội dung</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    rows={3}
-                                    value={newContent}
-                                    onChange={(e) => setNewContent(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mt-2">
-                                <Form.Label>Hình ảnh</Form.Label>
-                                <Form.Control
-                                    type="file"
-                                    accept="image/*"
-                                    ref={fileInputRef}
-                                    onChange={(e) =>
-                                        handleFileChange(e, setNewImage, setNewImagePreview)
-                                    }
-                                />
-                                {newImagePreview && (
-                                    <img
-                                        src={newImagePreview}
-                                        alt="preview"
-                                        style={{ maxWidth: "100%", marginTop: 10, borderRadius: 8 }}
-                                    />
-                                )}
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowCreate(false)}>
-                            Hủy
-                        </Button>
-                        <Button
-                            variant="success"
-                            onClick={handleSaveCreate}
-                            disabled={!newTitle.trim() || !newContent.trim()}
-                        >
-                            Đăng bài
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                            </div>
+                            <Button
+                                className="create-btn"
+                                onClick={handleShowCreate}
+                            >
+                                <FaPlus className="me-2" />
+                                Chia sẻ câu chuyện
+                            </Button>
+                        </div>
+                    </div>
+                </Container>
+            </div>
 
-                {/* Modal báo cáo */}
-                <Modal
-                    show={showReportModal}
-                    onHide={() => setShowReportModal(false)}
-                    centered
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Báo cáo bài viết</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group>
-                                <Form.Label>Lý do báo cáo</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    rows={3}
-                                    value={reportReason}
-                                    onChange={(e) => setReportReason(e.target.value)}
+            {/* Main Content */}
+            <Container className="main-content-area">
+                <Row>
+                    {/* Sidebar */}
+                    <Col lg={3} className="sidebar-section d-none d-lg-block">
+                        <div className="user-info-card">
+                            <div className="user-avatar">
+                                <Avatar
+                                    src={USER_AVATAR}
+                                    name={CURRENT_USER}
+                                    size={60}
                                 />
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button
-                            variant="secondary"
-                            onClick={() => setShowReportModal(false)}
-                        >
-                            Hủy
-                        </Button>
-                        <Button
-                            variant="danger"
-                            onClick={handleSendReport}
-                            disabled={!reportingBlog || !reportingBlog.blogId}
-                        >
-                            Gửi báo cáo
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                            </div>
+                            <h5 className="user-name">{CURRENT_USER}</h5>
+                            <p className="user-role">Thành viên cộng đồng</p>
+
+                            <div className="stats-grid">
+                                <div className="stat-item">
+                                    <span className="stat-value">
+                                        {blogs.filter(b => b.authorName === CURRENT_USER).length}
+                                    </span>
+                                    <span className="stat-label">Bài viết</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-value">
+                                        {blogs.filter(b => b.authorName === CURRENT_USER)
+                                            .reduce((sum, b) => sum + (b.likes || 0), 0)}
+                                    </span>
+                                    <span className="stat-label">Lượt thích</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Quick Actions */}
+                        <div className="quick-actions-card">
+                            <h6>Hoạt động nhanh</h6>
+                            <Button
+                                variant="outline-success"
+                                className="w-100 mb-2"
+                                onClick={handleShowCreate}
+                            >
+                                <FaPlus className="me-2" />
+                                Viết bài mới
+                            </Button>
+                        </div>
+                    </Col>
+
+                    {/* Posts Feed */}
+                    <Col lg={9}>
+                        <div className="posts-container">
+                            {isLoading ? (
+                                <div className="loading-section">
+                                    <Spinner animation="border" className="loading-spinner" />
+                                    <p>Đang tải bài viết...</p>
+                                </div>
+                            ) : filteredBlogs.length === 0 ? (
+                                <div className="empty-section">
+                                    <Avatar
+                                        src={null}
+                                        name="Empty"
+                                        size={80}
+                                        className="empty-icon"
+                                    />
+                                    <h4>Chưa có bài viết nào</h4>
+                                    <p>Hãy là người đầu tiên chia sẻ câu chuyện của mình!</p>
+                                    <Button
+                                        variant="success"
+                                        size="lg"
+                                        onClick={handleShowCreate}
+                                    >
+                                        <FaPlus className="me-2" />
+                                        Tạo bài viết đầu tiên
+                                    </Button>
+                                </div>
+                            ) : (
+                                <div className="posts-grid">
+                                    {filteredBlogs.map((blog) => (
+                                        <Card key={blog.blogId} className="post-card">
+                                            {/* Post Header */}
+                                            <Card.Header className="post-header">
+                                                <div className="author-section">
+                                                    <Avatar
+                                                        avatarUrl={blog.avatarUrl || blog.authorAvatar || null}
+                                                        name={blog.authorName}
+                                                        size={40}
+                                                        className="author-avatar"
+                                                    />
+                                                    <div className="author-info">
+                                                        <h6 className="author-name">{blog.authorName}</h6>
+                                                        <p className="post-date">
+                                                            {new Date(blog.createdDate).toLocaleDateString('vi-VN')}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {blog.authorName === CURRENT_USER && (
+                                                    <Dropdown>
+                                                        <Dropdown.Toggle variant="link" className="post-menu-btn">
+                                                            <FaEllipsisV />
+                                                        </Dropdown.Toggle>
+                                                        <Dropdown.Menu>
+                                                            <Dropdown.Item onClick={() => handleShowEdit(blog)}>
+                                                                <FaEdit className="me-2" />
+                                                                Chỉnh sửa
+                                                            </Dropdown.Item>
+                                                            <Dropdown.Item
+                                                                onClick={() => handleDeleteBlog(blog.blogId)}
+                                                                className="text-danger"
+                                                            >
+                                                                <FaTrash className="me-2" />
+                                                                Xóa
+                                                            </Dropdown.Item>
+                                                        </Dropdown.Menu>
+                                                    </Dropdown>
+                                                )}
+                                            </Card.Header>
+
+                                            {/* Post Content */}
+                                            <Card.Body className="post-body">
+                                                {blog.title && (
+                                                    <h5 className="post-title">{blog.title}</h5>
+                                                )}
+                                                <p className="post-content">{blog.content}</p>
+
+                                                {blog.imageUrl && (
+                                                    <div className="post-image">
+                                                        <img
+                                                            src={blog.imageUrl}
+                                                            alt="Nội dung bài viết"
+                                                            className="content-image"
+                                                        />
+                                                    </div>
+                                                )}
+                                            </Card.Body>
+
+                                            {/* Post Footer */}
+                                            <Card.Footer className="post-footer">
+                                                <div className="post-actions">
+                                                    <Button
+                                                        variant="link"
+                                                        className={`action-btn like-btn ${blog.liked ? 'liked' : ''}`}
+                                                        onClick={() => handleToggleLike(blog.blogId)}
+                                                    >
+                                                        {blog.liked ? <FaHeart /> : <FaRegHeart />}
+                                                        <span>{blog.likes || 0}</span>
+                                                    </Button>
+
+                                                    {blog.authorName !== CURRENT_USER && (
+                                                        <Button
+                                                            variant="link"
+                                                            className={`action-btn report-btn ${blog.reported ? 'reported' : ''}`}
+                                                            onClick={() => blog.reported ? null : handleSendReport(blog)}
+                                                            disabled={blog.reported}
+                                                        >
+                                                            <FaFlag />
+                                                            <span>{blog.reported ? 'Đã báo cáo' : 'Báo cáo'}</span>
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            </Card.Footer>
+                                        </Card>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </Col>
+                </Row>
             </Container>
+
+            {/* Modals */}
+            {/* Edit Modal */}
+            <Modal show={showEdit} onHide={() => setShowEdit(false)} size="lg" centered>
+                <Modal.Header closeButton className="modal-header-custom">
+                    <Modal.Title>
+                        <FaEdit className="me-2" />
+                        Chỉnh sửa bài viết
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal-body-custom">
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Nội dung</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={5}
+                                value={editContent}
+                                onChange={(e) => setEditContent(e.target.value)}
+                                className="form-control-custom"
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Hình ảnh</Form.Label>
+                            <Form.Control
+                                type="file"
+                                accept="image/*"
+                                ref={fileEditInputRef}
+                                onChange={(e) => handleFileChange(e, () => { }, setEditImagePreview)}
+                                className="form-control-custom"
+                            />
+                            {editImagePreview && (
+                                <div className="image-preview">
+                                    <img src={editImagePreview} alt="preview" className="preview-image" />
+                                </div>
+                            )}
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer className="modal-footer-custom">
+                    <Button variant="outline-secondary" onClick={() => setShowEdit(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="success" onClick={handleSaveEdit} className="save-btn">
+                        <FaEdit className="me-1" />
+                        Lưu thay đổi
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Create Modal */}
+            <Modal show={showCreate} onHide={() => setShowCreate(false)} size="lg" centered>
+                <Modal.Header closeButton className="modal-header-custom">
+                    <Modal.Title>
+                        <FaPlus className="me-2" />
+                        Chia sẻ bài viết mới
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal-body-custom">
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Tiêu đề</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newTitle}
+                                onChange={(e) => setNewTitle(e.target.value)}
+                                placeholder="Nhập tiêu đề bài viết"
+                                className="form-control-custom"
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Nội dung</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={5}
+                                value={newContent}
+                                onChange={(e) => setNewContent(e.target.value)}
+                                placeholder="Chia sẻ câu chuyện, kinh nghiệm của bạn..."
+                                className="form-control-custom"
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Hình ảnh</Form.Label>
+                            <Form.Control
+                                type="file"
+                                accept="image/*"
+                                ref={fileInputRef}
+                                onChange={(e) => handleFileChange(e, () => { }, setNewImagePreview)}
+                                className="form-control-custom"
+                            />
+                            {newImagePreview && (
+                                <div className="image-preview">
+                                    <img src={newImagePreview} alt="preview" className="preview-image" />
+                                </div>
+                            )}
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer className="modal-footer-custom">
+                    <Button variant="outline-secondary" onClick={() => setShowCreate(false)}>
+                        Hủy
+                    </Button>
+                    <Button
+                        variant="success"
+                        onClick={handleSaveCreate}
+                        disabled={!newTitle.trim() || !newContent.trim()}
+                        className="save-btn"
+                    >
+                        <FaPlus className="me-1" />
+                        Đăng bài
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Report Modal */}
+            <Modal show={showReportModal} onHide={() => setShowReportModal(false)} centered>
+                <Modal.Header closeButton className="modal-header-custom">
+                    <Modal.Title>
+                        <FaFlag className="me-2" />
+                        Báo cáo bài viết
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal-body-custom">
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Lý do báo cáo</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                value={reportReason}
+                                onChange={(e) => setReportReason(e.target.value)}
+                                placeholder="Vui lòng cho biết lý do báo cáo..."
+                                className="form-control-custom"
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer className="modal-footer-custom">
+                    <Button variant="outline-secondary" onClick={() => setShowReportModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button
+                        variant="warning"
+                        onClick={() => handleSendReport(null)}
+                        disabled={!reportReason.trim()}
+                    >
+                        <FaFlag className="me-1" />
+                        Gửi báo cáo
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }

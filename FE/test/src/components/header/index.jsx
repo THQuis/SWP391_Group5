@@ -43,40 +43,76 @@ const handleLogout = async () => {
 const Header = () => {
   const isLoggedIn = !!localStorage.getItem('userToken');
   const userRole = localStorage.getItem('userRole');
+  const userName = localStorage.getItem('userName');
   const profilePicture = localStorage.getItem('profilePicture');
 
+  // Avatar fallback function
+  const getAvatarUrl = () => {
+    if (profilePicture) return profilePicture;
+    const defaultName = userName || 'User';
+    return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(defaultName)}&backgroundColor=4CAF50&textColor=ffffff`;
+  };
+
   return (
-    <Navbar expand="lg" bg="light" className="shadow-sm border-bottom sticky-navbar" style={{ backgroundColor: '#C1DCDC' }}>
+    <Navbar expand="lg" className="sticky-navbar">
       <Container>
-        <Navbar.Brand as={Link} to={ROUTERS.USER.HOME}>
+        {/* Modern Brand */}
+        <Navbar.Brand as={Link} to={ROUTERS.USER.HOME} className="modern-navbar-brand">
           <Image
             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true"
-            alt="Logo"
-            width="80"
+            alt="Breath Again Logo"
           />
+          <span className="brand-text">BreathAgain</span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
-          <Nav className="me-auto gap-3 align-items-center">
+
+        <Navbar.Toggle aria-controls="modern-navbar-nav" />
+
+        <Navbar.Collapse id="modern-navbar-nav" className="justify-content-between">
+          {/* Navigation Links */}
+          <Nav className="me-auto modern-nav">
             {(!isLoggedIn || userRole === "2") && (
               <>
                 {isLoggedIn ? (
                   <>
-                    <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
-                    <Nav.Link as={Link} to={ROUTERS.USER.PROGRESS} className="nav-item-custom">Tiến trình</Nav.Link>
-                    <Nav.Link as={Link} to={ROUTERS.USER.QUITPLAN} className="nav-item-custom">Kế hoạch</Nav.Link>
-                    <Nav.Link as={Link} to={ROUTERS.USER.BLOG} className="nav-item-custom">Cộng đồng</Nav.Link>
-                    <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">Cẩm nang</Nav.Link>
-                    <Nav.Link as={Link} to={ROUTERS.USER.CHALENGE} className="nav-item-custom">Thử Thách</Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">
+                      🏠 Trang chủ
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.PROGRESS} className="nav-item-custom">
+                      📊 Tiến trình
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.QUITPLAN} className="nav-item-custom">
+                      📋 Kế hoạch
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.BLOG} className="nav-item-custom">
+                      👥 Cộng đồng
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.MILESTONES} className="nav-item-custom">
+                      📖 Cẩm nang
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={ROUTERS.USER.CHALENGE} className="nav-item-custom">
+                      🎯 Thử Thách
+                    </Nav.Link>
                   </>
                 ) : (
                   <>
-                    <Nav.Link onClick={() => window.location.href = ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
-                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Dashboard</Nav.Link>
-                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Kế hoạch</Nav.Link>
-                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Cộng đồng</Nav.Link>
-                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Tiến trình</Nav.Link>
-                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">Thử Thách</Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.USER.HOME} className="nav-item-custom">
+                      🏠 Trang chủ
+                    </Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">
+                      📊 Dashboard
+                    </Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">
+                      📋 Kế hoạch
+                    </Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">
+                      👥 Cộng đồng
+                    </Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">
+                      📊 Tiến trình
+                    </Nav.Link>
+                    <Nav.Link onClick={() => window.location.href = ROUTERS.AUTH.LOGIN} className="nav-item-custom">
+                      🎯 Thử Thách
+                    </Nav.Link>
                   </>
                 )}
               </>
@@ -84,66 +120,101 @@ const Header = () => {
 
             {userRole === "3" && (
               <>
-                <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">Trang chủ</Nav.Link>
-                {/* <Nav.Link as={Link} to={ROUTERS.COACH.DASHBOARD} className="nav-item-custom">Dashboard</Nav.Link> */}
-                <Nav.Link as={Link} to={ROUTERS.COACH.MEMBER} className="nav-item-custom">Quản lý thành viên</Nav.Link>
-                <Nav.Link as={Link} to={ROUTERS.COACH.BOOKING} className="nav-item-custom">Lịch tư vấn</Nav.Link>
+                <Nav.Link as={Link} to={ROUTERS.USER.HOME} className="nav-item-custom">
+                  🏠 Trang chủ
+                </Nav.Link>
+                <Nav.Link as={Link} to={ROUTERS.COACH.MEMBER} className="nav-item-custom">
+                  👥 Quản lý thành viên
+                </Nav.Link>
+                <Nav.Link as={Link} to={ROUTERS.COACH.BOOKING} className="nav-item-custom">
+                  📅 Lịch tư vấn
+                </Nav.Link>
               </>
             )}
           </Nav>
-          <Nav className="align-items-center gap-2">
-            {isLoggedIn && <NotificationBell />}
+
+          {/* User Section */}
+          <Nav className="modern-user-section">
+            {isLoggedIn && (
+              <div className="notification-bell">
+                <NotificationBell />
+              </div>
+            )}
+
             {isLoggedIn ? (
-              <Dropdown align="end">
-                <Dropdown.Toggle variant="success" id="dropdown-user">
+              <Dropdown align="end" className="user-dropdown">
+                <Dropdown.Toggle id="dropdown-user">
                   <Image
-                    src={profilePicture || "https://github.com/THQuis/SWP391_Group5/blob/main/image/user.png?raw=true"}
-                    width={30}
-                    height={30}
+                    src={getAvatarUrl()}
+                    width={28}
+                    height={28}
                     roundedCircle
-                    className="me-2"
-                    alt="avatar"
+                    className="user-avatar"
+                    alt="User Avatar"
+                    onError={(e) => {
+                      e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(userName || 'User')}&backgroundColor=4CAF50&textColor=ffffff`;
+                    }}
                   />
-                  Tài khoản
+                  {userName || 'Tài khoản'}
                 </Dropdown.Toggle>
+
                 <Dropdown.Menu>
                   {userRole === "2" && (
                     <>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>Hồ sơ cá nhân</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Bảng xếp hạng</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.COACH}>Coach</Dropdown.Item>
-                      {/* <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Dashboard</Dropdown.Item> */}
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.PACKAGE}>Gói thành viên</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.ACHIVE}>Huy hiệu và thành tích</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.MYCONSUL}>Lịch tư vấn</Dropdown.Item>
-
-
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>
+                        👤 Hồ sơ cá nhân
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>
+                        🏆 Bảng xếp hạng
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.COACH}>
+                        🧑‍⚕️ Coach
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.PACKAGE}>
+                        💎 Gói thành viên
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.ACHIVE}>
+                        🏅 Huy hiệu và thành tích
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.MYCONSUL}>
+                        📅 Lịch tư vấn
+                      </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Cài đặt</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.RANKING}>Hỗ trợ</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.HOME}>Về Chúng Tôi</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.HOME}>
+                        ℹ️ Về Chúng Tôi
+                      </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item as="button" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                      <Dropdown.Item as="button" onClick={handleLogout}>
+                        🚪 Đăng xuất
+                      </Dropdown.Item>
                     </>
                   )}
                   {(userRole === "3" || userRole === "1") && (
                     <>
-                      <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>Hồ sơ Coach</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.COACH.MANAGE}>Quản lý thành viên</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.COACH.SCHEDULE}>Lịch tư vấn</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.USER.PROFILE}>
+                        👤 Hồ sơ Coach
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.COACH.MANAGE}>
+                        👥 Quản lý thành viên
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.COACH.SCHEDULE}>
+                        📅 Lịch tư vấn
+                      </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item as={Link} to={ROUTERS.COACH.SETTINGS}>Cài đặt</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.COACH.HELP}>Hỗ trợ</Dropdown.Item>
-                      <Dropdown.Item as={Link} to={ROUTERS.COACH.HOME}>Về Chúng Tôi</Dropdown.Item>
+                      <Dropdown.Item as={Link} to={ROUTERS.COACH.HOME}>
+                        ℹ️ Về Chúng Tôi
+                      </Dropdown.Item>
                       <Dropdown.Divider />
-                      <Dropdown.Item as="button" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                      <Dropdown.Item as="button" onClick={handleLogout}>
+                        🚪 Đăng xuất
+                      </Dropdown.Item>
                     </>
                   )}
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
-              <Button as={Link} to={ROUTERS.AUTH.LOGIN} variant="success">
-                Đăng nhập
+              <Button as={Link} to={ROUTERS.AUTH.LOGIN} className="login-button">
+                🔐 Đăng nhập
               </Button>
             )}
           </Nav>

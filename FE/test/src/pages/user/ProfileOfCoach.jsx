@@ -166,6 +166,9 @@ const CoachProfileForUser = () => {
             setChangeCoachLoading(false);
         }
     };
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
     // Thêm API gửi yêu cầu hủy chọn coach đúng endpoint
     const submitUnchooseCoach = async () => {
         if (!unchooseReason.trim()) {

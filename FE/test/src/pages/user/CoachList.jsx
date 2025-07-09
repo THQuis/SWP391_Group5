@@ -154,6 +154,11 @@ const CoachList = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem("userToken");
 
+    // Auto scroll to top when page loads
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
+
     // Lấy coach hiện tại của user
     useEffect(() => {
         const fetchMyCoach = async () => {

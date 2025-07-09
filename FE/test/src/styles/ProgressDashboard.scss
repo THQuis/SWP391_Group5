@@ -64,7 +64,7 @@ $shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.18);
 
 // === HEADER ===
 .dashboard-header {
-    background: $hero-gradient;
+    background: linear-gradient(45deg, #3da679, #2d6a4f);
     color: white;
     padding: 2rem 0;
     margin-bottom: 2rem;

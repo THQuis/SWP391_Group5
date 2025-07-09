@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Container, Card, Table, Spinner, Alert, Button, Tabs, Tab } from "react-bootstrap";
+import { Card, Table, Spinner, Button, Tabs, Tab } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { FaCalendarPlus, FaCalendarCheck, FaTrashAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
+import '../../styles/MyConsultations.scss';
 
 const fetchMyBookings = async () => {
     const token = localStorage.getItem('userToken');
@@ -49,6 +50,9 @@ const MyConsultations = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Scroll to top when component mounts
+        window.scrollTo(0, 0);
+
         const getBookings = async () => {
             setLoading(true);
             const data = await fetchMyBookings();
@@ -83,125 +87,149 @@ const MyConsultations = () => {
     };
 
     const renderTable = (bookingList, statusKey) => (
-        <Table responsive bordered hover>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Tên chuyên gia</th>
-                    <th>Ngày tư vấn</th>
-                    <th>Thời lượng (phút)</th>
-                    <th>Ghi chú</th>
-                    <th>Trạng thái</th>
-                </tr>
-            </thead>
-            <tbody>
-                {bookingList.length === 0 ? (
+        <div className="table-responsive">
+            <Table className="table">
+                <thead>
                     <tr>
-                        <td colSpan={6} className="text-center text-muted">Không có lịch nào.</td>
+                        <th>#</th>
+                        <th>Tên chuyên gia</th>
+                        <th>Ngày tư vấn</th>
+                        <th>Thời lượng (phút)</th>
+                        <th>Ghi chú</th>
+                        <th>Trạng thái</th>
                     </tr>
-                ) : bookingList.map((b, idx) => (
-                    <tr key={b.bookingID}>
-                        <td>{idx + 1}</td>
-                        <td>{b.coachName}</td>
-                        <td>
-                            {(() => {
-                                const d = new Date(b.bookingDate);
-                                const date = d.toLocaleDateString('vi-VN');
-                                const time = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-                                return `${date} ${time}`;
-                            })()}
-                        </td>
-                        <td>{b.duration}</td>
-                        <td>{b.notes}</td>
-                        <td>
-                            <span className={statusMap[b.status]?.className || "badge bg-secondary"}>
-                                {statusMap[b.status]?.label || b.status}
-                            </span>
-                            {/* Thêm nút MeetingLink ở tab Đã xác nhận nếu có meetingLink */}
-                            {statusKey === "Approved" && b.meetingLink && (
-                                <Button
-                                    size="sm"
-                                    variant="outline-primary"
-                                    className="ms-2"
-                                    style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 120 }}
-                                    onClick={() => window.open(b.meetingLink.startsWith("http") ? b.meetingLink : undefined, "_blank")}
-                                    title={b.meetingLink}
-                                    disabled={!b.meetingLink.startsWith("http")}
-                                >
-                                    Link phòng họp
-                                </Button>
-                            )}
-                            {statusKey === "Pending" && (
-                                <Button
-                                    variant="danger"
-                                    size="sm"
-                                    onClick={() => handleCancel(b.bookingID)}
-                                    disabled={cancellingId === b.bookingID}
-                                    className="ms-2"
-                                >
-                                    {cancellingId === b.bookingID
-                                        ? <Spinner animation="border" size="sm" />
-                                        : <><FaTrashAlt /> Hủy lịch</>
-                                    }
-                                </Button>
-                            )}
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </Table>
+                </thead>
+                <tbody>
+                    {bookingList.length === 0 ? (
+                        <tr>
+                            <td colSpan={6} className="text-center text-muted">Không có lịch nào.</td>
+                        </tr>
+                    ) : bookingList.map((b, idx) => (
+                        <tr key={b.bookingID}>
+                            <td>{idx + 1}</td>
+                            <td>{b.coachName}</td>
+                            <td>
+                                {(() => {
+                                    const d = new Date(b.bookingDate);
+                                    const date = d.toLocaleDateString('vi-VN');
+                                    const time = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                                    return `${date} ${time}`;
+                                })()}
+                            </td>
+                            <td>{b.duration}</td>
+                            <td>{b.notes}</td>
+                            <td>
+                                <span className={statusMap[b.status]?.className || "badge bg-secondary"}>
+                                    {statusMap[b.status]?.label || b.status}
+                                </span>
+                                {/* Thêm nút MeetingLink ở tab Đã xác nhận nếu có meetingLink */}
+                                {statusKey === "Approved" && b.meetingLink && (
+                                    <Button
+                                        size="sm"
+                                        variant="outline-primary"
+                                        className="ms-2 meeting-link-btn"
+                                        onClick={() => window.open(b.meetingLink.startsWith("http") ? b.meetingLink : undefined, "_blank")}
+                                        title={b.meetingLink}
+                                        disabled={!b.meetingLink.startsWith("http")}
+                                    >
+                                        Link phòng họp
+                                    </Button>
+                                )}
+                                {statusKey === "Pending" && (
+                                    <Button
+                                        variant="danger"
+                                        size="sm"
+                                        onClick={() => handleCancel(b.bookingID)}
+                                        disabled={cancellingId === b.bookingID}
+                                        className="ms-2"
+                                    >
+                                        {cancellingId === b.bookingID
+                                            ? <Spinner animation="border" size="sm" />
+                                            : <><FaTrashAlt /> Hủy lịch</>
+                                        }
+                                    </Button>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+        </div>
     )
 
     return (
-        <Container className="py-4">
-            <Card className="mb-4 shadow-sm">
-                <Card.Body>
-                    <h4 className="mb-4">
-                        <FaCalendarCheck className="me-2" />
-                        Lịch sử tư vấn của bạn
-                    </h4>
-                    {loading ? (
-                        <div className="d-flex justify-content-center">
-                            <Spinner animation="border" variant="success" />
+        <div className="consultations-page">
+            <div className="consultations-container">
+                {/* Header Section */}
+                <div className="consultations-header">
+                    <div className="header-content">
+                        <div className="title-section">
+                            <h1 className="main-title">
+                                <FaCalendarCheck />
+                                Lịch sử tư vấn
+                            </h1>
+                            <p className="subtitle">Quản lý và theo dõi các buổi tư vấn của bạn</p>
                         </div>
-                    ) : bookings.length === 0 ? (
-                        <Alert variant="info">
-                            Bạn chưa có lịch tư vấn nào!
+                        <div className="header-actions">
                             <Button
-                                variant="primary"
-                                className="ms-3"
+                                className="new-appointment-btn"
                                 onClick={() => navigate('/User/coachList')}
                             >
-                                <FaCalendarPlus className="me-1" /> Đặt lịch tư vấn
+                                <FaCalendarPlus />
+                                Đặt lịch mới
                             </Button>
-                        </Alert>
-                    ) : (
-                        <Tabs
-                            id="booking-status-tabs"
-                            activeKey={activeTab}
-                            onSelect={k => setActiveTab(k)}
-                            className="mb-3"
-                        >
-                            <Tab eventKey="Pending" title="Chờ xác nhận">
-                                {renderTable(bookingsByStatus.Pending, "Pending")}
-                            </Tab>
-                            <Tab eventKey="Approved" title="Đã xác nhận">
-                                {renderTable(bookingsByStatus.Approved, "Approved")}
-                            </Tab>
-                            <Tab eventKey="Completed" title="Hoàn thành">
-                                {renderTable(bookingsByStatus.Completed, "Completed")}
-                            </Tab>
-                            <Tab eventKey="Rejected" title="Từ chối">
-                                {renderTable(bookingsByStatus.Rejected, "Reject")}
-                            </Tab>
-                            <Tab eventKey="Cancelled" title="Đã huỷ">
-                                {renderTable(bookingsByStatus.Cancelled, "Cancelled")}
-                            </Tab>
-                        </Tabs>
-                    )}
-                </Card.Body>
-            </Card>
-        </Container>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Content */}
+                <Card className="consultations-card">
+                    <div className="card-body">
+                        {loading ? (
+                            <div className="loading-container">
+                                <Spinner animation="border" className="spinner-border" />
+                            </div>
+                        ) : bookings.length === 0 ? (
+                            <div className="empty-state">
+                                <FaCalendarCheck className="empty-icon" />
+                                <h3 className="empty-title">Chưa có lịch tư vấn nào</h3>
+                                <p className="empty-subtitle">Bạn chưa đặt lịch tư vấn với chuyên gia nào. Hãy bắt đầu hành trình cải thiện sức khỏe của bạn!</p>
+                                <Button
+                                    className="empty-action-btn"
+                                    onClick={() => navigate('/User/coachList')}
+                                >
+                                    <FaCalendarPlus />
+                                    Đặt lịch tư vấn ngay
+                                </Button>
+                            </div>
+                        ) : (
+                            <Tabs
+                                id="booking-status-tabs"
+                                activeKey={activeTab}
+                                onSelect={k => setActiveTab(k)}
+                                className="mb-3"
+                            >
+                                <Tab eventKey="Pending" title="Chờ xác nhận">
+                                    {renderTable(bookingsByStatus.Pending, "Pending")}
+                                </Tab>
+                                <Tab eventKey="Approved" title="Đã xác nhận">
+                                    {renderTable(bookingsByStatus.Approved, "Approved")}
+                                </Tab>
+                                <Tab eventKey="Completed" title="Hoàn thành">
+                                    {renderTable(bookingsByStatus.Completed, "Completed")}
+                                </Tab>
+                                <Tab eventKey="Rejected" title="Từ chối">
+                                    {renderTable(bookingsByStatus.Rejected, "Reject")}
+                                </Tab>
+                                <Tab eventKey="Cancelled" title="Đã huỷ">
+                                    {renderTable(bookingsByStatus.Cancelled, "Cancelled")}
+                                </Tab>
+                            </Tabs>
+                        )}
+                    </div>
+                </Card>
+            </div>
+        </div>
     );
 };
 

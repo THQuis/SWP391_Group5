@@ -145,18 +145,19 @@ const HomePage = () => {
                     <h2>Về chúng tôi</h2>
                     <div className="about-content">
                         <div className="about-text">
-                            <h3>BreathAgain</h3>
-                            <p>Hãy để BreathAgain đồng hành cùng bạn trên con đường vượt qua sự phụ thuộc vào thuốc lá. Chúng tôi tin rằng mỗi người đều xứng đáng có một cuộc sống khỏe mạnh hơn, tự do hơn và hạnh phúc hơn. Tại đây, bạn sẽ nhận được không chỉ là các công cụ hỗ trợ, mà còn là sự động viên, chia sẻ từ cộng đồng cũng như những lời khuyên tận tâm từ các chuyên gia.</p>
+                            <h3>Breath Again</h3>
+                            <p>Hãy để Breath Again đồng hành cùng bạn trên con đường vượt qua sự phụ thuộc vào thuốc lá. Chúng tôi tin rằng mỗi người đều xứng đáng có một cuộc sống khỏe mạnh hơn, tự do hơn và hạnh phúc hơn. Tại đây, bạn sẽ nhận được không chỉ là các công cụ hỗ trợ, mà còn là sự động viên, chia sẻ từ cộng đồng cũng như những lời khuyên tận tâm từ các chuyên gia.</p>
                             <p>
-                                Bạn không đơn độc trên hành trình này! Hàng ngàn người đã và đang thành công nhờ sự giúp đỡ của BreathAgain. Mỗi bước tiến nhỏ của bạn sẽ được ghi nhận, mỗi thành tựu của bạn sẽ được tôn vinh và lan tỏa để truyền cảm hứng cho những người khác.
+                                Bạn không đơn độc trên hành trình này! Hàng ngàn người đã và đang thành công nhờ sự giúp đỡ của Breath Again. Mỗi bước tiến nhỏ của bạn sẽ được ghi nhận, mỗi thành tựu của bạn sẽ được tôn vinh và lan tỏa để truyền cảm hứng cho những người khác.
                             </p>
                             <p>
-                                Hãy bắt đầu thay đổi vì chính bạn, vì những người thân yêu và vì tương lai không còn khói thuốc. BreathAgain – Khơi lại một cuộc sống mới, khỏe mạnh hơn từng ngày cùng bạn!
+                                Hãy bắt đầu thay đổi vì chính bạn, vì những người thân yêu và vì tương lai không còn khói thuốc. Breath Again – Khơi lại một cuộc sống mới, khỏe mạnh hơn từng ngày cùng bạn!
                             </p>
                         </div>
                         <img
                             className="d-block w-100"
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.3.jpg?raw=true"
+                            alt="Breath Again - Quit Smoking Support"
                         />
                     </div>
                 </div>
@@ -170,10 +171,10 @@ const HomePage = () => {
                         <div className="feature-card">
                             <h3>💚 Sứ mệnh của chúng tôi</h3>
                             <p>
-                                Chúng tôi luôn tin rằng, mỗi hành trình thay đổi bắt đầu từ một quyết tâm nhỏ. BreathAgain không chỉ đồng hành cùng bạn trên con đường cai nghiện thuốc lá mà còn là người bạn hỗ trợ, cổ vũ bạn mỗi ngày. Mỗi thành tựu dù nhỏ nhất của bạn đều được ghi nhận, mỗi khó khăn bạn gặp phải đều có cộng đồng chia sẻ và động viên.
+                                Chúng tôi luôn tin rằng, mỗi hành trình thay đổi bắt đầu từ một quyết tâm nhỏ. Breath Again không chỉ đồng hành cùng bạn trên con đường cai nghiện thuốc lá mà còn là người bạn hỗ trợ, cổ vũ bạn mỗi ngày. Mỗi thành tựu dù nhỏ nhất của bạn đều được ghi nhận, mỗi khó khăn bạn gặp phải đều có cộng đồng chia sẻ và động viên.
                             </p>
                             <p>
-                                Đừng để thuốc lá lấy đi sức khỏe, hạnh phúc và những khoảnh khắc quý giá bên gia đình. Hãy để chúng tôi giúp bạn sống khỏe mạnh hơn, gắn kết hơn và truyền cảm hứng cho những người xung quanh. Hãy bắt đầu hành trình mới - vì bạn, vì người thân yêu, và vì cả cộng đồng. BreathAgain – nơi mọi thay đổi đều được trân trọng và hỗ trợ không ngừng!
+                                Đừng để thuốc lá lấy đi sức khỏe, hạnh phúc và những khoảnh khắc quý giá bên gia đình. Hãy để chúng tôi giúp bạn sống khỏe mạnh hơn, gắn kết hơn và truyền cảm hứng cho những người xung quanh. Hãy bắt đầu hành trình mới - vì bạn, vì người thân yêu, và vì cả cộng đồng. Breath Again – nơi mọi thay đổi đều được trân trọng và hỗ trợ không ngừng!
                             </p>
                         </div>
                         <div className="feature-card">
@@ -491,7 +492,7 @@ const HomePage = () => {
                 <div className="container">
                     <h2>🌟 Bạn sẵn sàng thở lại chưa?</h2>
                     <p>
-                        Hãy để BreathAgain đồng hành cùng bạn - không phán xét, không áp buộc,
+                        Hãy để Breath Again đồng hành cùng bạn - không phán xét, không áp buộc,
                         chỉ có hiểu - hỗ trợ - và hy vọng.
                     </p>
                     <p>Vì một ngày không thuốc là một ngày bạn sống trọn vẹn hơn.</p>

@@ -62,7 +62,7 @@ const Header = () => {
             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true"
             alt="Breath Again Logo"
           />
-          <span className="brand-text">Breathgain</span>
+          <span className="brand-text">BreathAgain</span>
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="modern-navbar-nav" />

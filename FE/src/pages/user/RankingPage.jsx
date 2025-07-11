@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
     Container,
     Card,
-    Row,
-    Col,
     Tabs,
     Tab,
 } from "react-bootstrap";
@@ -44,7 +42,7 @@ function UserRanking() {
                         <Tabs
                             activeKey={activeKey}
                             onSelect={setActiveKey}
-                            className="nav-justified"
+                            className="nav-justified nav-tabs"
                             style={{
                                 borderBottom: "2px solid #f1f3f4",
                                 backgroundColor: "#f8f9fa"
@@ -95,7 +93,7 @@ function UserRanking() {
                 </Card>
 
                 <div className="mt-4 text-center text-secondary" style={{ fontSize: 15 }}>
-                    <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+                    <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap pb-4">
                         <span>🎯 <b>Mục tiêu hôm nay:</b> Hoàn thành milestone mới để tăng hạng!</span>
                         <span>|</span>
                         <span>💪 <b>Động lực:</b> Mỗi ngày không hút là một chiến thắng!</span>

@@ -12,9 +12,19 @@ import {
 import { FaCrown, FaDollarSign } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import { useRanking, useApi } from "../../hooks/useApi";
-// import { toast } from "react-toastify"; // Uncomment if using toast notifications
 
+async function fetchRanking(top = 50) {
+    const token = localStorage.getItem("userToken");
+    const res = await fetch(`https://localhost:7049/api/ranking/top-money-saved?top=${top}`, {
+        method: "GET",
+        headers: {
+            "accept": "*/*",
+            "Authorization": `Bearer ${token}`,
+        },
+    });
+    if (!res.ok) throw new Error("Lỗi tải dữ liệu xếp hạng");
+    return await res.json();
+}
 function getCrown(idx) {
     if (idx === 0)
         return (
@@ -47,9 +57,25 @@ function MoneySavedRanking() {
     const [search, setSearch] = useState("");
 
     // Use the custom hook with localStorage integration
-    const { rankingData: ranking, isLoading: loading, error, refetch } = useRanking('money-saved', 50);
-    const { userData, isAuthenticated } = useApi();
-
+    const [ranking, setRanking] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [reload, setReload] = useState(0);
+    useEffect(() => {
+        const token = localStorage.getItem("userToken");
+        if (!token) {
+            setError("Bạn chưa đăng nhập!");
+            setLoading(false);
+            return;
+        }
+        setLoading(true);
+        setError("");
+        fetchRanking(50)
+            .then(data => setRanking(data))
+            .catch(err => setError(err.message))
+            .finally(() => setLoading(false));
+    }, [reload]);
+    const refetch = () => setReload(r => r + 1);
     // Filter based on search - sử dụng fullName từ API response
     const filteredRanking = ranking.filter(u =>
         u.fullName && u.fullName.toLowerCase().includes(search.toLowerCase())
@@ -67,19 +93,9 @@ function MoneySavedRanking() {
     useEffect(() => {
         if (!loading && ranking.length > 0 && !error) {
             console.log(`✅ Đã tải ${ranking.length} người dùng từ API!`);
-            // toast.success(`Đã tải ${ranking.length} người dùng từ API!`); // Uncomment if using toast
         }
     }, [loading, ranking.length, error]);
 
-    // Check if user is authenticated before loading data
-    useEffect(() => {
-        if (!isAuthenticated()) {
-            console.warn('User not authenticated, redirecting...');
-            // Could redirect to login or show message
-        }
-    }, [isAuthenticated]);
-
-    // Show error message if API fails
     if (error) {
         return (
             <div className="text-center my-5">
@@ -123,31 +139,12 @@ function MoneySavedRanking() {
 
     return (
         <>
-            {/* Debug info - User data from localStorage và API response */}
-            {/* {userData && userData.userToken && (
-                <div className="mb-3 p-2 bg-light rounded" style={{ fontSize: '12px' }}>
-                    <div><strong>👤 User:</strong> {userData.userName} ({userData.userEmail})</div>
-                    <div><strong>🔑 Token:</strong> {userData.userToken.substring(0, 30)}...</div>
-                    <div><strong>📊 API Data:</strong> {ranking.length} users loaded</div>
-                    {ranking.length > 0 && (
-                        <div><strong>🎯 Sample:</strong> {JSON.stringify(ranking[0], null, 2).substring(0, 100)}...</div>
-                    )}
-                </div>
-            )} */}
+
 
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <h4 className="mb-1">💰 Bảng xếp hạng theo tiền tiết kiệm</h4>
                     <p className="text-muted mb-0">Những người tiết kiệm nhiều nhất từ việc cai thuốc</p>
-                    {/* <Button
-                        variant="outline-primary"
-                        size="sm"
-                        className="mt-2"
-                        onClick={refetch}
-                        disabled={loading}
-                    >
-                        🔄 Làm mới dữ liệu
-                    </Button> */}
                 </div>
                 <div style={{ maxWidth: 300 }}>
                     <Form.Control

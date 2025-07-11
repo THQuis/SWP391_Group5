@@ -128,7 +128,7 @@ function ChallengesCompletedRanking() {
             {loading ? (
                 <div className="text-center my-5">
                     <Spinner animation="border" variant="info" />
-                    <p className="mt-3 text-muted">Đang tải dữ liệu...</p>
+                    <p className="mt-3 text-muted">Đang tải ...</p>
                 </div>
             ) : (
                 <>

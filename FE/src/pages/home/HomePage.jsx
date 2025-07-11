@@ -1,14 +1,26 @@
 import { memo, useState, useEffect } from "react";
 import { Carousel, Image } from 'react-bootstrap';
 import "../../styles/home.scss";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTERS } from "../../utils/router";
 
 const HomePage = () => {
+    const navigate = useNavigate();
     const [topUsers, setTopUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeRankingType, setActiveRankingType] = useState("smoke-free-days");
+    const handleStartJourney = () => {
+        // Kiểm tra xem user đã đăng nhập chưa
+        const userToken = localStorage.getItem('userToken');
 
+        if (userToken) {
+            // Đã đăng nhập -> chuyển đến trang tiến trình (quit plan)
+            navigate(ROUTERS.USER.PROGRESS);
+        } else {
+            // Chưa đăng nhập -> chuyển đến trang login
+            navigate(ROUTERS.USER.LOGIN);
+        }
+    };
     useEffect(() => {
         const fetchTopRanking = async () => {
             try {
@@ -25,9 +37,6 @@ const HomePage = () => {
                         break;
                     case 'cigarettes-dropped':
                         endpoint = '/api/ranking/top-cigarettes-dropped?top=3';
-                        break;
-                    case 'achievements':
-                        endpoint = '/api/ranking/top-achievements?top=3';
                         break;
                     default:
                         endpoint = '/api/ranking/top-smoke-free-days?top=3';
@@ -48,18 +57,18 @@ const HomePage = () => {
                     console.error('API Error:', response.status, response.statusText);
                     // Fallback to static data if API fails
                     setTopUsers([
-                        { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825, achievements: 15 },
-                        { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000, achievements: 10 },
-                        { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750, achievements: 8 }
+                        { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
+                        { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
+                        { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
                     ]);
                 }
             } catch (error) {
                 console.error('Network Error:', error);
                 // Fallback to static data if network fails
                 setTopUsers([
-                    { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825, achievements: 15 },
-                    { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000, achievements: 10 },
-                    { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750, achievements: 8 }
+                    { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
+                    { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
+                    { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
                 ]);
             } finally {
                 setLoading(false);
@@ -70,15 +79,15 @@ const HomePage = () => {
     }, [activeRankingType]);
 
     const getRankingValue = (user, type) => {
+        if (!user) return '0';
+
         switch (type) {
             case 'smoke-free-days':
                 return `${user.smokeFreeDays || 0} ngày`;
             case 'money-saved':
-                return `${(user.moneySaved || 0).toLocaleString('vi-VN')} VNĐ`;
+                return `${(user.totalMoneySaved || 0).toLocaleString('vi-VN')} VNĐ`;
             case 'cigarettes-dropped':
-                return `${user.cigarettesDropped || 0} điếu`;
-            case 'achievements':
-                return `${user.achievements || 0} thành tích`;
+                return `${user.totalCigarettesDropped || 0} điếu`;
             default:
                 return `${user.smokeFreeDays || 0} ngày`;
         }
@@ -92,8 +101,6 @@ const HomePage = () => {
                 return '💰 Top Tiền Tiết Kiệm';
             case 'cigarettes-dropped':
                 return '🚬 Top Điếu Đã Bỏ';
-            case 'achievements':
-                return '🏅 Top Thành Tích';
             default:
                 return '🚭 Top Ngày Không Hút Thuốc';
         }
@@ -106,7 +113,7 @@ const HomePage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://github.com/THQuis/SWP391_Group5/blob/Qui2/image/banner_Ko_nicotin.png?raw=true"
+                            src="https://github.com/THQuis/SWP391_Group5/blob/main/image/bannerFirst.png?raw=true"
                             alt="First slide"
                         />
                     </Carousel.Item>
@@ -116,7 +123,6 @@ const HomePage = () => {
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Thien1.2.jpg?raw=true"
                             alt="Second slide"
                         />
-
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
@@ -130,7 +136,6 @@ const HomePage = () => {
                             className="d-block w-100"
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.1.jpg?raw=true"
                             alt="Four slide"
-
                         />
                     </Carousel.Item>
                 </Carousel>
@@ -142,24 +147,20 @@ const HomePage = () => {
                     <h2>Về chúng tôi</h2>
                     <div className="about-content">
                         <div className="about-text">
-                            <h3>BreathAgain</h3>
-                            <p>Hãy để BreathAgain đồng hành cùng bạn trên con đường vượt qua sự phụ thuộc vào thuốc lá. Chúng tôi tin rằng mỗi người đều xứng đáng có một cuộc sống khỏe mạnh hơn, tự do hơn và hạnh phúc hơn. Tại đây, bạn sẽ nhận được không chỉ là các công cụ hỗ trợ, mà còn là sự động viên, chia sẻ từ cộng đồng cũng như những lời khuyên tận tâm từ các chuyên gia.</p>
+                            <h3>Breath Again</h3>
+                            <p>Hãy để Breath Again đồng hành cùng bạn trên con đường vượt qua sự phụ thuộc vào thuốc lá. Chúng tôi tin rằng mỗi người đều xứng đáng có một cuộc sống khỏe mạnh hơn, tự do hơn và hạnh phúc hơn. Tại đây, bạn sẽ nhận được không chỉ là các công cụ hỗ trợ, mà còn là sự động viên, chia sẻ từ cộng đồng cũng như những lời khuyên tận tâm từ các chuyên gia.</p>
                             <p>
-                                Bạn không đơn độc trên hành trình này! Hàng ngàn người đã và đang thành công nhờ sự giúp đỡ của BreathAgain. Mỗi bước tiến nhỏ của bạn sẽ được ghi nhận, mỗi thành tựu của bạn sẽ được tôn vinh và lan tỏa để truyền cảm hứng cho những người khác.
+                                Bạn không đơn độc trên hành trình này! Hàng ngàn người đã và đang thành công nhờ sự giúp đỡ của Breath Again. Mỗi bước tiến nhỏ của bạn sẽ được ghi nhận, mỗi thành tựu của bạn sẽ được tôn vinh và lan tỏa để truyền cảm hứng cho những người khác.
                             </p>
                             <p>
-                                Hãy bắt đầu thay đổi vì chính bạn, vì những người thân yêu và vì tương lai không còn khói thuốc. BreathAgain – Khơi lại một cuộc sống mới, khỏe mạnh hơn từng ngày cùng bạn!
-
-
+                                Hãy bắt đầu thay đổi vì chính bạn, vì những người thân yêu và vì tương lai không còn khói thuốc. Breath Again – Khơi lại một cuộc sống mới, khỏe mạnh hơn từng ngày cùng bạn!
                             </p>
                         </div>
                         <img
                             className="d-block w-100"
                             src="https://github.com/THQuis/SWP391_Group5/blob/main/image/banner1.3.jpg?raw=true"
-                        // alt="First slide"
+                            alt="Breath Again - Quit Smoking Support"
                         />
-                        {/* <div className="about-image"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/Phoi4.png?raw=true" alt=""/></div> */}
-
                     </div>
                 </div>
             </section>
@@ -172,10 +173,10 @@ const HomePage = () => {
                         <div className="feature-card">
                             <h3>💚 Sứ mệnh của chúng tôi</h3>
                             <p>
-                                Chúng tôi luôn tin rằng, mỗi hành trình thay đổi bắt đầu từ một quyết tâm nhỏ. BreathAgain không chỉ đồng hành cùng bạn trên con đường cai nghiện thuốc lá mà còn là người bạn hỗ trợ, cổ vũ bạn mỗi ngày. Mỗi thành tựu dù nhỏ nhất của bạn đều được ghi nhận, mỗi khó khăn bạn gặp phải đều có cộng đồng chia sẻ và động viên.
+                                Chúng tôi luôn tin rằng, mỗi hành trình thay đổi bắt đầu từ một quyết tâm nhỏ. Breath Again không chỉ đồng hành cùng bạn trên con đường cai nghiện thuốc lá mà còn là người bạn hỗ trợ, cổ vũ bạn mỗi ngày. Mỗi thành tựu dù nhỏ nhất của bạn đều được ghi nhận, mỗi khó khăn bạn gặp phải đều có cộng đồng chia sẻ và động viên.
                             </p>
                             <p>
-                                Đừng để thuốc lá lấy đi sức khỏe, hạnh phúc và những khoảnh khắc quý giá bên gia đình. Hãy để chúng tôi giúp bạn sống khỏe mạnh hơn, gắn kết hơn và truyền cảm hứng cho những người xung quanh. Hãy bắt đầu hành trình mới - vì bạn, vì người thân yêu, và vì cả cộng đồng. BreathAgain – nơi mọi thay đổi đều được trân trọng và hỗ trợ không ngừng!
+                                Đừng để thuốc lá lấy đi sức khỏe, hạnh phúc và những khoảnh khắc quý giá bên gia đình. Hãy để chúng tôi giúp bạn sống khỏe mạnh hơn, gắn kết hơn và truyền cảm hứng cho những người xung quanh. Hãy bắt đầu hành trình mới - vì bạn, vì người thân yêu, và vì cả cộng đồng. Breath Again – nơi mọi thay đổi đều được trân trọng và hỗ trợ không ngừng!
                             </p>
                         </div>
                         <div className="feature-card">
@@ -203,7 +204,6 @@ const HomePage = () => {
                             <div className="icon">📊</div>
                             <h3>Xem các blogger chia sẻ kinh nghiệm</h3>
                         </Link>
-
                         <Link to={ROUTERS.USER.COACH} className="support-card">
                             <div className="icon">👥</div>
                             <h3>Giao lưu với chuyên môn</h3>
@@ -290,7 +290,7 @@ const HomePage = () => {
                                                         {topUsers[1]?.fullName || "Chưa có dữ liệu"}
                                                     </h6>
                                                     <p className="text-muted mb-0" style={{ fontSize: 14 }}>
-                                                        {getRankingValue(topUsers[1], activeRankingType)}
+                                                        {topUsers[1] ? getRankingValue(topUsers[1], activeRankingType) : 'Chưa có dữ liệu'}
                                                     </p>
                                                 </div>
                                             </div>
@@ -352,7 +352,7 @@ const HomePage = () => {
                                                         {topUsers[0]?.fullName || "Chưa có dữ liệu"}
                                                     </h5>
                                                     <p className="text-muted mb-0" style={{ fontSize: 16 }}>
-                                                        {getRankingValue(topUsers[0], activeRankingType)}
+                                                        {topUsers[0] ? getRankingValue(topUsers[0], activeRankingType) : 'Chưa có dữ liệu'}
                                                     </p>
                                                 </div>
                                             </div>
@@ -409,16 +409,16 @@ const HomePage = () => {
                                                         {topUsers[2]?.fullName || "Chưa có dữ liệu"}
                                                     </h6>
                                                     <p className="text-muted mb-0" style={{ fontSize: 14 }}>
-                                                        {getRankingValue(topUsers[2], activeRankingType)}
+                                                        {topUsers[2] ? getRankingValue(topUsers[2], activeRankingType) : 'Chưa có dữ liệu'}
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     )}
 
-                                    {/* Stats Cards - Now as clickable buttons */}
-                                    <div className="row g-3 mb-4">
-                                        <div className="col-6 col-md-3">
+                                    {/* Stats Cards - Only 3 buttons now */}
+                                    <div className="row g-3 mb-4 justify-content-center">
+                                        <div className="col-6 col-md-4">
                                             <button
                                                 className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'smoke-free-days' ? 'btn-success' : 'btn-light'}`}
                                                 onClick={() => setActiveRankingType('smoke-free-days')}
@@ -433,7 +433,7 @@ const HomePage = () => {
                                                 </small>
                                             </button>
                                         </div>
-                                        <div className="col-6 col-md-3">
+                                        <div className="col-6 col-md-4">
                                             <button
                                                 className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'money-saved' ? 'btn-success' : 'btn-light'}`}
                                                 onClick={() => setActiveRankingType('money-saved')}
@@ -448,7 +448,7 @@ const HomePage = () => {
                                                 </small>
                                             </button>
                                         </div>
-                                        <div className="col-6 col-md-3">
+                                        <div className="col-6 col-md-4">
                                             <button
                                                 className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'cigarettes-dropped' ? 'btn-success' : 'btn-light'}`}
                                                 onClick={() => setActiveRankingType('cigarettes-dropped')}
@@ -460,21 +460,6 @@ const HomePage = () => {
                                                 <div style={{ fontSize: 20 }}>🚬</div>
                                                 <small className={activeRankingType === 'cigarettes-dropped' ? 'text-white' : 'text-muted'}>
                                                     Điếu đã bỏ
-                                                </small>
-                                            </button>
-                                        </div>
-                                        <div className="col-6 col-md-3">
-                                            <button
-                                                className={`btn w-100 text-center p-3 rounded-3 border-0 ${activeRankingType === 'achievements' ? 'btn-success' : 'btn-light'}`}
-                                                onClick={() => setActiveRankingType('achievements')}
-                                                style={{
-                                                    transition: 'all 0.3s ease',
-                                                    transform: activeRankingType === 'achievements' ? 'scale(1.05)' : 'scale(1)'
-                                                }}
-                                            >
-                                                <div style={{ fontSize: 20 }}>🏅</div>
-                                                <small className={activeRankingType === 'achievements' ? 'text-white' : 'text-muted'}>
-                                                    Thành tích
                                                 </small>
                                             </button>
                                         </div>
@@ -501,13 +486,6 @@ const HomePage = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* <div className="text-center mt-4">
-                        <p className="text-muted" style={{ fontSize: 15 }}>
-                            🎯 <strong>Mục tiêu:</strong> Hoàn thành milestone mới để tăng hạng! |
-                            💪 <strong>Động lực:</strong> Mỗi ngày không hút là một chiến thắng!
-                        </p>
-                    </div> */}
                 </div>
             </section>
 
@@ -516,11 +494,11 @@ const HomePage = () => {
                 <div className="container">
                     <h2>🌟 Bạn sẵn sàng thở lại chưa?</h2>
                     <p>
-                        Hãy để BreathAgain đồng hành cùng bạn - không phán xét, không áp buộc,
+                        Hãy để Breath Again đồng hành cùng bạn - không phán xét, không áp buộc,
                         chỉ có hiểu - hỗ trợ - và hy vọng.
                     </p>
                     <p>Vì một ngày không thuốc là một ngày bạn sống trọn vẹn hơn.</p>
-                    <button className="cta-button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <button className="cta-button" onClick={handleStartJourney}>
                         Bắt đầu hành trình
                     </button>
                 </div>

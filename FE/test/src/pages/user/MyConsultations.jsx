@@ -1,7 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Card, Table, Spinner, Button, Tabs, Tab } from "react-bootstrap";
+import { Card, Table, Spinner, Button, Tabs, Tab, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { FaCalendarPlus, FaCalendarCheck, FaTrashAlt } from "react-icons/fa";
+import {
+    FaCalendarPlus,
+    FaCalendarCheck,
+    FaTrashAlt,
+    FaUserTie,
+    FaClock,
+    FaCalendarAlt,
+    FaStickyNote,
+    FaInfoCircle,
+    FaVideo,
+    FaCheckCircle,
+    FaHourglassHalf,
+    FaTimesCircle,
+    FaBan,
+    FaCheckDouble
+} from "react-icons/fa";
 import { toast } from 'react-toastify';
 import '../../styles/MyConsultations.scss';
 
@@ -88,67 +103,130 @@ const MyConsultations = () => {
 
     const renderTable = (bookingList, statusKey) => (
         <div className="table-responsive">
-            <Table className="table">
+            <Table className="modern-table">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Tên chuyên gia</th>
-                        <th>Ngày tư vấn</th>
-                        <th>Thời lượng (phút)</th>
-                        <th>Ghi chú</th>
-                        <th>Trạng thái</th>
+                        <th><FaInfoCircle className="me-2" />STT</th>
+                        <th><FaUserTie className="me-2" />Chuyên gia</th>
+                        <th><FaCalendarAlt className="me-2" />Ngày & Giờ</th>
+                        <th><FaClock className="me-2" />Thời lượng</th>
+                        <th><FaStickyNote className="me-2" />Ghi chú</th>
+                        <th><FaCheckCircle className="me-2" />Trạng thái & Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                     {bookingList.length === 0 ? (
                         <tr>
-                            <td colSpan={6} className="text-center text-muted">Không có lịch nào.</td>
+                            <td colSpan={6} className="empty-row">
+                                <div className="empty-message">
+                                    <FaCalendarCheck className="empty-icon" />
+                                    <p>Không có lịch hẹn nào trong danh mục này</p>
+                                </div>
+                            </td>
                         </tr>
                     ) : bookingList.map((b, idx) => (
-                        <tr key={b.bookingID}>
-                            <td>{idx + 1}</td>
-                            <td>{b.coachName}</td>
+                        <tr key={b.bookingID} className="data-row">
                             <td>
-                                {(() => {
-                                    const d = new Date(b.bookingDate);
-                                    const date = d.toLocaleDateString('vi-VN');
-                                    const time = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-                                    return `${date} ${time}`;
-                                })()}
+                                <div className="index-cell">
+                                    <span className="index-number">{idx + 1}</span>
+                                </div>
                             </td>
-                            <td>{b.duration}</td>
-                            <td>{b.notes}</td>
                             <td>
-                                <span className={statusMap[b.status]?.className || "badge bg-secondary"}>
-                                    {statusMap[b.status]?.label || b.status}
-                                </span>
-                                {/* Thêm nút MeetingLink ở tab Đã xác nhận nếu có meetingLink */}
-                                {statusKey === "Approved" && b.meetingLink && (
-                                    <Button
-                                        size="sm"
-                                        variant="outline-primary"
-                                        className="ms-2 meeting-link-btn"
-                                        onClick={() => window.open(b.meetingLink.startsWith("http") ? b.meetingLink : undefined, "_blank")}
-                                        title={b.meetingLink}
-                                        disabled={!b.meetingLink.startsWith("http")}
-                                    >
-                                        Link phòng họp
-                                    </Button>
-                                )}
-                                {statusKey === "Pending" && (
-                                    <Button
-                                        variant="danger"
-                                        size="sm"
-                                        onClick={() => handleCancel(b.bookingID)}
-                                        disabled={cancellingId === b.bookingID}
-                                        className="ms-2"
-                                    >
-                                        {cancellingId === b.bookingID
-                                            ? <Spinner animation="border" size="sm" />
-                                            : <><FaTrashAlt /> Hủy lịch</>
-                                        }
-                                    </Button>
-                                )}
+                                <div className="coach-info">
+                                    <div className="coach-avatar">
+                                        <FaUserTie />
+                                    </div>
+                                    <div className="coach-details">
+                                        <span className="coach-name">{b.coachName}</span>
+                                        <small className="coach-title">Chuyên gia tư vấn</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div className="datetime-info">
+                                    <div className="date-part">
+                                        <FaCalendarAlt className="me-1" />
+                                        {(() => {
+                                            const d = new Date(b.bookingDate);
+                                            return d.toLocaleDateString('vi-VN');
+                                        })()}
+                                    </div>
+                                    <div className="time-part">
+                                        <FaClock className="me-1" />
+                                        {(() => {
+                                            const d = new Date(b.bookingDate);
+                                            return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                                        })()}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div className="duration-badge">
+                                    <FaClock className="me-1" />
+                                    <span>{b.duration} phút</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div className="notes-cell">
+                                    {b.notes ? (
+                                        <div className="notes-content" title={b.notes}>
+                                            <FaStickyNote className="me-1" />
+                                            <span>{b.notes}</span>
+                                        </div>
+                                    ) : (
+                                        <div className="no-notes">
+                                            <span>—</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </td>
+                            <td>
+                                <div className="status-actions">
+                                    <div className="status-badge-wrapper">
+                                        <span className={`status-badge ${b.status.toLowerCase()}`}>
+                                            {b.status === 'Pending' && <FaHourglassHalf className="me-1" />}
+                                            {(b.status === 'Approved' || b.status === 'Confirmed') && <FaCheckCircle className="me-1" />}
+                                            {b.status === 'Completed' && <FaCheckDouble className="me-1" />}
+                                            {b.status === 'Rejected' && <FaTimesCircle className="me-1" />}
+                                            {b.status === 'Cancelled' && <FaBan className="me-1" />}
+                                            {statusMap[b.status]?.label || b.status}
+                                        </span>
+                                    </div>
+                                    <div className="action-buttons">
+                                        {statusKey === "Approved" && b.meetingLink && (
+                                            <Button
+                                                size="sm"
+                                                className="meeting-btn"
+                                                onClick={() => window.open(b.meetingLink.startsWith("http") ? b.meetingLink : undefined, "_blank")}
+                                                title={b.meetingLink}
+                                                disabled={!b.meetingLink.startsWith("http")}
+                                            >
+                                                <FaVideo className="me-1" />
+                                                Vào phòng họp
+                                            </Button>
+                                        )}
+                                        {statusKey === "Pending" && (
+                                            <Button
+                                                size="sm"
+                                                className="cancel-btn"
+                                                onClick={() => handleCancel(b.bookingID)}
+                                                disabled={cancellingId === b.bookingID}
+                                            >
+                                                {cancellingId === b.bookingID ? (
+                                                    <>
+                                                        <Spinner animation="border" size="sm" className="me-1" />
+                                                        Đang hủy...
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <FaTrashAlt className="me-1" />
+                                                        Hủy lịch
+                                                    </>
+                                                )}
+                                            </Button>
+                                        )}
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     ))}
@@ -207,21 +285,86 @@ const MyConsultations = () => {
                                 id="booking-status-tabs"
                                 activeKey={activeTab}
                                 onSelect={k => setActiveTab(k)}
-                                className="mb-3"
+                                className="modern-tabs mb-4"
                             >
-                                <Tab eventKey="Pending" title="Chờ xác nhận">
+                                <Tab
+                                    eventKey="Pending"
+                                    title={
+                                        <div className="tab-title">
+                                            <FaHourglassHalf className="tab-icon" />
+                                            <span>Chờ xác nhận</span>
+                                            {bookingsByStatus.Pending.length > 0 && (
+                                                <Badge bg="warning" className="tab-badge">
+                                                    {bookingsByStatus.Pending.length}
+                                                </Badge>
+                                            )}
+                                        </div>
+                                    }
+                                >
                                     {renderTable(bookingsByStatus.Pending, "Pending")}
                                 </Tab>
-                                <Tab eventKey="Approved" title="Đã xác nhận">
+                                <Tab
+                                    eventKey="Approved"
+                                    title={
+                                        <div className="tab-title">
+                                            <FaCheckCircle className="tab-icon" />
+                                            <span>Đã xác nhận</span>
+                                            {bookingsByStatus.Approved.length > 0 && (
+                                                <Badge bg="success" className="tab-badge">
+                                                    {bookingsByStatus.Approved.length}
+                                                </Badge>
+                                            )}
+                                        </div>
+                                    }
+                                >
                                     {renderTable(bookingsByStatus.Approved, "Approved")}
                                 </Tab>
-                                <Tab eventKey="Completed" title="Hoàn thành">
+                                <Tab
+                                    eventKey="Completed"
+                                    title={
+                                        <div className="tab-title">
+                                            <FaCheckDouble className="tab-icon" />
+                                            <span>Hoàn thành</span>
+                                            {bookingsByStatus.Completed.length > 0 && (
+                                                <Badge bg="primary" className="tab-badge">
+                                                    {bookingsByStatus.Completed.length}
+                                                </Badge>
+                                            )}
+                                        </div>
+                                    }
+                                >
                                     {renderTable(bookingsByStatus.Completed, "Completed")}
                                 </Tab>
-                                <Tab eventKey="Rejected" title="Từ chối">
+                                <Tab
+                                    eventKey="Rejected"
+                                    title={
+                                        <div className="tab-title">
+                                            <FaTimesCircle className="tab-icon" />
+                                            <span>Từ chối</span>
+                                            {bookingsByStatus.Rejected.length > 0 && (
+                                                <Badge bg="danger" className="tab-badge">
+                                                    {bookingsByStatus.Rejected.length}
+                                                </Badge>
+                                            )}
+                                        </div>
+                                    }
+                                >
                                     {renderTable(bookingsByStatus.Rejected, "Reject")}
                                 </Tab>
-                                <Tab eventKey="Cancelled" title="Đã huỷ">
+                                <Tab
+                                    eventKey="Cancelled"
+                                    title={
+                                        <div className="tab-title">
+                                            <FaBan className="tab-icon" />
+                                            <span>Đã hủy</span>
+                                            {bookingsByStatus.Cancelled.length > 0 && (
+                                                <Badge bg="secondary" className="tab-badge">
+                                                    {bookingsByStatus.Cancelled.length}
+                                                </Badge>
+                                            )}
+                                        </div>
+                                    }
+                                >
                                     {renderTable(bookingsByStatus.Cancelled, "Cancelled")}
                                 </Tab>
                             </Tabs>

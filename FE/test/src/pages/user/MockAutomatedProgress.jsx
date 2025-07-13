@@ -29,7 +29,89 @@ const ProgressDashboardPage = () => {
 
     const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
-    const memberPackage = localStorage.getItem('memberPackage'); // Sẽ là "Premium" hoặc "Basic"
+
+    // Chuyển memberPackage thành state để có thể cập nhật real-time
+    const [memberPackage, setMemberPackage] = useState(() => {
+        const stored = localStorage.getItem('memberPackage');
+        console.log('🔍 Initial memberPackage from localStorage:', stored);
+        return stored || 'Basic'; // Default là Basic
+    });
+
+    // Debug log mỗi khi component render
+    console.log('🎬 MockAutomatedProgress render - memberPackage:', memberPackage);
+    console.log('🔍 All localStorage premium info:');
+    console.log('  - memberPackage:', localStorage.getItem('memberPackage'));
+    console.log('  - isPremium:', localStorage.getItem('isPremium'));
+    console.log('  - membershipType:', localStorage.getItem('membershipType'));
+
+    // Debug help: Nếu cần reset để test
+    if (window.location.hash === '#reset-premium') {
+        console.log('🔄 Resetting premium status for testing...');
+        localStorage.setItem('memberPackage', 'Basic');
+        setMemberPackage('Basic');
+        window.location.hash = '';
+    }
+
+    // Thêm useEffect để check và update memberPackage từ localStorage
+    useEffect(() => {
+        const checkMemberPackage = async () => {
+            const currentPackage = localStorage.getItem('memberPackage');
+            if (currentPackage && currentPackage !== memberPackage) {
+                console.log('🔄 Updating memberPackage:', memberPackage, '->', currentPackage);
+                setMemberPackage(currentPackage);
+            }
+
+            // BACKUP CHECK: Chỉ log để debug, không tự động fix
+            // Vì có thể gây ra false positive (set Premium cho user không đủ điều kiện)
+            if (currentPackage === 'Basic' || !currentPackage) {
+                try {
+                    const token = localStorage.getItem('userToken');
+                    const response = await fetch('/api/membership/packages', {
+                        headers: {
+                            "Authorization": "Bearer " + token,
+                            "Accept": "*/*",
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        // CHỈ LOG để debug, không tự động sửa
+                        if (data.currentPackagePrice && data.currentPackagePrice > 0) {
+                            console.log('� DEBUG: User có package trả phí (currentPackagePrice:', data.currentPackagePrice, ') nhưng memberPackage là Basic');
+                            console.log('📋 Membership data:', data);
+                            console.log('❗ Cần kiểm tra tại sao API login không trả về đúng membership info');
+                        } else {
+                            console.log('✅ User có Basic package và currentPackagePrice = 0, logic đúng');
+                        }
+                    }
+                } catch (err) {
+                    console.log('Cannot check membership status:', err);
+                }
+            }
+        };
+
+        // Check ngay khi mount
+        checkMemberPackage();
+
+        // Set up interval để check định kỳ (trong trường hợp localStorage thay đổi)
+        const interval = setInterval(checkMemberPackage, 1000);
+
+        // Event listener cho storage changes
+        const handleStorageChange = (e) => {
+            if (e.key === 'memberPackage') {
+                console.log('📦 Storage change detected for memberPackage:', e.newValue);
+                setMemberPackage(e.newValue || 'Basic');
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            clearInterval(interval);
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, [memberPackage]);
 
     // Fix scroll issue - scroll to top when component mounts
     useEffect(() => {
@@ -1134,9 +1216,12 @@ const ProgressDashboardPage = () => {
                                     variant="outline-warning"
                                     className="action-btn"
                                     onClick={() => {
+                                        console.log('🎯 Button click - Current memberPackage:', memberPackage);
                                         if (memberPackage === 'Basic') {
+                                            console.log('➡️ Redirecting to package page (Basic user)');
                                             navigate('/User/package');
                                         } else {
+                                            console.log('✅ Opening relapse modal (Premium user)');
                                             setShowRelapseModal(true);
                                         }
                                     }}
@@ -1147,6 +1232,10 @@ const ProgressDashboardPage = () => {
                                 {memberPackage === 'Basic' && (
                                     <small className="text-warning d-block mt-2">
                                         Cần gói Premium để sử dụng
+                                        <br />
+                                        <span className="text-muted" style={{ fontSize: '0.7em' }}>
+                                            Debug: memberPackage = "{memberPackage}"
+                                        </span>
                                     </small>
                                 )}
                             </Card.Body>

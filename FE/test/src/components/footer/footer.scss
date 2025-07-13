@@ -3,14 +3,17 @@
     background: linear-gradient(135deg, #2c5530 0%, #1a3a1a 100%);
     color: #ffffff;
     margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
 
     .footer-content {
         padding: 60px 0 40px;
 
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 0 20px;
+            box-sizing: border-box;
         }
 
         .footer-sections {
@@ -170,9 +173,10 @@
         border-top: 1px solid rgba(76, 175, 80, 0.2);
 
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 0 20px;
+            box-sizing: border-box;
         }
 
         .footer-bottom-content {
@@ -226,10 +230,14 @@
 html,
 body {
     height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 #root {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }

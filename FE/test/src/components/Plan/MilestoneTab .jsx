@@ -106,18 +106,51 @@ function MilestoneTab() {
     };
 
 
-    const handleDeleteMilestone = (id) => {
-        // TODO: Gọi API xóa milestone
-        setMilestones(milestones.filter(ms => ms.id !== id));
-        toast.success("Xóa mốc thành công!");
+    const handleDeleteMilestone = async (id) => {
+        try {
+            const res = await fetch(`/api/admin/milestones/delete?id=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (res.ok) {
+                setMilestones(milestones.filter(ms => ms.id !== id));
+                toast.success("Xóa mốc thành công!");
+            } else {
+                toast.error("Xóa mốc thất bại!");
+            }
+        } catch (err) {
+            toast.error("Lỗi kết nối khi xóa mốc!");
+        }
     };
 
 
-    const handleMilestoneModalSave = () => {
+    const handleMilestoneModalSave = async () => {
         if (editMilestone) {
-            // TODO: Gọi API PUT để cập nhật
-            setMilestones(milestones.map(ms => ms.id === editMilestone ? { ...milestoneForm, id: editMilestone } : ms));
-            toast.success("Cập nhật mốc thành công!");
+            // Gọi API PUT để cập nhật milestone
+            try {
+                const res = await fetch(`/api/admin/milestones/update`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        id: editMilestone,
+                        label: milestoneForm.label,
+                        status: milestoneForm.status
+                    })
+                });
+                if (res.ok) {
+                    setMilestones(milestones.map(ms => ms.id === editMilestone ? { ...milestoneForm, id: editMilestone } : ms));
+                    toast.success("Cập nhật mốc thành công!");
+                } else {
+                    toast.error("Cập nhật mốc thất bại!");
+                }
+            } catch (err) {
+                toast.error("Lỗi kết nối khi cập nhật mốc!");
+            }
         } else {
             // TODO: Gọi API POST để thêm mới
             setMilestones([...milestones, { ...milestoneForm, id: Date.now() }]);

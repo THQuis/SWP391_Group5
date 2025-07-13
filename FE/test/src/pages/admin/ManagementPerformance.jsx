@@ -13,6 +13,16 @@ const ManagementPerformance = () => {
     const [editingBadge, setEditingBadge] = useState(null);
     const [search, setSearch] = useState('');
 
+    // Thêm state cho tùy chọn "Khác"
+    const [showCustomPackageType, setShowCustomPackageType] = useState(false);
+    const [customPackageType, setCustomPackageType] = useState('');
+    const [showEditCustomPackageType, setShowEditCustomPackageType] = useState(false);
+    const [editCustomPackageType, setEditCustomPackageType] = useState('');
+
+    // State cho việc chọn loại điều kiện (chỉ chọn một)
+    const [selectedConditionType, setSelectedConditionType] = useState('');
+    const [editSelectedConditionType, setEditSelectedConditionType] = useState('');
+
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; // Hiển thị 10 huy hiệu mỗi trang
@@ -61,53 +71,53 @@ const ManagementPerformance = () => {
         setCurrentPage(1);
     };
 
-    // Thêm huy hiệu mới
-    const handleAddBadge = async () => {
-        try {
-            const token = localStorage.getItem('userToken');
-            // Chuẩn hóa dữ liệu gửi đi đúng với API mới
-            const payload = {
-                achievementName: newBadge.achievementName,
-                description: newBadge.description,
-                criteria: newBadge.criteria,
-                badgeImage: newBadge.badgeImage,
-                packageType: newBadge.packageType,
-                smokeFreeDaysRequired: Number(newBadge.smokeFreeDaysRequired) || 0,
-                moneySavedRequired: Number(newBadge.moneySavedRequired) || 0,
-                cigarettesDroppedRequired: Number(newBadge.cigarettesDroppedRequired) || 0,
-                checkinDaysRequired: Number(newBadge.checkinDaysRequired) || 0
-            };
-            const res = await axios.post('/api/admin/achievements/create', payload, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            });
-            // Sau khi tạo thành công, reload lại danh sách
-            await fetchBadges();
-            setShowModal(false);
-            setNewBadge({ achievementName: '', badgeImage: '', criteria: '', description: '', packageType: 'Basic', smokeFreeDaysRequired: '', moneySavedRequired: '', cigarettesDroppedRequired: '', checkinDaysRequired: '' });
-        } catch (err) {
-            console.error('Lỗi khi thêm huy hiệu:', err);
-            toast.error('Lỗi khi thêm huy hiệu!');
-        }
-    };
-
     // Sửa huy hiệu
     const handleEdit = (badge) => {
         setEditingBadge({ ...badge });
+
+        // Kiểm tra xem có phải là loại gói tùy chỉnh không
+        const standardTypes = ['Streak', 'Superstar', 'JoinDays', 'CheckIn', 'Basic', 'Premium'];
+        if (!standardTypes.includes(badge.packageType)) {
+            setShowEditCustomPackageType(true);
+            setEditCustomPackageType(badge.packageType);
+        } else {
+            setShowEditCustomPackageType(false);
+            setEditCustomPackageType('');
+        }
+
+        // Xác định loại điều kiện hiện tại
+        if (badge.smokeFreeDaysRequired && badge.smokeFreeDaysRequired > 0) {
+            setEditSelectedConditionType('smokeFreeDays');
+        } else if (badge.moneySavedRequired && badge.moneySavedRequired > 0) {
+            setEditSelectedConditionType('moneySaved');
+        } else if (badge.cigarettesDroppedRequired && badge.cigarettesDroppedRequired > 0) {
+            setEditSelectedConditionType('cigarettesDropped');
+        } else if (badge.checkinDaysRequired && badge.checkinDaysRequired > 0) {
+            setEditSelectedConditionType('checkinDays');
+        } else {
+            setEditSelectedConditionType('');
+        }
+
         setShowEditModal(true);
     };
 
     const handleSaveEdit = async () => {
         try {
             const token = localStorage.getItem('userToken');
+
+            // Sử dụng loại gói tùy chỉnh nếu có
+            let finalPackageType = editingBadge.packageType;
+            if (showEditCustomPackageType && editCustomPackageType.trim()) {
+                finalPackageType = editCustomPackageType.trim();
+            }
+
             // Chuẩn hóa dữ liệu gửi đi đúng với API mới
             const payload = {
                 achievementName: editingBadge.achievementName,
                 description: editingBadge.description,
                 criteria: editingBadge.criteria,
                 badgeImage: editingBadge.badgeImage,
-                packageType: editingBadge.packageType,
+                packageType: finalPackageType,
                 smokeFreeDaysRequired: Number(editingBadge.smokeFreeDaysRequired) || 0,
                 moneySavedRequired: Number(editingBadge.moneySavedRequired) || 0,
                 cigarettesDroppedRequired: Number(editingBadge.cigarettesDroppedRequired) || 0,
@@ -123,9 +133,11 @@ const ManagementPerformance = () => {
                 }
             );
             await fetchBadges();
-            setShowEditModal(false);
+            handleCloseEditModal(); // Sử dụng hàm reset
+            toast.success('Cập nhật huy hiệu thành công!');
         } catch (err) {
             console.error('Lỗi khi sửa huy hiệu:', err);
+            toast.error('Lỗi khi cập nhật huy hiệu!');
         }
     };
 
@@ -139,6 +151,109 @@ const ManagementPerformance = () => {
             await fetchBadges();
         } catch (err) {
             console.error('Lỗi khi xóa huy hiệu:', err);
+        }
+    };
+
+    // Hàm xử lý thay đổi loại gói
+    const handlePackageTypeChange = (value, isEdit = false) => {
+        if (value === 'other') {
+            if (isEdit) {
+                setShowEditCustomPackageType(true);
+                setEditingBadge({ ...editingBadge, packageType: '' });
+            } else {
+                setShowCustomPackageType(true);
+                setNewBadge({ ...newBadge, packageType: '' });
+            }
+        } else {
+            if (isEdit) {
+                setShowEditCustomPackageType(false);
+                setEditCustomPackageType('');
+                setEditingBadge({ ...editingBadge, packageType: value });
+            } else {
+                setShowCustomPackageType(false);
+                setCustomPackageType('');
+                setNewBadge({ ...newBadge, packageType: value });
+            }
+        }
+    };
+
+    // Hàm xử lý chọn loại điều kiện
+    const handleConditionTypeChange = (type, value, isEdit = false) => {
+        if (isEdit) {
+            setEditSelectedConditionType(type);
+            // Reset tất cả điều kiện khác về 0
+            setEditingBadge({
+                ...editingBadge,
+                smokeFreeDaysRequired: type === 'smokeFreeDays' ? value : '',
+                moneySavedRequired: type === 'moneySaved' ? value : '',
+                cigarettesDroppedRequired: type === 'cigarettesDropped' ? value : '',
+                checkinDaysRequired: type === 'checkinDays' ? value : ''
+            });
+        } else {
+            setSelectedConditionType(type);
+            // Reset tất cả điều kiện khác về 0
+            setNewBadge({
+                ...newBadge,
+                smokeFreeDaysRequired: type === 'smokeFreeDays' ? value : '',
+                moneySavedRequired: type === 'moneySaved' ? value : '',
+                cigarettesDroppedRequired: type === 'cigarettesDropped' ? value : '',
+                checkinDaysRequired: type === 'checkinDays' ? value : ''
+            });
+        }
+    };
+
+    // Hàm reset form khi đóng modal
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setNewBadge({ achievementName: '', badgeImage: '', criteria: '', description: '', packageType: 'Basic', smokeFreeDaysRequired: '', moneySavedRequired: '', cigarettesDroppedRequired: '', checkinDaysRequired: '' });
+        setShowCustomPackageType(false);
+        setCustomPackageType('');
+        setSelectedConditionType('');
+    };
+
+    const handleCloseEditModal = () => {
+        setShowEditModal(false);
+        setEditingBadge(null);
+        setShowEditCustomPackageType(false);
+        setEditCustomPackageType('');
+        setEditSelectedConditionType('');
+    };
+
+    // Thêm huy hiệu mới
+    const handleAddBadge = async () => {
+        try {
+            const token = localStorage.getItem('userToken');
+
+            // Sử dụng loại gói tùy chỉnh nếu có
+            let finalPackageType = newBadge.packageType;
+            if (showCustomPackageType && customPackageType.trim()) {
+                finalPackageType = customPackageType.trim();
+            }
+
+            // Chuẩn hóa dữ liệu gửi đi đúng với API mới
+            const payload = {
+                achievementName: newBadge.achievementName,
+                description: newBadge.description,
+                criteria: newBadge.criteria,
+                badgeImage: newBadge.badgeImage,
+                packageType: finalPackageType,
+                smokeFreeDaysRequired: Number(newBadge.smokeFreeDaysRequired) || 0,
+                moneySavedRequired: Number(newBadge.moneySavedRequired) || 0,
+                cigarettesDroppedRequired: Number(newBadge.cigarettesDroppedRequired) || 0,
+                checkinDaysRequired: Number(newBadge.checkinDaysRequired) || 0
+            };
+            const res = await axios.post('/api/admin/achievements/create', payload, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            // Sau khi tạo thành công, reload lại danh sách
+            await fetchBadges();
+            handleCloseModal(); // Sử dụng hàm reset
+            toast.success('Thêm huy hiệu thành công!');
+        } catch (err) {
+            console.error('Lỗi khi thêm huy hiệu:', err);
+            toast.error('Lỗi khi thêm huy hiệu!');
         }
     };
 
@@ -298,7 +413,7 @@ const ManagementPerformance = () => {
             </Modal>
 
             {/* Modal tạo huy hiệu */}
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+            <Modal show={showModal} onHide={handleCloseModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Tạo huy hiệu</Modal.Title>
                 </Modal.Header>
@@ -340,7 +455,7 @@ const ManagementPerformance = () => {
                             <Form.Label>Loại gói:</Form.Label>
                             <Form.Select
                                 value={newBadge.packageType}
-                                onChange={e => setNewBadge({ ...newBadge, packageType: e.target.value })}
+                                onChange={e => handlePackageTypeChange(e.target.value)}
                             >
                                 <option value="Streak">Streak</option>
                                 <option value="Superstar">Superstar</option>
@@ -348,44 +463,110 @@ const ManagementPerformance = () => {
                                 <option value="CheckIn">CheckIn</option>
                                 <option value="Basic">Basic</option>
                                 <option value="Premium">Premium</option>
+                                <option value="other">Khác (vui lòng nhập bên dưới)</option>
                             </Form.Select>
                         </Form.Group>
-                        <Form.Group controlId="formSmokeFreeDaysRequired">
-                            <Form.Label>Số ngày không hút thuốc (smokeFreeDaysRequired):</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={newBadge.smokeFreeDaysRequired || ''}
-                                onChange={e => setNewBadge({ ...newBadge, smokeFreeDaysRequired: e.target.value })}
-                            />
+                        {showCustomPackageType && (
+                            <Form.Group controlId="formCustomPackageType">
+                                <Form.Label>Nhập loại gói tùy chỉnh:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={customPackageType}
+                                    onChange={e => setCustomPackageType(e.target.value)}
+                                    placeholder="VD: Gói cơ bản, Gói nâng cao..."
+                                />
+                            </Form.Group>
+                        )}
+
+                        <Form.Group>
+                            <Form.Label>Chọn loại điều kiện (chỉ chọn một):</Form.Label>
+                            <div className="d-flex flex-wrap gap-3 mt-2">
+                                <Form.Check
+                                    type="radio"
+                                    id="smokeFreeDays"
+                                    name="conditionType"
+                                    label="Số ngày không hút thuốc"
+                                    checked={selectedConditionType === 'smokeFreeDays'}
+                                    onChange={() => handleConditionTypeChange('smokeFreeDays', newBadge.smokeFreeDaysRequired)}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    id="moneySaved"
+                                    name="conditionType"
+                                    label="Số tiền tiết kiệm"
+                                    checked={selectedConditionType === 'moneySaved'}
+                                    onChange={() => handleConditionTypeChange('moneySaved', newBadge.moneySavedRequired)}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    id="cigarettesDropped"
+                                    name="conditionType"
+                                    label="Số điếu không hút"
+                                    checked={selectedConditionType === 'cigarettesDropped'}
+                                    onChange={() => handleConditionTypeChange('cigarettesDropped', newBadge.cigarettesDroppedRequired)}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    id="checkinDays"
+                                    name="conditionType"
+                                    label="Số ngày check-in"
+                                    checked={selectedConditionType === 'checkinDays'}
+                                    onChange={() => handleConditionTypeChange('checkinDays', newBadge.checkinDaysRequired)}
+                                />
+                            </div>
                         </Form.Group>
-                        <Form.Group controlId="formMoneySavedRequired">
-                            <Form.Label>Số tiền tiết kiệm (moneySavedRequired):</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={newBadge.moneySavedRequired || ''}
-                                onChange={e => setNewBadge({ ...newBadge, moneySavedRequired: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formCigarettesDroppedRequired">
-                            <Form.Label>Số điếu không hút (cigarettesDroppedRequired):</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={newBadge.cigarettesDroppedRequired || ''}
-                                onChange={e => setNewBadge({ ...newBadge, cigarettesDroppedRequired: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formCheckinDaysRequired">
-                            <Form.Label>Số ngày check-in (checkinDaysRequired):</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={newBadge.checkinDaysRequired || ''}
-                                onChange={e => setNewBadge({ ...newBadge, checkinDaysRequired: e.target.value })}
-                            />
-                        </Form.Group>
+
+                        {selectedConditionType === 'smokeFreeDays' && (
+                            <Form.Group controlId="formSmokeFreeDaysRequired">
+                                <Form.Label>Số ngày không hút thuốc:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={newBadge.smokeFreeDaysRequired || ''}
+                                    onChange={e => handleConditionTypeChange('smokeFreeDays', e.target.value)}
+                                    placeholder="VD: 7, 30, 90..."
+                                />
+                            </Form.Group>
+                        )}
+
+                        {selectedConditionType === 'moneySaved' && (
+                            <Form.Group controlId="formMoneySavedRequired">
+                                <Form.Label>Số tiền tiết kiệm (VNĐ):</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={newBadge.moneySavedRequired || ''}
+                                    onChange={e => handleConditionTypeChange('moneySaved', e.target.value)}
+                                    placeholder="VD: 100000, 500000..."
+                                />
+                            </Form.Group>
+                        )}
+
+                        {selectedConditionType === 'cigarettesDropped' && (
+                            <Form.Group controlId="formCigarettesDroppedRequired">
+                                <Form.Label>Số điếu không hút:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={newBadge.cigarettesDroppedRequired || ''}
+                                    onChange={e => handleConditionTypeChange('cigarettesDropped', e.target.value)}
+                                    placeholder="VD: 20, 100, 500..."
+                                />
+                            </Form.Group>
+                        )}
+
+                        {selectedConditionType === 'checkinDays' && (
+                            <Form.Group controlId="formCheckinDaysRequired">
+                                <Form.Label>Số ngày check-in:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={newBadge.checkinDaysRequired || ''}
+                                    onChange={e => handleConditionTypeChange('checkinDays', e.target.value)}
+                                    placeholder="VD: 7, 30, 100..."
+                                />
+                            </Form.Group>
+                        )}
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                    <Button variant="secondary" onClick={handleCloseModal}>
                         Hủy
                     </Button>
                     <Button variant="primary" onClick={handleAddBadge}>
@@ -395,7 +576,7 @@ const ManagementPerformance = () => {
             </Modal>
 
             {/* Modal chỉnh sửa huy hiệu */}
-            <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+            <Modal show={showEditModal} onHide={handleCloseEditModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Sửa huy hiệu</Modal.Title>
                 </Modal.Header>
@@ -441,7 +622,7 @@ const ManagementPerformance = () => {
                             <Form.Label>Loại gói:</Form.Label>
                             <Form.Select
                                 value={editingBadge?.packageType}
-                                onChange={e => setEditingBadge({ ...editingBadge, packageType: e.target.value })}
+                                onChange={e => handlePackageTypeChange(e.target.value, true)}
                             >
                                 <option value="Streak">Streak</option>
                                 <option value="Superstar">Superstar</option>
@@ -449,45 +630,110 @@ const ManagementPerformance = () => {
                                 <option value="CheckIn">CheckIn</option>
                                 <option value="Basic">Basic</option>
                                 <option value="Premium">Premium</option>
+                                <option value="other">Khác (vui lòng nhập bên dưới)</option>
                             </Form.Select>
                         </Form.Group>
+                        {showEditCustomPackageType && (
+                            <Form.Group controlId="formEditCustomPackageType">
+                                <Form.Label>Nhập loại gói tùy chỉnh:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={editCustomPackageType}
+                                    onChange={e => setEditCustomPackageType(e.target.value)}
+                                    placeholder="VD: Gói cơ bản, Gói nâng cao..."
+                                />
+                            </Form.Group>
+                        )}
 
-                        <Form.Group controlId="formEditSmokeFreeDaysRequired">
-                            <Form.Label>Số ngày không hút thuốc (smokeFreeDaysRequired):</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={editingBadge?.smokeFreeDaysRequired || ''}
-                                onChange={e => setEditingBadge({ ...editingBadge, smokeFreeDaysRequired: e.target.value })}
-                            />
+                        <Form.Group>
+                            <Form.Label>Chọn loại điều kiện (chỉ chọn một):</Form.Label>
+                            <div className="d-flex flex-wrap gap-3 mt-2">
+                                <Form.Check
+                                    type="radio"
+                                    id="editSmokeFreeDays"
+                                    name="editConditionType"
+                                    label="Số ngày không hút thuốc"
+                                    checked={editSelectedConditionType === 'smokeFreeDays'}
+                                    onChange={() => handleConditionTypeChange('smokeFreeDays', editingBadge?.smokeFreeDaysRequired, true)}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    id="editMoneySaved"
+                                    name="editConditionType"
+                                    label="Số tiền tiết kiệm"
+                                    checked={editSelectedConditionType === 'moneySaved'}
+                                    onChange={() => handleConditionTypeChange('moneySaved', editingBadge?.moneySavedRequired, true)}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    id="editCigarettesDropped"
+                                    name="editConditionType"
+                                    label="Số điếu không hút"
+                                    checked={editSelectedConditionType === 'cigarettesDropped'}
+                                    onChange={() => handleConditionTypeChange('cigarettesDropped', editingBadge?.cigarettesDroppedRequired, true)}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    id="editCheckinDays"
+                                    name="editConditionType"
+                                    label="Số ngày check-in"
+                                    checked={editSelectedConditionType === 'checkinDays'}
+                                    onChange={() => handleConditionTypeChange('checkinDays', editingBadge?.checkinDaysRequired, true)}
+                                />
+                            </div>
                         </Form.Group>
-                        <Form.Group controlId="formEditMoneySavedRequired">
-                            <Form.Label>Số tiền tiết kiệm (moneySavedRequired):</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={editingBadge?.moneySavedRequired || ''}
-                                onChange={e => setEditingBadge({ ...editingBadge, moneySavedRequired: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formEditCigarettesDroppedRequired">
-                            <Form.Label>Số điếu không hút (cigarettesDroppedRequired):</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={editingBadge?.cigarettesDroppedRequired || ''}
-                                onChange={e => setEditingBadge({ ...editingBadge, cigarettesDroppedRequired: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formEditCheckinDaysRequired">
-                            <Form.Label>Số ngày check-in (checkinDaysRequired):</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={editingBadge?.checkinDaysRequired || ''}
-                                onChange={e => setEditingBadge({ ...editingBadge, checkinDaysRequired: e.target.value })}
-                            />
-                        </Form.Group>
+
+                        {editSelectedConditionType === 'smokeFreeDays' && (
+                            <Form.Group controlId="formEditSmokeFreeDaysRequired">
+                                <Form.Label>Số ngày không hút thuốc:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={editingBadge?.smokeFreeDaysRequired || ''}
+                                    onChange={e => handleConditionTypeChange('smokeFreeDays', e.target.value, true)}
+                                    placeholder="VD: 7, 30, 90..."
+                                />
+                            </Form.Group>
+                        )}
+
+                        {editSelectedConditionType === 'moneySaved' && (
+                            <Form.Group controlId="formEditMoneySavedRequired">
+                                <Form.Label>Số tiền tiết kiệm (VNĐ):</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={editingBadge?.moneySavedRequired || ''}
+                                    onChange={e => handleConditionTypeChange('moneySaved', e.target.value, true)}
+                                    placeholder="VD: 100000, 500000..."
+                                />
+                            </Form.Group>
+                        )}
+
+                        {editSelectedConditionType === 'cigarettesDropped' && (
+                            <Form.Group controlId="formEditCigarettesDroppedRequired">
+                                <Form.Label>Số điếu không hút:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={editingBadge?.cigarettesDroppedRequired || ''}
+                                    onChange={e => handleConditionTypeChange('cigarettesDropped', e.target.value, true)}
+                                    placeholder="VD: 20, 100, 500..."
+                                />
+                            </Form.Group>
+                        )}
+
+                        {editSelectedConditionType === 'checkinDays' && (
+                            <Form.Group controlId="formEditCheckinDaysRequired">
+                                <Form.Label>Số ngày check-in:</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    value={editingBadge?.checkinDaysRequired || ''}
+                                    onChange={e => handleConditionTypeChange('checkinDays', e.target.value, true)}
+                                    placeholder="VD: 7, 30, 100..."
+                                />
+                            </Form.Group>
+                        )}
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+                    <Button variant="secondary" onClick={handleCloseEditModal}>
                         Hủy
                     </Button>
                     <Button variant="primary" onClick={handleSaveEdit}>

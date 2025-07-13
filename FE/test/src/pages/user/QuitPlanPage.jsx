@@ -496,7 +496,6 @@ const QuitPlanPage = () => {
                 }
 
                 toast.success("Tạo kế hoạch thành công!");
-                window.scrollTo({ top: 0, behavior: "smooth" }); // <-- scroll lên đầu trang ngay khi lưu thành công
                 await loadInitialData();
             } catch (error) {
                 toast.error(error.message);
@@ -541,7 +540,6 @@ const QuitPlanPage = () => {
                 }
 
                 toast.success("Cập nhật thành công!");
-                window.scrollTo({ top: 0, behavior: "smooth" });
                 await loadInitialData();
             } catch (error) {
                 toast.error(error.message || "Đã có lỗi xảy ra khi cập nhật.");

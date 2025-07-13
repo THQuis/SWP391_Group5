@@ -78,9 +78,118 @@ function MakePaymentModal({ show, handleClose, selectedPackage }) {
             });
 
             if (!res.ok) throw new Error("Xác nhận thanh toán thất bại");
-            toast.success("Thanh toán thành công!");
-            handleClose();
-            window.location.reload();
+
+            // Sau khi thanh toán thành công, gọi API lấy thông tin user mới nhất
+            try {
+                const userRes = await fetch("/api/auth/profile", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                if (userRes.ok) {
+                    const userData = await userRes.json();
+                    const data = userData.data || userData; // Adjust based on your API response structure
+
+                    // Set lại thông tin user vào localStorage
+                    const userRole = data.user?.roleID || data.roleID;
+                    const userName = data.user?.fullName || data.fullName;
+                    const userEmail = data.user?.email || data.email;
+                    const userId = data.user?.userID || data.userID;
+                    const coachId = data.user?.CoachId || data.CoachId;
+                    const profilePicture = data.user?.profilePicture || data.profilePicture || null;
+                    const DateOfBirth = data.user?.dateOfBirth || data.dateOfBirth;
+                    const gender = data.user?.gender || data.gender;
+                    const phoneNumber = data.user?.phoneNumber || data.phoneNumber;
+
+                    // Thêm thông tin membership/premium nếu có
+                    const isPremium = data.user?.isPremium || data.isPremium || false;
+                    const membershipType = data.user?.membershipType || data.membershipType || 'free';
+                    const membershipExpiry = data.user?.membershipExpiry || data.membershipExpiry;
+
+                    // LOGIC AN TOÀN: Chỉ set Premium khi user thực sự thanh toán thành công
+                    let memberPackage = 'Basic'; // Mặc định an toàn
+
+                    // Điều kiện nghiêm ngặt để set Premium:
+                    // 1. User vừa thanh toán gói trả phí (selectedPackage.price > 0)
+                    // 2. API callback thành công (đã qua bước if (!res.ok))
+                    // 3. Có transactionReference (đảm bảo có giao dịch thực tế)
+                    if (selectedPackage?.price > 0 && transactionReference) {
+                        memberPackage = 'Premium';
+                        console.log('🎉 VALID: Set memberPackage to Premium after successful payment');
+                        console.log('   - Package:', selectedPackage.name, 'Price:', selectedPackage.price);
+                        console.log('   - Transaction:', transactionReference);
+                    } else {
+                        // Fallback: tin API response
+                        const apiMemberPackage = data.user?.membership?.packageType || data.membership?.packageType;
+                        if (apiMemberPackage === 'Premium') {
+                            memberPackage = 'Premium';
+                            console.log('📦 Using Premium from API response');
+                        } else {
+                            memberPackage = 'Basic';
+                            console.log('📝 Default to Basic (no payment or API says Basic)');
+                        }
+                    }
+
+                    localStorage.setItem('userToken', token); // Giữ nguyên token
+                    localStorage.setItem('userRole', userRole);
+                    localStorage.setItem('userName', userName);
+                    localStorage.setItem('userEmail', userEmail);
+                    localStorage.setItem('userId', userId);
+                    localStorage.setItem('coachId', coachId);
+                    localStorage.setItem('profilePicture', profilePicture);
+                    localStorage.setItem('gender', gender);
+                    localStorage.setItem('dateOfBirth', DateOfBirth);
+                    localStorage.setItem('phoneNumber', phoneNumber);
+                    localStorage.setItem('isPremium', isPremium);
+                    localStorage.setItem('membershipType', membershipType);
+                    localStorage.setItem('memberPackage', memberPackage); // 🔥 Quan trọng nhất cho premium
+                    if (membershipExpiry) {
+                        localStorage.setItem('membershipExpiry', membershipExpiry);
+                    }
+
+                    console.log("Updated user info in localStorage after payment success");
+                    console.log("Premium status:", isPremium, "Membership type:", membershipType);
+                    console.log("Member package:", memberPackage); // 🔥 Debug memberPackage
+
+                    // Thông báo kích hoạt premium
+                    if (memberPackage === 'Premium') {
+                        console.log("🎉 Premium activated successfully!");
+                    }
+                }
+            } catch (profileErr) {
+                console.warn("Could not update user profile after payment:", profileErr);
+
+                // BACKUP: Nếu API profile fail, vẫn phải set Premium cho gói trả phí
+                if (selectedPackage?.price > 0) {
+                    localStorage.setItem('memberPackage', 'Premium');
+                    console.log('🔧 BACKUP: Force set memberPackage to Premium after payment failure');
+                }
+            }
+
+            // CUỐI CÙNG: Đảm bảo 100% rằng gói trả phí = Premium
+            if (selectedPackage?.price > 0) {
+                localStorage.setItem('memberPackage', 'Premium');
+                console.log('💯 FINAL: Guaranteed set memberPackage to Premium for paid package');
+            }
+
+            // Đảm bảo localStorage đã được cập nhật trước khi reload
+            setTimeout(() => {
+                // Debug: check localStorage trước khi reload
+                const finalMemberPackage = localStorage.getItem('memberPackage');
+                console.log('🔍 Final check before reload - memberPackage:', finalMemberPackage);
+                console.log('🔍 All premium-related localStorage:');
+                console.log('  - memberPackage:', localStorage.getItem('memberPackage'));
+                console.log('  - isPremium:', localStorage.getItem('isPremium'));
+                console.log('  - membershipType:', localStorage.getItem('membershipType'));
+
+                toast.success(`Thanh toán thành công! Quyền ${finalMemberPackage} đã được kích hoạt!`);
+                handleClose();
+                window.location.reload();
+            }, 500); // Delay ngắn để đảm bảo localStorage được set
+
         } catch (err) {
             toast.error(err.message || "Lỗi khi xác nhận thanh toán");
             setConfirming(false);

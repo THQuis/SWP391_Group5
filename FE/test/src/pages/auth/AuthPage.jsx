@@ -101,9 +101,25 @@ const AuthPage = () => {
 
 
             console.log("role name", userRole);
-            // Lưu loại gói thành viên (để phân quyền dashboard)
-            const packageType = data.user.membership?.packageType || "Basic";
-            localStorage.setItem('memberPackage', packageType);
+
+            // LOGIC AN TOÀN: Chỉ tin API response, không tin localStorage cũ
+            const apiPackageType = data.user.membership?.packageType;
+
+            let memberPackage = "Basic"; // Default an toàn
+
+            if (apiPackageType && (apiPackageType === 'Premium' || apiPackageType === 'Basic')) {
+                // Chỉ tin API response - đây là nguồn tin cậy duy nhất
+                memberPackage = apiPackageType;
+                console.log('📦 Using TRUSTED memberPackage from API:', apiPackageType);
+            } else {
+                // Nếu API không có hoặc không hợp lệ -> Default Basic
+                memberPackage = "Basic";
+                console.log('📝 API không có membership info, default to Basic');
+            }
+
+            localStorage.setItem('memberPackage', memberPackage);
+            console.log('� Final memberPackage set to:', memberPackage);
+            console.log('� API membership data:', data.user.membership);
             // Điều hướng dựa trên vai trò
             if (userRole === 1) {
                 navigate('/admin');

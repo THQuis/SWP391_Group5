@@ -43,6 +43,10 @@ const ManagementPackage = () => {
     const [showAssignModal, setShowAssignModal] = useState(false);
     const [assignment, setAssignment] = useState({ userId: '', packageId: '' });
 
+    // State cho modal xác nhận xóa
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [pkgIdToDelete, setPkgIdToDelete] = useState(null);
+
     // Tải dữ liệu khi view thay đổi
     useEffect(() => {
         const token = localStorage.getItem('userToken');
@@ -155,7 +159,15 @@ const ManagementPackage = () => {
 
     // Xử lý API: Xóa gói
     const handleDeletePkg = async (pkgId) => {
-        if (!window.confirm(`Bạn có chắc chắn muốn xóa gói có ID: ${pkgId}?`)) return;
+        setPkgIdToDelete(pkgId);
+        setShowDeleteModal(true);
+    };
+
+    // Hàm xác nhận xóa thật sự
+    const confirmDeletePkg = async () => {
+        const pkgId = pkgIdToDelete;
+        setShowDeleteModal(false);
+        setPkgIdToDelete(null);
         const token = localStorage.getItem('userToken');
         toast.info(`Đang xóa gói ID: ${pkgId}...`);
         try {
@@ -300,7 +312,6 @@ const ManagementPackage = () => {
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
                                 <th>Trạng thái TT</th>
-                                <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -340,9 +351,6 @@ const ManagementPackage = () => {
                                         <span className={`badge bg-${item.paymentStatus === 'Completed' ? 'success' : 'warning'}`}>
                                             {item.paymentStatus}
                                         </span>
-                                    </td>
-                                    <td>
-                                        <Button variant="info" size="sm">Xem chi tiết</Button>
                                     </td>
                                 </tr>
                             ))}
@@ -406,7 +414,6 @@ const ManagementPackage = () => {
                                 <th>Thời gian thanh toán</th>
                                 <th>Ngày hết hạn</th>
                                 <th>Trạng thái</th>
-                                <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -448,28 +455,6 @@ const ManagementPackage = () => {
                                     <td>{txn.endDate ? new Date(txn.endDate).toLocaleString('vi-VN') : ''}</td>
                                     <td>
                                         <span className={`badge bg-${txn.status === 'Success' ? 'success' : 'warning'}`}>{txn.status}</span>
-                                    </td>
-                                    <td>
-                                        <Button variant="info" size="sm" className="me-2" onClick={async () => {
-                                            setShowTxnDetail(true);
-                                            setTxnDetailLoading(true);
-                                            setTxnDetailUser(txn.userName);
-                                            try {
-                                                const token = localStorage.getItem('userToken');
-                                                const res = await fetch(`/api/admin/payments/by-user/${txn.userId || txn.userID || txn.user_id || ''}`, {
-                                                    headers: { 'Authorization': `Bearer ${token}` }
-                                                });
-                                                if (!res.ok) throw new Error('Không lấy được chi tiết giao dịch.');
-                                                const data = await res.json();
-                                                setTxnDetail(Array.isArray(data) ? data : []);
-                                            } catch (err) {
-                                                setTxnDetail([]);
-                                                toast.error(err.message);
-                                            } finally {
-                                                setTxnDetailLoading(false);
-                                            }
-                                        }}>Xem</Button>
-                                        <Button variant="secondary" size="sm">Hoàn tiền</Button>
                                     </td>
                                 </tr>
                             ))}
@@ -589,6 +574,20 @@ const ManagementPackage = () => {
                         <Button variant="primary" type="submit">Xác nhận cấp gói</Button>
                     </Modal.Footer>
                 </Form>
+            </Modal>
+
+            {/* Modal xác nhận xóa gói */}
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa gói</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn xóa gói có ID: <b>{pkgIdToDelete}</b>?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Hủy</Button>
+                    <Button variant="danger" onClick={confirmDeletePkg}>Xóa</Button>
+                </Modal.Footer>
             </Modal>
         </Container>
     );

@@ -57,18 +57,18 @@ const HomePage = () => {
                     console.error('API Error:', response.status, response.statusText);
                     // Fallback to static data if API fails
                     setTopUsers([
-                        { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
-                        { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
-                        { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
+                        // { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
+                        // { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
+                        // { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
                     ]);
                 }
             } catch (error) {
                 console.error('Network Error:', error);
                 // Fallback to static data if network fails
                 setTopUsers([
-                    { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
-                    { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
-                    { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
+                    // { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
+                    // { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
+                    // { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
                 ]);
             } finally {
                 setLoading(false);

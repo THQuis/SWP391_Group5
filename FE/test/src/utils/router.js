@@ -22,7 +22,9 @@ export const ROUTERS = {
     COACH: {
         DASHBOARD: "/coach/dashboard",
         BOOKING: "/coach/managementBooking",
-        MEMBER: "/coach/managemetnMember"
+        MEMBER: "/coach/managementMember",
+        PROFILE: "/coach/profile",
+
     },
 
     ADMIN: {

@@ -537,8 +537,54 @@ function UserBlog() {
                                 className="form-control-custom"
                             />
                             {editImagePreview && (
-                                <div className="image-preview">
-                                    <img src={editImagePreview} alt="preview" className="preview-image" />
+                                <div className="image-preview mt-3 text-center">
+                                    <div className="position-relative d-inline-block">
+                                        <img
+                                            src={editImagePreview}
+                                            alt="preview"
+                                            style={{
+                                                maxWidth: '100%',
+                                                maxHeight: '200px',
+                                                borderRadius: '8px',
+                                                objectFit: 'cover',
+                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                                border: '2px solid #e8ecf0'
+                                            }}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="btn btn-danger btn-sm position-absolute"
+                                            style={{
+                                                top: '5px',
+                                                right: '5px',
+                                                width: '30px',
+                                                height: '30px',
+                                                borderRadius: '50%',
+                                                padding: '0',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                fontSize: '16px',
+                                                fontWeight: 'bold',
+                                                opacity: '0.9',
+                                                transition: 'opacity 0.2s ease'
+                                            }}
+                                            onMouseEnter={(e) => e.target.style.opacity = '1'}
+                                            onMouseLeave={(e) => e.target.style.opacity = '0.9'}
+                                            onClick={() => {
+                                                setEditImagePreview("");
+                                                if (fileEditInputRef.current) {
+                                                    fileEditInputRef.current.value = "";
+                                                }
+                                            }}
+                                            title="Xóa ảnh"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                    <small className="text-muted d-block mt-2">
+                                        Click vào dấu × để xóa ảnh
+                                    </small>
                                 </div>
                             )}
                         </Form.Group>
@@ -596,8 +642,54 @@ function UserBlog() {
                                 className="form-control-custom"
                             />
                             {newImagePreview && (
-                                <div className="image-preview">
-                                    <img src={newImagePreview} alt="preview" className="preview-image" />
+                                <div className="image-preview mt-3 text-center">
+                                    <div className="position-relative d-inline-block">
+                                        <img
+                                            src={newImagePreview}
+                                            alt="preview"
+                                            style={{
+                                                maxWidth: '100%',
+                                                maxHeight: '200px',
+                                                borderRadius: '8px',
+                                                objectFit: 'cover',
+                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                                border: '2px solid #e8ecf0'
+                                            }}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="btn btn-danger btn-sm position-absolute"
+                                            style={{
+                                                top: '5px',
+                                                right: '5px',
+                                                width: '30px',
+                                                height: '30px',
+                                                borderRadius: '50%',
+                                                padding: '0',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                fontSize: '16px',
+                                                fontWeight: 'bold',
+                                                opacity: '0.9',
+                                                transition: 'opacity 0.2s ease'
+                                            }}
+                                            onMouseEnter={(e) => e.target.style.opacity = '1'}
+                                            onMouseLeave={(e) => e.target.style.opacity = '0.9'}
+                                            onClick={() => {
+                                                setNewImagePreview("");
+                                                if (fileInputRef.current) {
+                                                    fileInputRef.current.value = "";
+                                                }
+                                            }}
+                                            title="Xóa ảnh"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                    <small className="text-muted d-block mt-2">
+                                        Click vào dấu × để xóa ảnh
+                                    </small>
                                 </div>
                             )}
                         </Form.Group>

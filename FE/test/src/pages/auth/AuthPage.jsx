@@ -29,6 +29,7 @@ const CountdownTimer = ({ initialTime, onTimeout }) => {
 
 const AuthPage = () => {
     const navigate = useNavigate();
+
     // --- STATES ---
     const [isLoading, setIsLoading] = useState(false);
     // State cho tab chính
@@ -118,13 +119,14 @@ const AuthPage = () => {
             }
 
             localStorage.setItem('memberPackage', memberPackage);
-            console.log('� Final memberPackage set to:', memberPackage);
-            console.log('� API membership data:', data.user.membership);
+            console.log('🎯 Final memberPackage set to:', memberPackage);
+            console.log('🎯 API membership data:', data.user.membership);
+
             // Điều hướng dựa trên vai trò
             if (userRole === 1) {
                 navigate('/admin');
             } else if (userRole === 3) {
-                navigate('/coach');
+                navigate('/coach/managementMember');
             } else {
                 navigate('/User/progress');
             }

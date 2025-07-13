@@ -54,22 +54,17 @@ const HomePage = () => {
                     console.log(`Top 3 ${activeRankingType} Ranking API Response:`, data);
                     setTopUsers(data || []);
                 } else {
-                    console.error('API Error:', response.status, response.statusText);
-                    // Fallback to static data if API fails
-                    setTopUsers([
-                        // { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
-                        // { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
-                        // { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
-                    ]);
+                    console.error('❌ API Error:', response.status, response.statusText);
+                    console.error('🔍 API Endpoint:', endpoint);
+                    console.error('🔑 Token exists:', !!userToken);
+                    // Fallback to empty array when API fails
+                    setTopUsers([]);
                 }
             } catch (error) {
-                console.error('Network Error:', error);
-                // Fallback to static data if network fails
-                setTopUsers([
-                    // { fullName: "Người dùng 1", smokeFreeDays: 365, moneySaved: 1000000, cigarettesDropped: 1825 },
-                    // { fullName: "Người dùng 2", smokeFreeDays: 200, moneySaved: 600000, cigarettesDropped: 1000 },
-                    // { fullName: "Người dùng 3", smokeFreeDays: 150, moneySaved: 450000, cigarettesDropped: 750 }
-                ]);
+                console.error('❌ Network Error:', error);
+                console.error(' Hint: Kiểm tra backend có đang chạy không và proxy config');
+                // Fallback to empty array when network fails  
+                setTopUsers([]);
             } finally {
                 setLoading(false);
             }
@@ -79,6 +74,9 @@ const HomePage = () => {
     }, [activeRankingType]);
 
     const getRankingValue = (user, type) => {
+        // Kiểm tra user tồn tại trước khi truy cập properties
+        if (!user) return '0';
+
         switch (type) {
             case 'smoke-free-days':
                 return `${user.smokeFreeDays || 0} ngày`;
@@ -234,6 +232,14 @@ const HomePage = () => {
                                             </div>
                                             <p className="mt-2 text-muted">Đang tải bảng xếp hạng...</p>
                                         </div>
+                                    ) : topUsers.length === 0 ? (
+                                        <div className="text-center py-5">
+                                            <div style={{ fontSize: 48, opacity: 0.3 }}>🏆</div>
+                                            <h6 className="text-muted mt-2">Chưa có dữ liệu bảng xếp hạng</h6>
+                                            <p className="text-muted mb-0" style={{ fontSize: 14 }}>
+                                                Hãy tham gia và trở thành người đầu tiên!
+                                            </p>
+                                        </div>
                                     ) : (
                                         <div className="row text-center mb-4">
                                             {/* 2nd Place */}
@@ -283,12 +289,11 @@ const HomePage = () => {
                                                         >
                                                             🥈
                                                         </span>
-                                                    </div>
-                                                    <h6 className="mt-2 fw-bold">
+                                                    </div>                                    <h6 className="mt-2 fw-bold">
                                                         {topUsers[1]?.fullName || "Chưa có dữ liệu"}
                                                     </h6>
                                                     <p className="text-muted mb-0" style={{ fontSize: 14 }}>
-                                                        {getRankingValue(topUsers[1], activeRankingType)}
+                                                        {topUsers[1] ? getRankingValue(topUsers[1], activeRankingType) : 'Chưa có dữ liệu'}
                                                     </p>
                                                 </div>
                                             </div>
@@ -345,12 +350,11 @@ const HomePage = () => {
                                                         >
                                                             🏆
                                                         </span>
-                                                    </div>
-                                                    <h5 className="mt-2 fw-bold text-warning">
+                                                    </div>                                    <h5 className="mt-2 fw-bold text-warning">
                                                         {topUsers[0]?.fullName || "Chưa có dữ liệu"}
                                                     </h5>
                                                     <p className="text-muted mb-0" style={{ fontSize: 16 }}>
-                                                        {getRankingValue(topUsers[0], activeRankingType)}
+                                                        {topUsers[0] ? getRankingValue(topUsers[0], activeRankingType) : 'Chưa có dữ liệu'}
                                                     </p>
                                                 </div>
                                             </div>
@@ -407,7 +411,7 @@ const HomePage = () => {
                                                         {topUsers[2]?.fullName || "Chưa có dữ liệu"}
                                                     </h6>
                                                     <p className="text-muted mb-0" style={{ fontSize: 14 }}>
-                                                        {getRankingValue(topUsers[2], activeRankingType)}
+                                                        {topUsers[2] ? getRankingValue(topUsers[2], activeRankingType) : 'Chưa có dữ liệu'}
                                                     </p>
                                                 </div>
                                             </div>

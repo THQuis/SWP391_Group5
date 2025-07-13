@@ -10,7 +10,6 @@ namespace Smoking.DAL.Interfaces.Repositories
     public interface IBlogRepository
     {
         // ================= ADMIN =================
-
         Task<IEnumerable<Blog>> GetAllWithUserAndRoleAsync();
         Task<IEnumerable<Blog>> GetAllByStatusWithUserAndRoleAsync(string status);
         Task<IEnumerable<Blog>> GetAllReportedWithUserAndRoleAsync();
@@ -20,28 +19,27 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task<Blog> GetByIdWithUserAndRoleAsync(int id);
 
         // ================= USER =================
-
         Task<IEnumerable<Blog>> GetAllByUserIdAsync(int userId);
         Task<Blog> GetByIdAsync(int blogId);
         Task<int> CountAllByUserAsync(int userId);
         Task<int> CountByUserAndStatusAsync(int userId, string status);
-        // Get blogs by AuthorId, including User and Role
         Task<IEnumerable<Blog>> GetByAuthorIdWithUserAndRoleAsync(int authorId);
         Task<IEnumerable<Blog>> GetAllPublishedWithUserAndRoleAsync();
-        // Tăng like
-        Task<bool> IncrementLikeAsync(int blogId);
 
-        // Tăng dislike
-        Task<bool> IncrementDislikeAsync(int blogId);
-
-
+        // ================= Reaction =================
+        Task<BlogReaction?> GetReactionAsync(int blogId, int userId);
+        Task AddReactionAsync(BlogReaction reaction);
+        void UpdateReaction(BlogReaction reaction);
+        Task<int> CountReactionsAsync(int blogId, bool isLike);
 
 
         // ================= COMMON =================
-
         Task AddAsync(Blog blog);
         void Update(Blog blog);
         void Delete(Blog blog);
         Task SaveChangesAsync();
+        // Tăng like/dislike truyền thống (nếu vẫn dùng song song)
+        Task<bool> IncrementLikeAsync(int blogId);
+        Task<bool> IncrementDislikeAsync(int blogId);
     }
 }

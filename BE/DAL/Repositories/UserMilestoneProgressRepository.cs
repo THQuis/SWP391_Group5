@@ -20,26 +20,43 @@ namespace Smoking.DAL.Repositories
         // Lấy tất cả tiến trình của người dùng
         public async Task<List<UserMilestoneProgress>> GetByUserIdAsync(int userId)
         {
-            return await _context.UserMilestoneProgress
+            return await _context.UserMilestoneProgresses
                 .Where(up => up.UserID == userId)
-                .Include(up => up.Milestone)  // Bao gồm Milestone
-                .ThenInclude(m => m.PackageMilestones)  // Bao gồm PackageMilestones trong Milestone
+                .Include(up => up.Milestone)
+                    .ThenInclude(m => m.PackageMilestones)
                 .ToListAsync();
         }
 
         // Lấy tiến trình theo ID
         public async Task<UserMilestoneProgress> GetByIdAsync(int id)
         {
-            return await _context.UserMilestoneProgress
+            return await _context.UserMilestoneProgresses
                 .Include(up => up.Milestone)
                 .FirstOrDefaultAsync(up => up.UserMilestoneID == id);
         }
 
-        // Thêm tiến trình vào cơ sở dữ liệu
+        // Thêm tiến trình
         public async Task AddAsync(UserMilestoneProgress userMilestoneProgress)
         {
-            await _context.UserMilestoneProgress.AddAsync(userMilestoneProgress);  // Thêm tiến trình vào DbContext
-            await _context.SaveChangesAsync();  // Lưu thay đổi vào cơ sở dữ liệu
+            await _context.UserMilestoneProgresses.AddAsync(userMilestoneProgress);
+            await _context.SaveChangesAsync();
+        }
+
+        // Lấy theo milestoneId
+        public async Task<IEnumerable<UserMilestoneProgress>> GetByMilestoneIdAsync(int milestoneId)
+        {
+            return await _context.UserMilestoneProgresses
+                .Where(x => x.MilestoneID == milestoneId)
+                .ToListAsync();
+        }
+
+        // Xoá nhiều bản ghi
+        public void RemoveRange(IEnumerable<UserMilestoneProgress> items)
+        {
+            _context.UserMilestoneProgresses.RemoveRange(items);
         }
     }
+
+
 }
+

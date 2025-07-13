@@ -145,16 +145,54 @@ namespace Smoking.BLL.Services
         {
             return await _repo.GetAllPublishedWithUserAndRoleAsync();
         }
-        public async Task<bool> LikeBlogAsync(int blogId)
+        public async Task<bool> ToggleReactionAsync(int blogId, int userId, bool isLike)
         {
-            return await _repo.IncrementLikeAsync(blogId);
+            var existing = await _repo.GetReactionAsync(blogId, userId);
+
+            if (existing == null)
+            {
+                await _repo.AddReactionAsync(new BlogReaction
+                {
+                    BlogId = blogId,
+                    UserId = userId,
+                    IsLike = isLike,
+                    ReactedAt = DateTime.Now
+                });
+            }
+            else
+            {
+                if (existing.IsLike == isLike)
+                {
+                    // Nếu đã like/dislike rồi mà nhấn lại => huỷ
+                    existing.IsLike = null;
+                }
+                else
+                {
+                    existing.IsLike = isLike;
+                    existing.ReactedAt = DateTime.Now;
+                }
+
+                _repo.UpdateReaction(existing);
+            }
+
+            await _repo.SaveChangesAsync(); // 💥 Cần lưu xong rồi mới tính toán lại
+
+            // Cập nhật lại tổng Likes/Dislikes bên bảng Blog
+            var blog = await _repo.GetByIdAsync(blogId);
+            blog.Likes = await _repo.CountReactionsAsync(blogId, true);
+            blog.Dislikes = await _repo.CountReactionsAsync(blogId, false);
+            _repo.Update(blog);
+
+            await _repo.SaveChangesAsync(); // 💥 Phải lưu tiếp sau khi cập nhật blog
+
+            return true;
         }
 
-        public async Task<bool> DislikeBlogAsync(int blogId)
-        {
-            return await _repo.IncrementDislikeAsync(blogId);
-        }
 
+
+        public async Task<int> CountLikesAsync(int blogId) => await _repo.CountReactionsAsync(blogId, true);
+
+        public async Task<int> CountDislikesAsync(int blogId) => await _repo.CountReactionsAsync(blogId, false);
 
     }
 }

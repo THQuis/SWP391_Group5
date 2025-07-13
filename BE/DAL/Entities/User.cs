@@ -63,6 +63,9 @@ namespace Smoking.DAL.Entities
         public ICollection<ConsultationBooking> ConsultationBookingsAsCoach { get; set; } = new List<ConsultationBooking>();
         // Cho coach truy xuất danh sách user được gán
         public ICollection<User> AssignedUsers { get; set; } = new List<User>();
+        public ICollection<BlogReaction> BlogReactions { get; set; } = new List<BlogReaction>();
+        public virtual ICollection<UserMilestoneProgress> UserMilestoneProgresses { get; set; } = new List<UserMilestoneProgress>();
+
 
     }
 }

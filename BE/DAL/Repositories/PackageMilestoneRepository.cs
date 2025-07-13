@@ -50,5 +50,16 @@ namespace Smoking.DAL.Repositories
         {
             _context.PackageMilestones.Remove(milestone);
         }
+        public async Task<IEnumerable<PackageMilestone>> GetByMilestoneIdAsync(int milestoneId)
+        {
+            return await _context.PackageMilestones
+                .Where(pm => pm.MilestoneID == milestoneId)
+                .ToListAsync();
+        }
+
+        public void RemoveRange(IEnumerable<PackageMilestone> entities)
+        {
+            _context.PackageMilestones.RemoveRange(entities);
+        }
     }
 }

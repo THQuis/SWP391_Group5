@@ -22,6 +22,7 @@ namespace Smoking.DAL.Entities
         public MilestoneGroup MilestoneGroup { get; set; }
 
         public virtual ICollection<PackageMilestone> PackageMilestones { get; set; } = new List<PackageMilestone>();
+        public virtual ICollection<UserMilestoneProgress> UserMilestoneProgresses { get; set; } = new List<UserMilestoneProgress>();
 
     }
 

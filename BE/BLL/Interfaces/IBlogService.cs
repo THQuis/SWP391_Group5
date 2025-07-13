@@ -31,8 +31,9 @@ namespace Smoking.BLL.Interfaces
         Task<int> CountAllByUserAsync(int userId);
         Task<int> CountByUserAndStatusAsync(int userId, string status);
         Task<bool> ReportBlogAsync(int blogId);
-        Task<bool> LikeBlogAsync(int blogId);
-        Task<bool> DislikeBlogAsync(int blogId);
+        Task<bool> ToggleReactionAsync(int blogId, int userId, bool isLike);
+        Task<int> CountLikesAsync(int blogId);
+        Task<int> CountDislikesAsync(int blogId);
 
     }
 }

@@ -16,6 +16,7 @@
         public DateTime CreatedDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public string? ImageUrl { get; set; }
+        public string? AvatarUrl { get; set; } 
     }
 
     // ✅ Model dành cho Admin tạo blog

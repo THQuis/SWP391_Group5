@@ -128,11 +128,19 @@ namespace Smoking.API.Controllers.Admin
             if (milestone == null)
                 return NotFound(new { message = "Milestone không tồn tại." });
 
+            // Lấy các bản ghi liên kết
+            var relatedPackages = await _unitOfWork.PackageMilestones.GetByMilestoneIdAsync(id);
+
+            // Xoá các bản ghi liên kết trước
+            if (relatedPackages.Any())
+                _unitOfWork.PackageMilestones.RemoveRange(relatedPackages);
+
             _unitOfWork.Milestones.Delete(milestone);
             await _unitOfWork.CompleteAsync();
 
-            return Ok(new { message = "Xoá milestone thành công." });
+            return Ok(new { message = "Xoá milestone và dữ liệu liên kết thành công." });
         }
+
 
         [HttpPut("update")]
         public async Task<IActionResult> Update(int id, [FromBody] MilestoneRequest model)

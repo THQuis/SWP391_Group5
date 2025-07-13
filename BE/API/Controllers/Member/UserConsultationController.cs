@@ -98,7 +98,7 @@ namespace Smoking.API.Controllers.Member
                 UserID = userId,
                 CoachID = request.CoachId,
                 BookingDate = consultationDateTime,
-                Duration = request.Duration,
+                //Duration = request.Duration,
                 Status = "Pending",
                 CreatedDate = DateTime.Now,
                 Notes = request.Notes

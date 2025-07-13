@@ -44,7 +44,8 @@ namespace Smoking.API.Controllers.Member
                 RoleName = b.User?.Role?.RoleName ?? "Unknown",
                 CreatedDate = b.CreatedDate,
                 LastModifiedDate = b.LastModifiedDate,
-                ImageUrl = b.ImageUrl
+                ImageUrl = b.ImageUrl,
+                AvatarUrl = b.User?.ProfilePicture ?? "Unknown"
             }));
         }
 
@@ -208,22 +209,17 @@ namespace Smoking.API.Controllers.Member
         [HttpPost("like/{blogId}")]
         public async Task<IActionResult> LikeBlog(int blogId)
         {
-            var result = await _blogService.LikeBlogAsync(blogId);
-            if (!result)
-                return NotFound(new { Message = "Không tìm thấy blog để Like." });
-
-            return Ok(new { Message = "Đã thích bài viết." });
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _blogService.ToggleReactionAsync(blogId, userId, true);
+            return Ok(new { Message = "Đã xử lý Like" });
         }
 
-        // [POST] Bấm Dislike
         [HttpPost("dislike/{blogId}")]
         public async Task<IActionResult> DislikeBlog(int blogId)
         {
-            var result = await _blogService.DislikeBlogAsync(blogId);
-            if (!result)
-                return NotFound(new { Message = "Không tìm thấy blog để Dislike." });
-
-            return Ok(new { Message = "Đã không thích bài viết." });
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _blogService.ToggleReactionAsync(blogId, userId, false);
+            return Ok(new { Message = "Đã xử lý Dislike" });
         }
 
     }

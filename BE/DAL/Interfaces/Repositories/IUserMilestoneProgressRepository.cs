@@ -9,5 +9,8 @@ namespace Smoking.DAL.Interfaces.Repositories
         Task<List<UserMilestoneProgress>> GetByUserIdAsync(int userId);
         Task<UserMilestoneProgress> GetByIdAsync(int id);
         Task AddAsync(UserMilestoneProgress userMilestoneProgress);
+        Task<IEnumerable<UserMilestoneProgress>> GetByMilestoneIdAsync(int milestoneId);
+        void RemoveRange(IEnumerable<UserMilestoneProgress> items);
+
     }
 }

@@ -17,8 +17,7 @@ namespace Smoking.DAL.Repositories
             _context = context;
         }
 
-        // ================= ADMIN =================
-
+        // ============ ADMIN ============
         public async Task<IEnumerable<Blog>> GetAllWithUserAndRoleAsync()
         {
             return await _context.Blogs
@@ -71,8 +70,7 @@ namespace Smoking.DAL.Repositories
                 .ToListAsync();
         }
 
-        // ================= USER =================
-
+        // ============ USER ============
         public async Task<IEnumerable<Blog>> GetAllByUserIdAsync(int userId)
         {
             return await _context.Blogs
@@ -80,7 +78,6 @@ namespace Smoking.DAL.Repositories
                 .ToListAsync();
         }
 
-        // Lấy blog theo id
         public async Task<Blog> GetByIdAsync(int blogId)
         {
             return await _context.Blogs
@@ -93,14 +90,21 @@ namespace Smoking.DAL.Repositories
         public async Task<int> CountByUserAndStatusAsync(int userId, string status)
             => await _context.Blogs.CountAsync(b => b.AuthorId == userId && b.Status == status);
 
-        // ================= COMMON =================
+        public async Task<IEnumerable<Blog>> GetAllPublishedWithUserAndRoleAsync()
+        {
+            return await _context.Blogs
+                .Include(b => b.User)
+                .ThenInclude(u => u.Role)
+                .Where(b => b.Status == "Published")
+                .ToListAsync();
+        }
 
+        // ============ COMMON ============
         public async Task AddAsync(Blog blog)
         {
             await _context.Blogs.AddAsync(blog);
         }
 
-        // Update blog
         public void Update(Blog blog)
         {
             _context.Blogs.Update(blog);
@@ -116,25 +120,27 @@ namespace Smoking.DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        // Tăng số lượng báo cáo cho một blog
-        public async Task<bool> IncrementReportCountAsync(int blogId)
+        // ============ Reaction ============
+        public async Task<BlogReaction?> GetReactionAsync(int blogId, int userId)
         {
-            var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.BlogId == blogId);
-            if (blog == null) return false;
-
-            blog.ReportCount += 1;
-            _context.Blogs.Update(blog);
-            await _context.SaveChangesAsync();
-            return true;
+            return await _context.BlogReactions
+                .FirstOrDefaultAsync(r => r.BlogId == blogId && r.UserId == userId);
         }
 
-        public async Task<IEnumerable<Blog>> GetAllPublishedWithUserAndRoleAsync()
+        public async Task AddReactionAsync(BlogReaction reaction)
         {
-            return await _context.Blogs
-                .Include(b => b.User)
-                .ThenInclude(u => u.Role)
-                .Where(b => b.Status == "Published")
-                .ToListAsync();
+            await _context.BlogReactions.AddAsync(reaction);
+        }
+
+        public void UpdateReaction(BlogReaction reaction)
+        {
+            _context.BlogReactions.Update(reaction);
+        }
+
+        public async Task<int> CountReactionsAsync(int blogId, bool isLike)
+        {
+            return await _context.BlogReactions
+                .CountAsync(r => r.BlogId == blogId && r.IsLike == isLike);
         }
         public async Task<bool> IncrementLikeAsync(int blogId)
         {
@@ -157,7 +163,6 @@ namespace Smoking.DAL.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-
 
     }
 }

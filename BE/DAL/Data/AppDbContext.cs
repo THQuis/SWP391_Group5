@@ -37,7 +37,8 @@ namespace Smoking.DAL.Data
         public DbSet<Milestone> Milestones { get; set; }
         public DbSet<MilestoneGroup> MilestoneGroups { get; set; }
         public DbSet<PackageMilestone> PackageMilestones { get; set; }
-        public DbSet<UserMilestoneProgress> UserMilestoneProgress { get; set; }
+        public DbSet<UserMilestoneProgress> UserMilestoneProgresses { get; set; }
+        public DbSet<BlogReaction> BlogReactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -130,6 +131,23 @@ namespace Smoking.DAL.Data
             modelBuilder.Entity<Achievement>()
                 .Property(a => a.MoneySavedRequired)
                 .HasPrecision(18, 2);
+
+            // Milestone - UserMilestoneProgress
+            modelBuilder.Entity<UserMilestoneProgress>()
+                .HasOne(up => up.Milestone)
+                .WithMany(m => m.UserMilestoneProgresses)
+                .HasForeignKey(up => up.MilestoneID)
+                .OnDelete(DeleteBehavior.Cascade); 
+
+
+            // User - UserMilestoneProgress
+            modelBuilder.Entity<UserMilestoneProgress>()
+                .HasOne(ump => ump.User)
+                .WithMany(u => u.UserMilestoneProgresses)
+                .HasForeignKey(ump => ump.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         }
     }
 }

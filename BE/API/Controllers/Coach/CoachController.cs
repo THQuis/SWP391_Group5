@@ -107,7 +107,7 @@ namespace Smoking.API.Controllers.Coach
                 c.ScheduledDate,
                 c.IsCompleted,
                 c.Notes,
-                c.ImageUrl
+                HasImage = c.ImageData != null
             }));
         }
 

@@ -19,7 +19,7 @@ public class UserQuitChallengeService : IUserQuitChallengeService
     public async Task GenerateChallengesAsync(int quitPlanId, int userId, DateTime startDate)
     {
         var templates = (await _unitOfWork.QuitChallengeTemplates.GetAllTemplatesAsync())
-            .OrderBy(t => t.Id) // hoặc thêm SortOrder nếu có
+            .OrderBy(t => t.Id)
             .ToList();
 
         var existing = await _unitOfWork.UserQuitChallenges
@@ -40,11 +40,12 @@ public class UserQuitChallengeService : IUserQuitChallengeService
                 UserId = userId,
                 QuitPlanId = quitPlanId,
                 TemplateId = template.Id,
-                ChallengeDate = startDate.AddDays(i), // ✅ tính theo thứ tự
+                ChallengeDate = startDate.AddDays(i),
                 ScheduledDate = DateTime.UtcNow,
                 IsCompleted = false,
                 Notes = null,
-                ImageUrl = null
+                ImageData = null,
+                ImageContentType = null
             });
         }
 
@@ -55,14 +56,13 @@ public class UserQuitChallengeService : IUserQuitChallengeService
         }
     }
 
-
     public async Task<List<UserQuitChallenge>> GetChallengesForWeekAsync(int userId, DateTime startOfWeek)
     {
         var endOfWeek = startOfWeek.AddDays(6);
         return await _unitOfWork.UserQuitChallenges.GetChallengesForUserAsync(userId, startOfWeek, endOfWeek);
     }
 
-    public async Task MarkAsCompletedAsync(int challengeId, string? notes, string? imageUrl)
+    public async Task MarkAsCompletedAsync(int challengeId, string? notes, byte[]? imageData, string? contentType)
     {
         var challenge = await _unitOfWork.UserQuitChallenges.GetByIdAsync(challengeId);
         if (challenge == null)
@@ -92,7 +92,8 @@ public class UserQuitChallengeService : IUserQuitChallengeService
 
         challenge.IsCompleted = true;
         challenge.Notes = notes;
-        challenge.ImageUrl = imageUrl;
+        challenge.ImageData = imageData;
+        challenge.ImageContentType = contentType;
 
         await _unitOfWork.CompleteAsync();
     }
@@ -121,7 +122,8 @@ public class UserQuitChallengeService : IUserQuitChallengeService
             {
                 ordered[i].IsCompleted = false;
                 ordered[i].Notes = null;
-                ordered[i].ImageUrl = null;
+                ordered[i].ImageData = null;
+                ordered[i].ImageContentType = null;
             }
 
             await _unitOfWork.CompleteAsync();
@@ -138,7 +140,6 @@ public class UserQuitChallengeService : IUserQuitChallengeService
         if (quitPlan == null)
             throw new InvalidOperationException("Người dùng chưa có kế hoạch cai thuốc.");
 
-        // Kiểm tra stage trước đó
         if (stage > 1)
         {
             var previousStage = stage - 1;
@@ -155,7 +156,7 @@ public class UserQuitChallengeService : IUserQuitChallengeService
 
         var templates = (await _unitOfWork.QuitChallengeTemplates
             .FindAsync(t => t.Stage == stage))
-            .OrderBy(t => t.Id) // hoặc theo thứ tự nào bạn định nghĩa
+            .OrderBy(t => t.Id)
             .ToList();
 
         var existing = await _unitOfWork.UserQuitChallenges
@@ -163,7 +164,6 @@ public class UserQuitChallengeService : IUserQuitChallengeService
 
         var existingTemplateIds = existing.Select(e => e.TemplateId).ToHashSet();
 
-        // 🔁 ChallengeDate tính từ ngày nhận (ngày hiện tại)
         var assignDate = DateTime.Today;
 
         var newChallenges = new List<UserQuitChallenge>();
@@ -182,7 +182,8 @@ public class UserQuitChallengeService : IUserQuitChallengeService
                 ScheduledDate = DateTime.UtcNow,
                 IsCompleted = false,
                 Notes = null,
-                ImageUrl = null
+                ImageData = null,
+                ImageContentType = null
             });
         }
 
@@ -194,7 +195,6 @@ public class UserQuitChallengeService : IUserQuitChallengeService
 
         return newChallenges.Count;
     }
-
 
     public async Task<List<UserQuitChallenge>> GetProgressiveChallengesForWeekAsync(int userId, DateTime weekStart, int stage)
     {
@@ -238,8 +238,7 @@ public class UserQuitChallengeService : IUserQuitChallengeService
 
     public async Task<IEnumerable<UserQuitChallenge>> GetChallengesForStageAsync(int userId, int stage)
     {
-        return await _unitOfWork.UserQuitChallenges
-            .GetByUserIdAndStageAsync(userId, stage);
+        return await _unitOfWork.UserQuitChallenges.GetByUserIdAndStageAsync(userId, stage);
     }
 
     public async Task<List<UserQuitChallenge>> GetAllChallengesAsync(int userId)

@@ -78,11 +78,15 @@ namespace Smoking.DAL.Repositories
         public async Task<List<User>> GetUsersWithPendingCoachAsync()
         {
             return await _context.Users
-                .Include(u => u.PendingCoach) // Include thông tin coach được yêu cầu
+                .Include(u => u.PendingCoach)
                 .Where(u => u.PendingCoachId != null)
                 .ToListAsync();
         }
 
-
+        public async Task<int> CountByRoleNameAsync(string roleName)
+        {
+            return _context.Users
+                .Count(u => u.Role.RoleName == roleName && u.Status == "Active");
+        }
     }
 }

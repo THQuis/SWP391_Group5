@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Smoking.API.Models.User;
+using Smoking.DAL.Entities;
 
 [ApiController]
 [Route("api/user-challenges")]
@@ -70,9 +71,7 @@ public class UserQuitChallengeController : ControllerBase
             bool isLocked = false;
 
             if (i == 0)
-            {
                 isLocked = challenge.ChallengeDate > today;
-            }
             else
             {
                 var prev = ordered[i - 1];
@@ -80,9 +79,7 @@ public class UserQuitChallengeController : ControllerBase
             }
 
             if (isLocked)
-            {
                 allowNext = false;
-            }
 
             result.Add(new
             {
@@ -92,38 +89,30 @@ public class UserQuitChallengeController : ControllerBase
                 challenge.ChallengeDate,
                 challenge.IsCompleted,
                 challenge.Notes,
-                ImageUrl = challenge.ImageUrl,
+                HasImage = challenge.ImageData != null,
                 IsLocked = isLocked
             });
         }
 
         var todayChallenge = ordered.FirstOrDefault(c => c.ChallengeDate.Date == today);
-
         if (todayChallenge != null)
         {
             var index = ordered.IndexOf(todayChallenge);
             bool isLocked = false;
 
             if (index == 0)
-            {
                 isLocked = todayChallenge.ChallengeDate > today;
-            }
             else
             {
                 var prev = ordered[index - 1];
                 isLocked = todayChallenge.ChallengeDate > today || !prev.IsCompleted;
             }
 
-            if (isLocked)
-            {
-                message = "🔒 Thử thách hôm nay chưa được mở. Hãy hoàn thành thử thách hôm trước.";
-            }
-            else
-            {
-                message = todayChallenge.IsCompleted
+            message = isLocked
+                ? "🔒 Thử thách hôm nay chưa được mở. Hãy hoàn thành thử thách hôm trước."
+                : todayChallenge.IsCompleted
                     ? "✅ Bạn đã hoàn thành thử thách hôm nay!"
                     : "📌 Hôm nay bạn có thử thách mới cần hoàn thành.";
-            }
         }
         else
         {
@@ -139,40 +128,38 @@ public class UserQuitChallengeController : ControllerBase
         });
     }
 
-
     [HttpPost("complete")]
     public async Task<IActionResult> CompleteChallenge([FromForm] CompleteChallengeForm request)
     {
         try
         {
-            string? imageUrl = null;
+            byte[]? imageData = null;
+            string? contentType = null;
 
             if (request.Image != null && request.Image.Length > 0)
             {
-                var fileName = $"{Guid.NewGuid()}_{request.Image.FileName}";
-                var folderPath = Path.Combine("wwwroot", "uploads", "challenge-images");
-
-                if (!Directory.Exists(folderPath))
-                    Directory.CreateDirectory(folderPath);
-
-                var filePath = Path.Combine(folderPath, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await request.Image.CopyToAsync(stream);
-                }
-
-                imageUrl = $"/uploads/challenge-images/{fileName}";
+                using var memoryStream = new MemoryStream();
+                await request.Image.CopyToAsync(memoryStream);
+                imageData = memoryStream.ToArray();
+                contentType = request.Image.ContentType;
             }
 
-            await _challengeService.MarkAsCompletedAsync(request.ChallengeId, request.Notes, imageUrl);
+            await _challengeService.MarkAsCompletedAsync(
+                request.ChallengeId,
+                request.Notes,
+                imageData,
+                contentType
+            );
 
             return Ok(new
             {
                 success = true,
-                imageUrl,
+                hasImage = imageData != null,
+                contentType,
+                imageBase64 = imageData != null ? Convert.ToBase64String(imageData) : null,
                 message = "🎉 Đánh dấu hoàn thành thử thách thành công!"
             });
+
         }
         catch (Exception ex)
         {
@@ -228,14 +215,14 @@ public class UserQuitChallengeController : ControllerBase
                         c.ChallengeDate,
                         c.IsCompleted,
                         c.Notes,
-                        c.ImageUrl,
+                        HasImage = c.ImageData != null,
                         IsLocked = false
                     }).ToList()
                 });
             }
             else
             {
-                var templates = allTemplates.Where(t => t.Stage == stage).OrderBy(t => t.Id).ToList(); // ✅ sửa tại đây
+                var templates = allTemplates.Where(t => t.Stage == stage).OrderBy(t => t.Id).ToList();
 
                 result.Add(new
                 {
@@ -250,7 +237,7 @@ public class UserQuitChallengeController : ControllerBase
                         ChallengeDate = (DateTime?)null,
                         IsCompleted = false,
                         Notes = (string?)null,
-                        ImageUrl = (string?)null,
+                        HasImage = false,
                         IsLocked = true
                     }).ToList()
                 });
@@ -260,4 +247,13 @@ public class UserQuitChallengeController : ControllerBase
         return Ok(new { success = true, data = result });
     }
 
+    //[HttpGet("{challengeId}/image")]
+    //public async Task<IActionResult> GetChallengeImage(int challengeId)
+    //{
+    //    var challenge = await _challengeService.GetChallengeByIdAsync(challengeId);
+    //    if (challenge == null || challenge.ImageData == null || string.IsNullOrEmpty(challenge.ImageContentType))
+    //        return NotFound(new { success = false, message = "Ảnh không tồn tại." });
+
+    //    return File(challenge.ImageData, challenge.ImageContentType);
+    //}
 }

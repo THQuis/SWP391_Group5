@@ -472,6 +472,18 @@
         }
       }
     },
+    "/api/Admin/user-counts": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/admin/consultation/all-appointments": {
       "get": {
         "tags": [
@@ -657,17 +669,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MembershipPackage"
+                "$ref": "#/components/schemas/AdminCreatePackageDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/MembershipPackage"
+                "$ref": "#/components/schemas/AdminCreatePackageDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/MembershipPackage"
+                "$ref": "#/components/schemas/AdminCreatePackageDto"
               }
             }
           }
@@ -3579,6 +3591,44 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AdminCreatePackageDto": {
+        "required": [
+          "duration",
+          "packageName",
+          "packageType",
+          "price"
+        ],
+        "type": "object",
+        "properties": {
+          "packageName": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "packageType": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "maximum": 100000000,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "duration": {
+            "maximum": 120,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

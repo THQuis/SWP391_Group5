@@ -19,12 +19,15 @@ namespace Smoking.API.Controllers.Admin
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMailService _mailService;
+        private readonly IUserService _userService;
 
-        public AdminController(IUnitOfWork unitOfWork, IMailService mailService)
+        public AdminController(IUnitOfWork unitOfWork, IMailService mailService, IUserService userService)
         {
             _unitOfWork = unitOfWork;
             _mailService = mailService;
+            _userService = userService;
         }
+
 
 
         // 1️ Lấy danh sách User
@@ -350,6 +353,19 @@ namespace Smoking.API.Controllers.Admin
                 RequestedCoachId = u.PendingCoachId,
                  Reason = u.CoachChangeReason
             }));
+        }
+
+        [HttpGet("user-counts")]
+        public async Task<IActionResult> GetUserCounts()
+        {
+            int coachCount = await _userService.CountUsersByRoleAsync("Coach");
+            int memberCount = await _userService.CountUsersByRoleAsync("Member");
+
+            return Ok(new
+            {
+                CoachCount = coachCount,
+                MemberCount = memberCount
+            });
         }
 
 

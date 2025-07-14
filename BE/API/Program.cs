@@ -154,7 +154,8 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "swagger";
     });
 }
-
+app.UseStaticFiles();
+app.UseDefaultFiles();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

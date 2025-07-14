@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Smoking.API.Models.Admin;
+using Smoking.API.Models.Admin.Smoking.API.Models.Admin;
 using Smoking.DAL.Entities;
 using Smoking.DAL.Interfaces;
 using Smoking.DAL.Interfaces.Repositories;
@@ -20,6 +20,7 @@ namespace Smoking.API.Controllers.Admin
             _unitOfWork = unitOfWork;
         }
 
+        // Lấy danh sách user membership
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUserMemberships()
         {
@@ -40,7 +41,7 @@ namespace Smoking.API.Controllers.Admin
             return Ok(result);
         }
 
-        // ✅ Admin cập nhật gói thành viên cho người dùng (không cần thanh toán)
+        // Gán gói thành viên cho user (Admin assign, không thanh toán)
         [HttpPost("assign")]
         public async Task<IActionResult> AssignMembershipToUser([FromBody] AdminUpdateMembershipDto dto)
         {
@@ -52,8 +53,8 @@ namespace Smoking.API.Controllers.Admin
 
             var now = DateTime.Now;
             var end = package.Duration > 0
-            ? now.AddMonths(package.Duration)
-            : DateTime.MaxValue;
+                ? now.AddMonths(package.Duration)
+                : DateTime.MaxValue;
 
             var existing = await _unitOfWork.UserMemberships.GetActiveByUserIdAsync(dto.UserId);
             if (existing != null)
@@ -81,7 +82,7 @@ namespace Smoking.API.Controllers.Admin
             return Ok(new { message = "Cập nhật thành công" });
         }
 
-        // ✅ Xem danh sách tất cả các gói thành viên
+        // Lấy danh sách tất cả các gói
         [HttpGet("packages")]
         public async Task<IActionResult> GetAllPackages()
         {
@@ -100,18 +101,36 @@ namespace Smoking.API.Controllers.Admin
             return Ok(result);
         }
 
-        [HttpPost("packages")]
-        public async Task<IActionResult> CreatePackage([FromBody] MembershipPackage package)
+        // Tạo gói thành viên mới
+        [HttpPost("createpackages")]
+        public async Task<IActionResult> CreatePackage([FromBody] AdminCreatePackageDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _unitOfWork.MembershipPackages.AddAsync(package);
+            // Kiểm tra tên gói đã tồn tại chưa
+            var existing = await _unitOfWork.MembershipPackages
+                .FindFirstOrDefaultAsync(p => p.PackageName == dto.PackageName);
+            if (existing != null)
+                return BadRequest("❌ Tên gói đã tồn tại. Vui lòng chọn tên khác.");
+
+            var newPackage = new MembershipPackage
+            {
+                PackageName = dto.PackageName,
+                PackageType = dto.PackageType,
+                Description = dto.Description ?? "",
+                Price = dto.Price,
+                Duration = dto.Duration
+            };
+
+            await _unitOfWork.MembershipPackages.AddAsync(newPackage);
             await _unitOfWork.CompleteAsync();
-            return Ok(new { message = "Tạo gói thành công", package });
+
+            return Ok(new { message = "✅ Tạo gói thành công", newPackage });
         }
 
-        [HttpPut("packages/{id}")]
+        // Cập nhật gói thành viên
+        [HttpPut("Updatepackages/{id}")]
         public async Task<IActionResult> UpdatePackage(int id, [FromBody] MembershipPackage updatedPackage)
         {
             var package = await _unitOfWork.MembershipPackages.GetByIdAsync(id);
@@ -130,14 +149,14 @@ namespace Smoking.API.Controllers.Admin
             return Ok(new { message = "Cập nhật gói thành công", package });
         }
 
-        [HttpDelete("packages/{id}")]
+        // Xóa gói thành viên
+        [HttpDelete("Deletepackages/{id}")]
         public async Task<IActionResult> DeletePackage(int id)
         {
             var package = await _unitOfWork.MembershipPackages.GetByIdAsync(id);
             if (package == null)
                 return NotFound("Không tìm thấy gói");
 
-            // Kiểm tra xem gói có đang được dùng không
             var inUse = await _unitOfWork.UserMemberships.AnyAsync(m => m.PackageID == id);
             if (inUse)
                 return BadRequest("Không thể xoá vì có người dùng đang sử dụng gói này.");
@@ -147,6 +166,5 @@ namespace Smoking.API.Controllers.Admin
 
             return Ok(new { message = "Xoá gói thành công" });
         }
-
     }
 }

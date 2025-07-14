@@ -461,8 +461,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "package",
-        "Type": "Smoking.DAL.Entities.MembershipPackage",
+        "Name": "dto",
+        "Type": "Smoking.API.Models.Admin.Smoking.API.Models.Admin.AdminCreatePackageDto",
         "IsRequired": true
       }
     ],
@@ -896,6 +896,16 @@
         "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminController",
+    "Method": "GetUserCounts",
+    "RelativePath": "api/Admin/user-counts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

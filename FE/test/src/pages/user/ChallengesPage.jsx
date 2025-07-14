@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
-    Container, Tabs, Tab, Card, Button, Spinner,
-    Collapse, Form, Image, Row, Col, ListGroup, Alert, ProgressBar, Badge
+    Container, Card, Button, Spinner,
+    Collapse, Form, Image, ListGroup, Alert
 } from "react-bootstrap";
 import {
-    FaCheckCircle, FaBullseye, FaLock,
+    FaCheckCircle, FaLock,
     FaCalendarAlt, FaEdit, FaImage,
     FaUndo, FaPencilAlt, FaCamera,
     FaCloudUploadAlt, FaTimes, FaArrowRight, FaUnlock,
@@ -26,7 +26,6 @@ const ChallengePage = () => {
     const [note, setNote] = useState("");
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
-    const [missionNotes, setMissionNotes] = useState({});
     const [showSuccess, setShowSuccess] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
@@ -62,16 +61,58 @@ const ChallengePage = () => {
     }, [userId, token]);
 
     // Khi đổi mission, load note/image preview
-    const handleToggleMission = (mission) => {
+    const handleToggleMission = async (mission) => {
         setShowSuccess(false);
         if (expandedMissionId === mission.id) {
             setExpandedMissionId(null);
         } else {
             setExpandedMissionId(mission.id);
-            // Lấy lại note/image từ dữ liệu backend hoặc local nếu có
             setNote(mission.notes || "");
-            setImagePreview(mission.imageUrl ? `${mission.imageUrl}` : null);
             setImageFile(null);
+            // Nếu đã hoàn thành và có ImageData (từ API mới) thì tạo url động
+            if (mission.isCompleted && mission.imageData) {
+                // Nếu là base64, tạo url động
+                let url = null;
+                try {
+                    // Ưu tiên lấy contentType từ backend, nếu không có thì mặc định là jpeg
+                    const contentType = mission.imageData.startsWith("/9j/") ? "image/jpeg" : "image/png";
+                    url = `data:${contentType};base64,${mission.imageData}`;
+                } catch {
+                    url = null;
+                }
+                setImagePreview(url);
+                // Cập nhật imageUrl cho mission trong stageList để lần sau không phải tạo lại
+                setStageList(prev => prev.map(stage => ({
+                    ...stage,
+                    challenges: stage.challenges.map(m =>
+                        m.id === mission.id ? { ...m, imageUrl: url } : m
+                    )
+                })));
+            } else if (mission.isCompleted && mission.hasImage && !mission.imageUrl) {
+                // Nếu có HasImage mà không có imageData, fallback gọi API lấy ảnh như cũ
+                try {
+                    const res = await fetch(`/api/user-challenges/${mission.id}/image`, {
+                        headers: { "Authorization": `Bearer ${token}` }
+                    });
+                    if (res.ok) {
+                        const blob = await res.blob();
+                        const url = URL.createObjectURL(blob);
+                        setImagePreview(url);
+                        setStageList(prev => prev.map(stage => ({
+                            ...stage,
+                            challenges: stage.challenges.map(m =>
+                                m.id === mission.id ? { ...m, imageUrl: url } : m
+                            )
+                        })));
+                    } else {
+                        setImagePreview(null);
+                    }
+                } catch {
+                    setImagePreview(null);
+                }
+            } else {
+                setImagePreview(mission.imageUrl ? `${mission.imageUrl}` : null);
+            }
         }
     };
 
@@ -110,7 +151,11 @@ const ChallengePage = () => {
                 });
                 const result = await res.json();
                 if (result.success) {
-                    // Cập nhật UI cho mission vừa hoàn thành, show ngay notes và ảnh vừa gửi
+                    // Xử lý ảnh trả về dạng base64
+                    let imageUrl = null;
+                    if (result.imageBase64 && result.contentType) {
+                        imageUrl = `data:${result.contentType};base64,${result.imageBase64}`;
+                    }
                     setStageList(prev =>
                         prev.map(stage => ({
                             ...stage,
@@ -120,12 +165,13 @@ const ChallengePage = () => {
                                         ...m,
                                         isCompleted: true,
                                         notes: note,
-                                        imageUrl: result.imageUrl || m.imageUrl
+                                        imageUrl: imageUrl
                                     }
                                     : m
                             )
                         }))
                     );
+                    setImagePreview(imageUrl); // Hiển thị ngay ảnh vừa gửi
                     setShowSuccess(true);
                     setSaving(false);
                     setTimeout(() => {
@@ -225,7 +271,7 @@ const ChallengePage = () => {
                                         <FaMedal />
                                     </div>
                                     <div className="stage-info">
-                                        <div className="stage-name">Giai đoạn {stage.stage}</div>
+                                        <div className="stage-name">{stage.stageTitle}</div>
                                         <div className="stage-status">{stage.stageStatus}</div>
                                     </div>
                                     {stage.stageStatus?.includes('Đã nhận') && (
@@ -281,7 +327,7 @@ const ChallengePage = () => {
                                     <div className="unlock-stage-section">
                                         <div className="unlock-content">
                                             <FaLock className="lock-icon" />
-                                            <h3>Giai đoạn {activeStageObj.stage} chưa được mở khóa</h3>
+                                            <h3>{activeStageObj.stageTitle} chưa được mở khóa</h3>
                                             <p>Bắt đầu thử thách mới để tiếp tục hành trình của bạn</p>
                                             <Button
                                                 className="unlock-button"
@@ -315,7 +361,7 @@ const ChallengePage = () => {
                                                     <>
                                                         <div className="button-content">
                                                             <FaUnlock className="unlock-icon" />
-                                                            <span>Mở khóa Giai đoạn {activeStageObj.stage}</span>
+                                                            <span>Mở khóa {activeStageObj.stageTitle}</span>
                                                         </div>
                                                         <div className="hover-effect">
                                                             <FaArrowRight className="arrow-icon" />

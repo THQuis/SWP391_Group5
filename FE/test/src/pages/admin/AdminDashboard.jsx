@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Alert } from 'react-bootstrap';
 import ProgressPieChart from '../../components/Chart/ProgressPieChart';
 import FeedbackBarChart from '../../components/Chart/FeedbackBarChart';
 import RevenueLineChart from '../../components/Chart/RevenueLineChart';
@@ -16,23 +16,54 @@ const AdminDashboard = () => {
         totalConsultations: 0,
     });
 
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await fetch('/api/admin/stats'); // gọi API
-                const data = await res.json();
-                setStats({
-                    memberCount: data.memberCount,
-                    coachCount: data.coachCount,
-                    revenue: data.totalRevenue,
-                    acceptedNotifications: data.acceptedNotifications,
-                    activeConsultations: data.activeConsultations,
-                    totalConsultations: data.totalConsultations,
+                setLoading(true);
+                setError(null);
+
+                // Lấy token từ localStorage
+                const token = localStorage.getItem("userToken");
+
+                if (!token) {
+                    setError("Không tìm thấy token xác thực");
+                    setLoading(false);
+                    return;
+                }
+
+                // Gọi API để lấy số lượng user và coach
+                const userCountRes = await fetch('/api/Admin/user-counts', {
+                    method: 'GET',
+                    headers: {
+                        'accept': '*/*',
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
+
+                if (userCountRes.ok) {
+                    const userCountData = await userCountRes.json();
+                    setStats(prevStats => ({
+                        ...prevStats,
+                        memberCount: userCountData.memberCount,
+                        coachCount: userCountData.coachCount,
+                    }));
+                } else {
+                    setError(`Lỗi API: ${userCountRes.status} - ${userCountRes.statusText}`);
+                }
+
+                // Có thể thêm các API khác để lấy thông tin khác
+                // const revenueRes = await fetch('/api/admin/revenue', { headers: ... });
+                // const notificationRes = await fetch('/api/admin/notifications', { headers: ... });
 
             } catch (err) {
                 console.error('Lỗi khi tải thống kê:', err);
+                setError('Có lỗi xảy ra khi tải dữ liệu');
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -41,19 +72,31 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard">
+            {error && (
+                <Alert variant="danger" className="mb-3">
+                    <strong>Lỗi:</strong> {error}
+                </Alert>
+            )}
+
             {/* Hàng ngang 3 thông số */}
             <div className="stats-row">
                 <div className="stat-card">
                     <div className="label">Member</div>
-                    <div className="value">{stats.memberCount}</div>
+                    <div className="value">
+                        {loading ? '...' : stats.memberCount}
+                    </div>
                 </div>
                 <div className="stat-card">
                     <div className="label">Coach</div>
-                    <div className="value">{stats.coachCount}</div>
+                    <div className="value">
+                        {loading ? '...' : stats.coachCount}
+                    </div>
                 </div>
                 <div className="stat-card">
                     <div className="label">Tổng doanh thu</div>
-                    <div className="value">{stats.revenue.toLocaleString()} đ</div>
+                    <div className="value">
+                        {loading ? '...' : `${stats.revenue.toLocaleString()} đ`}
+                    </div>
                 </div>
             </div>
             <br></br>
@@ -82,15 +125,21 @@ const AdminDashboard = () => {
             <div className="stats-row">
                 <div className="stat-card">
                     <div className="label">Thông báo chấp thuận</div>
-                    <div className="value">{stats.acceptedNotifications}</div>
+                    <div className="value">
+                        {loading ? '...' : stats.acceptedNotifications}
+                    </div>
                 </div>
                 <div className="stat-card">
                     <div className="label">Lượt tư vấn đang diễn ra</div>
-                    <div className="value">{stats.activeConsultations}</div>
+                    <div className="value">
+                        {loading ? '...' : stats.activeConsultations}
+                    </div>
                 </div>
                 <div className="stat-card">
                     <div className="label">Lượt tư vấn đã đăng ký</div>
-                    <div className="value">{stats.totalConsultations}</div>
+                    <div className="value">
+                        {loading ? '...' : stats.totalConsultations}
+                    </div>
                 </div>
             </div>
 

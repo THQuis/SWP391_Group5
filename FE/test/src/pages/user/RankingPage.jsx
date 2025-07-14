@@ -72,14 +72,14 @@ function UserRanking() {
                                     <CigarettesDroppedRanking />
                                 </div>
                             </Tab>
-                            <Tab
+                            {/* <Tab
                                 eventKey="achievements"
                                 title={<span style={{ padding: "4px 8px", fontSize: "14px", fontWeight: "500", display: "block" }}>🏅 Thành tích</span>}
                             >
                                 <div style={{ padding: "24px" }}>
                                     <AchievementsRanking />
                                 </div>
-                            </Tab>
+                            </Tab> */}
                             <Tab
                                 eventKey="challenges"
                                 title={<span style={{ padding: "4px 8px", fontSize: "14px", fontWeight: "500", display: "block" }}>✅ Thử thách</span>}

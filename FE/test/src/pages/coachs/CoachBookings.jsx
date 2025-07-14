@@ -4,6 +4,7 @@ import {
 } from "react-bootstrap";
 import { FaCalendarAlt, FaUser, FaClock, FaCheck, FaTimes, FaEdit, FaEye, FaCheckCircle, FaTimesCircle, FaExclamationTriangle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import '../../styles/CoachBookingsManagement.scss';
 
 // Modal xác nhận lịch tư vấn (chỉ để duyệt hoặc từ chối)
 function BookingActionModal({ show, onHide, booking, onApprove, onReject, loading }) {
@@ -410,8 +411,8 @@ const CoachBookings = () => {
                     {bookingList.length === 0 ? (
                         <tr>
                             <td colSpan={6} className="text-center text-muted py-4">
-                                <div className="d-flex flex-column align-items-center">
-                                    <FaCalendarAlt size={48} className="text-muted mb-3" />
+                                <div className="d-flex flex-column align-items-center empty-state">
+                                    <FaCalendarAlt className="empty-icon" />
                                     <h5 className="text-muted">Không có lịch nào</h5>
                                     <p className="text-muted">Chưa có lịch tư vấn nào trong trạng thái này.</p>
                                 </div>
@@ -467,7 +468,7 @@ const CoachBookings = () => {
                                         size="sm"
                                         variant="outline-success"
                                         onClick={() => handleClickBooking(b)}
-                                        className="btn-action"
+                                        className="btn-action-detail"
                                     >
                                         <FaEdit className="me-1" />
                                         Duyệt / Từ chối
@@ -481,6 +482,7 @@ const CoachBookings = () => {
                                             onClick={() => handleCompleteBooking(b)}
                                             disabled={actionLoading}
                                             title="Đánh dấu hoàn thành"
+                                            className="btn-action-detail"
                                         >
                                             <FaCheckCircle className="me-1" />
                                             Hoàn thành
@@ -491,6 +493,7 @@ const CoachBookings = () => {
                                             onClick={() => handleShowUpdateInfo(b)}
                                             disabled={infoLoading}
                                             title="Gửi/Cập nhật thông tin meeting"
+                                            className="btn-action-challenge"
                                         >
                                             <FaEdit className="me-1" />
                                             Thông tin
@@ -512,7 +515,7 @@ const CoachBookings = () => {
     );
 
     return (
-        <Container fluid style={{ marginTop: 40, marginBottom: 40 }}>
+        <Container fluid className="coach-bookings-management-page" style={{ marginTop: 40, marginBottom: 40 }}>
             {/* Header Section */}
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <div>
@@ -623,56 +626,6 @@ const CoachBookings = () => {
                     </Card.Body>
                 </Card>
             )}
-
-            {/* CSS Styles */}
-            <style jsx>{`
-                .avatar-sm {
-                    width: 36px;
-                    height: 36px;
-                    font-size: 0.875rem;
-                }
-                
-                .btn-action {
-                    transition: all 0.2s ease;
-                }
-                
-                .btn-action:hover {
-                    transform: translateY(-1px);
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                }
-                
-                .table th {
-                    font-weight: 600;
-                    border-bottom: 2px solid #dee2e6;
-                    color: #495057;
-                }
-                
-                .table td {
-                    vertical-align: middle;
-                    border-bottom: 1px solid #f8f9fa;
-                }
-                
-                .table tbody tr:hover {
-                    background-color: #f8f9fa;
-                }
-                
-                .nav-tabs .nav-link {
-                    border: none;
-                    color: #6c757d;
-                    font-weight: 500;
-                }
-                
-                .nav-tabs .nav-link.active {
-                    background-color: transparent;
-                    border-bottom: 3px solid #28a745;
-                    color: #28a745;
-                }
-                
-                .nav-tabs .nav-link:hover {
-                    border-color: transparent;
-                    color: #28a745;
-                }
-            `}</style>
 
             {/* Modal xác nhận duyệt lịch */}
             <BookingActionModal

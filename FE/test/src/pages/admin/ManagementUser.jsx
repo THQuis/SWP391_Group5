@@ -528,7 +528,7 @@ const ManagementUser = () => {
                                     <Form.Control as="select" value={selectedStatus} onChange={e => setSelectedStatus(e.target.value)}>
                                         {/* Giả định các trạng thái có thể có */}
                                         <option value="Active">Active</option>
-                                        <option value="Inactive">Inactive</option>
+                                        <option value="InActive">InActive</option>
                                     </Form.Control>
                                 </Col>
                             </Form.Group>

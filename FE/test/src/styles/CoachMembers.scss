@@ -1,0 +1,339 @@
+// Variables
+$primary: #198754;
+$primary-light: #e8f5e8;
+$primary-dark: #146c43;
+$secondary: #6c757d;
+$warning: #ffc107;
+$warning-light: #fff3cd;
+$success: #198754;
+$info: #0dcaf0;
+$white: #ffffff;
+$light: #f8f9fa;
+$dark: #212529;
+$border-radius: 1rem;
+$transition: all 0.3s ease;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+$shadow: 0 4px 16px rgba(25, 135, 84, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
+$shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
+
+// Page container
+.coach-members-page {
+    padding: 2rem 0;
+
+    .container {
+        max-width: 1200px;
+    }
+}
+
+// Typography
+h2 {
+    color: $primary-dark;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(25, 135, 84, 0.1);
+    margin-bottom: 2rem;
+}
+
+// Cards
+.card {
+    border: none;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    background: $white;
+    overflow: hidden;
+    transition: $transition;
+
+    &:hover {
+        box-shadow: $shadow-lg;
+        transform: translateY(-2px);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+        color: $white;
+        border: none;
+        padding: 1.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+}
+
+// Table styling
+.table {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: none;
+    margin-bottom: 0;
+
+    thead th {
+        background: linear-gradient(135deg, $primary-light 0%, darken($primary-light, 5%) 100%);
+        color: $primary-dark;
+        font-weight: 600;
+        border: none;
+        padding: 1rem 1.5rem;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    tbody {
+        tr {
+            transition: $transition;
+            border: none;
+
+            &:hover {
+                background: $primary-light;
+                transform: translateX(3px);
+                box-shadow: 0 2px 8px rgba(25, 135, 84, 0.08);
+            }
+
+            td {
+                padding: 1.25rem 1.5rem;
+                border: none;
+                vertical-align: middle;
+                border-bottom: 1px solid rgba(25, 135, 84, 0.08);
+
+                &:first-child {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+// Buttons
+.btn {
+    border-radius: 0.75rem;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    transition: $transition;
+    border: none;
+
+    &.btn-primary {
+        background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+        box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
+
+        &:hover,
+        &:focus {
+            background: linear-gradient(135deg, $primary-dark 0%, darken($primary-dark, 10%) 100%);
+            box-shadow: 0 4px 16px rgba(25, 135, 84, 0.3);
+            transform: translateY(-1px);
+        }
+    }
+
+    &.btn-info {
+        background: linear-gradient(135deg, $info 0%, darken($info, 10%) 100%);
+        color: $white;
+        box-shadow: 0 2px 8px rgba(13, 202, 240, 0.2);
+
+        &:hover,
+        &:focus {
+            background: linear-gradient(135deg, darken($info, 10%) 0%, darken($info, 20%) 100%);
+            box-shadow: 0 4px 16px rgba(13, 202, 240, 0.3);
+            transform: translateY(-1px);
+            color: $white;
+        }
+    }
+
+    &.btn-success {
+        background: linear-gradient(135deg, $success 0%, $primary-dark 100%);
+        box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
+
+        &:hover,
+        &:focus {
+            background: linear-gradient(135deg, $primary-dark 0%, darken($primary-dark, 10%) 100%);
+            box-shadow: 0 4px 16px rgba(25, 135, 84, 0.3);
+            transform: translateY(-1px);
+        }
+    }
+}
+
+// Badges
+.badge {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border-radius: 1.25rem;
+    font-weight: 500;
+
+    &.bg-success {
+        background: linear-gradient(135deg, $success 0%, $primary-dark 100%) !important;
+        box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
+    }
+
+    &.bg-secondary {
+        background: linear-gradient(135deg, $secondary 0%, darken($secondary, 10%) 100%) !important;
+        box-shadow: 0 2px 8px rgba(108, 117, 125, 0.2);
+    }
+}
+
+// Avatar images
+img[alt="avatar"] {
+    border: 3px solid $primary-light;
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.15);
+    transition: $transition;
+
+    &:hover {
+        border-color: $primary;
+        box-shadow: 0 6px 20px rgba(25, 135, 84, 0.25);
+        transform: scale(1.05);
+    }
+}
+
+// Modal styling
+.modal {
+    .modal-header {
+        background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+        color: $white;
+        border: none;
+        border-radius: $border-radius $border-radius 0 0;
+        padding: 1.5rem 2rem;
+
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .btn-close {
+            filter: invert(1);
+            opacity: 0.8;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .modal-body {
+        padding: 2rem;
+        background: $white;
+    }
+
+    .modal-footer {
+        background: $light;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 0 0 $border-radius $border-radius;
+    }
+}
+
+// Challenge items
+.challenge-item {
+    border: 1px solid rgba(25, 135, 84, 0.1);
+    border-left: 4px solid $primary;
+    border-radius: 0.75rem;
+    background: $white;
+    transition: $transition;
+    padding: 1.5rem;
+
+    &:hover {
+        border-left-color: $warning;
+        box-shadow: 0 4px 20px rgba(25, 135, 84, 0.08);
+        background: $primary-light;
+        transform: translateX(3px);
+    }
+}
+
+// Info cards
+.info-card {
+    background: linear-gradient(135deg, $primary-light 0%, $white 100%);
+    border: 1px solid rgba(25, 135, 84, 0.1);
+    border-radius: $border-radius;
+    box-shadow: $shadow-sm;
+    transition: $transition;
+
+    &:hover {
+        box-shadow: $shadow;
+        transform: translateY(-1px);
+    }
+}
+
+// Loading spinner
+.spinner-border {
+    color: $primary;
+}
+
+// Alert styling
+.alert {
+    border-radius: 0.75rem;
+    border: none;
+
+    &.alert-info {
+        background: linear-gradient(135deg, lighten($info, 35%) 0%, lighten($info, 40%) 100%);
+        color: darken($info, 20%);
+        border-left: 4px solid $info;
+    }
+}
+
+// List group
+.list-group-item {
+    border: 1px solid rgba(25, 135, 84, 0.08);
+    transition: $transition;
+
+    &:hover {
+        background: $primary-light;
+        border-color: rgba(25, 135, 84, 0.15);
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .coach-members-page {
+        padding: 1rem 0;
+
+        .container {
+            padding: 0 1rem;
+        }
+    }
+
+    .card {
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+
+        .card-body {
+            padding: 1.5rem;
+        }
+    }
+
+    .table {
+        font-size: 0.9rem;
+
+        thead th,
+        tbody td {
+            padding: 0.75rem 1rem;
+        }
+    }
+
+    .btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+    }
+
+    .modal {
+        .modal-body {
+            padding: 1.5rem;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    h2 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .table-responsive {
+        border-radius: 0.75rem;
+
+        .table {
+            font-size: 0.8rem;
+        }
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}

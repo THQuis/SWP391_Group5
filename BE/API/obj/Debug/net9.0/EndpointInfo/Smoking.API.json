@@ -660,7 +660,9 @@
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/api/admin/memberships/createpackages": {
       "post": {
         "tags": [
           "AdminMembership"
@@ -691,7 +693,7 @@
         }
       }
     },
-    "/api/admin/memberships/packages/{id}": {
+    "/api/admin/memberships/Updatepackages/{id}": {
       "put": {
         "tags": [
           "AdminMembership"
@@ -731,7 +733,9 @@
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/api/admin/memberships/Deletepackages/{id}": {
       "delete": {
         "tags": [
           "AdminMembership"
@@ -3826,6 +3830,10 @@
         "additionalProperties": false
       },
       "BlogReaction": {
+        "required": [
+          "blogId",
+          "userId"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -3846,8 +3854,7 @@
           },
           "reactedAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "format": "date-time"
           },
           "blog": {
             "$ref": "#/components/schemas/Blog"

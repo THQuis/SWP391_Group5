@@ -444,18 +444,8 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
-    "Method": "GetAllPackages",
-    "RelativePath": "api/admin/memberships/packages",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
     "Method": "CreatePackage",
-    "RelativePath": "api/admin/memberships/packages",
+    "RelativePath": "api/admin/memberships/createpackages",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -470,8 +460,34 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "DeletePackage",
+    "RelativePath": "api/admin/memberships/Deletepackages/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
+    "Method": "GetAllPackages",
+    "RelativePath": "api/admin/memberships/packages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
     "Method": "UpdatePackage",
-    "RelativePath": "api/admin/memberships/packages/{id}",
+    "RelativePath": "api/admin/memberships/Updatepackages/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -484,22 +500,6 @@
       {
         "Name": "updatedPackage",
         "Type": "Smoking.DAL.Entities.MembershipPackage",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Smoking.API.Controllers.Admin.AdminMembershipController",
-    "Method": "DeletePackage",
-    "RelativePath": "api/admin/memberships/packages/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

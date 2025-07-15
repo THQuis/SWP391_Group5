@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
     Row,
     Col,
@@ -9,10 +9,12 @@ import {
     Button,
     Table,
     Modal,
-    Form
+    Form,
+    Pagination
 } from 'react-bootstrap';
 import { FaSearch, FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 // Giúp chuyển đổi giữa tên Role (ví dụ: 'Admin') và Role ID (ví dụ: '1')
 const roleNameToIdMap = {
     'Admin': '1',
@@ -31,6 +33,10 @@ const ManagementUser = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterRole, setFilterRole] = useState('Tất cả vai trò');
     const [showModal, setShowModal] = useState(false);
+
+    // State phân trang
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
     // *** CẢI TIẾN 1: Cập nhật state cho người dùng mới để bao gồm tất cả các trường trong form ***
     const [newUser, setNewUser] = useState({
@@ -71,7 +77,7 @@ const ManagementUser = () => {
             setUsers(sortedUsers);
         } catch (err) {
             console.error('Lỗi khi lấy danh sách người dùng:', err);
-            // Có thể thêm thông báo lỗi cho người dùng ở đây
+            toast.error('Không thể tải danh sách người dùng. Vui lòng thử lại.');
         }
     };
 
@@ -111,23 +117,44 @@ const ManagementUser = () => {
         });
     }, [searchTerm, users, filterRole]);
 
+    // Logic phân trang
+    const totalUsers = filteredUsers.length;
+    const totalPages = Math.ceil(totalUsers / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentPageUsers = filteredUsers.slice(startIndex, startIndex + itemsPerPage);
+
+    // Helper functions cho phân trang
+    const handlePageChange = useCallback((pageNumber) => {
+        setCurrentPage(pageNumber);
+    }, []);
+
+    const handleItemsPerPageChange = useCallback((newItemsPerPage) => {
+        setItemsPerPage(newItemsPerPage);
+        setCurrentPage(1); // Reset về trang đầu tiên
+    }, []);
+
+    // Cập nhật currentPage khi search/filter thay đổi
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, filterRole]);
+
     // *** CẢI TIẾN 2: Hoàn thiện hàm handleAddUser ***
     const handleAddUser = async () => {
         // a) Validation cơ bản
         if (!newUser.fullName || !newUser.email || !newUser.roleID || !newUser.password || !newUser.phoneNumber) {
-            alert('Vui lòng điền đầy đủ các thông tin bắt buộc.');
+            toast.error('Vui lòng điền đầy đủ các thông tin bắt buộc.');
             return;
         }
 
         // Validation email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(newUser.email)) {
-            alert('Vui lòng nhập email đúng định dạng (ví dụ: example@domain.com)');
+            toast.error('Vui lòng nhập email đúng định dạng (ví dụ: example@domain.com)');
             return;
         }
 
         if (newUser.password !== newUser.confirm) {
-            alert('Mật khẩu và xác nhận mật khẩu không khớp.');
+            toast.error('Mật khẩu và xác nhận mật khẩu không khớp.');
             return;
         }
 
@@ -167,13 +194,13 @@ const ManagementUser = () => {
 
             // e) Lấy lại danh sách người dùng mới nhất từ server
             await fetchUsers();
-            alert('Thêm người dùng thành công!');
+            toast.success('Thêm người dùng thành công!');
 
         } catch (err) {
             // f) Xử lý lỗi và thông báo cho người dùng
             console.error('Add user failed:', err);
             const errorMessage = err.response?.data?.message || 'Thêm người dùng thất bại. Vui lòng thử lại.';
-            alert(errorMessage);
+            toast.error(errorMessage);
         }
     };
 
@@ -189,7 +216,7 @@ const ManagementUser = () => {
 
     const handleSaveEdit = async () => {
         if (!editingUser) {
-            alert('Không có thông tin người dùng để cập nhật.');
+            toast.error('Không có thông tin người dùng để cập nhật.');
             return;
         }
 
@@ -234,6 +261,7 @@ const ManagementUser = () => {
         // Nếu không có gì thay đổi, chỉ cần đóng modal
         if (updatePromises.length === 0) {
             setShowEditModal(false);
+            toast.info('Không có thay đổi nào để lưu.');
             return;
         }
 
@@ -243,12 +271,12 @@ const ManagementUser = () => {
 
             setShowEditModal(false);
             await fetchUsers(); // Tải lại dữ liệu mới
-            alert('Cập nhật người dùng thành công!');
+            toast.success('Cập nhật người dùng thành công!');
 
         } catch (err) {
             console.error('Lỗi khi cập nhật người dùng:', err);
             const errorMessage = err.response?.data?.message || 'Cập nhật thất bại. Vui lòng thử lại.';
-            alert(errorMessage);
+            toast.error(errorMessage);
         }
     };
 
@@ -270,13 +298,13 @@ const ManagementUser = () => {
 
                 // Cập nhật lại danh sách sau khi xóa thành công
                 await fetchUsers();
-                alert('Xóa người dùng thành công!');
+                toast.success('Xóa người dùng thành công!');
 
             } catch (err) {
                 // Xử lý lỗi và thông báo cho người dùng
                 console.error('Delete user failed:', err);
                 const errorMessage = err.response?.data?.message || 'Xóa người dùng thất bại. Vui lòng thử lại.';
-                alert(errorMessage);
+                toast.error(errorMessage);
             }
         }
     };
@@ -339,8 +367,30 @@ const ManagementUser = () => {
             <Row>
                 <Col>
                     <Card className="user-table">
-                        <Card.Header>
+                        <Card.Header className="d-flex justify-content-between align-items-center">
                             <h5>Danh sách người dùng</h5>
+                            <div className="d-flex align-items-center gap-3">
+                                <span>Hiển thị {startIndex + 1}-{Math.min(startIndex + itemsPerPage, totalUsers)} của {totalUsers} người dùng</span>
+                                <div className="d-flex align-items-center gap-2">
+                                    <span>Hiển thị:</span>
+                                    <Dropdown size="sm">
+                                        <Dropdown.Toggle variant="outline-secondary" size="sm">
+                                            {itemsPerPage}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            {[5, 10, 25, 50].map(size => (
+                                                <Dropdown.Item
+                                                    key={size}
+                                                    active={itemsPerPage === size}
+                                                    onClick={() => handleItemsPerPageChange(size)}
+                                                >
+                                                    {size}
+                                                </Dropdown.Item>
+                                            ))}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </div>
+                            </div>
                         </Card.Header>
                         <Card.Body className="p-0">
                             <Table responsive hover className="mb-0">
@@ -356,28 +406,86 @@ const ManagementUser = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredUsers.map(u => (
-                                        <tr key={u.userID}>
-                                            <td>{u.userID}</td>
-                                            <td>{u.fullName}</td>
-                                            <td>{u.email}</td>
-                                            <td> {u.role}</td>
-                                            <td>{u.status}</td>
-                                            <td>{u.registrationDate}</td>
-                                            <td className="text-center">
-                                                <Button variant="link" size="sm" onClick={() => handleEdit(u)}>
-                                                    <FaEdit />
-                                                </Button>
-                                                {/* Cập nhật hàm xóa để truyền userID */}
-                                                <Button variant="link" size="sm" onClick={() => handleDelete(u.userID)}>
-                                                    <FaTrash />
-                                                </Button>
+                                    {currentPageUsers.length > 0 ? (
+                                        currentPageUsers.map(u => (
+                                            <tr key={u.userID}>
+                                                <td>{u.userID}</td>
+                                                <td>{u.fullName}</td>
+                                                <td>{u.email}</td>
+                                                <td>{u.role}</td>
+                                                <td>{u.status}</td>
+                                                <td>{u.registrationDate}</td>
+                                                <td className="text-center">
+                                                    <Button variant="link" size="sm" onClick={() => handleEdit(u)}>
+                                                        <FaEdit />
+                                                    </Button>
+                                                    {/* Cập nhật hàm xóa để truyền userID */}
+                                                    <Button variant="link" size="sm" onClick={() => handleDelete(u.userID)}>
+                                                        <FaTrash />
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="7" className="text-center py-5 text-muted">
+                                                {searchTerm || filterRole !== 'Tất cả vai trò'
+                                                    ? 'Không tìm thấy người dùng nào phù hợp'
+                                                    : 'Chưa có người dùng nào'
+                                                }
                                             </td>
                                         </tr>
-                                    ))}
+                                    )}
                                 </tbody>
                             </Table>
                         </Card.Body>
+                        {totalPages > 1 && (
+                            <Card.Footer className="d-flex justify-content-center">
+                                <Pagination>
+                                    <Pagination.First
+                                        disabled={currentPage === 1}
+                                        onClick={() => handlePageChange(1)}
+                                    />
+                                    <Pagination.Prev
+                                        disabled={currentPage === 1}
+                                        onClick={() => handlePageChange(currentPage - 1)}
+                                    />
+
+                                    {/* Hiển thị các trang */}
+                                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                                        let pageNumber;
+                                        if (totalPages <= 5) {
+                                            pageNumber = i + 1;
+                                        } else if (currentPage <= 3) {
+                                            pageNumber = i + 1;
+                                        } else if (currentPage >= totalPages - 2) {
+                                            pageNumber = totalPages - 4 + i;
+                                        } else {
+                                            pageNumber = currentPage - 2 + i;
+                                        }
+
+                                        return (
+                                            <Pagination.Item
+                                                key={pageNumber}
+                                                active={pageNumber === currentPage}
+                                                onClick={() => handlePageChange(pageNumber)}
+                                            >
+                                                {pageNumber}
+                                            </Pagination.Item>
+                                        );
+                                    })}
+
+                                    <Pagination.Next
+                                        disabled={currentPage === totalPages}
+                                        onClick={() => handlePageChange(currentPage + 1)}
+                                    />
+                                    <Pagination.Last
+                                        disabled={currentPage === totalPages}
+                                        onClick={() => handlePageChange(totalPages)}
+                                    />
+                                </Pagination>
+                            </Card.Footer>
+                        )}
                     </Card>
                 </Col>
             </Row>

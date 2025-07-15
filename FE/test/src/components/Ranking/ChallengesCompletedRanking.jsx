@@ -50,7 +50,7 @@ function ChallengesCompletedRanking() {
         const fetchRanking = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('https://localhost:7049/api/ranking/top-challenges-completed?top=50', {
+                const response = await fetch('/api/ranking/top-challenges-completed?top=50', {
                     headers: {
                         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJDYW8gSOG7r3UgVHLDrSIsImVtYWlsIjoiY2FvaHV1dHJpdGwxMjM0QGdtYWlsLmNvbSIsInJvbGUiOiIxIiwibmJmIjoxNzUxMzc1Njk3LCJleHAiOjE3NTEzNzkyOTcsImlhdCI6MTc1MTM3NTY5NywiaXNzIjoiU21va2luZ0FQSSIsImF1ZCI6IlNtb2tpbmdDbGllbnRzIn0.sgKdFiafEqRonwhg24w5oRaWik8eP1hhQj-LCzH-c0g'
                     }

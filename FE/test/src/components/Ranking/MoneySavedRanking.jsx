@@ -15,7 +15,7 @@ import { saveAs } from "file-saver";
 
 async function fetchRanking(top = 50) {
     const token = localStorage.getItem("userToken");
-    const res = await fetch(`https://localhost:7049/api/ranking/top-money-saved?top=${top}`, {
+    const res = await fetch(`/api/ranking/top-money-saved?top=${top}`, {
         method: "GET",
         headers: {
             "accept": "*/*",

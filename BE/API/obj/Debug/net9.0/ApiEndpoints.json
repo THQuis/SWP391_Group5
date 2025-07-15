@@ -909,6 +909,58 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminFeedbackController",
+    "Method": "GetFeedbackDetail",
+    "RelativePath": "api/AdminFeedback/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminFeedbackController",
+    "Method": "GetAllFeedbacks",
+    "RelativePath": "api/AdminFeedback/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminFeedbackController",
+    "Method": "DeleteFeedback",
+    "RelativePath": "api/AdminFeedback/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Admin.AdminFeedbackController",
+    "Method": "GetStats",
+    "RelativePath": "api/AdminFeedback/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Smoking.API.Controllers.Auth.AuthController",
     "Method": "ForgotPassword",
     "RelativePath": "api/Auth/forgot-password",
@@ -2200,6 +2252,69 @@
     "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "GetUserBlogStats",
     "RelativePath": "api/UserBlog/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserFeedbackController",
+    "Method": "CreateFeedback",
+    "RelativePath": "api/UserFeedback/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Smoking.API.Models.User.FeedbackCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserFeedbackController",
+    "Method": "DeleteFeedback",
+    "RelativePath": "api/UserFeedback/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserFeedbackController",
+    "Method": "EditFeedback",
+    "RelativePath": "api/UserFeedback/edit/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Smoking.API.Models.User.FeedbackCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserFeedbackController",
+    "Method": "GetMyFeedback",
+    "RelativePath": "api/UserFeedback/my-feedback",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

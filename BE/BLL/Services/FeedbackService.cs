@@ -38,6 +38,11 @@ namespace Smoking.BLL.Services
             return await _unitOfWork.Feedbacks.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Feedback>> GetAllWithUserAsync() 
+        {
+            return await _unitOfWork.Feedbacks.GetAllWithUserAsync();
+        }
+
         public async Task<IEnumerable<Feedback>> GetByUserIdAsync(int userId)
         {
             return await _unitOfWork.Feedbacks.GetByUserIdAsync(userId);
@@ -63,5 +68,10 @@ namespace Smoking.BLL.Services
             await _unitOfWork.CompleteAsync();
             return true;
         }
+        public async Task<Feedback?> GetByIdWithUserAsync(int id)
+        {
+            return await _unitOfWork.Feedbacks.GetByIdWithUserAsync(id);
+        }
+
     }
 }

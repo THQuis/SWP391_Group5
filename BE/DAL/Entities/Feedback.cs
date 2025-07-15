@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Smoking.DAL.Entities
 {
-    [Table("Feedback")]
+
     public class Feedback
     {
         [Key]
@@ -12,6 +12,8 @@ namespace Smoking.DAL.Entities
 
         [Required]
         public int UserID { get; set; }
+
+        [ForeignKey("UserID")]
         public User User { get; set; }
 
         [Required]

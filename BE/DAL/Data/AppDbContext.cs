@@ -25,7 +25,7 @@ namespace Smoking.DAL.Data
         public DbSet<UserAchievement> UserAchievements { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Feedback> Feedback { get; set; }
         public DbSet<ConsultationBooking> ConsultationBookings { get; set; }
         public DbSet<QuitPlanSelectedAnswers> QuitPlanSelectedAnswers { get; set; }
         public DbSet<AnswerOption> AnswerOptions { get; set; }
@@ -45,6 +45,8 @@ namespace Smoking.DAL.Data
             base.OnModelCreating(modelBuilder);
 
             // Quan hệ giữa các entity
+            modelBuilder.Entity<User>().ToTable("User"); 
+
 
             // User - Role
             modelBuilder.Entity<User>()
@@ -146,6 +148,13 @@ namespace Smoking.DAL.Data
                 .WithMany(u => u.UserMilestoneProgresses)
                 .HasForeignKey(ump => ump.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Blog - User
+            modelBuilder.Entity<Feedback>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.Feedbacks)
+                .HasForeignKey(f => f.UserID)
+                .OnDelete(DeleteBehavior.Cascade); 
 
 
         }

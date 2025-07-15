@@ -25,6 +25,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // =================== SERVICES & REPOSITORIES ===================
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+
 
 // ---- Authentication & User ----
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -113,6 +115,8 @@ builder.Services.AddControllers()
 
 // =================== MEMORY CACHE ===================
 builder.Services.AddMemoryCache();
+builder.Services.AddHttpContextAccessor();
+
 
 // =================== SWAGGER ===================
 builder.Services.AddEndpointsApiExplorer();

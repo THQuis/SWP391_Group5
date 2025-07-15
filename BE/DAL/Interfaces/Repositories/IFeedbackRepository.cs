@@ -10,5 +10,7 @@ namespace Smoking.DAL.Interfaces.Repositories
     public interface IFeedbackRepository : IGenericRepository<Feedback>
     {
         Task<IEnumerable<Feedback>> GetByUserIdAsync(int userId);
+        Task<IEnumerable<Feedback>> GetAllWithUserAsync();
+        Task<Feedback?> GetByIdWithUserAsync(int id);
     }
 }

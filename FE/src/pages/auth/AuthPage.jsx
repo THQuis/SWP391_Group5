@@ -82,7 +82,7 @@ const AuthPage = () => {
             const userEmail = data.user.email;
             const userId = data.user.userID;
             const coachId = data.user.CoachId;
-            const profilePicture = data.user.profilePicture;
+            const profilePicture = data.user.profilePicture || null;
             const DateOfBirth = data.user.dateOfBirth;
             const gender = data.user.gender;
             const phoneNumber = data.user.phoneNumber;
@@ -372,7 +372,7 @@ const AuthPage = () => {
         <div className="auth-page">
             <div className="auth-container-wrapper">
                 <div className="auth-left-panel">
-                    <div className="auth-logo"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true" alt="BreathAgain" /></div>
+                    <div className="auth-logo"><img src="https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true" alt="Breath Again" /></div>
                     <div className="auth-tagline">Hành trình cai nghiện thuốc lá bắt đầu từ đây</div>
                     <ul className="auth-features">
                         <li>Theo dõi tiến trình cai nghiện hàng ngày</li><li>Nhận lời khuyên từ chuyên gia</li><li>Kết nối với cộng đồng hỗ trợ</li>

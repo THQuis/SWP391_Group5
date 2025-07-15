@@ -64,8 +64,11 @@ const ManagementUser = () => {
                 // Giả sử API trả về user.role là ID, chúng ta chuyển nó thành tên
                 roleName: roleIdToNameMap[user.role] || user.role
             }));
-            // setUsers(res.data);
-            setUsers(usersWithRoles);
+
+            // Sắp xếp users theo userID giảm dần để user mới nhất lên đầu
+            const sortedUsers = usersWithRoles.sort((a, b) => b.userID - a.userID);
+
+            setUsers(sortedUsers);
         } catch (err) {
             console.error('Lỗi khi lấy danh sách người dùng:', err);
             // Có thể thêm thông báo lỗi cho người dùng ở đây
@@ -116,6 +119,13 @@ const ManagementUser = () => {
             return;
         }
 
+        // Validation email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(newUser.email)) {
+            alert('Vui lòng nhập email đúng định dạng (ví dụ: example@domain.com)');
+            return;
+        }
+
         if (newUser.password !== newUser.confirm) {
             alert('Mật khẩu và xác nhận mật khẩu không khớp.');
             return;
@@ -144,7 +154,16 @@ const ManagementUser = () => {
 
             // d) Đóng modal và reset form
             setShowModal(false);
-            setNewUser({ username: '', email: '', roleID: '', password: '', confirm: '' });
+            setNewUser({
+                fullName: '',
+                email: '',
+                phoneNumber: '',
+                password: '',
+                registrationDate: '',
+                status: '',
+                roleID: '',
+                confirm: ''
+            });
 
             // e) Lấy lại danh sách người dùng mới nhất từ server
             await fetchUsers();
@@ -331,10 +350,8 @@ const ManagementUser = () => {
                                         <th>Tên tài khoản</th>
                                         <th>Email</th>
                                         <th>Vai trò</th>
-                                        <th>Gói</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày đăng ký</th>
-                                        <th>Thành tích</th>
                                         <th>Hành động</th>
                                     </tr>
                                 </thead>
@@ -345,10 +362,8 @@ const ManagementUser = () => {
                                             <td>{u.fullName}</td>
                                             <td>{u.email}</td>
                                             <td> {u.role}</td>
-                                            <td>{u.package}</td>
                                             <td>{u.status}</td>
                                             <td>{u.registrationDate}</td>
-                                            <td>{u.achievements}</td>
                                             <td className="text-center">
                                                 <Button variant="link" size="sm" onClick={() => handleEdit(u)}>
                                                     <FaEdit />
@@ -396,7 +411,15 @@ const ManagementUser = () => {
                                     type="email"
                                     value={newUser.email}
                                     onChange={e => setNewUser({ ...newUser, email: e.target.value })}
+                                    placeholder="example@domain.com"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                    required
                                 />
+                                {newUser.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newUser.email) && (
+                                    <Form.Text className="text-danger">
+                                        Email phải có định dạng: example@domain.com
+                                    </Form.Text>
+                                )}
                             </Col>
                         </Form.Group>
 

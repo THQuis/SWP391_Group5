@@ -62,8 +62,12 @@ function SmokeFreeDaysRanking() {
                     const data = await response.json();
                     console.log('Smoke Free Days Ranking API Response:', data);
 
-                    // API trả về đúng format rồi, không cần convert
-                    setRanking(data || []);
+                    // Ensure data is an array and has proper structure
+                    const validData = Array.isArray(data) ? data.filter(item =>
+                        item && typeof item === 'object'
+                    ) : [];
+
+                    setRanking(validData);
                 } else {
                     console.error('API Error:', response.status, response.statusText);
                     setRanking([]);
@@ -81,10 +85,10 @@ function SmokeFreeDaysRanking() {
 
     // Filter based on search
     const filteredRanking = ranking.filter(u =>
-        u.fullName && u.fullName.toLowerCase().includes(search.toLowerCase())
+        u?.fullName && u.fullName.toLowerCase().includes(search.toLowerCase())
     );
 
-    const maxDays = ranking.length > 0 ? Math.max(...ranking.map(u => u.smokeFreeDays)) : 1;
+    const maxDays = ranking.length > 0 ? Math.max(...ranking.map(u => u?.smokeFreeDays || 0)) : 1;
     const totalPages = Math.ceil(filteredRanking.length / USERS_PER_PAGE);
     const currentPageData = filteredRanking.slice((page - 1) * USERS_PER_PAGE, page * USERS_PER_PAGE);
 
@@ -97,8 +101,8 @@ function SmokeFreeDaysRanking() {
     const handleExportExcel = () => {
         const data = filteredRanking.map((user, index) => ({
             "STT": index + 1,
-            "Tên thành viên": user.fullName,
-            "Ngày không hút thuốc": user.smokeFreeDays,
+            "Tên thành viên": user?.fullName || "Không có tên",
+            "Ngày không hút thuốc": user?.smokeFreeDays || 0,
         }));
 
         const ws = XLSX.utils.json_to_sheet(data);
@@ -132,7 +136,7 @@ function SmokeFreeDaysRanking() {
             {loading ? (
                 <div className="text-center my-5">
                     <Spinner animation="border" variant="primary" />
-                    <p className="mt-3 text-muted">Đang tải dữ liệu từ API...</p>
+                    <p className="mt-3 text-muted">Đang tải...</p>
                 </div>
             ) : (
                 <>
@@ -157,7 +161,7 @@ function SmokeFreeDaysRanking() {
                                     const realIdx = (page - 1) * USERS_PER_PAGE + index;
                                     return (
                                         <tr
-                                            key={user.userID}
+                                            key={user?.userID || index}
                                             style={realIdx === 0 ? { background: "#fff8dc" } : {}}
                                         >
                                             <td className="text-center fw-bold py-3" style={{ fontSize: 18 }}>
@@ -167,8 +171,8 @@ function SmokeFreeDaysRanking() {
                                             <td className="py-3">
                                                 <div className="d-flex align-items-center gap-3">
                                                     <Image
-                                                        src={user.profilePicture || "https://via.placeholder.com/40"}
-                                                        alt={user.fullName}
+                                                        src={user?.profilePicture || "https://via.placeholder.com/40"}
+                                                        alt={user?.fullName || "User"}
                                                         roundedCircle
                                                         width={realIdx === 0 ? 50 : 40}
                                                         height={realIdx === 0 ? 50 : 40}
@@ -179,7 +183,7 @@ function SmokeFreeDaysRanking() {
                                                     />
                                                     <div>
                                                         <div className="fw-semibold" style={{ fontSize: realIdx === 0 ? 18 : 16 }}>
-                                                            {user.fullName || "Không có tên"}
+                                                            {user?.fullName || "Không có tên"}
                                                         </div>
                                                         {realIdx === 0 && (
                                                             <Badge bg="warning" text="dark" className="mt-1">
@@ -193,19 +197,19 @@ function SmokeFreeDaysRanking() {
                                                 <div className="d-flex align-items-center justify-content-center gap-2">
                                                     <FaCalendarAlt color="#28a745" size={18} />
                                                     <span className="fw-bold" style={{ fontSize: 18, color: "#28a745" }}>
-                                                        {user.smokeFreeDays || 0}
+                                                        {user?.smokeFreeDays || 0}
                                                     </span>
                                                     <span className="text-muted">ngày</span>
                                                 </div>
                                             </td>
                                             <td className="text-center py-3">
                                                 <ProgressBar
-                                                    now={maxDays > 0 ? Math.min(100, (user.smokeFreeDays / maxDays) * 100) : 0}
+                                                    now={maxDays > 0 ? Math.min(100, ((user?.smokeFreeDays || 0) / maxDays) * 100) : 0}
                                                     variant="success"
                                                     style={{ height: 8, minWidth: 120 }}
                                                 />
                                                 <small className="text-muted mt-1 d-block">
-                                                    {maxDays > 0 ? ((user.smokeFreeDays / maxDays) * 100).toFixed(1) : 0}%
+                                                    {maxDays > 0 ? (((user?.smokeFreeDays || 0) / maxDays) * 100).toFixed(1) : 0}%
                                                 </small>
                                             </td>
                                         </tr>

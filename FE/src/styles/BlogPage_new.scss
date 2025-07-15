@@ -1,5 +1,30 @@
-// Blog Page with QuitPlan Style Colors
-.blog-quit-style {
+// Blog Page with Qui            .title-section {
+.subtitle {
+    color: #fff !important;
+    font-size: 1rem !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+}
+
+.main-title {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    margin-bottom: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    background: none !important;
+    background-clip: initial !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    text-shadow: none !important;
+
+    svg {
+        color: #fff;
+    }
+}
+
+olors .blog-quit-style {
     min-height: 100vh;
     background: #f7f9fc;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -7,7 +32,7 @@
 
     // Header Section
     .blog-header-section {
-        background: linear-gradient(45deg, #3da679, #2d6a4f);
+        background: #ffffff;
         border-bottom: 1px solid #e8ecf0;
         padding: 2rem 0;
         margin-bottom: 2rem;
@@ -21,28 +46,22 @@
 
             .title-section {
                 .main-title {
-                    font-size: 2rem !important;
-                    font-weight: 700 !important;
-                    color: #fff !important;
-                    margin-bottom: 0.5rem !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    background: none !important;
-                    background-clip: initial !important;
-                    -webkit-background-clip: initial !important;
-                    -webkit-text-fill-color: initial !important;
-                    text-shadow: none !important;
+                    font-size: 2rem;
+                    font-weight: 700;
+                    color: #222;
+                    margin-bottom: 0.5rem;
+                    display: flex;
+                    align-items: center;
 
                     svg {
-                        color: #fff;
+                        color: #52c41a;
                     }
                 }
 
                 .subtitle {
-                    color: #fff !important;
-                    font-size: 1rem !important;
-                    margin: 0 !important;
-                    opacity: 1 !important;
+                    color: #666;
+                    font-size: 1rem;
+                    margin: 0;
                 }
             }
 

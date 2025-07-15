@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Table, Spinner, Button, Tabs, Tab, Badge } from "react-bootstrap";
+import { Card, Table, Spinner, Button, Tabs, Tab, Badge, Modal, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import {
     FaCalendarPlus,
@@ -15,7 +15,10 @@ import {
     FaHourglassHalf,
     FaTimesCircle,
     FaBan,
-    FaCheckDouble
+    FaCheckDouble,
+    FaStar,
+    FaRegStar,
+    FaComment
 } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import '../../styles/MyConsultations.scss';
@@ -48,6 +51,37 @@ const cancelBooking = async (bookingId) => {
     return data;
 };
 
+// API functions for feedback
+const createFeedback = async (feedbackData) => {
+    const token = localStorage.getItem('userToken');
+    const response = await fetch('/api/UserFeedback/create', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "*/*",
+            "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify(feedbackData)
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message || "Tạo đánh giá thất bại.");
+    }
+    return data;
+};
+
+const getMyFeedbacks = async () => {
+    const token = localStorage.getItem('userToken');
+    const response = await fetch('/api/UserFeedback/my-feedback', {
+        headers: {
+            "Accept": "*/*",
+            "Authorization": "Bearer " + token,
+        },
+    });
+    if (!response.ok) return [];
+    return await response.json();
+};
+
 const statusMap = {
     "Pending": { label: "Chờ xác nhận", className: "badge bg-warning text-dark" },
     "Approved": { label: "Đã xác nhận", className: "badge bg-success" },
@@ -62,6 +96,15 @@ const MyConsultations = () => {
     const [loading, setLoading] = useState(true);
     const [cancellingId, setCancellingId] = useState(null);
     const [activeTab, setActiveTab] = useState("Pending");
+
+    // Feedback states
+    const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+    const [selectedBooking, setSelectedBooking] = useState(null);
+    const [feedbackRating, setFeedbackRating] = useState(0);
+    const [feedbackContent, setFeedbackContent] = useState("");
+    const [submittingFeedback, setSubmittingFeedback] = useState(false);
+    const [userFeedbacks, setUserFeedbacks] = useState([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -74,8 +117,63 @@ const MyConsultations = () => {
             setBookings(data);
             setLoading(false);
         };
+
+        const getFeedbacks = async () => {
+            const feedbacks = await getMyFeedbacks();
+            setUserFeedbacks(feedbacks);
+        };
+
         getBookings();
+        getFeedbacks();
     }, []);
+
+    // Feedback handlers
+    const handleShowFeedbackModal = (booking) => {
+        setSelectedBooking(booking);
+        setFeedbackRating(0);
+        setFeedbackContent("");
+        setShowFeedbackModal(true);
+    };
+
+    const handleCloseFeedbackModal = () => {
+        setShowFeedbackModal(false);
+        setSelectedBooking(null);
+        setFeedbackRating(0);
+        setFeedbackContent("");
+    };
+
+    const handleSubmitFeedback = async () => {
+        if (feedbackRating === 0) {
+            toast.error("Vui lòng chọn số sao đánh giá.");
+            return;
+        }
+        if (!feedbackContent.trim()) {
+            toast.error("Vui lòng nhập nội dung đánh giá.");
+            return;
+        }
+
+        setSubmittingFeedback(true);
+        try {
+            await createFeedback({
+                FeedbackContent: feedbackContent,
+                Rating: feedbackRating
+            });
+            toast.success("Đánh giá thành công!");
+            handleCloseFeedbackModal();
+            // Reload feedbacks
+            const feedbacks = await getMyFeedbacks();
+            setUserFeedbacks(feedbacks);
+        } catch (err) {
+            toast.error(err.message || "Đánh giá thất bại.");
+        } finally {
+            setSubmittingFeedback(false);
+        }
+    };
+
+    // Check if booking has feedback
+    const hasBookingFeedback = (bookingId) => {
+        return userFeedbacks.some(feedback => feedback.bookingID === bookingId);
+    };
 
     const handleCancel = async (bookingId) => {
         setCancellingId(bookingId);
@@ -205,6 +303,27 @@ const MyConsultations = () => {
                                                 Vào phòng họp
                                             </Button>
                                         )}
+                                        {statusKey === "Completed" && (
+                                            hasBookingFeedback(b.bookingID) ? (
+                                                <Button
+                                                    size="sm"
+                                                    className="feedback-done-btn"
+                                                    disabled
+                                                >
+                                                    <FaCheckDouble className="me-1" />
+                                                    Đã đánh giá
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    size="sm"
+                                                    className="feedback-btn"
+                                                    onClick={() => handleShowFeedbackModal(b)}
+                                                >
+                                                    <FaStar className="me-1" />
+                                                    Đánh giá
+                                                </Button>
+                                            )
+                                        )}
                                         {statusKey === "Pending" && (
                                             <Button
                                                 size="sm"
@@ -249,6 +368,14 @@ const MyConsultations = () => {
                             <p className="subtitle">Quản lý và theo dõi các buổi tư vấn của bạn</p>
                         </div>
                         <div className="header-actions">
+                            <Button
+                                className="feedback-history-btn me-2"
+                                variant="outline-light"
+                                onClick={() => navigate('/User/my-feedbacks')}
+                            >
+                                <FaComment />
+                                Đánh giá của tôi
+                            </Button>
                             <Button
                                 className="new-appointment-btn"
                                 onClick={() => navigate('/User/coachList')}
@@ -371,6 +498,78 @@ const MyConsultations = () => {
                         )}
                     </div>
                 </Card>
+
+                {/* Feedback Modal */}
+                <Modal show={showFeedbackModal} onHide={handleCloseFeedbackModal} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            <FaComment className="me-2" />
+                            Đánh giá buổi tư vấn
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {selectedBooking && (
+                            <div className="feedback-form">
+                                <div className="booking-info mb-3">
+                                    <h6>Buổi tư vấn với: <strong>{selectedBooking.coachName}</strong></h6>
+                                    <p className="text-muted">
+                                        {new Date(selectedBooking.bookingDate).toLocaleDateString('vi-VN')} -
+                                        {new Date(selectedBooking.bookingDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                                    </p>
+                                </div>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Đánh giá số sao</Form.Label>
+                                    <div className="star-rating">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <span
+                                                key={star}
+                                                className={`star ${star <= feedbackRating ? 'filled' : ''}`}
+                                                onClick={() => setFeedbackRating(star)}
+                                                style={{ cursor: 'pointer', fontSize: '24px', marginRight: '5px' }}
+                                            >
+                                                {star <= feedbackRating ? <FaStar color="#ffc107" /> : <FaRegStar color="#dee2e6" />}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Nội dung đánh giá</Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        value={feedbackContent}
+                                        onChange={(e) => setFeedbackContent(e.target.value)}
+                                        placeholder="Chia sẻ trải nghiệm của bạn về buổi tư vấn..."
+                                    />
+                                </Form.Group>
+                            </div>
+                        )}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseFeedbackModal}>
+                            Hủy
+                        </Button>
+                        <Button
+                            variant="primary"
+                            onClick={handleSubmitFeedback}
+                            disabled={submittingFeedback}
+                        >
+                            {submittingFeedback ? (
+                                <>
+                                    <Spinner animation="border" size="sm" className="me-2" />
+                                    Đang gửi...
+                                </>
+                            ) : (
+                                <>
+                                    <FaStar className="me-2" />
+                                    Gửi đánh giá
+                                </>
+                            )}
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </div>
     );

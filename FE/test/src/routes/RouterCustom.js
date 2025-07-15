@@ -40,7 +40,7 @@ import CoachBookings from "../pages/coachs/CoachBookings";
 import CoachMembers from "../pages/coachs/CoachMembers";
 import AchievementGallery from "../pages/Achivement/AchievementGallery";
 import AdminPendingCoachChangesPage from "../pages/admin/AdPendiCoachChangePage";
-
+import CoachProfile from "../pages/coachs/CoachProfile";
 
 
 
@@ -78,6 +78,8 @@ const RouterCustom = () => {
                     <Route path={ROUTERS.COACH.DASHBOARD} element={<CoachDashboard />} />
                     <Route path={ROUTERS.COACH.BOOKING} element={<CoachBookings />} />
                     <Route path={ROUTERS.COACH.MEMBER} element={<CoachMembers />} />
+                    <Route path={ROUTERS.COACH.PROFILE} element={<CoachProfile />} />
+
 
 
                 </Route>

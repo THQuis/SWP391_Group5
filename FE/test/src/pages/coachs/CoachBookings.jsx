@@ -22,7 +22,7 @@ function BookingActionModal({ show, onHide, booking, onApprove, onReject, loadin
                     <h5 className="text-success mb-3">Chi tiết lịch hẹn:</h5>
                     <div className="card border-0 bg-light p-3">
                         <div className="d-flex align-items-center mb-2">
-                            <FaUser className="text-info me-2" />
+                            <FaUser className="text-success me-2" />
                             <strong>Thành viên:</strong>
                             <span className="ms-2 text-dark">{booking.userName}</span>
                         </div>
@@ -400,10 +400,10 @@ const CoachBookings = () => {
                 <thead className="bg-light">
                     <tr>
                         <th className="text-center" style={{ width: '60px' }}>#</th>
-                        <th><FaUser className="me-2 text-success" />Thành viên</th>
-                        <th><FaCalendarAlt className="me-2 text-success" />Ngày & Giờ</th>
-                        <th><FaEye className="me-2 text-info" />Ghi chú</th>
-                        <th className="text-center"><FaClock className="me-2 text-warning" />Trạng thái</th>
+                        <th><FaUser className="me-2" />Thành viên</th>
+                        <th><FaCalendarAlt className="me-2" />Ngày & Giờ</th>
+                        <th><FaEye className="me-2" />Ghi chú</th>
+                        <th className="text-center"><FaClock className="me-2" />Trạng thái</th>
                         <th className="text-center" style={{ width: '200px' }}>Thao tác</th>
                     </tr>
                 </thead>
@@ -425,7 +425,7 @@ const CoachBookings = () => {
                             </td>
                             <td>
                                 <div className="d-flex align-items-center">
-                                    <div className="avatar-sm bg-success rounded-circle d-flex align-items-center justify-content-center me-3">
+                                    <div className="avatar-sm rounded-circle d-flex align-items-center justify-content-center me-3">
                                         <FaUser className="text-white" />
                                     </div>
                                     <div>
@@ -517,18 +517,20 @@ const CoachBookings = () => {
     return (
         <Container fluid className="coach-bookings-management-page" style={{ marginTop: 40, marginBottom: 40 }}>
             {/* Header Section */}
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h2 className="fw-bold text-dark mb-1 d-flex align-items-center">
-                        <FaCalendarAlt className="text-success me-3" />
-                        Quản lý lịch tư vấn
-                    </h2>
-                    <p className="text-muted mb-0">Quản lý các lịch hẹn tư vấn từ thành viên</p>
-                </div>
-                <div className="d-flex align-items-center">
-                    <span className="badge bg-success fs-6 px-3 py-2">
-                        Tổng: {bookings.length} lịch hẹn
-                    </span>
+            <div className="header-section">
+                <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 className="fw-bold text-dark mb-1 d-flex align-items-center">
+                            <FaCalendarAlt className="me-3" />
+                            Quản lý lịch tư vấn
+                        </h2>
+                        <p className="text-muted mb-0">Quản lý các lịch hẹn tư vấn từ thành viên</p>
+                    </div>
+                    <div className="d-flex align-items-center">
+                        <span className="badge fs-6 px-3 py-2">
+                            Tổng: {bookings.length} lịch hẹn
+                        </span>
+                    </div>
                 </div>
             </div>
 

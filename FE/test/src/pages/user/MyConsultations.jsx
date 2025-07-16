@@ -369,14 +369,6 @@ const MyConsultations = () => {
                         </div>
                         <div className="header-actions">
                             <Button
-                                className="feedback-history-btn me-2"
-                                variant="outline-light"
-                                onClick={() => navigate('/User/my-feedbacks')}
-                            >
-                                <FaComment />
-                                Đánh giá của tôi
-                            </Button>
-                            <Button
                                 className="new-appointment-btn"
                                 onClick={() => navigate('/User/coachList')}
                             >

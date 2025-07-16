@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import {
     Container, Card, Table, Button, Badge, Spinner, Modal, Row, Col, ListGroup, Alert, Image
 } from "react-bootstrap";
-import '../../styles/CoachMembersManagement.scss';
+import { FaUser, FaUsers, FaEye, FaChartLine, FaCalendarAlt, FaPhone, FaEnvelope, FaHistory, FaTasks } from "react-icons/fa";
+import '../../styles/CoachMembers.scss';
 
 // Modal xem thử thách của thành viên
 function MemberChallengesModal({ show, onHide, challenges, member, loading }) {
@@ -20,15 +21,16 @@ function MemberChallengesModal({ show, onHide, challenges, member, loading }) {
 
     return (
         <Modal show={show} onHide={onHide} size="lg" centered>
-            <Modal.Header closeButton>
-                <Modal.Title>
-                    🎯 Thử thách của {member?.FullName}
+            <Modal.Header closeButton className="bg-success text-white">
+                <Modal.Title className="d-flex align-items-center">
+                    <FaTasks className="me-2" />
+                    Thử thách của {member?.FullName}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="p-4">
                 {loading ? (
                     <div className="text-center my-5">
-                        <Spinner animation="border" variant="primary" style={{ width: '3rem', height: '3rem' }} />
+                        <Spinner animation="border" variant="success" style={{ width: '3rem', height: '3rem' }} />
                     </div>
                 ) : !challenges || challenges.length === 0 ? (
                     <Alert variant="info" className="border-0 info-card">Chưa có thử thách nào.</Alert>
@@ -98,15 +100,19 @@ function MemberDetailModal({ show, onHide, member, loadingDetail, surveyAnswers,
 
     return (
         <Modal show={show} onHide={onHide} centered size="lg">
-            <Modal.Header closeButton>
-                <Modal.Title>
-                    👤 Chi tiết thành viên: {member.FullName}
+            <Modal.Header closeButton className="bg-success text-white">
+                <Modal.Title className="d-flex align-items-center">
+                    <FaUser className="me-2" />
+                    Chi tiết thành viên: {member.FullName}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Row>
                     <Col md={6}>
-                        <h5>Thông tin thành viên</h5>
+                        <h5 className="text-success mb-3">
+                            <FaUser className="me-2" />
+                            Thông tin thành viên
+                        </h5>
                         <Table bordered size="sm" className="mb-4">
                             <tbody>
                                 <tr>
@@ -125,7 +131,7 @@ function MemberDetailModal({ show, onHide, member, loadingDetail, surveyAnswers,
                                     <td>Trạng thái</td>
                                     <td>
                                         <Badge bg={member.Status === "Active" ? "success" : "secondary"}>
-                                            {member.Status}
+                                            {member.Status === "Active" ? "Hoạt động" : "Không hoạt động"}
                                         </Badge>
                                     </td>
                                 </tr>
@@ -133,7 +139,10 @@ function MemberDetailModal({ show, onHide, member, loadingDetail, surveyAnswers,
                         </Table>
                     </Col>
                     <Col md={6}>
-                        <h5>Tiến trình cai thuốc</h5>
+                        <h5 className="text-success mb-3">
+                            <FaChartLine className="me-2" />
+                            Tiến trình cai thuốc
+                        </h5>
                         {loadingDetail ? (
                             <Spinner animation="border" size="sm" />
                         ) : sortedProgress.length > 0 ? (
@@ -175,11 +184,12 @@ function MemberDetailModal({ show, onHide, member, loadingDetail, surveyAnswers,
                                 {history.length > 0 && (
                                     <div style={{ textAlign: "center" }}>
                                         <Button
-                                            variant="link"
+                                            variant="success"
                                             onClick={() => setShowHistory((prev) => !prev)}
-                                            style={{ fontWeight: 500, color: "#0d6efd" }}
+                                            style={{ fontWeight: 500 }}
                                         >
-                                            {showHistory ? "Ẩn lịch sử ▲" : "Xem lịch sử ▼"}
+                                            <FaHistory className="me-1" />
+                                            {showHistory ? "Ẩn lịch sử" : "Xem lịch sử"}
                                         </Button>
                                     </div>
                                 )}
@@ -229,7 +239,10 @@ function MemberDetailModal({ show, onHide, member, loadingDetail, surveyAnswers,
                     </Col>
                 </Row>
                 <hr />
-                <h5>Câu hỏi khảo sát & đáp án</h5>
+                <h5 className="text-success mb-3">
+                    <FaCalendarAlt className="me-2" />
+                    Câu hỏi khảo sát & đáp án
+                </h5>
                 {loadingSurveyAnswers ? (
                     <Spinner animation="border" size="sm" />
                 ) : surveyAnswers && surveyAnswers.length > 0 ? (
@@ -413,98 +426,122 @@ const CoachMembers = () => {
     };
 
     return (
-        <Container className="coach-members-management-page" style={{ marginTop: 40, marginBottom: 40 }}>
-            <div className="text-center mb-5">
-                <h1 className="display-5 fw-bold text-success mb-3">
-                    👨‍⚕️ Danh sách thành viên đang đồng hành
-                </h1>
-                <p className="lead text-muted">
-                    Quản lý và theo dõi tiến trình cai thuốc của các thành viên
-                </p>
-                {members.length > 0 && (
-                    <div className="d-inline-flex align-items-center bg-success text-white px-4 py-2 rounded-pill">
-                        <span className="me-2">👥</span>
-                        <strong>{members.length} thành viên</strong>
+        <Container fluid className="coach-members-management-page" style={{ marginTop: 40, marginBottom: 40 }}>
+            {/* Header Section */}
+            <div className="header-section">
+                <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 className="fw-bold text-dark mb-1 d-flex align-items-center">
+                            <FaUsers className="me-3" />
+                            Quản lý thành viên
+                        </h2>
+                        <p className="text-muted mb-0">Danh sách thành viên đang đồng hành cùng bạn</p>
                     </div>
-                )}
+                    <div className="d-flex align-items-center">
+                        <span className="badge fs-6 px-3 py-2">
+                            <FaUser className="me-2" />
+                            {members.length} thành viên
+                        </span>
+                    </div>
+                </div>
             </div>
             {loading ? (
-                <div className="text-center my-5">
-                    <Spinner animation="border" variant="success" style={{ width: '3rem', height: '3rem' }} />
-                    <h5 className="mt-3 text-success">Đang tải danh sách thành viên...</h5>
-                </div>
+                <Card className="border-0 shadow-sm">
+                    <Card.Body className="text-center py-5">
+                        <Spinner animation="border" variant="success" style={{ width: '3rem', height: '3rem' }} />
+                        <h5 className="mt-3 text-muted">Đang tải dữ liệu...</h5>
+                        <p className="text-muted">Vui lòng chờ trong giây lát</p>
+                    </Card.Body>
+                </Card>
             ) : (
-                <Card className="shadow-lg">
-                    <Card.Header className="bg-gradient">
-                        <h5 className="mb-0 d-flex align-items-center">
-                            <span className="me-2">📋</span>
+                <Card className="border-0 shadow-sm">
+                    <Card.Header className="bg-white border-bottom">
+                        <h5 className="mb-0 d-flex align-items-center text-success">
+                            <FaUsers className="me-2" />
                             Danh sách thành viên
                         </h5>
                     </Card.Header>
-                    <Card.Body>
+                    <Card.Body className="p-0">
                         {members.length === 0 ? (
                             <div className="text-center py-5">
-                                <div className="mb-4">
-                                    <span style={{ fontSize: '4rem' }}>👥</span>
+                                <div className="empty-state">
+                                    <FaUsers className="empty-icon" />
+                                    <h5 className="text-muted mb-3">Chưa có thành viên nào</h5>
+                                    <p className="text-muted">
+                                        Hiện tại chưa có thành viên nào chọn bạn làm coach.<br />
+                                        Hãy chia sẻ thông tin của bạn để thu hút thêm thành viên!
+                                    </p>
                                 </div>
-                                <h4 className="text-muted mb-3">Chưa có thành viên nào</h4>
-                                <p className="text-muted">
-                                    Hiện tại chưa có thành viên nào chọn bạn làm coach.<br />
-                                    Hãy chia sẻ thông tin của bạn để thu hút thêm thành viên!
-                                </p>
                             </div>
                         ) : (
-                            <Table hover responsive className="member-table">
-                                <thead>
-                                    <tr>
-                                        <th>👤 Họ tên</th>
-                                        <th>📧 Email</th>
-                                        <th>📞 Điện thoại</th>
-                                        <th>📊 Trạng thái</th>
-                                        <th colSpan={2} style={{ minWidth: 170 }}>⚙️ Chức năng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {members.map((m) => (
-                                        <tr key={m.UserID}>
-                                            <td>
-                                                {m.profilePicture && (
-                                                    <img
-                                                        src={m.profilePicture}
-                                                        alt="avatar"
-                                                        style={{
-                                                            width: 32,
-                                                            height: 32,
-                                                            objectFit: "cover",
-                                                            borderRadius: "50%",
-                                                            marginRight: 8,
-                                                            border: "1px solid #eee",
-                                                        }}
-                                                    />
-                                                )}
-                                                {m.FullName}
-                                            </td>
-                                            <td>{m.Email}</td>
-                                            <td>{m.PhoneNumber}</td>
-                                            <td>
-                                                <Badge bg={m.Status === "Active" ? "success" : "secondary"}>
-                                                    {m.Status}
-                                                </Badge>
-                                            </td>
-                                            <td>
-                                                <Button size="sm" variant="primary" onClick={() => handleClickMember(m)} className="me-2 btn-action-detail">
-                                                    👁️ Xem chi tiết
-                                                </Button>
-                                            </td>
-                                            <td>
-                                                <Button size="sm" variant="info" onClick={() => handleViewChallenges(m)} className="btn-action-challenge">
-                                                    🎯 Thử thách
-                                                </Button>
-                                            </td>
+                            <div className="table-responsive">
+                                <Table hover className="mb-0">
+                                    <thead className="bg-light">
+                                        <tr>
+                                            <th><FaUser className="me-2" />Thành viên</th>
+                                            <th><FaEnvelope className="me-2" />Email</th>
+                                            <th><FaPhone className="me-2" />Điện thoại</th>
+                                            <th className="text-center"><FaChartLine className="me-2" />Trạng thái</th>
+                                            <th className="text-center" style={{ width: '200px' }}>Thao tác</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
+                                    </thead>
+                                    <tbody>
+                                        {members.map((m) => (
+                                            <tr key={m.UserID} className="align-middle">
+                                                <td>
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="avatar-sm rounded-circle d-flex align-items-center justify-content-center me-3">
+                                                            {m.profilePicture ? (
+                                                                <img
+                                                                    src={m.profilePicture}
+                                                                    alt="avatar"
+                                                                    className="w-100 h-100 rounded-circle"
+                                                                    style={{ objectFit: "cover" }}
+                                                                />
+                                                            ) : (
+                                                                <FaUser className="text-white" />
+                                                            )}
+                                                        </div>
+                                                        <div>
+                                                            <h6 className="mb-0">{m.FullName}</h6>
+                                                            <small className="text-muted">ID: {m.UserID}</small>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{m.Email}</td>
+                                                <td>{m.PhoneNumber}</td>
+                                                <td className="text-center">
+                                                    <Badge bg={m.Status === "Active" ? "success" : "secondary"}>
+                                                        {m.Status === "Active" ? "Hoạt động" : "Không hoạt động"}
+                                                    </Badge>
+                                                </td>
+                                                <td className="text-center">
+                                                    <div className="d-flex gap-2 justify-content-center">
+                                                        <Button
+                                                            size="sm"
+                                                            variant="success"
+                                                            onClick={() => handleClickMember(m)}
+                                                            className="btn-action-detail"
+                                                        >
+                                                            <FaEye className="me-1" />
+                                                            Chi tiết
+                                                        </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-info"
+                                                            onClick={() => handleViewChallenges(m)}
+                                                            className="btn-action-challenge"
+                                                        >
+                                                            <FaTasks className="me-1" />
+                                                            Thử thách
+                                                        </Button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
+                            </div>
                         )}
                     </Card.Body>
                 </Card>

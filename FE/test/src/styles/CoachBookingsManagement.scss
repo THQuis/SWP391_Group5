@@ -1,4 +1,4 @@
-// Variables
+// Variables - Green Theme
 $primary: #198754;
 $primary-light: #e8f5e8;
 $primary-dark: #146c43;
@@ -17,20 +17,49 @@ $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
 $shadow: 0 4px 16px rgba(25, 135, 84, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
 $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
 
-// Page container
+// Page container - Clean Design
 .coach-bookings-management-page {
     padding: 2rem 0;
+    min-height: 100vh;
 
     .container {
         max-width: 1400px;
     }
 
-    // Typography
+    // Typography - Modern & Clean
     h2 {
         color: $primary-dark;
         font-weight: 700;
         text-shadow: 0 1px 2px rgba(25, 135, 84, 0.1);
         margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        svg {
+            color: $primary;
+            filter: drop-shadow(0 2px 4px rgba(25, 135, 84, 0.2));
+        }
+    }
+
+    // Header Section
+    .header-section {
+        background: $white;
+        border-radius: $border-radius;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: $shadow;
+        border-left: 4px solid $primary;
+
+        .badge {
+            background: linear-gradient(135deg, $primary 0%, $primary-dark 100%) !important;
+            color: $white;
+            border-radius: 2rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+        }
     }
 
     // Cards
@@ -48,7 +77,6 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
         }
 
         .card-header {
-            background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
             color: $white;
             border: none;
             padding: 1.5rem;
@@ -104,7 +132,7 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
         }
     }
 
-    // Action buttons styling - Tương tự CoachMembers
+    // Action buttons styling - Green Theme
     .btn-action-detail {
         background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
         border: none;
@@ -185,24 +213,24 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
 
         &.btn-primary {
             background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
-            box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
 
             &:hover,
             &:focus {
                 background: linear-gradient(135deg, $primary-dark 0%, darken($primary-dark, 10%) 100%);
-                box-shadow: 0 4px 16px rgba(25, 135, 84, 0.3);
+                box-shadow: 0 4px 16px rgba(13, 110, 253, 0.3);
                 transform: translateY(-1px);
             }
         }
 
         &.btn-success {
             background: linear-gradient(135deg, $success 0%, $primary-dark 100%);
-            box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
 
             &:hover,
             &:focus {
                 background: linear-gradient(135deg, $primary-dark 0%, darken($primary-dark, 10%) 100%);
-                box-shadow: 0 4px 16px rgba(25, 135, 84, 0.3);
+                box-shadow: 0 4px 16px rgba(13, 110, 253, 0.3);
                 transform: translateY(-1px);
             }
         }
@@ -221,7 +249,8 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
             }
         }
 
-        &.btn-outline-success {
+        &.btn-outline-success,
+        &.btn-outline-primary {
             border: 2px solid $primary;
             color: $primary;
             background: transparent;
@@ -292,7 +321,7 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
         font-weight: 500;
 
         &.bg-success {
-            background: linear-gradient(135deg, $success 0%, $primary-dark 100%) !important;
+            background: linear-gradient(135deg, $primary 0%, $primary-dark 100%) !important;
             box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
         }
 
@@ -304,6 +333,11 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
         &.bg-danger {
             background: linear-gradient(135deg, $danger 0%, darken($danger, 10%) 100%) !important;
             box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        &.bg-primary {
+            background: linear-gradient(135deg, $primary 0%, $primary-dark 100%) !important;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
         }
 
         &.bg-secondary {
@@ -355,7 +389,7 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
         justify-content: center;
         background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
         color: $white;
-        box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
+        box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
     }
 
     // Empty state
@@ -381,7 +415,7 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
 // Modal styling - Global scope vì modal render outside container
 .modal {
     .modal-header {
-        background: linear-gradient(135deg, #198754 0%, #146c43 100%);
+        background: linear-gradient(135deg, #0d6efd 0%, #084298 100%);
         color: #ffffff;
         border: none;
         border-radius: 1rem 1rem 0 0;
@@ -407,6 +441,15 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
 
             .btn-close {
                 filter: none;
+            }
+        }
+
+        &.bg-primary {
+            background: linear-gradient(135deg, #0d6efd 0%, #084298 100%) !important;
+            color: #ffffff !important;
+
+            .btn-close {
+                filter: invert(1);
             }
         }
     }

@@ -48,8 +48,8 @@ const RouterCustom = () => {
     return (
         <Routes>
             {/* === CÁC ROUTE CÔNG KHAI === */}
-            <Route path={ROUTERS.AUTH.LOGIN} element={<AuthPage />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
+            <Route path={ROUTERS.AUTH.LOGIN} element={<AuthPage />} />
 
             {/* === LAYOUT CHO USER VÀ CÁC TRANG CON === */}
             {/* Tất cả các trang của user sẽ có chung Header và Footer của UserLayout */}
@@ -68,6 +68,7 @@ const RouterCustom = () => {
                 <Route path={ROUTERS.USER.CHALENGE} element={<ChallengesPage />} />
                 <Route path={ROUTERS.USER.MYCONSUL} element={<MyConsultations />} />
                 <Route path={ROUTERS.USER.ACHIVE} element={<AchievementGallery />} />
+
 
 
                 {/* CoachDashboard */}

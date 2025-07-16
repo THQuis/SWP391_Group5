@@ -43,7 +43,41 @@ function UserBlog() {
                 });
                 if (!res.ok) throw new Error("Lỗi tải blog");
                 const data = await res.json();
-                setBlogs(data);
+
+                // Tải số lượng like/dislike cho từng blog
+                const blogsWithCounts = await Promise.all(
+                    data.map(async (blog) => {
+                        try {
+                            const countRes = await fetch(`/api/UserBlog/reaction-count/${blog.blogId}`, {
+                                method: "GET",
+                                headers: {
+                                    "Accept": "*/*",
+                                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                                },
+                            });
+
+                            if (countRes.ok) {
+                                const countData = await countRes.json();
+                                return {
+                                    ...blog,
+                                    likes: countData.likes || 0,
+                                    dislikes: countData.dislikes || 0,
+                                };
+                            }
+                        } catch (error) {
+                            console.error(`Error fetching count for blog ${blog.blogId}:`, error);
+                        }
+
+                        // Fallback nếu không lấy được count
+                        return {
+                            ...blog,
+                            likes: blog.likes || 0,
+                            dislikes: blog.dislikes || 0,
+                        };
+                    })
+                );
+
+                setBlogs(blogsWithCounts);
             } catch (err) {
                 toast.error("Không thể tải dữ liệu blog");
             } finally {
@@ -61,19 +95,72 @@ function UserBlog() {
             b.title?.toLowerCase().includes(search.toLowerCase()))
     );
 
-    // Like/Unlike bài viết (chỉ làm ở UI, muốn sync backend thì gọi API)
-    const handleToggleLike = (blogId) => {
-        setBlogs((prev) =>
-            prev.map((b) =>
-                b.blogId === blogId
-                    ? {
-                        ...b,
-                        liked: !b.liked,
-                        likes: b.liked ? (b.likes || 0) - 1 : (b.likes || 0) + 1,
-                    }
-                    : b
-            )
-        );
+    // Like/Unlike bài viết (đồng bộ với API)
+    const handleToggleLike = async (blogId) => {
+        const token = localStorage.getItem("userToken");
+
+        try {
+            // Bước 1: Gọi API toggle like trước
+            const toggleRes = await fetch(`/api/UserBlog/toggle-like/${blogId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                },
+            });
+
+            if (!toggleRes.ok) {
+                throw new Error("Không thể thực hiện thao tác like");
+            }
+
+            // Bước 2: Sau khi toggle thành công, lấy số lượng like/dislike mới
+            const countRes = await fetch(`/api/UserBlog/reaction-count/${blogId}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "*/*",
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                },
+            });
+
+            if (countRes.ok) {
+                const countData = await countRes.json();
+
+                // Cập nhật UI với dữ liệu thực từ API
+                setBlogs((prev) =>
+                    prev.map((b) =>
+                        b.blogId === blogId
+                            ? {
+                                ...b,
+                                likes: countData.likes || 0,
+                                dislikes: countData.dislikes || 0,
+                                // Toggle trạng thái liked ở UI
+                                liked: !b.liked,
+                            }
+                            : b
+                    )
+                );
+
+                toast.success("Đã cập nhật trạng thái like!");
+            } else {
+                // Fallback: cập nhật chỉ ở UI nếu không lấy được count
+                setBlogs((prev) =>
+                    prev.map((b) =>
+                        b.blogId === blogId
+                            ? {
+                                ...b,
+                                liked: !b.liked,
+                                likes: b.liked ? (b.likes || 0) - 1 : (b.likes || 0) + 1,
+                            }
+                            : b
+                    )
+                );
+            }
+        } catch (error) {
+            console.error("Error toggling like:", error);
+            toast.error("Không thể thực hiện thao tác like. Vui lòng thử lại!");
+
+            // Không thay đổi UI nếu API thất bại
+        }
     };
 
     // Mở modal chỉnh sửa
@@ -225,7 +312,7 @@ function UserBlog() {
     return (
         <div className="social-blog-page">
             <ToastContainer position="top-right" />
-            
+
             {/* Top Navigation Bar */}
             <div className="top-nav">
                 <Container>
@@ -234,7 +321,7 @@ function UserBlog() {
                             <FaBlog className="logo-icon" />
                             <span className="logo-text">QuitTogether</span>
                         </div>
-                        
+
                         {/* Search Bar */}
                         <div className="search-section">
                             <div className="search-container">
@@ -250,7 +337,7 @@ function UserBlog() {
                         </div>
 
                         {/* Create Post Button */}
-                        <Button 
+                        <Button
                             className="create-post-btn"
                             onClick={handleShowCreate}
                         >
@@ -274,7 +361,7 @@ function UserBlog() {
                                 <h5>{CURRENT_USER}</h5>
                                 <p className="profile-subtitle">Thành viên cộng đồng</p>
                             </div>
-                            
+
                             <div className="stats-card">
                                 <h6>Thống kê của bạn</h6>
                                 <div className="stat-item">
@@ -287,7 +374,7 @@ function UserBlog() {
                                     <span>Lượt thích</span>
                                     <span className="stat-number">
                                         {blogs.filter(b => b.authorName === CURRENT_USER)
-                                             .reduce((sum, b) => sum + (b.likes || 0), 0)}
+                                            .reduce((sum, b) => sum + (b.likes || 0), 0)}
                                     </span>
                                 </div>
                             </div>
@@ -301,8 +388,8 @@ function UserBlog() {
                             <Card.Body>
                                 <div className="create-post-header">
                                     <FaUserCircle size={40} className="me-3" />
-                                    <Button 
-                                        variant="outline-secondary" 
+                                    <Button
+                                        variant="outline-secondary"
                                         className="create-post-input"
                                         onClick={handleShowCreate}
                                     >
@@ -310,16 +397,16 @@ function UserBlog() {
                                     </Button>
                                 </div>
                                 <div className="create-post-actions">
-                                    <Button 
-                                        variant="link" 
+                                    <Button
+                                        variant="link"
                                         onClick={handleShowCreate}
                                         className="action-btn"
                                     >
                                         <FaImage className="me-2" />
                                         Ảnh
                                     </Button>
-                                    <Button 
-                                        variant="link" 
+                                    <Button
+                                        variant="link"
                                         onClick={handleShowCreate}
                                         className="action-btn"
                                     >
@@ -361,7 +448,7 @@ function UserBlog() {
                                                 </p>
                                             </div>
                                         </div>
-                                        
+
                                         {blog.authorName === CURRENT_USER && (
                                             <Dropdown>
                                                 <Dropdown.Toggle variant="link" className="post-menu">
@@ -372,7 +459,7 @@ function UserBlog() {
                                                         <FaEdit className="me-2" />
                                                         Chỉnh sửa
                                                     </Dropdown.Item>
-                                                    <Dropdown.Item 
+                                                    <Dropdown.Item
                                                         onClick={() => handleDeleteBlog(blog.blogId)}
                                                         className="text-danger"
                                                     >
@@ -390,11 +477,11 @@ function UserBlog() {
                                             <h5 className="post-title">{blog.title}</h5>
                                         )}
                                         <p className="post-text">{blog.content}</p>
-                                        
+
                                         {blog.imageUrl && (
                                             <div className="post-image">
-                                                <img 
-                                                    src={blog.imageUrl} 
+                                                <img
+                                                    src={blog.imageUrl}
                                                     alt="Post content"
                                                     className="content-image"
                                                 />
@@ -409,7 +496,7 @@ function UserBlog() {
                                                 {blog.likes || 0} lượt thích
                                             </span>
                                         </div>
-                                        
+
                                         <div className="action-buttons">
                                             <Button
                                                 variant="link"
@@ -417,19 +504,19 @@ function UserBlog() {
                                                 onClick={() => handleToggleLike(blog.blogId)}
                                             >
                                                 {blog.liked ? <FaHeart /> : <FaRegHeart />}
-                                                <span>Thích</span>
+                                                <span>Thích ({blog.likes || 0})</span>
                                             </Button>
-                                            
+
                                             <Button variant="link" className="action-btn">
                                                 <FaComments />
                                                 <span>Bình luận</span>
                                             </Button>
-                                            
+
                                             <Button variant="link" className="action-btn">
                                                 <FaShare />
                                                 <span>Chia sẻ</span>
                                             </Button>
-                                            
+
                                             {blog.authorName !== CURRENT_USER && (
                                                 <Button
                                                     variant="link"
@@ -466,7 +553,7 @@ function UserBlog() {
                                     <small>567 bài viết</small>
                                 </div>
                             </div>
-                            
+
                             <div className="suggestions-card">
                                 <h6>Gợi ý kết nối</h6>
                                 <div className="suggestion-item">
@@ -488,7 +575,7 @@ function UserBlog() {
                     </Col>
                 </Row>
             </Container>
-            
+
             {/* Modal chỉnh sửa bài viết */}
             <Modal show={showEdit} onHide={() => setShowEdit(false)} centered>
                 <Modal.Header closeButton>

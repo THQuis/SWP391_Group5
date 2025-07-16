@@ -1,11 +1,23 @@
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Toast, ToastContainer, Modal } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 // Dùng forwardRef để Tab khác gọi reload
 const BlogManagementTab = forwardRef((props, ref) => {
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVariant, setToastVariant] = useState('success');
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [blogToDelete, setBlogToDelete] = useState(null);
+
+    // Hàm hiển thị toast
+    const showToastMessage = (message, variant = 'success') => {
+        setToastMessage(message);
+        setToastVariant(variant);
+        setShowToast(true);
+    };
 
     const fetchBlogs = async () => {
         setLoading(true);
@@ -25,24 +37,32 @@ const BlogManagementTab = forwardRef((props, ref) => {
     };
 
     // Xử lý xóa blog
-    const handleDelete = async (blogId) => {
-        if (window.confirm("Bạn có chắc chắn muốn xóa blog này?")) {
-            try {
-                const token = localStorage.getItem('userToken');
-                const res = await fetch(`/api/BlogAdmin/delete/${blogId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                if (!res.ok) throw new Error("Lỗi xóa blog");
-                alert("Đã xóa blog.");
-                // Reload lại danh sách sau khi xoá
-                fetchBlogs();
-            } catch (err) {
-                alert("Xóa blog thất bại!");
-            }
+    const handleDelete = (blogId) => {
+        setBlogToDelete(blogId);
+        setShowDeleteModal(true);
+    };
+
+    // Xác nhận xóa blog
+    const confirmDelete = async () => {
+        if (!blogToDelete) return;
+
+        try {
+            const token = localStorage.getItem('userToken');
+            const res = await fetch(`/api/BlogAdmin/delete/${blogToDelete}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!res.ok) throw new Error("Lỗi xóa blog");
+            showToastMessage("Đã xóa blog thành công!", "success");
+            // Reload lại danh sách sau khi xoá
+            fetchBlogs();
+        } catch (err) {
+            showToastMessage("Xóa blog thất bại!", "danger");
         }
+        setShowDeleteModal(false);
+        setBlogToDelete(null);
     };
 
     // Expose reload function
@@ -104,6 +124,42 @@ const BlogManagementTab = forwardRef((props, ref) => {
                     )}
                 </tbody>
             </Table>
+
+            {/* Modal xác nhận xóa */}
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn xóa blog này? Hành động này không thể hoàn tác.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="danger" onClick={confirmDelete}>
+                        Xóa
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Toast thông báo */}
+            <ToastContainer position="top-end" className="p-3">
+                <Toast
+                    show={showToast}
+                    onClose={() => setShowToast(false)}
+                    delay={3000}
+                    autohide
+                    bg={toastVariant}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">Thông báo</strong>
+                    </Toast.Header>
+                    <Toast.Body className={toastVariant === 'danger' ? 'text-white' : ''}>
+                        {toastMessage}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </div>
     );
 });

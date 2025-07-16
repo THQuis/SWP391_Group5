@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Button, Table } from "react-bootstrap";
+import { Card, Row, Col, Button, Table, Toast, ToastContainer, Modal } from "react-bootstrap";
 import { FaCheckCircle } from "react-icons/fa";
 
 function BlogStatsTab() {
@@ -7,6 +7,18 @@ function BlogStatsTab() {
     const [reportedBlogs, setReportedBlogs] = useState([]);
     const [loadingStats, setLoadingStats] = useState(true);
     const [loadingReported, setLoadingReported] = useState(true);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVariant, setToastVariant] = useState('success');
+    const [showModal, setShowModal] = useState(false);
+    const [blogToReview, setBlogToReview] = useState(null);
+
+    // Hàm hiển thị toast
+    const showToastMessage = (message, variant = 'success') => {
+        setToastMessage(message);
+        setToastVariant(variant);
+        setShowToast(true);
+    };
 
     // Lấy thống kê tổng quan
     useEffect(() => {
@@ -51,23 +63,32 @@ function BlogStatsTab() {
     }, []);
 
     // Đánh dấu đã xử lý báo cáo
-    const handleReviewed = async (blogId) => {
-        if (window.confirm("Đánh dấu bài viết đã xử lý báo cáo?")) {
-            try {
-                const token = localStorage.getItem('userToken');
-                const res = await fetch(`/api/BlogAdmin/reviewed/${blogId}`, {
-                    method: "PUT",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                });
-                if (!res.ok) throw new Error();
-                alert("Đã đánh dấu bài viết đã xử lý báo cáo.");
-                setReportedBlogs(reportedBlogs.filter(b => b.blogId !== blogId));
-            } catch {
-                alert("Đánh dấu thất bại!");
-            }
+    const handleReviewed = (blogId) => {
+        setBlogToReview(blogId);
+        setShowModal(true);
+    };
+
+    // Xác nhận đánh dấu đã xử lý
+    const confirmReviewed = async () => {
+        if (!blogToReview) return;
+
+        try {
+            const token = localStorage.getItem('userToken');
+            const res = await fetch(`/api/BlogAdmin/reviewed/${blogToReview}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (!res.ok) throw new Error();
+            showToastMessage("Đã đánh dấu bài viết đã xử lý báo cáo.", "success");
+            setReportedBlogs(reportedBlogs.filter(b => b.blogId !== blogToReview));
+        } catch {
+            showToastMessage("Đánh dấu thất bại!", "danger");
         }
+
+        setShowModal(false);
+        setBlogToReview(null);
     };
 
     return (
@@ -147,6 +168,42 @@ function BlogStatsTab() {
                     )}
                 </tbody>
             </Table>
+
+            {/* Modal xác nhận */}
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận đánh dấu đã xử lý</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn đánh dấu bài viết này đã được xử lý báo cáo?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="success" onClick={confirmReviewed}>
+                        Đánh dấu đã xử lý
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Toast thông báo */}
+            <ToastContainer position="top-end" className="p-3">
+                <Toast
+                    show={showToast}
+                    onClose={() => setShowToast(false)}
+                    delay={3000}
+                    autohide
+                    bg={toastVariant}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">Thông báo</strong>
+                    </Toast.Header>
+                    <Toast.Body className={toastVariant === 'danger' ? 'text-white' : ''}>
+                        {toastMessage}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </div>
     );
 }

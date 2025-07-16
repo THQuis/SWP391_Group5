@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Toast, ToastContainer, Modal } from "react-bootstrap";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
 function ReportedBlogTab({ reloadBlogList }) {
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVariant, setToastVariant] = useState('success');
+    const [showModal, setShowModal] = useState(false);
+    const [modalAction, setModalAction] = useState('');
+    const [blogToAction, setBlogToAction] = useState(null);
+
+    // Hàm hiển thị toast
+    const showToastMessage = (message, variant = 'success') => {
+        setToastMessage(message);
+        setToastVariant(variant);
+        setShowToast(true);
+    };
 
     // Fetch reported blogs
     // Fetch reported blogs
@@ -30,44 +43,45 @@ function ReportedBlogTab({ reloadBlogList }) {
     }, []);
 
     // Approve or reject
-    const handleApprove = async (blogId) => {
-        if (window.confirm("Duyệt bài viết này?")) {
-            try {
-                const token = localStorage.getItem('userToken');
-                const res = await fetch(`/api/BlogAdmin/approve/${blogId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                if (!res.ok) throw new Error();
-                alert("Blog đã được duyệt.");
-                setBlogs(blogs.filter(b => b.blogId !== blogId));
-                if (reloadBlogList) reloadBlogList();
-            } catch {
-                alert("Duyệt blog thất bại!");
-            }
-        }
+    const handleApprove = (blogId) => {
+        setBlogToAction(blogId);
+        setModalAction('approve');
+        setShowModal(true);
     };
 
-    const handleReject = async (blogId) => {
-        if (window.confirm("Từ chối bài viết này?")) {
-            try {
-                const token = localStorage.getItem('userToken');
-                const res = await fetch(`/api/BlogAdmin/reject/${blogId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                if (!res.ok) throw new Error();
-                alert("Blog đã bị từ chối.");
-                setBlogs(blogs.filter(b => b.blogId !== blogId));
-                if (reloadBlogList) reloadBlogList();
-            } catch {
-                alert("Từ chối blog thất bại!");
-            }
+    const handleReject = (blogId) => {
+        setBlogToAction(blogId);
+        setModalAction('reject');
+        setShowModal(true);
+    };
+
+    // Xác nhận hành động
+    const confirmAction = async () => {
+        if (!blogToAction || !modalAction) return;
+
+        try {
+            const token = localStorage.getItem('userToken');
+            const endpoint = modalAction === 'approve' ? 'approve' : 'reject';
+            const res = await fetch(`/api/BlogAdmin/${endpoint}/${blogToAction}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!res.ok) throw new Error();
+
+            const successMessage = modalAction === 'approve' ? 'Blog đã được duyệt.' : 'Blog đã bị từ chối.';
+            showToastMessage(successMessage, 'success');
+            setBlogs(blogs.filter(b => b.blogId !== blogToAction));
+            if (reloadBlogList) reloadBlogList();
+        } catch {
+            const errorMessage = modalAction === 'approve' ? 'Duyệt blog thất bại!' : 'Từ chối blog thất bại!';
+            showToastMessage(errorMessage, 'danger');
         }
+
+        setShowModal(false);
+        setBlogToAction(null);
+        setModalAction('');
     };
 
     return (
@@ -118,6 +132,49 @@ function ReportedBlogTab({ reloadBlogList }) {
                     )}
                 </tbody>
             </Table>
+
+            {/* Modal xác nhận */}
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        {modalAction === 'approve' ? 'Xác nhận duyệt' : 'Xác nhận từ chối'}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {modalAction === 'approve'
+                        ? 'Bạn có chắc chắn muốn duyệt bài viết này?'
+                        : 'Bạn có chắc chắn muốn từ chối bài viết này?'}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button
+                        variant={modalAction === 'approve' ? 'success' : 'danger'}
+                        onClick={confirmAction}
+                    >
+                        {modalAction === 'approve' ? 'Duyệt' : 'Từ chối'}
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Toast thông báo */}
+            <ToastContainer position="top-end" className="p-3">
+                <Toast
+                    show={showToast}
+                    onClose={() => setShowToast(false)}
+                    delay={3000}
+                    autohide
+                    bg={toastVariant}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">Thông báo</strong>
+                    </Toast.Header>
+                    <Toast.Body className={toastVariant === 'danger' ? 'text-white' : ''}>
+                        {toastMessage}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </div>
     );
 }

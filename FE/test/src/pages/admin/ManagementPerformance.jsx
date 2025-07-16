@@ -142,16 +142,29 @@ const ManagementPerformance = () => {
     };
 
     // Xóa huy hiệu
-    const handleDelete = async (badgeId) => {
+    const handleDelete = (badgeId) => {
+        setBadgeToDelete(badgeId);
+        setShowDeleteModal(true);
+    };
+
+    // Xác nhận xóa
+    const confirmDelete = async () => {
+        if (!badgeToDelete) return;
+
         try {
             const token = localStorage.getItem('userToken');
-            await axios.delete(`/api/Admin/Achievement/Delete/${badgeId}`, {
+            await axios.delete(`/api/Admin/Achievement/Delete/${badgeToDelete}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             await fetchBadges();
+            toast.success('Xóa huy hiệu thành công!');
         } catch (err) {
             console.error('Lỗi khi xóa huy hiệu:', err);
+            toast.error('Lỗi khi xóa huy hiệu!');
         }
+
+        setShowDeleteModal(false);
+        setBadgeToDelete(null);
     };
 
     // Hàm xử lý thay đổi loại gói
@@ -266,6 +279,10 @@ const ManagementPerformance = () => {
     // State cho modal xem chi tiết (đặt ở đầu component, không đặt sau return hoặc điều kiện)
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [detailBadge, setDetailBadge] = useState(null);
+
+    // State cho modal xác nhận xóa
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [badgeToDelete, setBadgeToDelete] = useState(null);
 
     const handleShowDetail = (badge) => {
         setDetailBadge(badge);
@@ -382,6 +399,24 @@ const ManagementPerformance = () => {
                     </Card>
                 </Col>
             </Row>
+
+            {/* Modal xác nhận xóa */}
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa huy hiệu</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn xóa huy hiệu này? Hành động này không thể hoàn tác.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="danger" onClick={confirmDelete}>
+                        Xóa
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             {/* Modal xem chi tiết huy hiệu */}
             <Modal show={showDetailModal} onHide={() => setShowDetailModal(false)} centered>

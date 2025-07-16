@@ -221,6 +221,35 @@ namespace Smoking.API.Controllers.Member
             await _blogService.ToggleReactionAsync(blogId, userId, false);
             return Ok(new { Message = "Đã xử lý Dislike" });
         }
+        [HttpGet("reaction-status/{blogId}")]
+        public async Task<IActionResult> GetReactionStatus(int blogId)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim == null)
+                return Unauthorized("Chưa đăng nhập");
+
+            var userId = int.Parse(userIdClaim);
+            var reaction = await _blogService.GetUserReactionAsync(blogId, userId);
+
+            // Giá trị trả về: null (chưa phản ứng), true (like), false (dislike)
+            return Ok(new
+            {
+                BlogId = blogId,
+                UserReaction = reaction  // true / false / null
+            });
+        }
+
+        [HttpGet("reaction-count/{blogId}")]
+        public async Task<IActionResult> GetReactionCount(int blogId)
+        {
+            var counts = await _blogService.GetReactionCountAsync(blogId);
+            return Ok(new
+            {
+                BlogId = blogId,
+                Likes = counts.Likes,
+                Dislikes = counts.Dislikes
+            });
+        }
 
     }
 }

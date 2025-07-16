@@ -34,6 +34,9 @@ namespace Smoking.BLL.Interfaces
         Task<bool> ToggleReactionAsync(int blogId, int userId, bool isLike);
         Task<int> CountLikesAsync(int blogId);
         Task<int> CountDislikesAsync(int blogId);
+        Task<bool?> GetUserReactionAsync(int blogId, int userId);
+        Task<(int Likes, int Dislikes)> GetReactionCountAsync(int blogId);
+
 
     }
 }

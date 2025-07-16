@@ -193,6 +193,18 @@ namespace Smoking.BLL.Services
         public async Task<int> CountLikesAsync(int blogId) => await _repo.CountReactionsAsync(blogId, true);
 
         public async Task<int> CountDislikesAsync(int blogId) => await _repo.CountReactionsAsync(blogId, false);
+        public async Task<bool?> GetUserReactionAsync(int blogId, int userId)
+        {
+            var reaction = await _repo.GetReactionAsync(blogId, userId);
+            return reaction?.IsLike; // Có thể là true / false / null
+        }
+        public async Task<(int Likes, int Dislikes)> GetReactionCountAsync(int blogId)
+        {
+            var likes = await _repo.CountReactionsAsync(blogId, true);
+            var dislikes = await _repo.CountReactionsAsync(blogId, false);
+            return (likes, dislikes);
+        }
+
 
     }
 }

@@ -2234,6 +2234,38 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "GetReactionCount",
+    "RelativePath": "api/UserBlog/reaction-count/{blogId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
+    "Method": "GetReactionStatus",
+    "RelativePath": "api/UserBlog/reaction-status/{blogId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Member.UserBlogController",
     "Method": "ReportBlog",
     "RelativePath": "api/UserBlog/report/{blogId}",
     "HttpMethod": "POST",

@@ -2934,6 +2934,52 @@
         }
       }
     },
+    "/api/UserBlog/reaction-status/{blogId}": {
+      "get": {
+        "tags": [
+          "UserBlog"
+        ],
+        "parameters": [
+          {
+            "name": "blogId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UserBlog/reaction-count/{blogId}": {
+      "get": {
+        "tags": [
+          "UserBlog"
+        ],
+        "parameters": [
+          {
+            "name": "blogId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/user/coach/list": {
       "get": {
         "tags": [

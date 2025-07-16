@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/QuitPlanPage.scss";
 import { useNavigate } from "react-router-dom";
+import { ROUTERS } from "../../utils/router";
 import { FaSmokingBan, FaCoins, FaCalendarAlt, FaChartLine, FaHeart, FaTrophy, FaUsers, FaTrash, FaEdit, FaSave, FaClipboardList, FaQuestionCircle, FaInfoCircle, FaTimes, FaPlay, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 
 // PHẦN 1: Thói quen hiện tại
@@ -700,7 +701,10 @@ const QuitPlanPage = () => {
                                                     variant="warning"
                                                     size="lg"
                                                     className="thq-quick-action-btn w-100"
-                                                    onClick={() => navigate("/User/Challenges")}
+                                                    onClick={() => {
+                                                        navigate(ROUTERS.USER.CHALENGE);
+                                                        window.scrollTo({ top: 0, behavior: "smooth" });
+                                                    }}
                                                 >
                                                     <div className="d-flex align-items-center justify-content-center">
                                                         <FaTrophy className="me-2" size={20} />
@@ -716,7 +720,10 @@ const QuitPlanPage = () => {
                                                     variant="success"
                                                     size="lg"
                                                     className="thq-quick-action-btn w-100"
-                                                    onClick={() => navigate("/User/coachList")}
+                                                    onClick={() => {
+                                                        navigate(ROUTERS.USER.COACH);
+                                                        window.scrollTo({ top: 0, behavior: "smooth" });
+                                                    }}
                                                 >
                                                     <div className="d-flex align-items-center justify-content-center">
                                                         <FaUsers className="me-2" size={20} />

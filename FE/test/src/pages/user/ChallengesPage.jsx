@@ -33,6 +33,9 @@ const ChallengePage = () => {
 
     // Lấy toàn bộ thử thách các stage
     useEffect(() => {
+        // Cuộn lên đầu trang khi vào component
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
         if (!userId || !token) {
             setError("Bạn chưa đăng nhập hoặc thiếu thông tin người dùng.");
             setLoading(false);
@@ -262,7 +265,10 @@ const ChallengePage = () => {
                             {stageList.map((stage, idx) => (
                                 <button
                                     key={stage.stage}
-                                    onClick={() => setActiveTab(stage.stage)}
+                                    onClick={() => {
+                                        setActiveTab(stage.stage);
+                                        window.scrollTo({ top: 0, behavior: "smooth" });
+                                    }}
                                     className={`stage-btn ${activeTab === stage.stage ? 'active' : ''} ${stage.stageStatus?.includes('Đã nhận') ? 'completed' :
                                         stage.stageStatus?.includes('Chưa nhận') ? 'locked' : ''
                                         }`}

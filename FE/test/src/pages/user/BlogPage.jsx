@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../styles/BlogPage.scss";
 import { Container, Row, Col, Form, Button, Card, Modal, Dropdown, Spinner } from "react-bootstrap";
 import {
-    FaPlus, FaHeart, FaRegHeart, FaEllipsisV,
+    FaPlus, FaHeart, FaEllipsisV,
     FaEdit, FaTrash, FaFlag, FaSearch
 } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Lấy user từ localStorage hoặc bạn tuỳ chỉnh lại tuỳ hệ thống login
 const CURRENT_USER = localStorage.getItem("userName") || "Tài khoản của bạn";
@@ -80,6 +81,31 @@ const Avatar = ({ src, name, avatarUrl, size = 40, className = "" }) => {
     );
 };
 
+// Helper function để hiển thị toast an toàn với containerId
+const showToast = {
+    success: (message) => {
+        try {
+            toast.success(message, { containerId: 'blog-toast' });
+        } catch (error) {
+            console.log("Success:", message);
+        }
+    },
+    error: (message) => {
+        try {
+            toast.error(message, { containerId: 'blog-toast' });
+        } catch (error) {
+            console.log("Error:", message);
+        }
+    },
+    info: (message) => {
+        try {
+            toast.info(message, { containerId: 'blog-toast' });
+        } catch (error) {
+            console.log("Info:", message);
+        }
+    }
+};
+
 function UserBlog() {
     const [blogs, setBlogs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -112,9 +138,65 @@ function UserBlog() {
                 });
                 if (!res.ok) throw new Error("Lỗi tải blog");
                 const data = await res.json();
-                setBlogs(data);
+
+                // Tải số lượng like/dislike cho từng blog
+                const blogsWithCounts = await Promise.all(
+                    data.map(async (blog) => {
+                        try {
+                            // Lấy số lượng like/dislike
+                            const countRes = await fetch(`/api/UserBlog/reaction-count/${blog.blogId}`, {
+                                method: "GET",
+                                headers: {
+                                    "Accept": "*/*",
+                                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                                },
+                            });
+
+                            // Lấy trạng thái reaction của user
+                            const statusRes = await fetch(`/api/UserBlog/reaction-status/${blog.blogId}`, {
+                                method: "GET",
+                                headers: {
+                                    "Accept": "*/*",
+                                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                                },
+                            });
+
+                            let likes = 0, dislikes = 0, isLiked = false;
+
+                            if (countRes.ok) {
+                                const countData = await countRes.json();
+                                likes = countData.likes || 0;
+                                dislikes = countData.dislikes || 0;
+                            }
+
+                            if (statusRes.ok) {
+                                const statusData = await statusRes.json();
+                                isLiked = statusData.userReaction === true; // true = liked, false = disliked, null = no reaction
+                            }
+
+                            return {
+                                ...blog,
+                                likes,
+                                dislikes,
+                                isLiked,
+                            };
+                        } catch (error) {
+                            console.error(`Error fetching data for blog ${blog.blogId}:`, error);
+                        }
+
+                        // Fallback nếu không lấy được data
+                        return {
+                            ...blog,
+                            likes: blog.likes || 0,
+                            dislikes: blog.dislikes || 0,
+                            isLiked: false,
+                        };
+                    })
+                );
+
+                setBlogs(blogsWithCounts);
             } catch (err) {
-                toast.error("Không thể tải dữ liệu blog");
+                showToast.error("Không thể tải dữ liệu blog");
             } finally {
                 setIsLoading(false);
             }
@@ -130,19 +212,83 @@ function UserBlog() {
             b.title?.toLowerCase().includes(search.toLowerCase()))
     );
 
-    // Like/Unlike bài viết (chỉ làm ở UI, muốn sync backend thì gọi API)
-    const handleToggleLike = (blogId) => {
-        setBlogs((prev) =>
-            prev.map((b) =>
-                b.blogId === blogId
-                    ? {
-                        ...b,
-                        liked: !b.liked,
-                        likes: b.liked ? (b.likes || 0) - 1 : (b.likes || 0) + 1,
-                    }
-                    : b
-            )
-        );
+    // Toggle trái tim - xử lý cả like và dislike
+    const handleToggleHeart = async (blogId) => {
+        const token = localStorage.getItem("userToken");
+        const currentBlog = blogs.find(b => b.blogId === blogId);
+
+        try {
+            // Nếu chưa like thì like, nếu đã like thì dislike
+            const endpoint = currentBlog?.isLiked ? 'dislike' : 'like';
+            const res = await fetch(`/api/UserBlog/${endpoint}/${blogId}`, {
+                method: "POST",
+                headers: {
+                    "Accept": "*/*",
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                },
+            });
+
+            if (!res.ok) throw new Error(`Không thể thực hiện thao tác ${endpoint}`);
+
+            // Sau khi thành công, cập nhật lại số lượng và trạng thái từ API
+            await updateReactionCount(blogId);
+        } catch (error) {
+            console.error("Error toggling heart:", error);
+            showToast.error("Không thể thực hiện thao tác này!");
+        }
+    };
+
+    // Hàm helper để cập nhật số lượng reaction và trạng thái
+    const updateReactionCount = async (blogId) => {
+        const token = localStorage.getItem("userToken");
+
+        try {
+            // Lấy số lượng like/dislike
+            const countRes = await fetch(`/api/UserBlog/reaction-count/${blogId}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "*/*",
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                },
+            });
+
+            // Lấy trạng thái reaction của user
+            const statusRes = await fetch(`/api/UserBlog/reaction-status/${blogId}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "*/*",
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                },
+            });
+
+            let likes = 0, dislikes = 0, isLiked = false;
+
+            if (countRes.ok) {
+                const countData = await countRes.json();
+                likes = countData.likes || 0;
+                dislikes = countData.dislikes || 0;
+            }
+
+            if (statusRes.ok) {
+                const statusData = await statusRes.json();
+                isLiked = statusData.userReaction === true; // true = liked, false = disliked, null = no reaction
+            }
+
+            setBlogs((prev) =>
+                prev.map((b) =>
+                    b.blogId === blogId
+                        ? {
+                            ...b,
+                            likes,
+                            dislikes,
+                            isLiked,
+                        }
+                        : b
+                )
+            );
+        } catch (error) {
+            console.error("Error updating reaction count:", error);
+        }
     };
 
     // Mở modal chỉnh sửa
@@ -185,9 +331,9 @@ function UserBlog() {
                 )
             );
             setShowEdit(false);
-            toast.success("Đã lưu chỉnh sửa!");
+            showToast.success("Đã lưu chỉnh sửa!");
         } catch (err) {
-            toast.error("Sửa bài thất bại!");
+            showToast.error("Sửa bài thất bại!");
         }
     };
 
@@ -228,9 +374,9 @@ function UserBlog() {
             }
             setBlogs(prev => [newBlog, ...prev]);
             setShowCreate(false);
-            toast.success("Đã đăng bài thành công!");
+            showToast.success("Đã đăng bài thành công!");
         } catch (err) {
-            toast.error("Đăng bài thất bại!");
+            showToast.error("Đăng bài thất bại!");
         }
     };
 
@@ -247,9 +393,9 @@ function UserBlog() {
             if (!res.ok) throw new Error("Xóa bài thất bại!");
 
             setBlogs((prev) => prev.filter((b) => b.blogId !== blogId));
-            toast.success("Đã xóa bài viết!");
+            showToast.success("Đã xóa bài viết!");
         } catch (err) {
-            toast.error("Xóa bài thất bại!");
+            showToast.error("Xóa bài thất bại!");
         }
     };
     // Upload ảnh (base64 preview)
@@ -267,7 +413,7 @@ function UserBlog() {
     // Nhận blog làm tham số
     const handleSendReport = async (blog) => {
         if (!blog || !blog.blogId) {
-            toast.error("Không xác định được bài viết để báo cáo!");
+            showToast.error("Không xác định được bài viết để báo cáo!");
             return;
         }
         try {
@@ -287,15 +433,13 @@ function UserBlog() {
                         : b
                 )
             );
-            toast.success("Đã gửi báo cáo bài viết!");
+            showToast.success("Đã gửi báo cáo bài viết!");
         } catch (err) {
-            toast.error("Gửi báo cáo thất bại!");
+            showToast.error("Gửi báo cáo thất bại!");
         }
     };
     return (
         <div className="blog-quit-style">
-            <ToastContainer position="top-right" />
-
             {/* Header Section */}
             <div className="blog-header-section">
                 <Container>
@@ -475,14 +619,47 @@ function UserBlog() {
                                             {/* Post Footer */}
                                             <Card.Footer className="post-footer">
                                                 <div className="post-actions">
-                                                    <Button
-                                                        variant="link"
-                                                        className={`action-btn like-btn ${blog.liked ? 'liked' : ''}`}
-                                                        onClick={() => handleToggleLike(blog.blogId)}
-                                                    >
-                                                        {blog.liked ? <FaHeart /> : <FaRegHeart />}
-                                                        <span>{blog.likes || 0}</span>
-                                                    </Button>
+                                                    <div className="reaction-buttons">
+                                                        <Button
+                                                            variant="link"
+                                                            className={`action-btn heart-btn ${blog.isLiked ? 'liked' : ''}`}
+                                                            onClick={() => handleToggleHeart(blog.blogId)}
+                                                            style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                gap: '5px',
+                                                                padding: '5px 15px',
+                                                                borderRadius: '20px',
+                                                                textDecoration: 'none',
+                                                                transition: 'all 0.2s ease',
+                                                                backgroundColor: blog.isLiked ? '#ffe6e6' : 'transparent'
+                                                            }}
+                                                            onMouseEnter={(e) => {
+                                                                if (!blog.isLiked) {
+                                                                    e.currentTarget.style.backgroundColor = '#f8f9fa';
+                                                                }
+                                                            }}
+                                                            onMouseLeave={(e) => {
+                                                                if (!blog.isLiked) {
+                                                                    e.currentTarget.style.backgroundColor = 'transparent';
+                                                                }
+                                                            }}
+                                                        >
+                                                            <FaHeart
+                                                                className={blog.isLiked ? 'text-danger' : 'text-secondary'}
+                                                                style={{
+                                                                    fontSize: '18px',
+                                                                    transition: 'color 0.2s ease'
+                                                                }}
+                                                            />
+                                                            <span style={{
+                                                                fontWeight: '500',
+                                                                color: blog.isLiked ? '#dc3545' : '#6c757d'
+                                                            }}>
+                                                                {blog.likes || 0}
+                                                            </span>
+                                                        </Button>
+                                                    </div>
 
                                                     {blog.authorName !== CURRENT_USER && (
                                                         <Button
@@ -748,6 +925,22 @@ function UserBlog() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+            {/* Toast Container - đặt ở cuối để tránh xung đột */}
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                limit={3}
+                containerId="blog-toast"
+            />
         </div>
     );
 }

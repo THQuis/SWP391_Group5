@@ -11,7 +11,6 @@ import {
     FaEnvelope,
     FaPhoneAlt,
     FaTransgender,
-    FaCalendarAlt,
     FaUserTimes,
     FaCalendarCheck
 } from "react-icons/fa";
@@ -443,15 +442,6 @@ const CoachProfileForUser = () => {
                                             <span className={styles.label}>Giới tính</span>
                                             <span className={styles.value}>
                                                 {coach?.gender === 'Male' ? 'Nam' : 'Nữ'}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className={styles.infoItem}>
-                                        <FaCalendarAlt />
-                                        <div>
-                                            <span className={styles.label}>Ngày tham gia</span>
-                                            <span className={styles.value}>
-                                                {new Date(coach?.registrationDate).toLocaleDateString('vi-VN')}
                                             </span>
                                         </div>
                                     </div>

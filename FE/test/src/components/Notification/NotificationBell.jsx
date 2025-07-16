@@ -33,8 +33,8 @@ const NotificationBell = () => {
 
                     // Sort notifications by date (newest first)
                     const sortedNotifications = notificationList.sort((a, b) => {
-                        const dateA = new Date(a.sentAt || a.createdAt || a.date);
-                        const dateB = new Date(b.sentAt || b.createdAt || b.date);
+                        const dateA = new Date(a.sentAt || a.notificationDate || a.createdAt || a.date);
+                        const dateB = new Date(b.sentAt || b.notificationDate || b.createdAt || b.date);
                         return dateB - dateA; // Descending order (newest first)
                     });
 
@@ -70,8 +70,8 @@ const NotificationBell = () => {
                 );
                 // Re-sort to maintain newest first order
                 return updated.sort((a, b) => {
-                    const dateA = new Date(a.sentAt || a.createdAt || a.date);
-                    const dateB = new Date(b.sentAt || b.createdAt || b.date);
+                    const dateA = new Date(a.sentAt || a.notificationDate || a.createdAt || a.date);
+                    const dateB = new Date(b.sentAt || b.notificationDate || b.createdAt || b.date);
                     return dateB - dateA;
                 });
             });
@@ -99,8 +99,8 @@ const NotificationBell = () => {
                 const updated = prev.map(n => ({ ...n, isRead: true }));
                 // Re-sort to maintain newest first order
                 return updated.sort((a, b) => {
-                    const dateA = new Date(a.sentAt || a.createdAt || a.date);
-                    const dateB = new Date(b.sentAt || b.createdAt || b.date);
+                    const dateA = new Date(a.sentAt || a.notificationDate || a.createdAt || a.date);
+                    const dateB = new Date(b.sentAt || b.notificationDate || b.createdAt || b.date);
                     return dateB - dateA;
                 });
             });
@@ -110,23 +110,45 @@ const NotificationBell = () => {
     };
 
     const formatTimeAgo = (dateString) => {
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffInSeconds = Math.floor((now - date) / 1000);
+        if (!dateString) return 'Không rõ thời gian';
 
-        if (diffInSeconds < 60) return 'Vừa xong';
-        if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} phút trước`;
-        if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} giờ trước`;
-        if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 86400)} ngày trước`;
-        return date.toLocaleDateString('vi-VN');
+        try {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return 'Không rõ thời gian';
+
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+
+            if (diffInSeconds < 60) return 'Vừa xong';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} phút trước`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} giờ trước`;
+            if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 86400)} ngày trước`;
+            return date.toLocaleDateString('vi-VN');
+        } catch (error) {
+            console.error('Error formatting date:', error);
+            return 'Không rõ thời gian';
+        }
     };
 
     const getNotificationIcon = (type) => {
-        switch (type) {
+        // Map các type từ API thành icon phù hợp
+        const normalizedType = (type || '').toLowerCase();
+
+        switch (normalizedType) {
+            case 'consultation':
+            case 'appointment':
+            case 'booking':
+                return <Clock className="notification-icon warning" size={16} />;
             case 'success':
+            case 'completed':
+            case 'approved':
                 return <CheckCircle className="notification-icon success" size={16} />;
             case 'warning':
+            case 'reminder':
+            case 'pending':
                 return <Clock className="notification-icon warning" size={16} />;
+            case 'info':
+            case 'information':
             default:
                 return <CircleFill className="notification-icon info" size={12} />;
         }
@@ -191,7 +213,7 @@ const NotificationBell = () => {
                                     onClick={() => handleViewNotification(notification.notificationID)}
                                 >
                                     <div className="notification-icon-wrapper">
-                                        {getNotificationIcon(notification.type)}
+                                        {getNotificationIcon(notification.notificationType || notification.type)}
                                         {!notification.isRead && (
                                             <CircleFill className="unread-indicator" size={8} />
                                         )}
@@ -199,14 +221,14 @@ const NotificationBell = () => {
 
                                     <div className="notification-content-wrapper">
                                         <div className="notification-title">
-                                            {notification.notificationName}
+                                            {notification.notificationName || notification.title || 'Thông báo'}
                                         </div>
                                         <div className="notification-message">
                                             {notification.message}
                                         </div>
                                         <div className="notification-time">
                                             <Clock size={12} className="me-1" />
-                                            {formatTimeAgo(notification.sentAt)}
+                                            {formatTimeAgo(notification.sentAt || notification.notificationDate)}
                                         </div>
                                     </div>
                                 </div>

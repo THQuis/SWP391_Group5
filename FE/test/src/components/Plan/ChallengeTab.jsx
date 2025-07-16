@@ -17,6 +17,11 @@ function ChallengeTab() {
     const [saving, setSaving] = useState(false);
     const [challengeModalShow, setChallengeModalShow] = useState(false);
     const [editChallenge, setEditChallenge] = useState(null);
+
+    // State cho modal xác nhận xóa
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [challengeToDelete, setChallengeToDelete] = useState(null);
+
     const [formChallenge, setFormChallenge] = useState({
         title: "",
         description: "",
@@ -311,10 +316,18 @@ function ChallengeTab() {
         setChallengeModalShow(true);
     };
 
-    const handleDeleteChallenge = async (id) => {
-        if (window.confirm('Bạn có chắc chắn muốn xóa thử thách này?')) {
-            await deleteChallenge(id);
-        }
+    const handleDeleteChallenge = (id) => {
+        setChallengeToDelete(id);
+        setShowDeleteModal(true);
+    };
+
+    // Xác nhận xóa thử thách
+    const confirmDeleteChallenge = async () => {
+        if (!challengeToDelete) return;
+
+        const success = await deleteChallenge(challengeToDelete);
+        setShowDeleteModal(false);
+        setChallengeToDelete(null);
     };
 
     const handleChallengeModalSave = async () => {
@@ -670,6 +683,24 @@ function ChallengeTab() {
                         ) : (
                             editChallenge ? 'Cập nhật' : 'Tạo mới'
                         )}
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Modal xác nhận xóa */}
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa thử thách</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn xóa thử thách này? Hành động này không thể hoàn tác.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="danger" onClick={confirmDeleteChallenge}>
+                        Xóa
                     </Button>
                 </Modal.Footer>
             </Modal>

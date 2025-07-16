@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Tabs, Tab, Card, Row, Col, Button } from "react-bootstrap";
+import { Tabs, Tab, Card, Row, Col, Button, Modal, Toast, ToastContainer } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import NotificationFilter from "../../components/Notification/NotificationFilter";
 import NotificationTable from "../../components/Notification/NotificationTable";
 import NotificationModal from "../../components/Notification/NotificationModal";
-import NotificationPersonalSearch from "../../components/Notification/NotificationPersonalSearch";
-import NotificationPersonalTable from "../../components/Notification/NotificationPersonalTable";
 import SendNotificationTab from "../../components/Notification/SendNotificationTab";
 
 const notificationTypeOptions = [
@@ -41,6 +39,20 @@ const ManagementNotificationTabs = () => {
 
     const [searchUserId, setSearchUserId] = useState(localStorage.getItem("userId") || 3);
     const [inputUserId, setInputUserId] = useState(localStorage.getItem("userId") || 3);
+
+    // Toast and Modal states
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVariant, setToastVariant] = useState('success');
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [notificationToDelete, setNotificationToDelete] = useState(null);
+
+    // Hàm hiển thị toast
+    const showToastMessage = (message, variant = 'success') => {
+        setToastMessage(message);
+        setToastVariant(variant);
+        setShowToast(true);
+    };
 
     const [searchAll, setSearchAll] = useState({
         notificationName: "",
@@ -125,9 +137,10 @@ const ManagementNotificationTabs = () => {
             });
             if (!res.ok) throw new Error();
             setShowModal(false);
+            showToastMessage("Tạo và gửi thông báo thành công!", "success");
             fetchAllNotifications();
         } catch {
-            alert("Tạo và gửi thông báo thất bại!");
+            showToastMessage("Tạo và gửi thông báo thất bại!", "danger");
         }
     };
 
@@ -146,12 +159,19 @@ const ManagementNotificationTabs = () => {
     };
 
     // Delete
-    const handleDelete = async (id) => {
-        if (!window.confirm("Bạn chắc chắn muốn xóa thông báo này?")) return;
+    const handleDelete = (id) => {
+        setNotificationToDelete(id);
+        setShowDeleteModal(true);
+    };
+
+    // Xác nhận xóa
+    const confirmDelete = async () => {
+        if (!notificationToDelete) return;
+
         try {
             const token = localStorage.getItem("userToken");
             const res = await fetch(
-                `/api/NotificationAdmin/deleteNotification?id=${id}`,
+                `/api/NotificationAdmin/deleteNotification?id=${notificationToDelete}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -161,11 +181,15 @@ const ManagementNotificationTabs = () => {
             );
             if (!res.ok) throw new Error();
             setAllNotifications((prev) =>
-                prev.filter((n) => n.notificationID !== id)
+                prev.filter((n) => n.notificationID !== notificationToDelete)
             );
+            showToastMessage("Xóa thông báo thành công!", "success");
         } catch {
-            alert("Xóa thông báo thất bại!");
+            showToastMessage("Xóa thông báo thất bại!", "danger");
         }
+
+        setShowDeleteModal(false);
+        setNotificationToDelete(null);
     };
 
     // Search userId
@@ -286,6 +310,42 @@ const ManagementNotificationTabs = () => {
                     notifyToOptions={notifyToOptions}
                 />
             </Card>
+
+            {/* Modal xác nhận xóa */}
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa thông báo</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn xóa thông báo này? Hành động này không thể hoàn tác.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="danger" onClick={confirmDelete}>
+                        Xóa
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Toast thông báo */}
+            <ToastContainer position="top-end" className="p-3">
+                <Toast
+                    show={showToast}
+                    onClose={() => setShowToast(false)}
+                    delay={3000}
+                    autohide
+                    bg={toastVariant}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">Thông báo</strong>
+                    </Toast.Header>
+                    <Toast.Body className={toastVariant === 'danger' ? 'text-white' : ''}>
+                        {toastMessage}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </div>
     );
 };

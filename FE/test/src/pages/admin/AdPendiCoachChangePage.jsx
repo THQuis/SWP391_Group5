@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Button, Spinner, Alert } from 'react-bootstrap';
+import { Container, Table, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 const fetchPendingCoachChanges = async () => {
@@ -34,6 +34,8 @@ const AdminPendingCoachChangesPage = () => {
     const [pendingList, setPendingList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [approvingId, setApprovingId] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [userToApprove, setUserToApprove] = useState(null);
 
     const loadData = async () => {
         setLoading(true);
@@ -51,17 +53,26 @@ const AdminPendingCoachChangesPage = () => {
         loadData();
     }, []);
 
-    const handleApprove = async (userId) => {
-        if (!window.confirm("Bạn chắc chắn muốn duyệt yêu cầu này?")) return;
-        setApprovingId(userId);
+    const handleApprove = (userId) => {
+        setUserToApprove(userId);
+        setShowModal(true);
+    };
+
+    const confirmApprove = async () => {
+        if (!userToApprove) return;
+
+        setApprovingId(userToApprove);
+        setShowModal(false);
+
         try {
-            await approveCoachChange(userId);
+            await approveCoachChange(userToApprove);
             toast.success("Duyệt yêu cầu thành công!");
             await loadData();
         } catch (err) {
             toast.error(err.message || "Duyệt yêu cầu thất bại");
         } finally {
             setApprovingId(null);
+            setUserToApprove(null);
         }
     };
 
@@ -116,6 +127,24 @@ const AdminPendingCoachChangesPage = () => {
                     </tbody>
                 </Table>
             )}
+
+            {/* Modal xác nhận */}
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận duyệt yêu cầu</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn duyệt yêu cầu đổi/hủy huấn luyện viên này?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="success" onClick={confirmApprove}>
+                        Duyệt
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 };

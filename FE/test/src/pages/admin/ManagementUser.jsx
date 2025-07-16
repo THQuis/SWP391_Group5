@@ -56,6 +56,10 @@ const ManagementUser = () => {
     const [editingUser, setEditingUser] = useState(null);
     const [selectedRoleId, setSelectedRoleId] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
+
+    // State cho modal xác nhận xóa
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [userToDelete, setUserToDelete] = useState(null);
     // Hàm lấy danh sách người dùng, được tách ra để tái sử dụng
     const fetchUsers = async () => {
         try {
@@ -282,31 +286,39 @@ const ManagementUser = () => {
 
 
     // xóa người dùng
-    const handleDelete = async (userId) => {
-        // Thêm xác nhận trước khi xóa
-        if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
-            try {
-                // Gọi API DELETE với URL và params chính xác
-                await axios.delete('/api/Admin/DeleteUser', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
-                    },
-                    params: { // Gửi ID dưới dạng query parameter
-                        id: userId
-                    }
-                });
+    const handleDelete = (userId) => {
+        setUserToDelete(userId);
+        setShowDeleteModal(true);
+    };
 
-                // Cập nhật lại danh sách sau khi xóa thành công
-                await fetchUsers();
-                toast.success('Xóa người dùng thành công!');
+    // Xác nhận xóa người dùng
+    const confirmDelete = async () => {
+        if (!userToDelete) return;
 
-            } catch (err) {
-                // Xử lý lỗi và thông báo cho người dùng
-                console.error('Delete user failed:', err);
-                const errorMessage = err.response?.data?.message || 'Xóa người dùng thất bại. Vui lòng thử lại.';
-                toast.error(errorMessage);
-            }
+        try {
+            // Gọi API DELETE với URL và params chính xác
+            await axios.delete('/api/Admin/DeleteUser', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+                },
+                params: { // Gửi ID dưới dạng query parameter
+                    id: userToDelete
+                }
+            });
+
+            // Cập nhật lại danh sách sau khi xóa thành công
+            await fetchUsers();
+            toast.success('Xóa người dùng thành công!');
+
+        } catch (err) {
+            // Xử lý lỗi và thông báo cho người dùng
+            console.error('Delete user failed:', err);
+            const errorMessage = err.response?.data?.message || 'Xóa người dùng thất bại. Vui lòng thử lại.';
+            toast.error(errorMessage);
         }
+
+        setShowDeleteModal(false);
+        setUserToDelete(null);
     };
 
     // Phần JSX giữ nguyên như của bạn
@@ -655,6 +667,23 @@ const ManagementUser = () => {
             </Modal>
             {/* --- KẾT THÚC: MODAL CHỈNH SỬA VAI TRÒ --- */}
 
+            {/* Modal xác nhận xóa người dùng */}
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa người dùng</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="danger" onClick={confirmDelete}>
+                        Xóa
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </div>
     );

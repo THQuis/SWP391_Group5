@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Tabs, Tab, Button, Modal, Form, Row, Col } from "react-bootstrap";
 
 import BlogManagementTab from "../../components/Blog/BlogManagementTab";
-import ReportedBlogTab from "../../components/Blog/ReportedBlogTab";
+// import ReportedBlogTab from "../../components/Blog/ReportedBlogTab";
 import BlogStatsTab from "../../components/Blog/BlogStatsTab";
 import PendingBlogTab from "../../components/Blog/PendingBlogTab";
 
@@ -80,9 +80,9 @@ function ManagementBlog() {
                 <Tab eventKey="milestone" title="View">
                     <BlogManagementTab ref={blogTabRef} />
                 </Tab>
-                <Tab eventKey="reported" title="Bài viết bị báo cáo">
+                {/* <Tab eventKey="reported" title="Bài viết bị báo cáo">
                     <ReportedBlogTab reloadBlogList={() => blogTabRef.current && blogTabRef.current.reload()} />
-                </Tab>
+                </Tab> */}
                 <Tab eventKey="stats" title="Thống kê">
                     <BlogStatsTab />
                 </Tab>

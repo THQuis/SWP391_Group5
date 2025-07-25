@@ -1233,9 +1233,6 @@ const ProgressDashboardPage = () => {
                                     <small className="text-warning d-block mt-2">
                                         Cần gói Premium để sử dụng
                                         <br />
-                                        <span className="text-muted" style={{ fontSize: '0.7em' }}>
-                                            Debug: memberPackage = "{memberPackage}"
-                                        </span>
                                     </small>
                                 )}
                             </Card.Body>

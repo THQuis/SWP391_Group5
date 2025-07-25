@@ -24,8 +24,7 @@ const ChallengePage = () => {
     const [activeTab, setActiveTab] = useState(1);
     const [expandedMissionId, setExpandedMissionId] = useState(null);
     const [note, setNote] = useState("");
-    const [imageFile, setImageFile] = useState(null);
-    const [imagePreview, setImagePreview] = useState(null);
+
     const [showSuccess, setShowSuccess] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
@@ -71,7 +70,6 @@ const ChallengePage = () => {
         } else {
             setExpandedMissionId(mission.id);
             setNote(mission.notes || "");
-            setImageFile(null);
             // Nếu đã hoàn thành và có ImageData (từ API mới) thì tạo url động
             if (mission.isCompleted && mission.imageData) {
                 // Nếu là base64, tạo url động
@@ -83,7 +81,6 @@ const ChallengePage = () => {
                 } catch {
                     url = null;
                 }
-                setImagePreview(url);
                 // Cập nhật imageUrl cho mission trong stageList để lần sau không phải tạo lại
                 setStageList(prev => prev.map(stage => ({
                     ...stage,
@@ -100,38 +97,21 @@ const ChallengePage = () => {
                     if (res.ok) {
                         const blob = await res.blob();
                         const url = URL.createObjectURL(blob);
-                        setImagePreview(url);
                         setStageList(prev => prev.map(stage => ({
                             ...stage,
                             challenges: stage.challenges.map(m =>
                                 m.id === mission.id ? { ...m, imageUrl: url } : m
                             )
                         })));
-                    } else {
-                        setImagePreview(null);
                     }
                 } catch {
-                    setImagePreview(null);
+
                 }
             } else {
-                setImagePreview(mission.imageUrl ? `${mission.imageUrl}` : null);
             }
         }
     };
 
-    // Chọn ảnh
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImageFile(file);
-            const reader = new FileReader();
-            reader.onload = (ev) => setImagePreview(ev.target.result);
-            reader.readAsDataURL(file);
-        }
-    };
-
-    // Hoàn thành/bỏ hoàn thành nhiệm vụ (SYNC backend)
-    // ... các import giữ nguyên
 
     const handleToggleComplete = async (mission, stageIdx) => {
         setSaving(true);
@@ -142,9 +122,7 @@ const ChallengePage = () => {
                 const formData = new FormData();
                 formData.append("challengeId", mission.id);
                 formData.append("notes", note || "");
-                if (imageFile) {
-                    formData.append("image", imageFile);
-                }
+
                 const res = await fetch("/api/user-challenges/complete", {
                     method: "POST",
                     headers: {
@@ -174,7 +152,6 @@ const ChallengePage = () => {
                             )
                         }))
                     );
-                    setImagePreview(imageUrl); // Hiển thị ngay ảnh vừa gửi
                     setShowSuccess(true);
                     setSaving(false);
                     setTimeout(() => {
@@ -525,65 +502,6 @@ const ChallengePage = () => {
                                                                                 </Form.Group>
                                                                             </div>
 
-                                                                            <div className="form-section">
-                                                                                <Form.Group className="form-group-modern">
-                                                                                    <Form.Label className="form-label-modern">
-                                                                                        <div className="label-content">
-                                                                                            <FaCamera className="label-icon" />
-                                                                                            <span>Ảnh minh chứng</span>
-                                                                                        </div>
-                                                                                        <span className="label-optional">Tùy chọn</span>
-                                                                                    </Form.Label>
-
-                                                                                    {imagePreview ? (
-                                                                                        <div className="image-preview-section">
-                                                                                            <div className="preview-wrapper">
-                                                                                                <Image
-                                                                                                    src={imagePreview}
-                                                                                                    className="image-preview-modern"
-                                                                                                    alt="Ảnh minh chứng"
-                                                                                                />
-                                                                                                <div className="preview-overlay">
-                                                                                                    <Button
-                                                                                                        variant="light"
-                                                                                                        size="sm"
-                                                                                                        className="remove-btn"
-                                                                                                        onClick={() => {
-                                                                                                            setImagePreview(null);
-                                                                                                            setImageFile(null);
-                                                                                                        }}
-                                                                                                    >
-                                                                                                        <FaTimes />
-                                                                                                    </Button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <p className="preview-label">Ảnh đã chọn</p>
-                                                                                        </div>
-                                                                                    ) : (
-                                                                                        <div className="upload-area">
-                                                                                            <input
-                                                                                                type="file"
-                                                                                                accept="image/*"
-                                                                                                onChange={handleImageChange}
-                                                                                                disabled={saving}
-                                                                                                className="file-input-hidden"
-                                                                                                id="file-upload"
-                                                                                            />
-                                                                                            <label htmlFor="file-upload" className="upload-label">
-                                                                                                <div className="upload-content">
-                                                                                                    <div className="upload-icon">
-                                                                                                        <FaCloudUploadAlt />
-                                                                                                    </div>
-                                                                                                    <div className="upload-text">
-                                                                                                        <span className="upload-main">Chọn ảnh hoặc kéo thả</span>
-                                                                                                        <span className="upload-sub">PNG, JPG, GIF (tối đa 5MB)</span>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    )}
-                                                                                </Form.Group>
-                                                                            </div>
 
                                                                             <div className="form-actions-modern">
                                                                                 <Button

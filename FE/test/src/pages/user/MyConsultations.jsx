@@ -207,7 +207,7 @@ const MyConsultations = () => {
                         <th><FaInfoCircle className="me-2" />STT</th>
                         <th><FaUserTie className="me-2" />Chuyên gia</th>
                         <th><FaCalendarAlt className="me-2" />Ngày & Giờ</th>
-                        <th><FaClock className="me-2" />Thời lượng</th>
+                        {/* <th><FaClock className="me-2" />Thời lượng</th> */}
                         <th><FaStickyNote className="me-2" />Ghi chú</th>
                         <th><FaCheckCircle className="me-2" />Trạng thái & Hành động</th>
                     </tr>
@@ -215,7 +215,7 @@ const MyConsultations = () => {
                 <tbody>
                     {bookingList.length === 0 ? (
                         <tr>
-                            <td colSpan={6} className="empty-row">
+                            <td colSpan={5} className="empty-row">
                                 <div className="empty-message">
                                     <FaCalendarCheck className="empty-icon" />
                                     <p>Không có lịch hẹn nào trong danh mục này</p>
@@ -258,12 +258,12 @@ const MyConsultations = () => {
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                            {/* <td>
                                 <div className="duration-badge">
                                     <FaClock className="me-1" />
                                     <span>{b.duration} phút</span>
                                 </div>
-                            </td>
+                            </td> */}
                             <td>
                                 <div className="notes-cell">
                                     {b.notes ? (

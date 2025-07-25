@@ -1,10 +1,145 @@
-
 import React, { useState, useEffect } from "react";
 import {
-    Container, Card, Table, Button, Badge, Spinner, Modal, Row, Col, ListGroup, Alert, Image
+    Container,
+    Row,
+    Col,
+    Card,
+    Table,
+    Badge,
+    Button,
+    Modal,
+    Spinner,
+    Alert,
+    ListGroup,
+    Image
 } from "react-bootstrap";
-import { FaUser, FaUsers, FaEye, FaChartLine, FaCalendarAlt, FaPhone, FaEnvelope, FaHistory, FaTasks } from "react-icons/fa";
-import '../../styles/CoachMembers.scss';
+import {
+    FaUsers,
+    FaUser,
+    FaEnvelope,
+    FaPhone,
+    FaChartLine,
+    FaEye,
+    FaTasks,
+    FaCalendarAlt,
+    FaHistory,
+    FaCalendarCheck,
+    FaExternalLinkAlt
+} from "react-icons/fa";
+import "../../styles/CoachMembers.scss";
+
+// Modal xem cuộc hẹn của thành viên
+function MemberAppointmentsModal({ show, onHide, appointments, member, loading }) {
+    const formatDate = (dateString) => {
+        if (!dateString) return "Không có";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("vi-VN", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    };
+
+    const getStatusBadge = (status) => {
+        switch (status?.toLowerCase()) {
+            case "completed":
+                return <Badge bg="success">Đã hoàn thành</Badge>;
+            case "approved":
+                return <Badge bg="info">Đã duyệt</Badge>;
+            case "pending":
+                return <Badge bg="warning">Chờ duyệt</Badge>;
+            case "cancelled":
+                return <Badge bg="danger">Đã hủy</Badge>;
+            default:
+                return <Badge bg="secondary">{status || "Không xác định"}</Badge>;
+        }
+    };
+
+    const openMeetingLink = (link) => {
+        if (link) {
+            window.open(link, "_blank");
+        }
+    };
+
+    return (
+        <Modal show={show} onHide={onHide} size="lg" centered>
+            <Modal.Header closeButton className="bg-success text-white">
+                <Modal.Title className="d-flex align-items-center">
+                    <FaCalendarAlt className="me-2" />
+                    Cuộc hẹn của {member?.FullName}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="p-4">
+                {loading ? (
+                    <div className="text-center my-5">
+                        <Spinner animation="border" variant="success" style={{ width: '3rem', height: '3rem' }} />
+                    </div>
+                ) : !appointments || appointments.length === 0 ? (
+                    <Alert variant="info" className="border-0 info-card">
+                        <FaCalendarAlt className="me-2" />
+                        Chưa có cuộc hẹn nào.
+                    </Alert>
+                ) : (
+                    <ListGroup>
+                        {appointments.map((appointment) => (
+                            <ListGroup.Item key={appointment.bookingId} className="border rounded mb-3 shadow-sm appointment-item">
+                                <div className="d-flex justify-content-between align-items-start">
+                                    <div className="flex-grow-1">
+                                        <div className="d-flex align-items-center mb-2">
+                                            <h6 className="mb-0 me-3">
+                                                <FaCalendarAlt className="me-2 text-success" />
+                                                Cuộc hẹn #{appointment.bookingId}
+                                            </h6>
+                                            {getStatusBadge(appointment.status)}
+                                        </div>
+
+                                        <div className="appointment-details">
+                                            <div className="mb-2">
+                                                <strong>Ngày hẹn:</strong> {formatDate(appointment.bookingDate)}
+                                            </div>
+
+                                            {appointment.meetingLink && (
+                                                <div className="mb-2">
+                                                    <strong>Link cuộc họp:</strong>
+                                                    <Button
+                                                        variant="link"
+                                                        size="sm"
+                                                        className="p-0 ms-2"
+                                                        onClick={() => openMeetingLink(appointment.meetingLink)}
+                                                    >
+                                                        <FaExternalLinkAlt className="me-1" />
+                                                        Tham gia cuộc họp
+                                                    </Button>
+                                                </div>
+                                            )}
+
+                                            {appointment.notes && (
+                                                <div className="mb-2">
+                                                    <strong>Ghi chú:</strong>
+                                                    <div className="text-muted mt-1">{appointment.notes}</div>
+                                                </div>
+                                            )}
+
+                                            <div className="mb-2">
+                                                <strong>Ngày tạo:</strong> {formatDate(appointment.createdDate)}
+                                            </div>
+
+                                            <div>
+                                                <strong>Coach:</strong> {appointment.coachName}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ListGroup.Item>
+                        ))}
+                    </ListGroup>
+                )}
+            </Modal.Body>
+        </Modal>
+    );
+}
 
 // Modal xem thử thách của thành viên
 function MemberChallengesModal({ show, onHide, challenges, member, loading }) {
@@ -306,6 +441,12 @@ const CoachMembers = () => {
     const [challenges, setChallenges] = useState([]);
     const [challengeMember, setChallengeMember] = useState(null);
 
+    // State for Member Appointments Modal
+    const [showAppointmentsModal, setShowAppointmentsModal] = useState(false);
+    const [loadingAppointments, setLoadingAppointments] = useState(false);
+    const [appointments, setAppointments] = useState([]);
+    const [appointmentMember, setAppointmentMember] = useState(null);
+
     const [surveyAnswers, setSurveyAnswers] = useState([]);
     const [loadingSurveyAnswers, setLoadingSurveyAnswers] = useState(false);
 
@@ -397,7 +538,6 @@ const CoachMembers = () => {
             });
     };
 
-
     // Xem thử thách của thành viên
     const handleViewChallenges = (member) => {
         setLoadingChallenges(true);
@@ -422,6 +562,33 @@ const CoachMembers = () => {
             .catch(() => {
                 setChallenges([]);
                 setLoadingChallenges(false);
+            });
+    };
+
+    // Xem cuộc hẹn của thành viên
+    const handleViewAppointments = (member) => {
+        setLoadingAppointments(true);
+        setShowAppointmentsModal(true);
+        setAppointmentMember(member);
+        const token = localStorage.getItem("userToken");
+        fetch(`/api/coach/user/${member.UserID}/appointments`, {
+            method: "GET",
+            headers: {
+                "accept": "*/*",
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Lỗi lấy cuộc hẹn");
+                return res.json();
+            })
+            .then(data => {
+                setAppointments(data || []);
+                setLoadingAppointments(false);
+            })
+            .catch(() => {
+                setAppointments([]);
+                setLoadingAppointments(false);
             });
     };
 
@@ -482,7 +649,7 @@ const CoachMembers = () => {
                                             <th><FaEnvelope className="me-2" />Email</th>
                                             <th><FaPhone className="me-2" />Điện thoại</th>
                                             <th className="text-center"><FaChartLine className="me-2" />Trạng thái</th>
-                                            <th className="text-center" style={{ width: '200px' }}>Thao tác</th>
+                                            <th className="text-center" style={{ width: '280px' }}>Thao tác</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -535,6 +702,15 @@ const CoachMembers = () => {
                                                             <FaTasks className="me-1" />
                                                             Thử thách
                                                         </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-primary"
+                                                            onClick={() => handleViewAppointments(m)}
+                                                            className="btn-action-appointment"
+                                                        >
+                                                            <FaCalendarCheck className="me-1" />
+                                                            Cuộc hẹn
+                                                        </Button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -557,6 +733,15 @@ const CoachMembers = () => {
                 loadingSurveyAnswers={loadingSurveyAnswers}
             />
 
+            {/* Modal Cuộc hẹn của thành viên */}
+            <MemberAppointmentsModal
+                show={showAppointmentsModal}
+                onHide={() => setShowAppointmentsModal(false)}
+                appointments={appointments}
+                member={appointmentMember}
+                loading={loadingAppointments}
+            />
+
             {/* Modal Thử thách của thành viên */}
             <MemberChallengesModal
                 show={showChallengesModal}
@@ -569,4 +754,4 @@ const CoachMembers = () => {
     );
 };
 
-export default CoachMembers;    
+export default CoachMembers;

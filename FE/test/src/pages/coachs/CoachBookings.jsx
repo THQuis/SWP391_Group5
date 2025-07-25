@@ -430,21 +430,33 @@ const CoachBookings = () => {
                                     </div>
                                     <div>
                                         <h6 className="mb-0">{b.userName}</h6>
-                                        <small className="text-muted">ID: {b.bookingID}</small>
+                                        {/* <small className="text-muted">ID: {b.bookingID}</small> */}
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div>
                                     <div className="fw-bold text-dark">
-                                        {b.bookingDate ? new Date(b.bookingDate).toLocaleDateString('vi-VN') : ""}
+                                        {b.bookingDate
+                                            ? new Date(b.bookingDate).toLocaleDateString('vi-VN', {
+                                                weekday: 'short',
+                                                day: '2-digit',
+                                                month: '2-digit',
+                                                year: 'numeric'
+                                            })
+                                            : ""}
                                     </div>
-                                    {b.time && (
-                                        <small className="text-muted">
-                                            <FaClock className="me-1" />
-                                            {b.time}
-                                        </small>
-                                    )}
+                                    <small className="text-muted">
+                                        <FaClock className="me-1" />
+                                        {b.bookingDate
+                                            ? new Date(b.bookingDate).toLocaleTimeString('vi-VN', {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                hour12: false // hoặc true nếu bạn muốn AM/PM
+                                            })
+                                            : ""}
+                                    </small>
+
                                 </div>
                             </td>
                             <td>

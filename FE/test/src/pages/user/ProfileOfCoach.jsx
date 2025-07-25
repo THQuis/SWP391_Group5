@@ -139,7 +139,7 @@ const CoachProfileForUser = () => {
     const [bookingData, setBookingData] = useState({
         consultationDate: '',
         consultationTime: '08:00:00', // Mặc định 8h sáng
-        duration: 30,
+        // duration: 30,
         notes: ''
     });
     const [bookingLoading, setBookingLoading] = useState(false);
@@ -277,7 +277,7 @@ const CoachProfileForUser = () => {
                 coachId: coach.UserID,
                 consultationDate: bookingData.consultationDate,
                 consultationTime: bookingData.consultationTime,
-                duration: Number(bookingData.duration),
+                // duration: Number(bookingData.duration),
                 notes: bookingData.notes
             });
             toast.success('Đặt lịch tư vấn thành công!');
@@ -286,7 +286,7 @@ const CoachProfileForUser = () => {
             setBookingData({
                 consultationDate: '',
                 consultationTime: '00:00:00',
-                duration: 30,
+                // duration: 30,
                 notes: ''
             });
             // Thêm dòng này:
@@ -477,18 +477,7 @@ const CoachProfileForUser = () => {
                                     onChange={e => setBookingData({ ...bookingData, consultationTime: e.target.value + ':00' })}
                                 />
                             </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Thời lượng (phút)</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    min={15}
-                                    max={180}
-                                    step={15}
-                                    required
-                                    value={bookingData.duration}
-                                    onChange={e => setBookingData({ ...bookingData, duration: e.target.value })}
-                                />
-                            </Form.Group>
+
                             <Form.Group className="mb-3">
                                 <Form.Label>Ghi chú (tuỳ chọn)</Form.Label>
                                 <Form.Control

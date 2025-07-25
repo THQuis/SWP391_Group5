@@ -16,6 +16,15 @@ $transition: all 0.3s ease;
 $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
 $shadow: 0 4px 16px rgba(25, 135, 84, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
 $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
+$appointment-color: #3b82f6; // Xanh dương (Blue-500)
+$appointment-color-dark: #2563eb; // Xanh dương đậm (Blue-600)
+$appointment-color-light: #eff6ff; // Xanh dương rất nhạt (Blue-50)
+$appointment-header-bg: #1f2937; // Xám đậm (Gray-800)
+$appointment-text-muted: #6b7280; // Xám nhạt (Gray-500)
+$border-color: #e5e7eb;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+$transition: all 0.3s ease-in-out;
 
 // Page container - Clean Design
 .coach-members-management-page {
@@ -421,6 +430,122 @@ $shadow-lg: 0 8px 32px rgba(25, 135, 84, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
         .btn-action-challenge {
             width: 100%;
             margin-bottom: 0.25rem;
+        }
+    }
+}
+
+
+.btn-action-appointment {
+    background: linear-gradient(145deg, $appointment-color, $appointment-color-dark) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba($appointment-color, 0.25);
+    transition: $transition;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem; // Kích thước cho size="sm"
+    border-radius: 0.5rem;
+
+    &:hover,
+    &:focus {
+        background: linear-gradient(145deg, $appointment-color-dark, $appointment-color) !important;
+        color: #ffffff !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba($appointment-color, 0.3);
+    }
+}
+
+/* 3. Style cho Modal Cuộc hẹn */
+/* Lưu ý: Style này sẽ ảnh hưởng đến tất cả modal, nhưng được thiết kế để trông đẹp hơn */
+.modal-dialog {
+    .modal-content {
+        border-radius: 1rem;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    // Ghi đè lên className="bg-success text-white" trên header của modal
+    .modal-header.bg-success {
+        background: $appointment-header-bg !important;
+        color: #ffffff;
+        border-bottom: none;
+        padding: 1.25rem 1.5rem;
+
+        .modal-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+            transition: all 0.2s ease;
+
+            &:hover {
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    .modal-body {
+        background-color: #f3f4f6; // Nền xám nhạt
+    }
+}
+
+// 4. Style cho từng mục cuộc hẹn trong danh sách
+.appointment-item {
+    background: #ffffff !important;
+    border: 1px solid $border-color !important;
+    border-left: 5px solid $appointment-color !important;
+    border-radius: 0.75rem !important;
+    padding: 1.25rem !important;
+    margin-bottom: 1rem !important;
+    box-shadow: $shadow-sm !important;
+    transition: $transition;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: $shadow-md !important;
+        border-left-color: $appointment-color-dark !important;
+    }
+
+    h6 {
+        color: $appointment-header-bg;
+        font-weight: 600;
+    }
+
+    .appointment-details {
+        font-size: 0.95rem;
+        color: $appointment-text-muted;
+
+        strong {
+            color: $appointment-header-bg;
+            font-weight: 500;
+        }
+    }
+
+    // 5. Style cho nút "Tham gia cuộc họp" (ghi đè variant="link")
+    .btn.btn-link {
+        background: $appointment-color-light;
+        color: $appointment-color-dark;
+        border: 1px solid transparent;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        padding: 0.3rem 0.8rem;
+        transition: $transition;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        text-decoration: none !important;
+
+        &:hover {
+            background: $appointment-color;
+            color: #ffffff;
+            transform: scale(1.05);
         }
     }
 }

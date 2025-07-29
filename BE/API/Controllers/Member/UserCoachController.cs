@@ -240,7 +240,6 @@ namespace Smoking.API.Controllers.Member
     </div>";
 
             await _mailService.SendHtmlEmailAsync("admin@example.com", "🛑 Yêu cầu hủy huấn luyện viên", htmlBody);
-
             await _unitOfWork.CompleteAsync();
 
             return Ok(new { Message = "Đã gửi yêu cầu hủy huấn luyện viên, vui lòng chờ admin xét duyệt." });

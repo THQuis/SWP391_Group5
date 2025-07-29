@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Smoking.API.Models;
@@ -13,6 +14,23 @@ using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+// ⭐ BƯỚC 1: THÊM DỊCH VỤ CORS
+// =================================================================
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            // Thay thế "http://localhost:3000" bằng địa chỉ của frontend React của bạn
+            policy.WithOrigins(
+            "http://localhost:3000"
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 
 // =================== CONFIGURATION ===================
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
@@ -39,7 +57,6 @@ builder.Services.AddScoped<IMilestoneRepository, MilestoneRepository>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IUserAchievementService, UserAchievementService>();
 builder.Services.AddScoped<IAchievementEvaluatorService, AchievementEvaluatorService>();
-builder.Services.AddHostedService<AchievementEvaluationHostedService>();
 
 // ---- Quit Plan & Progress ----
 builder.Services.AddScoped<IQuitPlanService, QuitPlanService>();
@@ -161,6 +178,17 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseDefaultFiles();
 app.UseHttpsRedirection();
+// ⭐ BƯỚC 2: KÍCH HOẠT MIDDLEWARE CORS (ĐẶT TRƯỚC UseAuthentication)
+// =================================================================
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+    RequestPath = ""
+});
+
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

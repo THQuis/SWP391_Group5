@@ -109,6 +109,15 @@ namespace Smoking.API.Controllers.Admin
             var user = await _unitOfWork.Users.GetByIdAsync(id);
             if (user == null)
                 return NotFound(new { Message = "User không tồn tại." });
+            var currentUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(currentUserIdClaim, out int currentUserId))
+            {
+                if (id == currentUserId)
+                {
+                    return BadRequest(new { Message = "Bạn không thể tự thay đổi trạng thái của chính mình." });
+                }
+            }
             user.Status = "InActive";
 
             _unitOfWork.Users.Update(user);

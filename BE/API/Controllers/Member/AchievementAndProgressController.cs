@@ -68,31 +68,11 @@ public class AchievementAndProgressController : ControllerBase
     [HttpPost("user/UpdateProgress")]
     public async Task<IActionResult> UpdateQuitProgress(int userId, [FromBody] UpdateQuitProgressRequest request)
     {
-        var validMembership = await _unitOfWork.UserMemberships
-            .FindFirstOrDefaultAsync(m =>
-                m.UserID == userId &&
-                m.EndDate >= DateTime.Today &&
-                (m.PaymentStatus == "Completed" || m.PaymentStatus == "AdminAssigned")
-            );
-
-        if (validMembership == null)
-        {
-            return StatusCode(403, "Chỉ người dùng có gói Premium mới được cập nhật tiến trình hằng ngày.");
-        }
-
-        var package = await _unitOfWork.MembershipPackages.GetByIdAsync(validMembership.PackageID);
-        if (package == null || !string.Equals(package.PackageType, "Premium", StringComparison.OrdinalIgnoreCase))
-        {
-            return StatusCode(403, "Chỉ người dùng có gói Premium mới được cập nhật tiến trình hằng ngày.");
-        }
-
         var quitPlans = await _unitOfWork.QuitPlans
             .FindAsync(x => x.UserID == userId && x.Status == "Active");
 
         if (quitPlans == null || !quitPlans.Any())
-        {
             return NotFound("Không tìm thấy kế hoạch cai thuốc.");
-        }
 
         var quitPlan = quitPlans.First();
         var progressDate = DateTime.UtcNow.AddHours(7).Date;
@@ -106,20 +86,30 @@ public class AchievementAndProgressController : ControllerBase
         );
 
         if (!updateResult)
-        {
             return BadRequest("Cập nhật tiến trình thất bại.");
-        }
-
-        // ✅ Gọi service để kiểm tra và trao thành tựu ngay
-        await _achievementEvaluatorService.EvaluateAndGrantAchievementsAsync(userId);
 
         var updatedProgressList = await _quitProgressService.GetByPlanIdAsync(quitPlan.QuitPlanID);
 
-        return Ok(new
+        var response = Ok(new
         {
             Message = "Tiến trình cai thuốc đã được cập nhật thành công.",
             QuitProgress = updatedProgressList
         });
+
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(3000);
+                await _achievementEvaluatorService.EvaluateAndGrantAchievementsAsync(userId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi trao thành tựu: " + ex.Message);
+            }
+        });
+
+        return response;
     }
 
     [HttpGet("user/showAllProgress")]

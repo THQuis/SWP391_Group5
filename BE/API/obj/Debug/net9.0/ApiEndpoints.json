@@ -1302,6 +1302,22 @@
   },
   {
     "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
+    "Method": "GetUserAppointments",
+    "RelativePath": "api/coach/user/{userId}/appointments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Smoking.API.Controllers.Coach.CoachController",
     "Method": "GetUserChallenges",
     "RelativePath": "api/coach/user/{userId}/challenges",
     "HttpMethod": "GET",

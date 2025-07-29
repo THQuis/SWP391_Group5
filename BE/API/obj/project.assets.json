@@ -5612,23 +5612,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dell\\.nuget\\packages\\": {},
+    "C:\\Users\\truon\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Smoking.API.csproj",
+      "projectUniqueName": "D:\\DOC\\ky5\\SWP391\\BE\\API\\Smoking.API.csproj",
       "projectName": "Smoking.API",
-      "projectPath": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\Smoking.API.csproj",
-      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\API\\obj\\",
+      "projectPath": "D:\\DOC\\ky5\\SWP391\\BE\\API\\Smoking.API.csproj",
+      "packagesPath": "C:\\Users\\truon\\.nuget\\packages\\",
+      "outputPath": "D:\\DOC\\ky5\\SWP391\\BE\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\truon\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5643,11 +5643,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Smoking.BLL.csproj": {
-              "projectPath": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\BLL\\Smoking.BLL.csproj"
+            "D:\\DOC\\ky5\\SWP391\\BE\\BLL\\Smoking.BLL.csproj": {
+              "projectPath": "D:\\DOC\\ky5\\SWP391\\BE\\BLL\\Smoking.BLL.csproj"
             },
-            "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Smoking.DAL.csproj": {
-              "projectPath": "D:\\Ki_5\\PRN212\\code\\abc\\SWP391_Group5\\BE\\DAL\\Smoking.DAL.csproj"
+            "D:\\DOC\\ky5\\SWP391\\BE\\DAL\\Smoking.DAL.csproj": {
+              "projectPath": "D:\\DOC\\ky5\\SWP391\\BE\\DAL\\Smoking.DAL.csproj"
             }
           }
         }
@@ -5662,7 +5662,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -5732,7 +5732,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

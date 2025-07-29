@@ -18,15 +18,15 @@ namespace Smoking.BLL.Services
 
         public async Task SendOtpEmailAsync(string toEmail, string otpCode)
         {
-            string subject = "Xác thực đăng ký tài khoản - Smoking App";
+            string subject = "Xác thực đăng ký tài khoản - Breath Again";
             string htmlBody = $@"
                 <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; padding: 20px;'>
                     <div style='text-align: center;'>
-                        <img src='https://github.com/THQuis/SWP391_Group5/blob/main/image/logo.png?raw=true' alt='Logo' style='width: 100px; margin-bottom: 20px;'/>
+                        <img src='https://raw.githubusercontent.com/THQuis/SWP391_Group5/main/image/logo.png' alt='Logo' style='width: 100px; margin-bottom: 20px;'/>
                         <h2>Xác thực đăng ký tài khoản</h2>
                     </div>
                     <p>Xin chào,</p>
-                    <p>Bạn đã yêu cầu đăng ký tài khoản tại Smoking App.</p>
+                    <p>Bạn đã yêu cầu đăng ký tài khoản tại Breath Again.</p>
                     <p>Vui lòng sử dụng mã OTP sau để xác nhận đăng ký:</p>
                     <div style='background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 2px; margin: 20px 0;'>
                         {otpCode}
@@ -34,7 +34,7 @@ namespace Smoking.BLL.Services
                     <p><strong>Lưu ý:</strong> Mã OTP có hiệu lực trong 5 phút. Vui lòng không chia sẻ mã này với người khác.</p>
                     <p>Nếu bạn không yêu cầu đăng ký tài khoản, hãy bỏ qua email này.</p>
                     <hr/>
-                    <p style='text-align: center; color: #888;'>Smoking App © 2025</p>
+                    <p style='text-align: center; color: #888;'>Breath Again © 2025</p>
                 </div>";
 
             await SendHtmlEmailAsync(toEmail, subject, htmlBody);

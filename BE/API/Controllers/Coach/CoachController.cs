@@ -127,6 +127,32 @@ namespace Smoking.API.Controllers.Coach
 
             return Ok(result);
         }
+        // Xem danh sách cuộc hẹn của user
+        [HttpGet("user/{userId}/appointments")]
+        public async Task<IActionResult> GetUserAppointments(int userId)
+        {
+            var appointments = await _unitOfWork.ConsultationBookings.GetByUserIdAsync(userId);
+
+            if (appointments == null || !appointments.Any())
+            {
+                return NotFound("Không tìm thấy cuộc hẹn nào cho người dùng này.");
+            }
+
+            var result = appointments.Select(a => new
+            {
+                BookingId = a.BookingID,
+                BookingDate = a.BookingDate,
+                MeetingLink = a.MeetingLink,
+                Status = a.Status,
+                Notes = a.Notes,
+                CreatedDate = a.CreatedDate,
+                CoachName = a.Coach?.FullName
+            });
+
+            return Ok(result);
+        }
+
+
 
     }
 }
